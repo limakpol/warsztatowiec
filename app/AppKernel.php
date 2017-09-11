@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
+use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -18,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new DoctrineMigrationsBundle(),
+            new AsseticBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,0 +1,55 @@
+body {
+    background-color: #fff;
+}
+.btn-square i {
+    margin: 0 !important;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+[class*='btn-']{
+    font: 12px "Ubuntu", sans-serif;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+    color: #fff;
+    padding: 5px;
+}
+[class*='btn-']:hover {
+    cursor: pointer;
+    filter: brightness(120%);
+}
+[class*='btn-']::-moz-focus-inner {
+    border: 0;
+}
+.btn-previous i {
+    margin-right: 4px;
+}
+.btn-next i, .btn-save i, .btn-edit i, .btn-info i, .btn-remove i, .btn-add i {
+    margin-left: 4px;
+}
+.btn-previous, .btn-next, .btn-info {
+    background-color: #ff5a00;
+}
+.btn-save, .btn-add {
+    background-color: #006e00;
+}
+.btn-edit {
+    background-color: #dd9600;
+}
+.btn-remove {
+    background-color: #833c00;
+}
+
+@media screen and (min-width: 960px)
+{
+    body {
+        background-color: #ddd;
+    }
+    [class*='btn-'] {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
