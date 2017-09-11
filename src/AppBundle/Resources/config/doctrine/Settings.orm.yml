@@ -1,0 +1,34 @@
+AppBundle\Entity\Settings:
+    type: entity
+    table: settings
+    repositoryClass: AppBundle\Entity\Repository\SettingsRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    oneToOne:
+        workshop:
+            targetEntity: Workshop
+            inversedBy: settings
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id

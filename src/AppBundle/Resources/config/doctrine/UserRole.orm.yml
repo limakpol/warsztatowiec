@@ -1,0 +1,53 @@
+AppBundle\Entity\UserRole:
+    type: entity
+    table: user_role
+    repositoryClass: AppBundle\Entity\Repository\UserRoleRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        user_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        role:
+            type: string
+            length: 50
+            options:
+                fixed: false
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: roles
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        workshop:
+            targetEntity: Workshop
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id
+            onDelete: cascade
+    uniqueConstraints:
+            user_workshop_role:
+                columns: [user_id, workshop_id, role]

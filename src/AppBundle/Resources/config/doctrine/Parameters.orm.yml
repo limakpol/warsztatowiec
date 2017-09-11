@@ -1,0 +1,55 @@
+AppBundle\Entity\Parameters:
+    type: entity
+    table: parameters
+    repositoryClass: AppBundle\Entity\Repository\ParametersRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        good_margin_pc:
+            type: integer
+            length: 3
+            nullable: false
+            options:
+                fixed: true
+                default: 30
+        good_vat_pc:
+            type: integer
+            length: 3
+            nullable: false
+            options:
+                fixed: true
+                default: 23
+        service_vat_pc:
+            type: integer
+            length: 3
+            nullable: false
+            options:
+                fixed: true
+                default: 23
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    oneToOne:
+        workshop:
+            targetEntity: Workshop
+            inversedBy: parameters
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id

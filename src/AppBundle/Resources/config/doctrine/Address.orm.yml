@@ -1,0 +1,62 @@
+AppBundle\Entity\Address:
+    type: entity
+    table: address
+    repositoryClass: AppBundle\Entity\Repository\AddressRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        street:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        house_number:
+            type: string
+            length: 5
+            nullable: true
+            options:
+                fixed: false
+        flat_number:
+            type: string
+            length: 5
+            nullable: true
+            options:
+                fixed: false
+        post_code:
+            type: string
+            length: 6
+            nullable: true
+            options:
+                fixed: true
+        city:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        province_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+    manyToOne:
+        province:
+            targetEntity: Province
+            inversedBy: addresses
+            joinColumn:
+                name: province_id
+                referencedColumnName: id
+    oneToOne:
+        workshop:
+            targetEntity: Workshop
+            inversedBy: address
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id

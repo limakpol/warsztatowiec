@@ -1,0 +1,98 @@
+AppBundle\Entity\Workshop:
+    type: entity
+    table: workshop
+    repositoryClass: AppBundle\Entity\Repository\WorkshopRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        owner_user_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        name:
+            type: string
+            length: 80
+            nullable: false
+            options:
+                fixed: false
+        phone:
+            type: string
+            length: 12
+            nullable: true
+            options:
+                fixed: true
+        email:
+            type: string
+            length: 80
+            nullable: true
+            options:
+                fixed: false
+        subscription_expiration_date:
+            type: datetime
+            nullable: true
+        address_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        nip:
+            type: string
+            length: 10
+            nullable: true
+            options:
+                fixed: true
+        bank_account_number:
+            type: string
+            length: 26
+            nullable: true
+            options:
+                fixed: false
+        website_url:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    oneToOne:
+        parameters:
+            targetEntity: Parameters
+            mappedBy: workshop
+        settings:
+            targetEntity: Settings
+            mappedBy: workshop
+        address:
+            targetEntity: Address
+            mappedBy: workshop
+    manyToMany:
+        users:
+            targetEntity: User
+            mappedBy: workshops
+    manyToOne:
+        owner_user:
+            targetEntity: User
+            joinColumn:
+                name: owner_user_id
+                referencedColumnName: id
+            onDelete: cascade
+        province:
+            targetEntity: Province
+            joinColumn:
+                name: province_id
+                referencedColumnName: id
+            onDelete: cascade

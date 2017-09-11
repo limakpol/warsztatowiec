@@ -1,0 +1,23 @@
+AppBundle\Entity\Province:
+    type: entity
+    table: province
+    repositoryClass: AppBundle\Entity\Repository\ProvinceRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 40
+            nullable: false
+            options:
+                fixed: false
+    oneToMany:
+        addresses:
+            targetEntity: Address
+            mappedBy: province

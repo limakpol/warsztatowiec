@@ -1,0 +1,86 @@
+AppBundle\Entity\User:
+    type: entity
+    table: user
+    repositoryClass: AppBundle\Entity\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        current_workshop_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        password:
+            type: string
+            length: 60
+            nullable: false
+            options:
+                fixed: true
+        forename:
+            type: string
+            length: 30
+            nullable: false
+        surname:
+            type: string
+            length: 50
+            nullable: false
+        phone:
+            type: string
+            length: 12
+            nullable: true
+            options:
+                fixed: true
+        email:
+            type: string
+            length: 80
+            nullable: false
+        status:
+            type: smallint
+            length: 1
+            nullable: false
+            options:
+                default: 0
+                comment: '0 - użytkownik zweryfikował się negatywnie przez e-mail, 1 - użytkownik jeszcze się nie weryfikował, 2 - użytkownik zweryfikował się pozytywnie, 3 - użytkownik zbanowany przez nas'
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    oneToMany:
+        roles:
+            targetEntity: UserRole
+            mappedBy: user
+    manyToMany:
+        workshops:
+            targetEntity: Workshop
+            inversedBy: users
+            joinTable:
+                name: user_workshop
+                joinColumns:
+                    user_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                  workshop_id:
+                    referencedColumnName: id
+    manyToOne:
+        current_workshop:
+            targetEntity: Workshop
+            joinColumn:
+                name: current_workshop_id
+                referencedColumnName: id
+            onDelete: cascade
+    uniqueConstraints:
+            phone:
+                columns: [ phone ]
+            email:
+                columns: [ email ]
