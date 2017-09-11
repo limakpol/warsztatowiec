@@ -1,0 +1,7 @@
+app_index:
+    path: /
+    defaults: { _controller: AppBundle:App:index }
+
+app_test_index:
+    path: /test
+    defaults: { _controller: AppBundle:Test:index }
