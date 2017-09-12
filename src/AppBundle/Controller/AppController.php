@@ -25,7 +25,7 @@ class AppController extends Controller
     {
         /** @var Request $request */
         $request = $this->get('request_stack')->getCurrentRequest();
-        
+
 
         return $this->render('AppBundle:app:register.html.twig');
     }

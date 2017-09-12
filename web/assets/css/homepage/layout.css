@@ -1,0 +1,26 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+#wrapper {
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../img/workshop_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+}
+h1 {
+    margin: 0;
+}
+header {
+    width: 70%;
+    margin: 0 auto 0 auto;
+}
+#div-logo svg {
+    width: 5vw;
+    fill: #ff5a00;
+    background-color: #fff;
+}
