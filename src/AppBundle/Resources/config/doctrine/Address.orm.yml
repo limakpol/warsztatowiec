@@ -56,7 +56,4 @@ AppBundle\Entity\Address:
     oneToOne:
         workshop:
             targetEntity: Workshop
-            inversedBy: address
-            joinColumn:
-                name: workshop_id
-                referencedColumnName: id
+            mappedBy: address

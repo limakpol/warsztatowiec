@@ -2,10 +2,21 @@
 # https://symfony.com/doc/current/security.html
 security:
 
+    encoders:
+        AppBundle\Entity\Ext\User:
+            algorithm: bcrypt
+            cost: 13
+
+    role_hierarchy:
+        ROLE_DEVELOPER: [ROLE_USER]
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
             memory: ~
+
+        my_provider:
+            entity:
+                class: AppBundle:User
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +25,26 @@ security:
             security: false
 
         main:
+            pattern: ^/
             anonymous: ~
+            provider: my_provider
+            simple_form:
+                authenticator: app.security.user_authenticator
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_homepage_index
+                always_use_default_target_path: true
+                username_parameter: login[login]
+                password_parameter: login[password]
+                use_forward: false
+            logout:
+                path: /wyloguj
+                target: /logowanie
+
+    access_control:
+     #   - { path: ^/logowanie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      #  - { path: ^/rejestracja, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/organizacja, roles: ROLE_USER }
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

@@ -78,7 +78,10 @@ AppBundle\Entity\Workshop:
             mappedBy: workshop
         address:
             targetEntity: Address
-            mappedBy: workshop
+            inversedBy: workshop
+            joinColumn:
+                name: address_id
+                referencedColumnName: id
     manyToMany:
         users:
             targetEntity: User
@@ -88,11 +91,5 @@ AppBundle\Entity\Workshop:
             targetEntity: User
             joinColumn:
                 name: owner_user_id
-                referencedColumnName: id
-            onDelete: cascade
-        province:
-            targetEntity: Province
-            joinColumn:
-                name: province_id
                 referencedColumnName: id
             onDelete: cascade

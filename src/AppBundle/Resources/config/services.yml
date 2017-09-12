@@ -1,0 +1,34 @@
+services:
+    app.security.user_authenticator:
+        class: AppBundle\Service\Security\UserAuthenticator
+        arguments: ["@security.password_encoder", "@doctrine.orm.default_entity_manager"]
+
+    form.type.province:
+        class: AppBundle\Form\ProvinceType
+        tags:
+            - { name: form.type }
+
+    form.type.address:
+        class: AppBundle\Form\AddressType
+        tags:
+            - { name: form.type }
+
+    form.type.user:
+        class: AppBundle\Form\UserType
+        tags:
+            - { name: form.type }
+
+    form.type.workshop:
+        class: AppBundle\Form\WorkshopType
+        tags:
+            - { name: form.type }
+
+    form.type.registration:
+        class: AppBundle\Form\RegistrationType
+        tags:
+            - { name: form.type }
+
+    form.type.login:
+        class: AppBundle\Form\LoginType
+        tags:
+            - { name: form.type }

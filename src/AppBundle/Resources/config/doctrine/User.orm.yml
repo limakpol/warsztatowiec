@@ -45,7 +45,7 @@ AppBundle\Entity\User:
             length: 1
             nullable: false
             options:
-                default: 0
+                default: 1
                 comment: '0 - użytkownik zweryfikował się negatywnie przez e-mail, 1 - użytkownik jeszcze się nie weryfikował, 2 - użytkownik zweryfikował się pozytywnie, 3 - użytkownik zbanowany przez nas'
         created_at:
             type: datetime

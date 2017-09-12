@@ -93,11 +93,6 @@ class Workshop
     private $owner_user;
 
     /**
-     * @var \AppBundle\Entity\Province
-     */
-    private $province;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $users;
@@ -502,30 +497,6 @@ class Workshop
     public function getOwnerUser()
     {
         return $this->owner_user;
-    }
-
-    /**
-     * Set province
-     *
-     * @param \AppBundle\Entity\Province $province
-     *
-     * @return Workshop
-     */
-    public function setProvince(\AppBundle\Entity\Province $province = null)
-    {
-        $this->province = $province;
-
-        return $this;
-    }
-
-    /**
-     * Get province
-     *
-     * @return \AppBundle\Entity\Province
-     */
-    public function getProvince()
-    {
-        return $this->province;
     }
 
     /**

@@ -1,7 +1,19 @@
-app_index:
+app_homepage_index:
     path: /
-    defaults: { _controller: AppBundle:App:index }
+    defaults: { _controller: AppBundle:Homepage:index }
 
 app_test_index:
     path: /test
     defaults: { _controller: AppBundle:Test:index }
+
+app_register:
+    path: /rejestracja
+    defaults: { _controller: AppBundle:App:register }
+
+app_login:
+    path: /logowanie
+    defaults: { _controller: AppBundle:App:login }
+
+app_logout:
+    path: /wyloguj
+    defaults: { _controller: AppBundle:App:logout }

@@ -45,7 +45,7 @@ class User
     /**
      * @var integer
      */
-    private $status = 0;
+    private $status = 1;
 
     /**
      * @var \DateTime
