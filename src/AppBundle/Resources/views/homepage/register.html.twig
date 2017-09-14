@@ -1,0 +1,20 @@
+{% extends ':base:homepage.html.twig' %}
+    {% block stylesheets %}
+        {{ parent() }}
+        {% stylesheets
+        'assets/css/homepage/registration.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+{% block body %}
+    <div id="wrapper">
+        {% block header %}
+            {{ parent() }}
+        {% endblock %}
+        <main>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </main>
+    </div>
+{% endblock %}

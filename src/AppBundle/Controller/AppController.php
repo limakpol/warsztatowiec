@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AppController extends Controller
 {
@@ -19,7 +20,7 @@ class AppController extends Controller
     public function loginAction()
     {
 
-        return $this->render('AppBundle:app:login.html.twig');
+        return $this->render('AppBundle:homepage:login.html.twig');
     }
 
     public function registerAction()
@@ -35,12 +36,14 @@ class AppController extends Controller
 
         }
 
-        return $this->render('AppBundle:app:register.html.twig');
+        return $this->render('AppBundle:homepage:register.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     public function logoutAction()
     {
-        return $this->render('AppBundle:app:login.html.twig');
+        return new Response();
     }
 
 }

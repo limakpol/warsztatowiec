@@ -16,6 +16,9 @@ body {
     display: flex;
     flex-direction: column;
 }
+a {
+    text-decoration: none;
+}
 header {
     box-sizing: border-box;
     display: flex;
@@ -44,9 +47,6 @@ header img {
 }
 #menu-square:hover {
     cursor: pointer;
-}
-a {
-    text-decoration: none;
 }
 header ul {
     box-sizing: border-box;
@@ -104,7 +104,7 @@ main section:first-child {
 main section:last-child {
     font: 4vw "Open Sans", sans-serif;
 }
-main button {
+#btn-try-demo {
     background-color: #ff5a00;
     border: none;
     outline: none;
@@ -115,10 +115,10 @@ main button {
     text-transform: uppercase;
     align-self: center;
 }
-main button::-moz-focus-inner {
+#btn-try-demo::-moz-focus-inner {
     border: none;
 }
-main button:hover {
+#btn-try-demo:hover {
     cursor: pointer;
 }
 
@@ -126,7 +126,7 @@ main button:hover {
     main section:first-child, main section:last-child {
         font-size: 3vw;
     }
-    main button {
+    #btn-try-demo {
         font-size: 4vw;
         padding: 2.2vw 9vw 1.9vw 9vw;
     }
@@ -159,7 +159,7 @@ main button:hover {
     main {
         display: flex;
     }
-    main button {
+    #btn-try-demo {
         font-size: 2.5vw;
         padding: 2vw 7vw 1.5vw 7vw;
     }
@@ -177,7 +177,7 @@ main button:hover {
     header ul {
         font-size: 1.5vw;
     }
-    main button {
+    #btn-try-demo {
         font-size: 2vw;
         padding: 1.2vw 5vw 1vw 5vw;
     }

@@ -33,7 +33,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Hasło do logowania',
+                'label' => 'Hasło',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 15,

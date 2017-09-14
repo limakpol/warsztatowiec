@@ -6,7 +6,7 @@
     <title>{% block title %}Warsztatowiec{% endblock %}</title>
     {% block stylesheets %}
         {% stylesheets
-        'assets/css/homepage/layout.css'
+            'assets/css/homepage/layout.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin-ext" rel="stylesheet">
@@ -17,7 +17,23 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+        {% block header %}
+            <header>
+                <img src="{{ asset('assets/img/logo.png') }}">
+                <div id="menu-square">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+                <ul>
+                    <li class="disabled">funkcje</li>
+                    <li class="disabled">cennik</li>
+                    <li class="disabled">polecają</li>
+                    <li><a href="{{ path('app_login') }}">logowanie</a></li>
+                    <li><a href="{{ path('app_register') }}">rejestracja</a></li>
+                </ul>
+            </header>
+        {% endblock %}
+{% endblock %}
 {% block javascripts %}
     <script src="https://use.fontawesome.com/7bc874a398.js"></script>
     <!-- <script

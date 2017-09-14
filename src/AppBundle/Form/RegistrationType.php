@@ -25,7 +25,7 @@ class RegistrationType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'zarejestruj',
                 'attr' => [
-                    'class' => 'btn-save',
+                    'class' => 'btn-register',
                 ],
             ])
             ;
