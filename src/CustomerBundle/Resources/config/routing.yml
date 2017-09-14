@@ -1,0 +1,3 @@
+customer_index:
+    path: /klienci
+    defaults: { _controller: CustomerBundle:Customer:index }

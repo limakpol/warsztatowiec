@@ -45,6 +45,9 @@ header img {
 #menu-square:hover {
     cursor: pointer;
 }
+a {
+    text-decoration: none;
+}
 header ul {
     box-sizing: border-box;
     list-style: none;
@@ -60,6 +63,9 @@ header ul li {
     padding: 1vw;
     width: 100%;
     border-radius: 2px;
+}
+header ul li a {
+    color: #fff;
 }
 header ul li:last-child {
     border: 1px solid #fff;

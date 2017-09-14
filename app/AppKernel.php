@@ -1,5 +1,6 @@
 <?php
 
+use CustomerBundle\CustomerBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
 use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Component\HttpKernel\Kernel;
@@ -20,6 +21,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new DoctrineMigrationsBundle(),
             new AsseticBundle(),
+            new CustomerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

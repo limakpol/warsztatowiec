@@ -23,6 +23,7 @@ class ProvinceType extends AbstractType
         $builder
             ->add('name', EntityType::class, [
                 'label' => 'Województwo',
+                'class' => Province::class,
                 'required' => false,
             ])
             ;
