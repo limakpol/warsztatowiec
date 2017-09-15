@@ -16,8 +16,12 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 a {
     text-decoration: none;
+}
+a:active, a:focus{
+    outline: none;
 }
 header {
     box-sizing: border-box;
@@ -118,6 +122,7 @@ main section:first-child {
 }
 #btn-try-demo:hover {
     cursor: pointer;
+    filter: brightness(120%);
 }
 #features-info {
     font: 4vw "Open Sans", sans-serif;

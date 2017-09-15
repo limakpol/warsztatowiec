@@ -17,9 +17,20 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+    <div id="wrapper">
+        <header>
+            {% block header %}
+                <img src="{{ asset('assets/img/logo_black_beta.png') }}">
+            {% endblock %}
+        </header>
+        <main>{% block main %}{% endblock %}</main>
+        <footer>{% block footer %}{% endblock %}</footer>
+    </div>
+{% endblock %}
 {% block javascripts %}
-    <script src="https://use.fontawesome.com/7bc874a398.js"></script>
+    <script src="{{ asset('assets/js/font_awesome.js') }}"></script>
+    <!-- <script src="https://use.fontawesome.com/7bc874a398.js"></script> -->
     <!-- <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

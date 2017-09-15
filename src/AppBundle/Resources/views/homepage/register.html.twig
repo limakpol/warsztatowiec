@@ -1,11 +1,36 @@
 {% extends ':base:login.html.twig' %}
-    {% block stylesheets %}
-        {{ parent() }}
-        {% stylesheets
-        filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-    {% endblock %}
-{% block body %}
-
+{% block title %}Warsztatowiec - Rejestracja{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block main %}
+    <div>
+        <span class="headline1">Przetestuj program</span>
+        <span class="headline2">Załóż darmowe konto</span>
+    </div>
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form.user.forename, {'attr': {'autofocus': true, 'placeholder': form.user.forename.vars.label }}) }}
+        {{ form_widget(form.user.surname, {'attr': {'placeholder': form.user.surname.vars.label }}) }}
+        {{ form_widget(form.workshop.name, {'attr': {'placeholder': form.workshop.name.vars.label }}) }}
+        {{ form_widget(form.user.email, {'attr': {'placeholder': form.user.email.vars.label }}) }}
+        {{ form_widget(form.user.password, {'attr': {'placeholder': form.user.password.vars.label }}) }}
+        {{ form_widget(form._token) }}
+        {{ form_widget(form.submit) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+    <div class="form-options">Nie chcę wpisywać swoich danych</div>
+{% endblock %}
+{% block footer %}Masz już konto? <a href="{{ path('app_login') }}">Zaloguj się<i class="fa fa-sign-in" aria-hidden="true"></i></a>{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'assets/js/homepage/register.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

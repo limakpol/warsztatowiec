@@ -24,7 +24,7 @@ class WorkshopType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nazwa warsztatu',
+                'label' => 'Nazwa Warsztatu',
                 'required' => true,
                 'attr' => [
                     'maxlength' => 80,

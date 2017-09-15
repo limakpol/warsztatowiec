@@ -18,11 +18,11 @@ class LoginType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(UserType::class)
+            ->add('user', UserType::class)
             ->add('submit', SubmitType::class, [
                 'label' => 'zaloguj',
                 'attr' => [
-                    'class' => 'btn-save',
+                    'class' => 'btn-login',
                 ],
             ])
             ;
