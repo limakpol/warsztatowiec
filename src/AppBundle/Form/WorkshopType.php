@@ -64,7 +64,7 @@ class WorkshopType extends AbstractType
                     'size' => 24,
                 ],
             ])
-            ->add('website', TextType::class, [
+            ->add('website_url', TextType::class, [
                 'label' => 'Strona www',
                 'required' => false,
                 'attr' => [
