@@ -97,12 +97,10 @@ main h1 {
 }
 main section {
     text-align: justify;
+    margin-bottom: 5vw;
 }
 main section:first-child {
     font: 4vw "Fira Sans", sans-serif;
-}
-main section:last-child {
-    font: 4vw "Open Sans", sans-serif;
 }
 #btn-try-demo {
     background-color: #ff5a00;
@@ -121,14 +119,53 @@ main section:last-child {
 #btn-try-demo:hover {
     cursor: pointer;
 }
+#features-info {
+    font: 4vw "Open Sans", sans-serif;
+    display: flex;
+}
+#features-info h2 {
+    font: bold 4vw "Open Sans", sans-serif;
+    margin: 0;
+}
+#features-info ul {
+    margin:  0 1vw 0 1vw;
+}
+#features-info div {
+    margin-bottom: 4vw;
+}
+#features-info div:last-child li {
+    color: rgba(255, 255, 255, 0.6);
+}
+#features-info li:hover, #features-info h2:hover {
+    cursor: default;
+}
+#message {
+    font: 4vw "Fira Sans", sans-serif;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 2vw;
+}
+#message span {
+    align-self: flex-end;
+    margin-top: 4vw;
+}
 
 @media screen and (min-width: 600px) {
+    main section {
+        margin-bottom: 4vw;
+    }
     main section:first-child, main section:last-child {
         font-size: 3vw;
     }
     #btn-try-demo {
         font-size: 4vw;
         padding: 2.2vw 9vw 1.9vw 9vw;
+    }
+    #features-info, #message, #features-info h2 {
+        font-size: 3vw;
+    }
+    #message span {
+        margin-top: 3vw;
     }
 }
 @media screen and (min-width: 900px) {
@@ -166,8 +203,27 @@ main section:last-child {
     main h1 {
         font-size: 5vw;
     }
+    main section {
+        margin-bottom: 3vw;
+    }
     main section:first-child, main section:last-child {
         font-size: 2vw;
+    }
+    #features-info, #message, #features-info h2 {
+        font-size: 2vw;
+    }
+    #features-info {
+        flex-direction: row;
+    }
+    #features-info div {
+        margin: 0;
+    }
+    #message {
+        width: 80%;
+        margin: 0 auto 0 auto;
+    }
+    #message span {
+        margin-top: 2vw;
     }
 }
 @media screen and (min-width: 1350px) {
@@ -184,6 +240,9 @@ main section:last-child {
     main h1 {
         font-size: 3.5vw;
     }
+    main section {
+        margin-bottom: 2vw;
+    }
     header {
         width: 80%;
         align-self: center;
@@ -192,5 +251,18 @@ main section:last-child {
         font-size: 1.3vw;
         width: 80%;
         align-self: center;
+    }
+    #features-info {
+        width: 80%;
+        align-self: center;
+    }
+    #features-info, #message, #features-info h2 {
+        font-size: 1.3vw;
+    }
+    #message {
+        box-sizing: border-box;
+    }
+    #message span {
+        margin-top: 1vw;
     }
 }

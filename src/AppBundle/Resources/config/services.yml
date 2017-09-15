@@ -32,3 +32,9 @@ services:
         class: AppBundle\Form\LoginType
         tags:
             - { name: form.type }
+
+    app.command.generate_provinces:
+        class: AppBundle\Command\GenerateProvinces
+        arguments: ["@service_container"]
+        tags:
+            - { name: console.command }

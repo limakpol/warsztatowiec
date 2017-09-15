@@ -25,6 +25,7 @@ class ProvinceType extends AbstractType
                 'label' => 'Województwo',
                 'class' => Province::class,
                 'required' => false,
+                'choice_label' => 'name',
             ])
             ;
     }

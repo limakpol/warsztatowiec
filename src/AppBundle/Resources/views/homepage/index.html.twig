@@ -1,20 +1,54 @@
 {% extends ':base:homepage.html.twig' %}
 {% block body %}
     <div id="wrapper">
-        {% block header %}
-            {{ parent() }}
-        {% endblock %}
+        <header>
+            <a href="{{ path('app_homepage_index') }}">
+                <img src="{{ asset('assets/img/logo_beta.png') }}">
+            </a>
+            <div id="menu-square">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            <ul>
+                <li class="disabled">funkcje</li>
+                <li class="disabled">cennik</li>
+                <li class="disabled">polecają</li>
+                <li><a href="{{ path('app_login') }}">logowanie</a></li>
+                <li><a href="{{ path('app_register') }}">rejestracja</a></li>
+            </ul>
+        </header>
         <main>
             <section>
                 <h1>Wygodna obsługa warsztatu</h1>
                 <p>
                     <strong>Warsztatowiec</strong> to wszystko, czego będziesz potrzebował do sprawnego zarządzania warsztatem samochodwym, blacharskim i lakierniczym - od przyjęcia zlecenia do jego rozliczenia. Wszystko w jednym miejscu. Zaoszczędzisz czas - swój i swoich klientów.
                 </p>
-                <button id="btn-try-demo">wypróbuj demo</button>
+                <button id="btn-try-demo">wypróbuj</button>
             </section>
-            <section>
-                <p>Wersja demo umożliwia zarządzanie bazą klientów, pojazdów, zleceń serwisowych, towarów i usług; edycję jednostek, statusów zleceń, kategorii towarów oraz edycję listy pracowników. Pozwala to na pełną obsługę zleceń. W przyszłości zostaną dodane moduły komunikacji z klientami za pomocą SMS i poczty e-mail. To, jak szybko uda się wprowadzić nowe funkcjonalności, zależy także od Ciebie. Po zalogowaniu i przetestowaniu programu <strong>wpisz swoje uwagi</strong>. Chcemy zbudować aplikację szytą na miarę - dokładnie taką, jakiej oczekują od nas mechanicy!
-                </p>
+            <section id="features-info">
+                <div>
+                    <h2>Funkcje dostępne w wersji beta:</h2>
+                    <ul>
+                        <li>zarządzanie bazą klientów i pojazdów</li>
+                        <li>magazyn</li>
+                        <li>pełna obsługa zleceń serwisowych</li>
+                        <li>edycja jednostek, statusów zleceń, kategorii towarów</li>
+                        <li>lista pracowników</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Inne funkcje, które będą dostępne w wersji pełnej:</h2>
+                    <ul>
+                        <li>komunikacja z klientami poprzez e-mail i SMS (powiadomienia)</li>
+                        <li>moduł księgowy - faktury i paragony</li>
+                        <li>przechowalnia</li>
+                        <li>integracja z innymi programami</li>
+                        <li>możliwość wymiany informacji pomiędzy warsztatami</li>
+                        <li>integracja ze skanerami kodów AZTEC i kodów kreskowych</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="message">To, jak szybo uda się wprowadzić nowe funkcjonalności, zależy także od Ciebie. W czasie testowania prosimy o wpisanie wszelkich uwag, które pomogą nam w rozwoju programu. Chcemy zbudować aplikację szytą na miarę - dokładnie taką, jakiej oczekują od nas mechanicy!
+                <span>Zespół projektowy Warsztatowiec.pl</span>
             </section>
         </main>
     </div>
