@@ -18,6 +18,7 @@ class GenerateProvinces extends Command
         $this->container = $container;
         parent::__construct();
     }
+
     protected function configure()
     {
         $this
@@ -25,24 +26,40 @@ class GenerateProvinces extends Command
             ->setDescription('Copy provinces from parameters to table')
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->container->get('doctrine.orm.default_entity_manager');
 
         $provinces = $em->getRepository('AppBundle:Province')->findAll();
 
-        if(!$provinces) {
+        if(!$provinces)
+        {
+            $provinceNames = $this->container->getParameter('pl')['provinces'];
 
-            $configProvinces = $this->container->getParameter('pl')['provinces'];
+            $this->writeProvinceNames($provinceNames);
 
-            foreach ($configProvinces as $configProvince) {
-                $province = new Province();
-                $province->setName($configProvince);
-                $em->persist($province);
-            }
-
-            $em->flush();
+            $output->writeln('All of provinces has been saved');
+        }
+        else
+        {
+            $output->writeln('Provinces already exist');
         }
     }
 
+    private function writeProvinceNames(array $provinceNames)
+    {
+        $em = $this->container->get('doctrine.orm.default_entity_manager');
+
+        foreach ($provinceNames as $provinceName) {
+
+            $province = new Province();
+
+            $province->setName($provinceName);
+
+            $em->persist($province);
+        }
+
+        $em->flush();
+    }
 }

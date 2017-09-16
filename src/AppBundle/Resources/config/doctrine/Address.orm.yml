@@ -46,6 +46,15 @@ AppBundle\Entity\Address:
             nullable: true
             options:
                 unsigned: true
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
     manyToOne:
         province:
             targetEntity: Province

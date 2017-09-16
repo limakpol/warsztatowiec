@@ -42,6 +42,12 @@ services:
         tags:
             - { name: console.command }
 
+    app.command.updated-at:
+        class: AppBundle\Command\UpdatedAt
+        arguments: ["@service_container"]
+        tags:
+            - { name: console.command }
+
 # VALIDATORS
     app.validator.mobile_phone:
         class: AppBundle\Form\Validator\MobilePhoneValidator
@@ -54,3 +60,7 @@ services:
             arguments: ["@doctrine.orm.entity_manager"]
             tags:
                 - { name: validator.constraint_validator }
+
+# HELPERS
+    app.helper.yaml_parser:
+        class: AppBundle\Service\Helper\YamlParser

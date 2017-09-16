@@ -9,6 +9,11 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Ext\User;
+use AppBundle\Entity\Ext\UserRole;
+use AppBundle\Entity\Parameters;
+use AppBundle\Entity\Settings;
+use AppBundle\Entity\Workshop;
 use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,11 +46,28 @@ class AppController extends Controller
         /** @var Request $request */
         $request = $this->get('request_stack')->getCurrentRequest();
 
-        $form = $this->createForm(RegistrationType::class);
+        $settings = new Settings();
+        $parameters = new Parameters();
+        $workshop = new Workshop();
+        $userRole = new UserRole();
+        $user = new User();
+
+        $workshop->setSettings($settings);
+        $workshop->setParameters($parameters);
+        $workshop->setOwnerUser($user);
+        $user->setCurrentWorkshop($workshop);
+
+        $form = $this->createForm(RegistrationType::class, [
+            'user' => $user,
+        ]);
+
         $form->handleRequest($request);
 
         if($request->getMethod() == 'POST' && $form->isValid())
         {
+
+
+
 
         }
 

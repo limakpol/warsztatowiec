@@ -1,7 +1,8 @@
 <?php
 namespace AppBundle\Service\Security;
 
-use AppBundle\Entity\User;
+use AppBundle\Entity\Ext\User;
+use AppBundle\Entity\Ext\Workshop;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -16,11 +17,13 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
 {
     private $encoder;
     private $entityManager;
+
     public function __construct(UserPasswordEncoderInterface $encoder, EntityManager $entityManager)
     {
         $this->encoder          = $encoder;
         $this->entityManager    = $entityManager;
     }
+
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
         try
@@ -30,18 +33,19 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
         }
         catch (UsernameNotFoundException $e)
         {
+
             throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
+
         $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+
         if($passwordValid)
         {
             if(null == $user->getCurrentWorkshop())
             {
-                $workshop = $user->getWorkshops()->first();
-                $user->setCurrentWorkshop($workshop);
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
+                $this->setCurrentWorkshop($user);
             }
+
             return new UsernamePasswordToken(
                 $user,
                 $user->getPassword(),
@@ -49,14 +53,30 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
                 $user->getRoles()->toArray()
             );
         }
+
         throw new CustomUserMessageAuthenticationException('Invalid username or password');
     }
+
     public function supportsToken(TokenInterface $token, $providerKey)
     {
+
         return $token instanceof UsernamePasswordToken && $token->getProviderKey() === $providerKey;
     }
+
     public function createToken(Request $request, $username, $password, $providerKey)
     {
+
         return new UsernamePasswordToken($username, $password, $providerKey);
+    }
+
+    private function setCurrentWorkshop(User $user)
+    {
+        $workshop = $user->getWorkshops()->first();
+
+        $user->setCurrentWorkshop($workshop);
+
+        $this->entityManager->persist($user);
+
+        $this->entityManager->flush();
     }
 }
