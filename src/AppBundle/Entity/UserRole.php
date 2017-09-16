@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * UserRole
  */
-class UserRole
+class UserRole extends \AppBundle\Entity\Base\UserRole
 {
     /**
      * @var integer
@@ -255,4 +255,3 @@ class UserRole
         return $this->workshop;
     }
 }
-

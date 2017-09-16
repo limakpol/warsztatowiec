@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Ext;
+namespace AppBundle\Entity\Base;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User extends \AppBundle\Entity\User implements UserInterface, \Serializable
+abstract class User implements UserInterface, \Serializable
 {
 
     private $username;
@@ -53,5 +53,26 @@ class User extends \AppBundle\Entity\User implements UserInterface, \Serializabl
 
         return str_replace('/', '-', crypt($stringToHash, $salt));
     }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
 
 }

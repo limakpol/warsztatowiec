@@ -8,32 +8,25 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Service\Helper\YamlParser;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UpdatedAt extends Command
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected $entityManager;
+    protected $yamlParser;
 
-    /**
-     * UpdatedAt constructor.
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, YamlParser $yamlParser)
     {
-        $this->container = $container;
+        $this->entityManager    = $entityManager;
+        $this->yamlParser       = $yamlParser;
 
         parent::__construct();
     }
 
-    /**
-     *
-     */
     protected function configure()
     {
         $this
@@ -42,17 +35,10 @@ class UpdatedAt extends Command
         ;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dir = __DIR__.'/../Resources/config/doctrine';
 
-        $schemaFileNames = scandir($dir);
-
-        $schemas =  $this->getSchemas($schemaFileNames, $dir);
+        $schemas =  $this->yamlParser->getSchemas();
 
         foreach($schemas as $schema)
         {
@@ -60,42 +46,9 @@ class UpdatedAt extends Command
         }
     }
 
-    /**
-     * @param $schemaFileNames
-     * @param $dir
-     * @return array
-     */
-    private function getSchemas($schemaFileNames, $dir)
-    {
-        $schemas = [];
-
-        foreach($schemaFileNames as $schemaFileName)
-        {
-            if($schemaFileName == '..' || $schemaFileName == '.')
-            {
-                continue;
-            }
-
-            $yamlParser = $this->container->get('app.helper.yaml_parser');
-
-            $schema = $yamlParser->parse($dir, $schemaFileName);
-
-            $schemas[] = $schema;
-        }
-
-        return $schemas;
-    }
-
-    /**
-     * @param $schema
-     * @param $output
-     * @throws \Doctrine\DBAL\DBALException
-     */
     private function changeUpdatedAt($schema, $output)
     {
-        $em = $this->container->get('doctrine.orm.default_entity_manager');
-
-        $connection = $em->getConnection();
+        $connection = $this->entityManager->getConnection();
 
         foreach($schema as $index)
         {
@@ -111,10 +64,6 @@ class UpdatedAt extends Command
         }
     }
 
-    /**
-     * @param $tableName
-     * @param $output
-     */
     private function message($tableName, $output)
     {
         $msg = 'Changed updated_at to timestamp in table ' . $tableName;

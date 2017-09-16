@@ -8,12 +8,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class MobilePhoneValidator extends ConstraintValidator
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
 
     public function validate($value, Constraint $constraint)
     {

@@ -38,29 +38,42 @@ services:
 # COMMANDS
     app.command.generate_provinces:
         class: AppBundle\Command\GenerateProvinces
-        arguments: ["@service_container"]
-        tags:
-            - { name: console.command }
+        arguments: ['@doctrine.orm.default_entity_manager', '@app.helper.parameter_container']
 
     app.command.updated-at:
         class: AppBundle\Command\UpdatedAt
-        arguments: ["@service_container"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
+        tags:
+            - { name: console.command }
+
+    app.command.truncate_all_tables:
+        class: AppBundle\Command\TruncateAllTables
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
+        tags:
+            - { name: console.command }
+
+    app.command.delete_all_tables:
+        class: AppBundle\Command\DeleteAllTables
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
         tags:
             - { name: console.command }
 
 # VALIDATORS
     app.validator.mobile_phone:
         class: AppBundle\Form\Validator\MobilePhoneValidator
-        arguments: ["@service_container"]
         tags:
             - { name: validator.constraint_validator }
 
     app.validator.email:
             class: AppBundle\Form\Validator\EmailValidator
-            arguments: ["@doctrine.orm.entity_manager"]
+            arguments: ["@doctrine.orm.default_entity_manager"]
             tags:
                 - { name: validator.constraint_validator }
 
 # HELPERS
     app.helper.yaml_parser:
         class: AppBundle\Service\Helper\YamlParser
+
+    app.helper.parameter_container:
+        class: AppBundle\Service\Helper\ParameterContainer
+        arguments: ['%app%']

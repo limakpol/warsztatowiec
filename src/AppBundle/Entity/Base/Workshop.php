@@ -6,10 +6,10 @@
  * Time: 7:39 PM
  */
 
-namespace AppBundle\Entity\Ext;
+namespace AppBundle\Entity\Base;
 
 
-class Workshop extends \AppBundle\Entity\Workshop
+abstract class Workshop
 {
 
 }

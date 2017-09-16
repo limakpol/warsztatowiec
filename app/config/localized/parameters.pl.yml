@@ -1,6 +1,6 @@
 parameters:
      locale: pl
-     pl:
+     app:
          week_price: 19
          currency: zł
          phone_prefix: '+48'

@@ -27,7 +27,7 @@ AppBundle\Entity\User:
             - AppBundle\Form\Validator\Constraint\MobilePhone: ~
         email:
             - NotBlank:
-                  message: 'Pole E-amil nie może być puste'
+                message: 'Pole E-amil nie może być puste'
             - Regex:
                 pattern: '/^[a-zA-Z]+[a-zA-Z0-9\.\-_]{1,32}\@[a-zA-Z0-9\.\-_]+\.[a-z]{2,4}$/D'
                 message: 'Wpisany adres e-mail jest nieprawidłowy'
@@ -40,7 +40,7 @@ AppBundle\Entity\User:
             - AppBundle\Form\Validator\Constraint\Email: ~
         password:
             - NotBlank:
-                  message: 'Hasło nie może być puste'
+                message: 'Hasło nie może być puste'
             - Length:
                 min: 6
                 max: 20
@@ -50,9 +50,9 @@ AppBundle\Entity\Workshop:
     properties:
         name:
             - NotBlank:
-                  message: 'Nazwa warsztatu nie może być pusta'
+                message: 'Nazwa warsztatu nie może być pusta'
             - Length:
                 min: 2
                 max: 30
-                minMessage: 'Nazwa warsztatu zawierać co najmniej 2 litery'
+                minMessage: 'Nazwa warsztatu musi zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa warsztatu może zawierać maksymalnie 30 liter'

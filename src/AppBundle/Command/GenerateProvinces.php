@@ -4,18 +4,22 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Province;
+use AppBundle\Service\Helper\ParameterContainer;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GenerateProvinces extends Command
 {
-    protected $container;
+    protected $entityManager;
+    protected $parameterContainer;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, ParameterContainer $parameterContainer)
     {
-        $this->container = $container;
+        $this->entityManager        = $entityManager;
+        $this->parameterContainer   = $parameterContainer;
+
         parent::__construct();
     }
 
@@ -25,19 +29,18 @@ class GenerateProvinces extends Command
             ->setName('app:generate:provinces')
             ->setDescription('Copy provinces from parameters to table')
         ;
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->container->get('doctrine.orm.default_entity_manager');
 
-        $provinces = $em->getRepository('AppBundle:Province')->findAll();
+        $provinces = $this->entityManager->getRepository('AppBundle:Province')->findAll();
 
         if(!$provinces)
         {
-            $provinceNames = $this->container->getParameter('pl')['provinces'];
 
-            $this->writeProvinceNames($provinceNames);
+            $this->writeProvinceNames();
 
             $output->writeln('All of provinces has been saved');
         }
@@ -45,11 +48,16 @@ class GenerateProvinces extends Command
         {
             $output->writeln('Provinces already exist');
         }
+
     }
 
-    private function writeProvinceNames(array $provinceNames)
+    private function writeProvinceNames()
     {
         $em = $this->container->get('doctrine.orm.default_entity_manager');
+
+        $parameters = $this->parameterContainer->getAppParameters();
+
+        $provinceNames = $parameters['provinces'];
 
         foreach ($provinceNames as $provinceName) {
 

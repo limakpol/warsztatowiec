@@ -1,8 +1,7 @@
 <?php
 namespace AppBundle\Service\Security;
 
-use AppBundle\Entity\Ext\User;
-use AppBundle\Entity\Ext\Workshop;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

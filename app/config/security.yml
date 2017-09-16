@@ -3,7 +3,7 @@
 security:
 
     encoders:
-        AppBundle\Entity\Ext\User:
+        AppBundle\Entity\User:
             algorithm: bcrypt
             cost: 13
 
@@ -16,7 +16,7 @@ security:
 
         my_provider:
             entity:
-                class: AppBundle:User
+                class: AppBundle\Entity\User
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

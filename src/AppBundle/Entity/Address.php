@@ -342,4 +342,3 @@ class Address
         return $this->province;
     }
 }
-

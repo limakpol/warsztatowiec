@@ -255,4 +255,3 @@ class Parameters
         return $this->workshop;
     }
 }
-

@@ -17,4 +17,54 @@ class YamlParser
 
         return Yaml::parse($yamlFile);
     }
+
+    public function getSchemas()
+    {
+        $fileDir = __DIR__.'/../../Resources/config/doctrine';
+
+        $schemaFileNames = scandir($fileDir);
+
+        $schemas = [];
+
+        foreach($schemaFileNames as $schemaFileName)
+        {
+            if($schemaFileName == '..' || $schemaFileName == '.')
+            {
+                continue;
+            }
+
+            $schemas[] = $this->parse($fileDir, $schemaFileName);
+        }
+
+        return $schemas;
+    }
+
+    public function getTableNames()
+    {
+        $schemas = $this->getSchemas();
+
+        $tableNames = [];
+
+        foreach($schemas as $schema)
+        {
+
+            foreach ($schema as $index)
+            {
+                $tableNames[] = $index['table'];
+
+                if(isset($index['manyToMany']))
+                {
+                    foreach($index['manyToMany'] as $manyToMany)
+                    {
+                        if(isset($manyToMany['joinTable']))
+                        {
+                            $tableNames[] = $manyToMany['joinTable']['name'];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $tableNames;
+    }
 }

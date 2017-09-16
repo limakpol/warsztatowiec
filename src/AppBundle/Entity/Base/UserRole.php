@@ -6,12 +6,12 @@
  * Time: 6:40 PM
  */
 
-namespace AppBundle\Entity\Ext;
+namespace AppBundle\Entity\Base;
 
 
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
-class UserRole extends \AppBundle\Entity\UserRole implements RoleHierarchyInterface
+abstract class UserRole implements RoleHierarchyInterface
 {
 
     const ROLE_USER = 'ROLE_USER';

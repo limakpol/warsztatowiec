@@ -168,4 +168,3 @@ class Settings
         return $this->workshop;
     }
 }
-

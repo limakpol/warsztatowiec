@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * User
  */
-class User
+class User extends \AppBundle\Entity\Base\User
 {
     /**
      * @var integer
@@ -428,4 +428,3 @@ class User
         return $this->workshops;
     }
 }
-
