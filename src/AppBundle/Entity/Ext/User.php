@@ -40,6 +40,7 @@ class User extends \AppBundle\Entity\User implements UserInterface, \Serializabl
             $password,
             ) = unserialize($serialized);
     }
+
     /**
      * @param $secret
      * @return mixed
@@ -47,7 +48,9 @@ class User extends \AppBundle\Entity\User implements UserInterface, \Serializabl
     public function getHashCode($secret)
     {
         $stringToHash = (string) $this->getId() . $this->getCreatedAt()->format('Y-m-d-H-i-j');
+
         $salt = '$6$' . $secret;
+
         return str_replace('/', '-', crypt($stringToHash, $salt));
     }
 

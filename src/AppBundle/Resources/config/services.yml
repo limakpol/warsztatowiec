@@ -1,8 +1,10 @@
 services:
+# SECURITY
     app.security.user_authenticator:
         class: AppBundle\Service\Security\UserAuthenticator
         arguments: ["@security.password_encoder", "@doctrine.orm.default_entity_manager"]
 
+# FORM TYPES
     form.type.province:
         class: AppBundle\Form\ProvinceType
         tags:
@@ -33,8 +35,22 @@ services:
         tags:
             - { name: form.type }
 
+# COMMANDS
     app.command.generate_provinces:
         class: AppBundle\Command\GenerateProvinces
         arguments: ["@service_container"]
         tags:
             - { name: console.command }
+
+# VALIDATORS
+    app.validator.mobile_phone:
+        class: AppBundle\Form\Validator\MobilePhoneValidator
+        arguments: ["@service_container"]
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.validator.email:
+            class: AppBundle\Form\Validator\EmailValidator
+            arguments: ["@doctrine.orm.entity_manager"]
+            tags:
+                - { name: validator.constraint_validator }

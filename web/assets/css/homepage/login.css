@@ -68,7 +68,7 @@ main input {
     padding: 2vw;
     margin-bottom: 2.5vw;
     border: 1px solid #ddd;
-    font: 5vw "Arial", sans-serif;
+    font: 4.5vw "Arial", sans-serif;
     color: #666;
     box-sizing: border-box;
 }
@@ -118,6 +118,13 @@ footer a i {
 footer a:hover {
     text-decoration: underline;
 }
+form input + ul {
+    list-style: none;
+    padding: 0;
+    color: red;
+    margin-top: -1.25vw;
+    font: 3vw "Arial", sans-serif;
+}
 @media screen and (min-width: 400px)
 {
     #wrapper {
@@ -139,8 +146,12 @@ footer a:hover {
     }
     main input {
         padding: 8px;
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 10px;
+    }
+    form input + ul {
+        margin-top: -5px;
+        font-size: 12px;
     }
     .btn-login {
         font-size: 20px;

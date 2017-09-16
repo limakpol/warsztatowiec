@@ -34,7 +34,7 @@ class UserType extends AbstractType
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Hasło',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'maxlength' => 15,
                     'size' => 10,
@@ -48,7 +48,7 @@ class UserType extends AbstractType
                     'size' => 25,
                 ],
             ])
-            ->add('phone', TextType::class, [
+            ->add('mobile_phone', TextType::class, [
                 'label' => 'Numer telefonu',
                 'required' => false,
                 'attr' => [

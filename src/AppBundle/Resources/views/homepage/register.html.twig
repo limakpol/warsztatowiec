@@ -15,10 +15,15 @@
     <div>
         {{ form_start(form) }}
         {{ form_widget(form.user.forename, {'attr': {'autofocus': true, 'placeholder': form.user.forename.vars.label }}) }}
+        {{ form_errors(form.user.forename) }}
         {{ form_widget(form.user.surname, {'attr': {'placeholder': form.user.surname.vars.label }}) }}
+        {{ form_errors(form.user.surname) }}
         {{ form_widget(form.workshop.name, {'attr': {'placeholder': form.workshop.name.vars.label }}) }}
+        {{ form_errors(form.workshop.name) }}
         {{ form_widget(form.user.email, {'attr': {'placeholder': form.user.email.vars.label }}) }}
+        {{ form_errors(form.user.email) }}
         {{ form_widget(form.user.password, {'attr': {'placeholder': form.user.password.vars.label }}) }}
+        {{ form_errors(form.user.password) }}
         {{ form_widget(form._token) }}
         {{ form_widget(form.submit) }}
         {{ form_end(form, {'render_rest': false}) }}

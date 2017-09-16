@@ -35,7 +35,7 @@ class User
     /**
      * @var string
      */
-    private $phone;
+    private $mobile_phone;
 
     /**
      * @var string
@@ -193,27 +193,27 @@ class User
     }
 
     /**
-     * Set phone
+     * Set mobilePhone
      *
-     * @param string $phone
+     * @param string $mobilePhone
      *
      * @return User
      */
-    public function setPhone($phone)
+    public function setMobilePhone($mobilePhone)
     {
-        $this->phone = $phone;
+        $this->mobile_phone = $mobilePhone;
 
         return $this;
     }
 
     /**
-     * Get phone
+     * Get mobilePhone
      *
      * @return string
      */
-    public function getPhone()
+    public function getMobilePhone()
     {
-        return $this->phone;
+        return $this->mobile_phone;
     }
 
     /**
