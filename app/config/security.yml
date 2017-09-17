@@ -32,7 +32,7 @@ security:
                 authenticator: app.security.user_authenticator
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_homepage_index
+                default_target_path: customer_index
                 always_use_default_target_path: true
                 username_parameter: login[user][email]
                 password_parameter: login[user][password]
@@ -44,7 +44,7 @@ security:
     access_control:
      #   - { path: ^/logowanie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       #  - { path: ^/rejestracja, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-       # - { path: ^/organizacja, roles: ROLE_USER }
+          - { path: ^/klienci, roles: ROLE_USER }
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

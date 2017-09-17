@@ -13,8 +13,10 @@
     </div>
     <div>
         {{ form_start(form) }}
-        {{ form_widget(form.user.email, {'attr': {'autofocus': true, 'placeholder': form.user.email.vars.label }}) }}
+        {{ form_widget(form.user.email, {'value': lastLogin, 'attr': {'autofocus': true, 'placeholder': form.user.email.vars.label }}) }}
+        {{ form_errors(form.user.email) }}
         {{ form_widget(form.user.password, {'attr': {'placeholder': form.user.password.vars.label }}) }}
+        {{ form_errors(form.user.password) }}
         {{ form_widget(form._token) }}
         {{ form_widget(form.submit) }}
         {{ form_end(form, {'render_rest': false}) }}

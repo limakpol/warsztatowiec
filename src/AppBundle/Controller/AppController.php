@@ -21,6 +21,7 @@ class AppController extends Controller
 
     public function loginAction()
     {
+        
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
         {
             return $this->redirect($this->generateUrl('customer_index'));

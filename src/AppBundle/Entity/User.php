@@ -2,10 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * User
  */
-class User extends \AppBundle\Entity\Base\User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -76,6 +78,8 @@ class User extends \AppBundle\Entity\Base\User
      * @var \Doctrine\Common\Collections\Collection
      */
     private $workshops;
+
+    private $username;
 
     /**
      * Constructor
@@ -367,7 +371,20 @@ class User extends \AppBundle\Entity\Base\User
      */
     public function getRoles()
     {
-        return $this->roles;
+        $workshop = $this->getCurrentWorkshop();
+
+        $roles = [];
+
+        /** @var UserRole $role */
+        foreach($this->roles as $role)
+        {
+            if($role->getWorkshop() == $workshop)
+            {
+                $roles[] = $role->getRole();
+            }
+        }
+
+        return $roles;
     }
 
     /**
@@ -427,4 +444,42 @@ class User extends \AppBundle\Entity\Base\User
     {
         return $this->workshops;
     }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            ) = unserialize($serialized);
+    }
+
+
 }
+

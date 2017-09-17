@@ -1,3 +1,7 @@
 app:
     resource: '@AppBundle/Resources/config/routing.yml'
     prefix: /
+
+customer:
+    resource: '@CustomerBundle/Resources/config/routing.yml'
+    prefix: /klienci

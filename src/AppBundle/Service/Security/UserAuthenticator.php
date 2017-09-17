@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\SimpleFormAuthenticatorInterface;
 
@@ -29,6 +30,7 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
         {
             /** @var User $user */
             $user = $userProvider->loadUserByUsername($token->getUsername());
+
         }
         catch (UsernameNotFoundException $e)
         {
