@@ -47,19 +47,29 @@ class YamlParser
 
         foreach($schemas as $schema)
         {
+            $tableNamesFromSchema = $this->getTableNamesFromSchema($schema);
 
-            foreach ($schema as $index)
+            $tableNames = array_merge($tableNames, $tableNamesFromSchema);
+        }
+
+        return $tableNames;
+    }
+
+    private function getTableNamesFromSchema($schema)
+    {
+        $tableNames = [];
+
+        foreach ($schema as $index)
+        {
+            $tableNames[] = $index['table'];
+
+            if(isset($index['manyToMany']))
             {
-                $tableNames[] = $index['table'];
-
-                if(isset($index['manyToMany']))
+                foreach($index['manyToMany'] as $manyToMany)
                 {
-                    foreach($index['manyToMany'] as $manyToMany)
+                    if(isset($manyToMany['joinTable']))
                     {
-                        if(isset($manyToMany['joinTable']))
-                        {
-                            $tableNames[] = $manyToMany['joinTable']['name'];
-                        }
+                        $tableNames[] = $manyToMany['joinTable']['name'];
                     }
                 }
             }
