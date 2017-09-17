@@ -73,7 +73,7 @@ services:
 # HELPERS
     app.helper.app.register:
         class: AppBundle\Service\Helper\App\Register
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.password_encoder"]
 
 # OTHER
     app.yaml_parser:
