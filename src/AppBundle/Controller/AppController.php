@@ -10,10 +10,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
 class AppController extends Controller
@@ -21,19 +21,22 @@ class AppController extends Controller
 
     public function loginAction()
     {
-        /** @var Request $request */
-        $request = $this->get('request_stack')->getCurrentRequest();
-
-        $form = $this->createForm(LoginType::class);
-        $form->handleRequest($request);
-
-        if($request->getMethod() == 'POST' && $form->isValid())
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
         {
-
+            return $this->redirect($this->generateUrl('customer_index'));
         }
 
-        return $this->render('AppBundle:homepage:login.html.twig', [
-            'form' => $form->createView(),
+        /** @var AuthenticationUtils $authenticationUtils */
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        $lastLogin = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginType::class);
+
+        return  $this->render('AppBundle:homepage:login.html.twig', [
+            'lastLogin' => $lastLogin,
+            'form'=> $form->createView(),
+            'isError' => null !== $authenticationUtils->getLastAuthenticationError(),
         ]);
     }
 

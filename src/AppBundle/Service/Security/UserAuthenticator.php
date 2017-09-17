@@ -2,7 +2,7 @@
 namespace AppBundle\Service\Security;
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -17,7 +17,7 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
     private $encoder;
     private $entityManager;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, EntityManager $entityManager)
+    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $entityManager)
     {
         $this->encoder          = $encoder;
         $this->entityManager    = $entityManager;
@@ -49,7 +49,7 @@ class UserAuthenticator implements SimpleFormAuthenticatorInterface
                 $user,
                 $user->getPassword(),
                 $providerKey,
-                $user->getRoles()->toArray()
+                $user->getRoles()
             );
         }
 
