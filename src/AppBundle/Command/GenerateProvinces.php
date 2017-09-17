@@ -4,7 +4,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Province;
-use AppBundle\Service\Helper\ParameterContainer;
+use AppBundle\Service\ParameterContainer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

@@ -38,23 +38,23 @@ services:
 # COMMANDS
     app.command.generate_provinces:
         class: AppBundle\Command\GenerateProvinces
-        arguments: ['@doctrine.orm.default_entity_manager', '@app.helper.parameter_container']
+        arguments: ['@doctrine.orm.default_entity_manager', '@app.parameter_container']
 
     app.command.updated-at:
         class: AppBundle\Command\UpdatedAt
-        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.yaml_parser"]
         tags:
             - { name: console.command }
 
     app.command.truncate_all_tables:
         class: AppBundle\Command\TruncateAllTables
-        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.yaml_parser"]
         tags:
             - { name: console.command }
 
     app.command.delete_all_tables:
         class: AppBundle\Command\DeleteAllTables
-        arguments: ["@doctrine.orm.default_entity_manager", "@app.helper.yaml_parser"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@app.yaml_parser"]
         tags:
             - { name: console.command }
 
@@ -65,15 +65,20 @@ services:
             - { name: validator.constraint_validator }
 
     app.validator.email:
-            class: AppBundle\Form\Validator\EmailValidator
-            arguments: ["@doctrine.orm.default_entity_manager"]
-            tags:
-                - { name: validator.constraint_validator }
+        class: AppBundle\Form\Validator\EmailValidator
+        arguments: ["@doctrine.orm.default_entity_manager"]
+        tags:
+            - { name: validator.constraint_validator }
 
 # HELPERS
-    app.helper.yaml_parser:
-        class: AppBundle\Service\Helper\YamlParser
+    app.helper.app.register:
+        class: AppBundle\Service\Helper\App\Register
+        arguments: ["@doctrine.orm.default_entity_manager"]
 
-    app.helper.parameter_container:
-        class: AppBundle\Service\Helper\ParameterContainer
+# OTHER
+    app.yaml_parser:
+        class: AppBundle\Service\YamlParser
+
+    app.parameter_container:
+        class: AppBundle\Service\ParameterContainer
         arguments: ['%app%']

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Service\Helper;
+namespace AppBundle\Service;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
@@ -20,7 +20,7 @@ class YamlParser
 
     public function getSchemas()
     {
-        $fileDir = __DIR__.'/../../Resources/config/doctrine';
+        $fileDir = __DIR__ . '/../Resources/config/doctrine';
 
         $schemaFileNames = scandir($fileDir);
 

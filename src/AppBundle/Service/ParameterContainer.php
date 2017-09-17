@@ -6,7 +6,7 @@
  * Time: 12:52 AM
  */
 
-namespace AppBundle\Service\Helper;
+namespace AppBundle\Service;
 
 
 class ParameterContainer
