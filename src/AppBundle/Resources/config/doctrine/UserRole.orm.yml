@@ -38,6 +38,26 @@ AppBundle\Entity\UserRole:
         deleted_at:
             type: datetime
             nullable: true
+        created_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        updated_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        removed_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        deleted_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
     manyToOne:
         user:
             targetEntity: User
@@ -51,6 +71,26 @@ AppBundle\Entity\UserRole:
                 name: workshop_id
                 referencedColumnName: id
             onDelete: cascade
+        created_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: created_by_id
+                referencedColumnName: id
+        updated_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: updated_by_id
+                referencedColumnName: id
+        removed_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: removed_by_id
+                referencedColumnName: id
+        deleted_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: deleted_by_id
+                referencedColumnName: id
     uniqueConstraints:
             user_workshop_role:
                 columns: [user_id, workshop_id, role]

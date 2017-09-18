@@ -1,7 +1,6 @@
 <?php
 
 namespace AppBundle\Entity;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -62,7 +61,32 @@ class User implements UserInterface, \Serializable
     /**
      * @var \DateTime
      */
+    private $removed_at;
+
+    /**
+     * @var \DateTime
+     */
     private $deleted_at;
+
+    /**
+     * @var integer
+     */
+    private $created_by_id;
+
+    /**
+     * @var integer
+     */
+    private $updated_by_id;
+
+    /**
+     * @var integer
+     */
+    private $removed_by_id;
+
+    /**
+     * @var integer
+     */
+    private $deleted_by_id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -73,6 +97,26 @@ class User implements UserInterface, \Serializable
      * @var \AppBundle\Entity\Workshop
      */
     private $current_workshop;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $created_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $updated_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $removed_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $deleted_by;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -317,6 +361,30 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     *
+     * @return User
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removed_at = $removedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime
+     */
+    public function getRemovedAt()
+    {
+        return $this->removed_at;
+    }
+
+    /**
      * Set deletedAt
      *
      * @param \DateTime $deletedAt
@@ -338,6 +406,102 @@ class User implements UserInterface, \Serializable
     public function getDeletedAt()
     {
         return $this->deleted_at;
+    }
+
+    /**
+     * Set createdById
+     *
+     * @param integer $createdById
+     *
+     * @return User
+     */
+    public function setCreatedById($createdById)
+    {
+        $this->created_by_id = $createdById;
+
+        return $this;
+    }
+
+    /**
+     * Get createdById
+     *
+     * @return integer
+     */
+    public function getCreatedById()
+    {
+        return $this->created_by_id;
+    }
+
+    /**
+     * Set updatedById
+     *
+     * @param integer $updatedById
+     *
+     * @return User
+     */
+    public function setUpdatedById($updatedById)
+    {
+        $this->updated_by_id = $updatedById;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedById
+     *
+     * @return integer
+     */
+    public function getUpdatedById()
+    {
+        return $this->updated_by_id;
+    }
+
+    /**
+     * Set removedById
+     *
+     * @param integer $removedById
+     *
+     * @return User
+     */
+    public function setRemovedById($removedById)
+    {
+        $this->removed_by_id = $removedById;
+
+        return $this;
+    }
+
+    /**
+     * Get removedById
+     *
+     * @return integer
+     */
+    public function getRemovedById()
+    {
+        return $this->removed_by_id;
+    }
+
+    /**
+     * Set deletedById
+     *
+     * @param integer $deletedById
+     *
+     * @return User
+     */
+    public function setDeletedById($deletedById)
+    {
+        $this->deleted_by_id = $deletedById;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedById
+     *
+     * @return integer
+     */
+    public function getDeletedById()
+    {
+        return $this->deleted_by_id;
     }
 
     /**
@@ -378,7 +542,7 @@ class User implements UserInterface, \Serializable
         /** @var UserRole $role */
         foreach($this->roles as $role)
         {
-            if($role->getWorkshop() == $workshop)
+            if($role->getWorkshop() === $workshop)
             {
                 $roles[] = $role->getRole();
             }
@@ -409,6 +573,102 @@ class User implements UserInterface, \Serializable
     public function getCurrentWorkshop()
     {
         return $this->current_workshop;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return User
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \AppBundle\Entity\User $updatedBy
+     *
+     * @return User
+     */
+    public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
+    {
+        $this->updated_by = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updated_by;
+    }
+
+    /**
+     * Set removedBy
+     *
+     * @param \AppBundle\Entity\User $removedBy
+     *
+     * @return User
+     */
+    public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
+    {
+        $this->removed_by = $removedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get removedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getRemovedBy()
+    {
+        return $this->removed_by;
+    }
+
+    /**
+     * Set deletedBy
+     *
+     * @param \AppBundle\Entity\User $deletedBy
+     *
+     * @return User
+     */
+    public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
+    {
+        $this->deleted_by = $deletedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getDeletedBy()
+    {
+        return $this->deleted_by;
     }
 
     /**
@@ -452,11 +712,9 @@ class User implements UserInterface, \Serializable
 
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
+
         return null;
     }
-
 
     public function eraseCredentials()
     {
@@ -479,35 +737,5 @@ class User implements UserInterface, \Serializable
             $this->password,
             ) = unserialize($serialized);
     }
-
-
-    /**
-     * @var \DateTime
-     */
-    private $removed_at;
-
-
-    /**
-     * Set removedAt
-     *
-     * @param \DateTime $removedAt
-     *
-     * @return User
-     */
-    public function setRemovedAt($removedAt)
-    {
-        $this->removed_at = $removedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get removedAt
-     *
-     * @return \DateTime
-     */
-    public function getRemovedAt()
-    {
-        return $this->removed_at;
-    }
 }
+

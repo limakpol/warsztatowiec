@@ -8,6 +8,7 @@ namespace AppBundle\Entity;
 class UserRole
 {
     const ROLE_USER = 'ROLE_USER';
+    const ROLE_TESTER = 'ROLE_TESTER';
 
     /**
      * @var integer
@@ -42,7 +43,32 @@ class UserRole
     /**
      * @var \DateTime
      */
+    private $removed_at;
+
+    /**
+     * @var \DateTime
+     */
     private $deleted_at;
+
+    /**
+     * @var integer
+     */
+    private $created_by_id;
+
+    /**
+     * @var integer
+     */
+    private $updated_by_id;
+
+    /**
+     * @var integer
+     */
+    private $removed_by_id;
+
+    /**
+     * @var integer
+     */
+    private $deleted_by_id;
 
     /**
      * @var \AppBundle\Entity\User
@@ -53,6 +79,26 @@ class UserRole
      * @var \AppBundle\Entity\Workshop
      */
     private $workshop;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $created_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $updated_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $removed_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $deleted_by;
 
 
     /**
@@ -186,6 +232,30 @@ class UserRole
     }
 
     /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     *
+     * @return UserRole
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removed_at = $removedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime
+     */
+    public function getRemovedAt()
+    {
+        return $this->removed_at;
+    }
+
+    /**
      * Set deletedAt
      *
      * @param \DateTime $deletedAt
@@ -207,6 +277,102 @@ class UserRole
     public function getDeletedAt()
     {
         return $this->deleted_at;
+    }
+
+    /**
+     * Set createdById
+     *
+     * @param integer $createdById
+     *
+     * @return UserRole
+     */
+    public function setCreatedById($createdById)
+    {
+        $this->created_by_id = $createdById;
+
+        return $this;
+    }
+
+    /**
+     * Get createdById
+     *
+     * @return integer
+     */
+    public function getCreatedById()
+    {
+        return $this->created_by_id;
+    }
+
+    /**
+     * Set updatedById
+     *
+     * @param integer $updatedById
+     *
+     * @return UserRole
+     */
+    public function setUpdatedById($updatedById)
+    {
+        $this->updated_by_id = $updatedById;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedById
+     *
+     * @return integer
+     */
+    public function getUpdatedById()
+    {
+        return $this->updated_by_id;
+    }
+
+    /**
+     * Set removedById
+     *
+     * @param integer $removedById
+     *
+     * @return UserRole
+     */
+    public function setRemovedById($removedById)
+    {
+        $this->removed_by_id = $removedById;
+
+        return $this;
+    }
+
+    /**
+     * Get removedById
+     *
+     * @return integer
+     */
+    public function getRemovedById()
+    {
+        return $this->removed_by_id;
+    }
+
+    /**
+     * Set deletedById
+     *
+     * @param integer $deletedById
+     *
+     * @return UserRole
+     */
+    public function setDeletedById($deletedById)
+    {
+        $this->deleted_by_id = $deletedById;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedById
+     *
+     * @return integer
+     */
+    public function getDeletedById()
+    {
+        return $this->deleted_by_id;
     }
 
     /**
@@ -256,33 +422,101 @@ class UserRole
     {
         return $this->workshop;
     }
-    /**
-     * @var \DateTime
-     */
-    private $removed_at;
-
 
     /**
-     * Set removedAt
+     * Set createdBy
      *
-     * @param \DateTime $removedAt
+     * @param \AppBundle\Entity\User $createdBy
      *
      * @return UserRole
      */
-    public function setRemovedAt($removedAt)
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
-        $this->removed_at = $removedAt;
+        $this->created_by = $createdBy;
 
         return $this;
     }
 
     /**
-     * Get removedAt
+     * Get createdBy
      *
-     * @return \DateTime
+     * @return \AppBundle\Entity\User
      */
-    public function getRemovedAt()
+    public function getCreatedBy()
     {
-        return $this->removed_at;
+        return $this->created_by;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \AppBundle\Entity\User $updatedBy
+     *
+     * @return UserRole
+     */
+    public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
+    {
+        $this->updated_by = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updated_by;
+    }
+
+    /**
+     * Set removedBy
+     *
+     * @param \AppBundle\Entity\User $removedBy
+     *
+     * @return UserRole
+     */
+    public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
+    {
+        $this->removed_by = $removedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get removedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getRemovedBy()
+    {
+        return $this->removed_by;
+    }
+
+    /**
+     * Set deletedBy
+     *
+     * @param \AppBundle\Entity\User $deletedBy
+     *
+     * @return UserRole
+     */
+    public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
+    {
+        $this->deleted_by = $deletedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getDeletedBy()
+    {
+        return $this->deleted_by;
     }
 }
+

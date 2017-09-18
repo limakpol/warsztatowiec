@@ -32,33 +32,46 @@ class Register
 
     public function processForm($formData)
     {
+        /** @var Workshop $workshop */
         $workshop   = $formData['workshop'];
+
+        /** @var User $user */
         $user       = $formData['user'];
-        
+
+        /** @var EntityManagerInterface $em */
+        $em = $this->em;
+
         $settings   = new Settings();
         $parameters = new Parameters();
-        $userRole   = new UserRole();
         
         $dateTime   = new \DateTime();
+        
+        $settings   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $parameters ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $workshop   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $user       ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
 
-        $settings   = new Settings();
-        $parameters = new Parameters();
-        $userRole   = new UserRole();
+        $roleNames = [UserRole::ROLE_USER, UserRole::ROLE_TESTER];
 
-        $settings   ->setCreatedAt($dateTime);
-        $parameters ->setCreatedAt($dateTime);
-        $workshop   ->setCreatedAt($dateTime);
-        $userRole   ->setCreatedAt($dateTime);
-        $user       ->setCreatedAt($dateTime);
-
-        $userRole   ->setUser($user);
-        $userRole   ->setWorkshop($workshop);
-        $userRole   ->setRole(UserRole::ROLE_USER);
+        foreach($roleNames as $roleName)
+        {
+            $userRole = new UserRole();
+            $userRole
+                ->setCreatedAt($dateTime)
+                ->setCreatedBy($user)
+                ->setUpdatedBy($user)
+                ->setRole($roleName)
+                ->setUser($user)
+                ->setWorkshop($workshop)
+            ;
+            
+            $em->persist($userRole);
+        }
 
         $workshop->setAddress(null);
 
         $password = $this->encoder->encodePassword($user, $user->getPassword());
-        $user     ->setPassword($password);
+        $user       ->setPassword($password);
 
         $settings   ->setWorkshop($workshop);
         $parameters ->setWorkshop($workshop);
@@ -66,13 +79,14 @@ class Register
         $user       ->setCurrentWorkshop($workshop);
         $user       ->addWorkshop($workshop);
 
-        $this->em->persist($user);
-        $this->em->persist($workshop);
-        $this->em->persist($parameters);
-        $this->em->persist($settings);
-        $this->em->persist($userRole);
+        $em->persist($user);
+        $em->persist($workshop);
+        $em->persist($parameters);
+        $em->persist($settings);
 
-        $this->em->flush();      
+        $em->flush();      
 
     }
+    
+ 
 }
