@@ -84,9 +84,6 @@ class Register
         $em->persist($parameters);
         $em->persist($settings);
 
-        $em->flush();      
-
+        $em->flush();
     }
-    
- 
 }
