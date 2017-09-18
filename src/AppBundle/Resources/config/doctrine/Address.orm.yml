@@ -52,6 +52,9 @@ AppBundle\Entity\Address:
         updated_at:
             type: datetime
             nullable: false
+        removed_at:
+            type: datetime
+            nullable: true
         deleted_at:
             type: datetime
             nullable: true

@@ -19,6 +19,7 @@ class EmailValidator extends ConstraintValidator
     {
 
         $emails = $this->em->getRepository('AppBundle:User')->findBy([
+            'removed_at' => null,
             'deleted_at' => null,
             'email' => $value,
         ]);

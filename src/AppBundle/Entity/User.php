@@ -481,5 +481,33 @@ class User implements UserInterface, \Serializable
     }
 
 
-}
+    /**
+     * @var \DateTime
+     */
+    private $removed_at;
 
+
+    /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     *
+     * @return User
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removed_at = $removedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime
+     */
+    public function getRemovedAt()
+    {
+        return $this->removed_at;
+    }
+}

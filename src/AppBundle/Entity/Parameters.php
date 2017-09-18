@@ -254,4 +254,33 @@ class Parameters
     {
         return $this->workshop;
     }
+    /**
+     * @var \DateTime
+     */
+    private $removed_at;
+
+
+    /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     *
+     * @return Parameters
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removed_at = $removedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime
+     */
+    public function getRemovedAt()
+    {
+        return $this->removed_at;
+    }
 }
