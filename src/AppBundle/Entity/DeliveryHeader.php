@@ -1,12 +1,11 @@
 <?php
 
 namespace AppBundle\Entity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * DeliveryHeader
  */
-class User implements UserInterface, \Serializable
+class DeliveryHeader
 {
     /**
      * @var integer
@@ -16,37 +15,57 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      */
-    private $current_workshop_id;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $forename;
-
-    /**
-     * @var string
-     */
-    private $surname;
-
-    /**
-     * @var string
-     */
-    private $mobile_phone;
-
-    /**
-     * @var string
-     */
-    private $email;
+    private $workshop_id;
 
     /**
      * @var integer
      */
-    private $status = 1;
+    private $customer_id;
+
+    /**
+     * @var string
+     */
+    private $document_type;
+
+    /**
+     * @var string
+     */
+    private $document_number;
+
+    /**
+     * @var string
+     */
+    private $total_net_before_discount = 0.0;
+
+    /**
+     * @var string
+     */
+    private $discount = 0.0;
+
+    /**
+     * @var string
+     */
+    private $total_net = 0.0;
+
+    /**
+     * @var string
+     */
+    private $vat = 0.0;
+
+    /**
+     * @var string
+     */
+    private $total_due = 0.0;
+
+    /**
+     * @var boolean
+     */
+    private $autocomplete = 1;
+
+    /**
+     * @var string
+     */
+    private $remarks;
 
     /**
      * @var \DateTime
@@ -91,12 +110,17 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $roles;
+    private $delivery_details;
 
     /**
      * @var \AppBundle\Entity\Workshop
      */
-    private $current_workshop;
+    private $workshop;
+
+    /**
+     * @var \AppBundle\Entity\Customer
+     */
+    private $customer;
 
     /**
      * @var \AppBundle\Entity\User
@@ -119,20 +143,11 @@ class User implements UserInterface, \Serializable
     private $deleted_by;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $workshops;
-
-
-    private $username;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->workshops = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->delivery_details = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -146,171 +161,267 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentWorkshopId
+     * Set workshopId
      *
-     * @param integer $currentWorkshopId
+     * @param integer $workshopId
      *
-     * @return User
+     * @return DeliveryHeader
      */
-    public function setCurrentWorkshopId($currentWorkshopId)
+    public function setWorkshopId($workshopId)
     {
-        $this->current_workshop_id = $currentWorkshopId;
+        $this->workshop_id = $workshopId;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshopId
+     * Get workshopId
      *
      * @return integer
      */
-    public function getCurrentWorkshopId()
+    public function getWorkshopId()
     {
-        return $this->current_workshop_id;
+        return $this->workshop_id;
     }
 
     /**
-     * Set password
+     * Set customerId
      *
-     * @param string $password
+     * @param integer $customerId
      *
-     * @return User
+     * @return DeliveryHeader
      */
-    public function setPassword($password)
+    public function setCustomerId($customerId)
     {
-        $this->password = $password;
+        $this->customer_id = $customerId;
 
         return $this;
     }
 
     /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set forename
-     *
-     * @param string $forename
-     *
-     * @return User
-     */
-    public function setForename($forename)
-    {
-        $this->forename = $forename;
-
-        return $this;
-    }
-
-    /**
-     * Get forename
-     *
-     * @return string
-     */
-    public function getForename()
-    {
-        return $this->forename;
-    }
-
-    /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return User
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string
-     */
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    /**
-     * Set mobilePhone
-     *
-     * @param string $mobilePhone
-     *
-     * @return User
-     */
-    public function setMobilePhone($mobilePhone)
-    {
-        $this->mobile_phone = $mobilePhone;
-
-        return $this;
-    }
-
-    /**
-     * Get mobilePhone
-     *
-     * @return string
-     */
-    public function getMobilePhone()
-    {
-        return $this->mobile_phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
+     * Get customerId
      *
      * @return integer
      */
-    public function getStatus()
+    public function getCustomerId()
     {
-        return $this->status;
+        return $this->customer_id;
+    }
+
+    /**
+     * Set documentType
+     *
+     * @param string $documentType
+     *
+     * @return DeliveryHeader
+     */
+    public function setDocumentType($documentType)
+    {
+        $this->document_type = $documentType;
+
+        return $this;
+    }
+
+    /**
+     * Get documentType
+     *
+     * @return string
+     */
+    public function getDocumentType()
+    {
+        return $this->document_type;
+    }
+
+    /**
+     * Set documentNumber
+     *
+     * @param string $documentNumber
+     *
+     * @return DeliveryHeader
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->document_number = $documentNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get documentNumber
+     *
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->document_number;
+    }
+
+    /**
+     * Set totalNetBeforeDiscount
+     *
+     * @param string $totalNetBeforeDiscount
+     *
+     * @return DeliveryHeader
+     */
+    public function setTotalNetBeforeDiscount($totalNetBeforeDiscount)
+    {
+        $this->total_net_before_discount = $totalNetBeforeDiscount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalNetBeforeDiscount
+     *
+     * @return string
+     */
+    public function getTotalNetBeforeDiscount()
+    {
+        return $this->total_net_before_discount;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param string $discount
+     *
+     * @return DeliveryHeader
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return string
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Set totalNet
+     *
+     * @param string $totalNet
+     *
+     * @return DeliveryHeader
+     */
+    public function setTotalNet($totalNet)
+    {
+        $this->total_net = $totalNet;
+
+        return $this;
+    }
+
+    /**
+     * Get totalNet
+     *
+     * @return string
+     */
+    public function getTotalNet()
+    {
+        return $this->total_net;
+    }
+
+    /**
+     * Set vat
+     *
+     * @param string $vat
+     *
+     * @return DeliveryHeader
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return string
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    /**
+     * Set totalDue
+     *
+     * @param string $totalDue
+     *
+     * @return DeliveryHeader
+     */
+    public function setTotalDue($totalDue)
+    {
+        $this->total_due = $totalDue;
+
+        return $this;
+    }
+
+    /**
+     * Get totalDue
+     *
+     * @return string
+     */
+    public function getTotalDue()
+    {
+        return $this->total_due;
+    }
+
+    /**
+     * Set autocomplete
+     *
+     * @param boolean $autocomplete
+     *
+     * @return DeliveryHeader
+     */
+    public function setAutocomplete($autocomplete)
+    {
+        $this->autocomplete = $autocomplete;
+
+        return $this;
+    }
+
+    /**
+     * Get autocomplete
+     *
+     * @return boolean
+     */
+    public function getAutocomplete()
+    {
+        return $this->autocomplete;
+    }
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return DeliveryHeader
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
     }
 
     /**
@@ -318,7 +429,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $createdAt
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setCreatedAt($createdAt)
     {
@@ -342,7 +453,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $updatedAt
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -366,7 +477,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $removedAt
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setRemovedAt($removedAt)
     {
@@ -390,7 +501,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $deletedAt
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setDeletedAt($deletedAt)
     {
@@ -414,7 +525,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $createdById
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setCreatedById($createdById)
     {
@@ -438,7 +549,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $updatedById
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setUpdatedById($updatedById)
     {
@@ -462,7 +573,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $removedById
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setRemovedById($removedById)
     {
@@ -486,7 +597,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $deletedById
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setDeletedById($deletedById)
     {
@@ -506,74 +617,85 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add role
+     * Add deliveryDetail
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\DeliveryDetail $deliveryDetail
      *
-     * @return User
+     * @return DeliveryHeader
      */
-    public function addRole(\AppBundle\Entity\UserRole $role)
+    public function addDeliveryDetail(\AppBundle\Entity\DeliveryDetail $deliveryDetail)
     {
-        $this->roles[] = $role;
+        $this->delivery_details[] = $deliveryDetail;
 
         return $this;
     }
 
     /**
-     * Remove role
+     * Remove deliveryDetail
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\DeliveryDetail $deliveryDetail
      */
-    public function removeRole(\AppBundle\Entity\UserRole $role)
+    public function removeDeliveryDetail(\AppBundle\Entity\DeliveryDetail $deliveryDetail)
     {
-        $this->roles->removeElement($role);
+        $this->delivery_details->removeElement($deliveryDetail);
     }
 
     /**
-     * Get roles
+     * Get deliveryDetails
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRoles()
+    public function getDeliveryDetails()
     {
-        $workshop = $this->getCurrentWorkshop();
-
-        $roles = [];
-
-        /** @var UserRole $role */
-        foreach($this->roles as $role)
-        {
-            if($role->getWorkshop() === $workshop)
-            {
-                $roles[] = $role->getRole();
-            }
-        }
-
-        return $roles;
+        return $this->delivery_details;
     }
 
     /**
-     * Set currentWorkshop
+     * Set workshop
      *
-     * @param \AppBundle\Entity\Workshop $currentWorkshop
+     * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return User
+     * @return DeliveryHeader
      */
-    public function setCurrentWorkshop(\AppBundle\Entity\Workshop $currentWorkshop = null)
+    public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
-        $this->current_workshop = $currentWorkshop;
+        $this->workshop = $workshop;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshop
+     * Get workshop
      *
      * @return \AppBundle\Entity\Workshop
      */
-    public function getCurrentWorkshop()
+    public function getWorkshop()
     {
-        return $this->current_workshop;
+        return $this->workshop;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     *
+     * @return DeliveryHeader
+     */
+    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \AppBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 
     /**
@@ -581,7 +703,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -605,7 +727,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -629,7 +751,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -653,7 +775,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return User
+     * @return DeliveryHeader
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -670,74 +792,6 @@ class User implements UserInterface, \Serializable
     public function getDeletedBy()
     {
         return $this->deleted_by;
-    }
-
-    /**
-     * Add workshop
-     *
-     * @param \AppBundle\Entity\Workshop $workshop
-     *
-     * @return User
-     */
-    public function addWorkshop(\AppBundle\Entity\Workshop $workshop)
-    {
-        $this->workshops[] = $workshop;
-
-        return $this;
-    }
-
-    /**
-     * Remove workshop
-     *
-     * @param \AppBundle\Entity\Workshop $workshop
-     */
-    public function removeWorkshop(\AppBundle\Entity\Workshop $workshop)
-    {
-        $this->workshops->removeElement($workshop);
-    }
-
-    /**
-     * Get workshops
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWorkshops()
-    {
-        return $this->workshops;
-    }
-
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
     }
 }
 

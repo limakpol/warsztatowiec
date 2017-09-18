@@ -1,0 +1,72 @@
+AppBundle\Entity\IndexxEdit:
+    type: entity
+    table: indexx_edit
+    repositoryClass: AppBundle\Entity\Repository\IndexxEditRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        indexx_id:
+            type: integer
+            length: 10
+            nullable: false
+            options:
+                unsigned: true
+        before_qty:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+        after_qty:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+        change_qty:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: false
+                default: 0.00
+        created_at:
+            type: datetime
+            nullable: false
+        created_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+    manyToOne:
+        workshop:
+            targetEntity: Workshop
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id
+        indexx:
+            targetEntity: AppBundle\Entity\Indexx
+            joinColumn:
+                name: indexx_id
+                referencedColumnName: id
+        created_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: created_by_id
+                referencedColumnName: id

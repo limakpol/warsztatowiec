@@ -1,7 +1,7 @@
-AppBundle\Entity\Workshop:
+AppBundle\Entity\Status:
     type: entity
-    table: workshop
-    repositoryClass: AppBundle\Entity\Repository\WorkshopRepository
+    table: status
+    repositoryClass: AppBundle\Entity\Repository\StatusRepository
     id:
         id:
             type: integer
@@ -11,55 +11,23 @@ AppBundle\Entity\Workshop:
             generator:
                 strategy: IDENTITY
     fields:
-        owner_user_id:
+        workshop_id:
             type: integer
             nullable: false
             options:
                 unsigned: true
         name:
             type: string
-            length: 80
+            length: 25
             nullable: false
             options:
                 fixed: false
-        phone:
+        hex_color:
             type: string
-            length: 12
+            length: 7
             nullable: true
             options:
                 fixed: true
-        email:
-            type: string
-            length: 80
-            nullable: true
-            options:
-                fixed: false
-        subscription_expiration_date:
-            type: datetime
-            nullable: true
-        address_id:
-            type: integer
-            nullable: true
-            options:
-                unsigned: true
-        nip:
-            type: string
-            length: 10
-            nullable: true
-            options:
-                fixed: true
-        bank_account_number:
-            type: string
-            length: 26
-            nullable: true
-            options:
-                fixed: false
-        website_url:
-            type: string
-            length: 50
-            nullable: true
-            options:
-                fixed: false
         created_at:
             type: datetime
             nullable: false
@@ -92,28 +60,11 @@ AppBundle\Entity\Workshop:
             nullable: true
             options:
                 unsigned: true
-    oneToOne:
-        parameters:
-            targetEntity: Parameters
-            mappedBy: workshop
-        settings:
-            targetEntity: Settings
-            mappedBy: workshop
-        address:
-            targetEntity: Address
-            inversedBy: workshop
-            joinColumn:
-                name: address_id
-                referencedColumnName: id
-    manyToMany:
-        users:
-            targetEntity: User
-            mappedBy: workshops
     manyToOne:
-        owner_user:
-            targetEntity: User
+        workshop:
+            targetEntity: Workshop
             joinColumn:
-                name: owner_user_id
+                name: workshop_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User
@@ -135,22 +86,19 @@ AppBundle\Entity\Workshop:
             joinColumn:
                 name: deleted_by_id
                 referencedColumnName: id
-    oneToMany:
-        workstations:
-            targetEntity: AppBundle\Entity\Workstation
-            mappedBy: workshop
-        models:
-            targetEntity: Model
-            mappedBy: workshop
-        vehicles:
-            targetEntity: Vehicle
-            mappedBy: workshop
-        customers:
-            targetEntity: Customer
-            mappedBy: workshop
-        goods:
-            targetEntity: Good
-            mappedBy: workshop
-        measures:
-            targetEntity: Measure
-            mappedBy: workshop
+    manyToMany:
+        order_headers:
+            targetEntity: AppBundle\Entity\OrderHeader
+            mappedBy: statuses
+        order_indexxes:
+            targetEntity: AppBundle\Entity\OrderIndexx
+            mappedBy: statuses
+        order_services:
+            targetEntity: AppBundle\Entity\OrderService
+            mappedBy: statuses
+        order_actions:
+            targetEntity: AppBundle\Entity\OrderAction
+            mappedBy: statuses
+    uniqueConstraints:
+        workshop_name:
+            columns: [ workshop_id, name ]

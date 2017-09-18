@@ -1,12 +1,11 @@
 <?php
 
 namespace AppBundle\Entity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * OrderAction
  */
-class User implements UserInterface, \Serializable
+class OrderAction
 {
     /**
      * @var integer
@@ -16,37 +15,62 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      */
-    private $current_workshop_id;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $forename;
-
-    /**
-     * @var string
-     */
-    private $surname;
-
-    /**
-     * @var string
-     */
-    private $mobile_phone;
-
-    /**
-     * @var string
-     */
-    private $email;
+    private $action_id;
 
     /**
      * @var integer
      */
-    private $status = 1;
+    private $order_indexx_id;
+
+    /**
+     * @var string
+     */
+    private $unit_price_net = 0.0;
+
+    /**
+     * @var string
+     */
+    private $quantity = 0.0;
+
+    /**
+     * @var string
+     */
+    private $total_net_before_discount = 0.0;
+
+    /**
+     * @var integer
+     */
+    private $discount_pc = 0;
+
+    /**
+     * @var string
+     */
+    private $discount = 0.0;
+
+    /**
+     * @var string
+     */
+    private $total_net = 0.0;
+
+    /**
+     * @var integer
+     */
+    private $vat_pc = 0;
+
+    /**
+     * @var string
+     */
+    private $vat = 0.0;
+
+    /**
+     * @var string
+     */
+    private $total_due = 0.0;
+
+    /**
+     * @var string
+     */
+    private $remarks;
 
     /**
      * @var \DateTime
@@ -89,14 +113,14 @@ class User implements UserInterface, \Serializable
     private $deleted_by_id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \AppBundle\Entity\Action
      */
-    private $roles;
+    private $action;
 
     /**
-     * @var \AppBundle\Entity\Workshop
+     * @var \AppBundle\Entity\OrderIndexx
      */
-    private $current_workshop;
+    private $order_indexx;
 
     /**
      * @var \AppBundle\Entity\User
@@ -121,18 +145,20 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $workshops;
+    private $workmans;
 
-
-    private $username;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $statuses;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->workshops = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->workmans = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statuses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -146,171 +172,291 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentWorkshopId
+     * Set actionId
      *
-     * @param integer $currentWorkshopId
+     * @param integer $actionId
      *
-     * @return User
+     * @return OrderAction
      */
-    public function setCurrentWorkshopId($currentWorkshopId)
+    public function setActionId($actionId)
     {
-        $this->current_workshop_id = $currentWorkshopId;
+        $this->action_id = $actionId;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshopId
+     * Get actionId
      *
      * @return integer
      */
-    public function getCurrentWorkshopId()
+    public function getActionId()
     {
-        return $this->current_workshop_id;
+        return $this->action_id;
     }
 
     /**
-     * Set password
+     * Set orderIndexxId
      *
-     * @param string $password
+     * @param integer $orderIndexxId
      *
-     * @return User
+     * @return OrderAction
      */
-    public function setPassword($password)
+    public function setOrderIndexxId($orderIndexxId)
     {
-        $this->password = $password;
+        $this->order_indexx_id = $orderIndexxId;
 
         return $this;
     }
 
     /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set forename
-     *
-     * @param string $forename
-     *
-     * @return User
-     */
-    public function setForename($forename)
-    {
-        $this->forename = $forename;
-
-        return $this;
-    }
-
-    /**
-     * Get forename
-     *
-     * @return string
-     */
-    public function getForename()
-    {
-        return $this->forename;
-    }
-
-    /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return User
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string
-     */
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    /**
-     * Set mobilePhone
-     *
-     * @param string $mobilePhone
-     *
-     * @return User
-     */
-    public function setMobilePhone($mobilePhone)
-    {
-        $this->mobile_phone = $mobilePhone;
-
-        return $this;
-    }
-
-    /**
-     * Get mobilePhone
-     *
-     * @return string
-     */
-    public function getMobilePhone()
-    {
-        return $this->mobile_phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
+     * Get orderIndexxId
      *
      * @return integer
      */
-    public function getStatus()
+    public function getOrderIndexxId()
     {
-        return $this->status;
+        return $this->order_indexx_id;
+    }
+
+    /**
+     * Set unitPriceNet
+     *
+     * @param string $unitPriceNet
+     *
+     * @return OrderAction
+     */
+    public function setUnitPriceNet($unitPriceNet)
+    {
+        $this->unit_price_net = $unitPriceNet;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPriceNet
+     *
+     * @return string
+     */
+    public function getUnitPriceNet()
+    {
+        return $this->unit_price_net;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param string $quantity
+     *
+     * @return OrderAction
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return string
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set totalNetBeforeDiscount
+     *
+     * @param string $totalNetBeforeDiscount
+     *
+     * @return OrderAction
+     */
+    public function setTotalNetBeforeDiscount($totalNetBeforeDiscount)
+    {
+        $this->total_net_before_discount = $totalNetBeforeDiscount;
+
+        return $this;
+    }
+
+    /**
+     * Get totalNetBeforeDiscount
+     *
+     * @return string
+     */
+    public function getTotalNetBeforeDiscount()
+    {
+        return $this->total_net_before_discount;
+    }
+
+    /**
+     * Set discountPc
+     *
+     * @param integer $discountPc
+     *
+     * @return OrderAction
+     */
+    public function setDiscountPc($discountPc)
+    {
+        $this->discount_pc = $discountPc;
+
+        return $this;
+    }
+
+    /**
+     * Get discountPc
+     *
+     * @return integer
+     */
+    public function getDiscountPc()
+    {
+        return $this->discount_pc;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param string $discount
+     *
+     * @return OrderAction
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return string
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Set totalNet
+     *
+     * @param string $totalNet
+     *
+     * @return OrderAction
+     */
+    public function setTotalNet($totalNet)
+    {
+        $this->total_net = $totalNet;
+
+        return $this;
+    }
+
+    /**
+     * Get totalNet
+     *
+     * @return string
+     */
+    public function getTotalNet()
+    {
+        return $this->total_net;
+    }
+
+    /**
+     * Set vatPc
+     *
+     * @param integer $vatPc
+     *
+     * @return OrderAction
+     */
+    public function setVatPc($vatPc)
+    {
+        $this->vat_pc = $vatPc;
+
+        return $this;
+    }
+
+    /**
+     * Get vatPc
+     *
+     * @return integer
+     */
+    public function getVatPc()
+    {
+        return $this->vat_pc;
+    }
+
+    /**
+     * Set vat
+     *
+     * @param string $vat
+     *
+     * @return OrderAction
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return string
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    /**
+     * Set totalDue
+     *
+     * @param string $totalDue
+     *
+     * @return OrderAction
+     */
+    public function setTotalDue($totalDue)
+    {
+        $this->total_due = $totalDue;
+
+        return $this;
+    }
+
+    /**
+     * Get totalDue
+     *
+     * @return string
+     */
+    public function getTotalDue()
+    {
+        return $this->total_due;
+    }
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return OrderAction
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
     }
 
     /**
@@ -318,7 +464,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $createdAt
      *
-     * @return User
+     * @return OrderAction
      */
     public function setCreatedAt($createdAt)
     {
@@ -342,7 +488,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $updatedAt
      *
-     * @return User
+     * @return OrderAction
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -366,7 +512,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $removedAt
      *
-     * @return User
+     * @return OrderAction
      */
     public function setRemovedAt($removedAt)
     {
@@ -390,7 +536,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $deletedAt
      *
-     * @return User
+     * @return OrderAction
      */
     public function setDeletedAt($deletedAt)
     {
@@ -414,7 +560,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $createdById
      *
-     * @return User
+     * @return OrderAction
      */
     public function setCreatedById($createdById)
     {
@@ -438,7 +584,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $updatedById
      *
-     * @return User
+     * @return OrderAction
      */
     public function setUpdatedById($updatedById)
     {
@@ -462,7 +608,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $removedById
      *
-     * @return User
+     * @return OrderAction
      */
     public function setRemovedById($removedById)
     {
@@ -486,7 +632,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $deletedById
      *
-     * @return User
+     * @return OrderAction
      */
     public function setDeletedById($deletedById)
     {
@@ -506,74 +652,51 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add role
+     * Set action
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\Action $action
      *
-     * @return User
+     * @return OrderAction
      */
-    public function addRole(\AppBundle\Entity\UserRole $role)
+    public function setAction(\AppBundle\Entity\Action $action = null)
     {
-        $this->roles[] = $role;
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * Remove role
+     * Get action
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @return \AppBundle\Entity\Action
      */
-    public function removeRole(\AppBundle\Entity\UserRole $role)
+    public function getAction()
     {
-        $this->roles->removeElement($role);
+        return $this->action;
     }
 
     /**
-     * Get roles
+     * Set orderIndexx
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\OrderIndexx $orderIndexx
+     *
+     * @return OrderAction
      */
-    public function getRoles()
+    public function setOrderIndexx(\AppBundle\Entity\OrderIndexx $orderIndexx = null)
     {
-        $workshop = $this->getCurrentWorkshop();
-
-        $roles = [];
-
-        /** @var UserRole $role */
-        foreach($this->roles as $role)
-        {
-            if($role->getWorkshop() === $workshop)
-            {
-                $roles[] = $role->getRole();
-            }
-        }
-
-        return $roles;
-    }
-
-    /**
-     * Set currentWorkshop
-     *
-     * @param \AppBundle\Entity\Workshop $currentWorkshop
-     *
-     * @return User
-     */
-    public function setCurrentWorkshop(\AppBundle\Entity\Workshop $currentWorkshop = null)
-    {
-        $this->current_workshop = $currentWorkshop;
+        $this->order_indexx = $orderIndexx;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshop
+     * Get orderIndexx
      *
-     * @return \AppBundle\Entity\Workshop
+     * @return \AppBundle\Entity\OrderIndexx
      */
-    public function getCurrentWorkshop()
+    public function getOrderIndexx()
     {
-        return $this->current_workshop;
+        return $this->order_indexx;
     }
 
     /**
@@ -581,7 +704,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return User
+     * @return OrderAction
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -605,7 +728,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return User
+     * @return OrderAction
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -629,7 +752,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return User
+     * @return OrderAction
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -653,7 +776,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return User
+     * @return OrderAction
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -673,71 +796,71 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add workshop
+     * Add workman
      *
-     * @param \AppBundle\Entity\Workshop $workshop
+     * @param \AppBundle\Entity\Workman $workman
      *
-     * @return User
+     * @return OrderAction
      */
-    public function addWorkshop(\AppBundle\Entity\Workshop $workshop)
+    public function addWorkman(\AppBundle\Entity\Workman $workman)
     {
-        $this->workshops[] = $workshop;
+        $this->workmans[] = $workman;
 
         return $this;
     }
 
     /**
-     * Remove workshop
+     * Remove workman
      *
-     * @param \AppBundle\Entity\Workshop $workshop
+     * @param \AppBundle\Entity\Workman $workman
      */
-    public function removeWorkshop(\AppBundle\Entity\Workshop $workshop)
+    public function removeWorkman(\AppBundle\Entity\Workman $workman)
     {
-        $this->workshops->removeElement($workshop);
+        $this->workmans->removeElement($workman);
     }
 
     /**
-     * Get workshops
+     * Get workmans
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getWorkshops()
+    public function getWorkmans()
     {
-        return $this->workshops;
+        return $this->workmans;
     }
 
-
-    public function getUsername()
+    /**
+     * Add status
+     *
+     * @param \AppBundle\Entity\Status $status
+     *
+     * @return OrderAction
+     */
+    public function addStatus(\AppBundle\Entity\Status $status)
     {
-        return $this->username;
+        $this->statuses[] = $status;
+
+        return $this;
     }
 
-    public function getSalt()
+    /**
+     * Remove status
+     *
+     * @param \AppBundle\Entity\Status $status
+     */
+    public function removeStatus(\AppBundle\Entity\Status $status)
     {
-
-        return null;
+        $this->statuses->removeElement($status);
     }
 
-    public function eraseCredentials()
+    /**
+     * Get statuses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStatuses()
     {
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
+        return $this->statuses;
     }
 }
 

@@ -113,6 +113,36 @@ class Workshop
     private $address;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $workstations;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $models;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $vehicles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $customers;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $goods;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $measures;
+
+    /**
      * @var \AppBundle\Entity\User
      */
     private $owner_user;
@@ -147,6 +177,12 @@ class Workshop
      */
     public function __construct()
     {
+        $this->workstations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->customers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->goods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->measures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -638,6 +674,210 @@ class Workshop
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Add workstation
+     *
+     * @param \AppBundle\Entity\Workstation $workstation
+     *
+     * @return Workshop
+     */
+    public function addWorkstation(\AppBundle\Entity\Workstation $workstation)
+    {
+        $this->workstations[] = $workstation;
+
+        return $this;
+    }
+
+    /**
+     * Remove workstation
+     *
+     * @param \AppBundle\Entity\Workstation $workstation
+     */
+    public function removeWorkstation(\AppBundle\Entity\Workstation $workstation)
+    {
+        $this->workstations->removeElement($workstation);
+    }
+
+    /**
+     * Get workstations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkstations()
+    {
+        return $this->workstations;
+    }
+
+    /**
+     * Add model
+     *
+     * @param \AppBundle\Entity\Model $model
+     *
+     * @return Workshop
+     */
+    public function addModel(\AppBundle\Entity\Model $model)
+    {
+        $this->models[] = $model;
+
+        return $this;
+    }
+
+    /**
+     * Remove model
+     *
+     * @param \AppBundle\Entity\Model $model
+     */
+    public function removeModel(\AppBundle\Entity\Model $model)
+    {
+        $this->models->removeElement($model);
+    }
+
+    /**
+     * Get models
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    /**
+     * Add vehicle
+     *
+     * @param \AppBundle\Entity\Vehicle $vehicle
+     *
+     * @return Workshop
+     */
+    public function addVehicle(\AppBundle\Entity\Vehicle $vehicle)
+    {
+        $this->vehicles[] = $vehicle;
+
+        return $this;
+    }
+
+    /**
+     * Remove vehicle
+     *
+     * @param \AppBundle\Entity\Vehicle $vehicle
+     */
+    public function removeVehicle(\AppBundle\Entity\Vehicle $vehicle)
+    {
+        $this->vehicles->removeElement($vehicle);
+    }
+
+    /**
+     * Get vehicles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVehicles()
+    {
+        return $this->vehicles;
+    }
+
+    /**
+     * Add customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     *
+     * @return Workshop
+     */
+    public function addCustomer(\AppBundle\Entity\Customer $customer)
+    {
+        $this->customers[] = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Remove customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     */
+    public function removeCustomer(\AppBundle\Entity\Customer $customer)
+    {
+        $this->customers->removeElement($customer);
+    }
+
+    /**
+     * Get customers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomers()
+    {
+        return $this->customers;
+    }
+
+    /**
+     * Add good
+     *
+     * @param \AppBundle\Entity\Good $good
+     *
+     * @return Workshop
+     */
+    public function addGood(\AppBundle\Entity\Good $good)
+    {
+        $this->goods[] = $good;
+
+        return $this;
+    }
+
+    /**
+     * Remove good
+     *
+     * @param \AppBundle\Entity\Good $good
+     */
+    public function removeGood(\AppBundle\Entity\Good $good)
+    {
+        $this->goods->removeElement($good);
+    }
+
+    /**
+     * Get goods
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGoods()
+    {
+        return $this->goods;
+    }
+
+    /**
+     * Add measure
+     *
+     * @param \AppBundle\Entity\Measure $measure
+     *
+     * @return Workshop
+     */
+    public function addMeasure(\AppBundle\Entity\Measure $measure)
+    {
+        $this->measures[] = $measure;
+
+        return $this;
+    }
+
+    /**
+     * Remove measure
+     *
+     * @param \AppBundle\Entity\Measure $measure
+     */
+    public function removeMeasure(\AppBundle\Entity\Measure $measure)
+    {
+        $this->measures->removeElement($measure);
+    }
+
+    /**
+     * Get measures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMeasures()
+    {
+        return $this->measures;
     }
 
     /**

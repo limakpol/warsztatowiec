@@ -1,0 +1,170 @@
+AppBundle\Entity\SaleDetail:
+    type: entity
+    table: sale_detail
+    repositoryClass: AppBundle\Entity\Repository\SaleDetailRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        sale_header_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        indexx_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        unit_price_net:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Cena jednostkowa netto. Wartość edytowalna, domyślnie pobierana z cennika (unit_price_net z tabeli good)"
+        quantity:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Ilość towaru. Wartość wpisywana."
+        total_net_before_discount:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Wartość całkowita przed rabatem, wyliczana wg wzoru: unit_price_net * quantity"
+        discount_pc:
+            type: integer
+            length: 3
+            nullable: false
+            options:
+                fixed: true
+                default: 0
+                comment: "Wartość procentowa rabatu (od 0 do 100), edytowalna."
+        discount:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Kwota rabatu, wyliczana wg wzoru: total_net_before_discount*(discount_pc/100)"
+        total_net:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Wartość całkowita netto, wyliczana wg wzoru: total_net_before_discount - discount"
+        vat_pc:
+            type: integer
+            length: 3
+            nullable: false
+            options:
+                fixed: true
+                default: 0
+                comment: "Wartość procentowa rabatu, edytowalna, ale domyślnie brana z parameters - good_vat_pc."
+        vat:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Kwota VAT, wyliczana wg wzoru: total_net*(vat_pc/100)"
+        total_due:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Należność całkowita, wyliczana wg wzoru: total_net + vat"
+        remarks:
+            type: string
+            length: 255
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        removed_at:
+            type: datetime
+            nullable: true
+        deleted_at:
+            type: datetime
+            nullable: true
+        created_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        updated_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        removed_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        deleted_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+    manyToOne:
+        sale_header:
+            targetEntity: SaleHeader
+            joinColumn:
+                name: sale_header_id
+                referencedColumnName: id
+            inversedBy: sale_details
+        indexx:
+            targetEntity: AppBundle\Entity\Indexx
+            joinColumn:
+                name: indexx_id
+                referencedColumnName: id
+        created_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: created_by_id
+                referencedColumnName: id
+        updated_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: updated_by_id
+                referencedColumnName: id
+        removed_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: removed_by_id
+                referencedColumnName: id
+        deleted_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: deleted_by_id
+                referencedColumnName: id

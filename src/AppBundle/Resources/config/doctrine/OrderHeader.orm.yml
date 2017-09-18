@@ -1,0 +1,214 @@
+AppBundle\Entity\OrderHeader:
+    type: entity
+    table: order_header
+    repositoryClass: AppBundle\Entity\Repository\OrderHeaderRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        customer_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        vehicle_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        number_monthly:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        number_yearly:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        priority:
+            type: boolean
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        workstation_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        total_net_before_discount:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Suma wartości przed rabatem"
+        discount:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Suma kwot rabatu"
+        total_net:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+                comment: "Wartość całkowita netto, wyliczana wg wzoru: total_net_before_discount - discount"
+        vat:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0.00
+                unsigned: true
+                comment: "Suma wartości VAT"
+        total_due:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: 0.00
+                unsigned: true
+                comment: "Należność całkowita, wyliczana wg wzoru: total_net + vat"
+        remarks:
+            type: string
+            length: 255
+            nullable: true
+            options:
+                fixed: false
+        amount_paid:
+            type: decimal
+            nullable: true
+            precision: 8
+            scale: 2
+            options:
+                unsigned: true
+                default: 0.00
+        paid_at:
+            type: datetime
+            nullable: true
+        completed_at:
+            type: datetime
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        removed_at:
+            type: datetime
+            nullable: true
+        deleted_at:
+            type: datetime
+            nullable: true
+        created_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        updated_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        removed_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        deleted_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+    manyToOne:
+        workshop:
+            targetEntity: Workshop
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id
+        customer:
+            targetEntity: Customer
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+            cascade: [persist]
+        vehicle:
+            targetEntity: Vehicle
+            joinColumn:
+                name: vehicle_id
+                referencedColumnName: id
+            cascade: [persist]
+        workstation:
+            targetEntity: Workstation
+            joinColumn:
+                name: workstation_id
+                referencedColumnName: id
+        created_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: created_by_id
+                referencedColumnName: id
+        updated_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: updated_by_id
+                referencedColumnName: id
+        removed_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: removed_by_id
+                referencedColumnName: id
+        deleted_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: deleted_by_id
+                referencedColumnName: id
+    oneToMany:
+        symptoms:
+            targetEntity: AppBundle\Entity\OrderSymptom
+            mappedBy: order_header
+        faults:
+            targetEntity: AppBundle\Entity\OrderFault
+            mappedBy: order_header
+        order_indexxes:
+            targetEntity: AppBundle\Entity\OrderIndexx
+            mappedBy: order_header
+        order_services:
+            targetEntity: AppBundle\Entity\OrderService
+            mappedBy: order_header
+    manyToMany:
+        statuses:
+            targetEntity: AppBundle\Entity\Status
+            inversedBy: order_headers
+            joinTable:
+                name: status_order_header
+                joinColumns:
+                    status_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    order_header_id:
+                        referencedColumnName: id

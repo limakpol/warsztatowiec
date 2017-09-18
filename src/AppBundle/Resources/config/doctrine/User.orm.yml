@@ -101,7 +101,6 @@ AppBundle\Entity\User:
             joinColumn:
                 name: current_workshop_id
                 referencedColumnName: id
-            onDelete: cascade
         created_by:
             targetEntity: AppBundle\Entity\User
             joinColumn:

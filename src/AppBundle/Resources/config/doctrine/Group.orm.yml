@@ -1,7 +1,7 @@
-AppBundle\Entity\UserRole:
+AppBundle\Entity\Group:
     type: entity
-    table: user_role
-    repositoryClass: AppBundle\Entity\Repository\UserRoleRepository
+    table: group
+    repositoryClass: AppBundle\Entity\Repository\GroupRepository
     id:
         id:
             type: integer
@@ -11,19 +11,15 @@ AppBundle\Entity\UserRole:
             generator:
                 strategy: IDENTITY
     fields:
-        user_id:
-            type: integer
-            nullable: false
-            options:
-                unsigned: true
         workshop_id:
             type: integer
             nullable: false
             options:
                 unsigned: true
-        role:
+        name:
             type: string
-            length: 50
+            length: 25
+            nullable: false
             options:
                 fixed: false
         created_at:
@@ -59,12 +55,6 @@ AppBundle\Entity\UserRole:
             options:
                 unsigned: true
     manyToOne:
-        user:
-            targetEntity: User
-            inversedBy: roles
-            joinColumn:
-                name: user_id
-                referencedColumnName: id
         workshop:
             targetEntity: Workshop
             joinColumn:
@@ -90,6 +80,10 @@ AppBundle\Entity\UserRole:
             joinColumn:
                 name: deleted_by_id
                 referencedColumnName: id
+    manyToMany:
+        customers:
+            targetEntity: AppBundle\Entity\Customer
+            mappedBy: groups
     uniqueConstraints:
-            user_workshop_role:
-                columns: [user_id, workshop_id, role]
+        workshop_name:
+            columns: [ workshop_id, name ]

@@ -1,12 +1,11 @@
 <?php
 
 namespace AppBundle\Entity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * Service
  */
-class User implements UserInterface, \Serializable
+class Service
 {
     /**
      * @var integer
@@ -16,37 +15,27 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      */
-    private $current_workshop_id;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $forename;
-
-    /**
-     * @var string
-     */
-    private $surname;
-
-    /**
-     * @var string
-     */
-    private $mobile_phone;
-
-    /**
-     * @var string
-     */
-    private $email;
+    private $workshop_id;
 
     /**
      * @var integer
      */
-    private $status = 1;
+    private $measure_id;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $unit_price_net;
+
+    /**
+     * @var string
+     */
+    private $remarks;
 
     /**
      * @var \DateTime
@@ -89,14 +78,14 @@ class User implements UserInterface, \Serializable
     private $deleted_by_id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $roles;
-
-    /**
      * @var \AppBundle\Entity\Workshop
      */
-    private $current_workshop;
+    private $workshop;
+
+    /**
+     * @var \AppBundle\Entity\Measure
+     */
+    private $measure;
 
     /**
      * @var \AppBundle\Entity\User
@@ -118,22 +107,6 @@ class User implements UserInterface, \Serializable
      */
     private $deleted_by;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $workshops;
-
-
-    private $username;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->workshops = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -146,171 +119,123 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentWorkshopId
+     * Set workshopId
      *
-     * @param integer $currentWorkshopId
+     * @param integer $workshopId
      *
-     * @return User
+     * @return Service
      */
-    public function setCurrentWorkshopId($currentWorkshopId)
+    public function setWorkshopId($workshopId)
     {
-        $this->current_workshop_id = $currentWorkshopId;
+        $this->workshop_id = $workshopId;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshopId
+     * Get workshopId
      *
      * @return integer
      */
-    public function getCurrentWorkshopId()
+    public function getWorkshopId()
     {
-        return $this->current_workshop_id;
+        return $this->workshop_id;
     }
 
     /**
-     * Set password
+     * Set measureId
      *
-     * @param string $password
+     * @param integer $measureId
      *
-     * @return User
+     * @return Service
      */
-    public function setPassword($password)
+    public function setMeasureId($measureId)
     {
-        $this->password = $password;
+        $this->measure_id = $measureId;
 
         return $this;
     }
 
     /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set forename
-     *
-     * @param string $forename
-     *
-     * @return User
-     */
-    public function setForename($forename)
-    {
-        $this->forename = $forename;
-
-        return $this;
-    }
-
-    /**
-     * Get forename
-     *
-     * @return string
-     */
-    public function getForename()
-    {
-        return $this->forename;
-    }
-
-    /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return User
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return string
-     */
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    /**
-     * Set mobilePhone
-     *
-     * @param string $mobilePhone
-     *
-     * @return User
-     */
-    public function setMobilePhone($mobilePhone)
-    {
-        $this->mobile_phone = $mobilePhone;
-
-        return $this;
-    }
-
-    /**
-     * Get mobilePhone
-     *
-     * @return string
-     */
-    public function getMobilePhone()
-    {
-        return $this->mobile_phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
+     * Get measureId
      *
      * @return integer
      */
-    public function getStatus()
+    public function getMeasureId()
     {
-        return $this->status;
+        return $this->measure_id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Service
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set unitPriceNet
+     *
+     * @param string $unitPriceNet
+     *
+     * @return Service
+     */
+    public function setUnitPriceNet($unitPriceNet)
+    {
+        $this->unit_price_net = $unitPriceNet;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPriceNet
+     *
+     * @return string
+     */
+    public function getUnitPriceNet()
+    {
+        return $this->unit_price_net;
+    }
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return Service
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
     }
 
     /**
@@ -318,7 +243,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $createdAt
      *
-     * @return User
+     * @return Service
      */
     public function setCreatedAt($createdAt)
     {
@@ -342,7 +267,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $updatedAt
      *
-     * @return User
+     * @return Service
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -366,7 +291,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $removedAt
      *
-     * @return User
+     * @return Service
      */
     public function setRemovedAt($removedAt)
     {
@@ -390,7 +315,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $deletedAt
      *
-     * @return User
+     * @return Service
      */
     public function setDeletedAt($deletedAt)
     {
@@ -414,7 +339,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $createdById
      *
-     * @return User
+     * @return Service
      */
     public function setCreatedById($createdById)
     {
@@ -438,7 +363,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $updatedById
      *
-     * @return User
+     * @return Service
      */
     public function setUpdatedById($updatedById)
     {
@@ -462,7 +387,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $removedById
      *
-     * @return User
+     * @return Service
      */
     public function setRemovedById($removedById)
     {
@@ -486,7 +411,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $deletedById
      *
-     * @return User
+     * @return Service
      */
     public function setDeletedById($deletedById)
     {
@@ -506,74 +431,51 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add role
+     * Set workshop
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return User
+     * @return Service
      */
-    public function addRole(\AppBundle\Entity\UserRole $role)
+    public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
-        $this->roles[] = $role;
+        $this->workshop = $workshop;
 
         return $this;
     }
 
     /**
-     * Remove role
-     *
-     * @param \AppBundle\Entity\UserRole $role
-     */
-    public function removeRole(\AppBundle\Entity\UserRole $role)
-    {
-        $this->roles->removeElement($role);
-    }
-
-    /**
-     * Get roles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRoles()
-    {
-        $workshop = $this->getCurrentWorkshop();
-
-        $roles = [];
-
-        /** @var UserRole $role */
-        foreach($this->roles as $role)
-        {
-            if($role->getWorkshop() === $workshop)
-            {
-                $roles[] = $role->getRole();
-            }
-        }
-
-        return $roles;
-    }
-
-    /**
-     * Set currentWorkshop
-     *
-     * @param \AppBundle\Entity\Workshop $currentWorkshop
-     *
-     * @return User
-     */
-    public function setCurrentWorkshop(\AppBundle\Entity\Workshop $currentWorkshop = null)
-    {
-        $this->current_workshop = $currentWorkshop;
-
-        return $this;
-    }
-
-    /**
-     * Get currentWorkshop
+     * Get workshop
      *
      * @return \AppBundle\Entity\Workshop
      */
-    public function getCurrentWorkshop()
+    public function getWorkshop()
     {
-        return $this->current_workshop;
+        return $this->workshop;
+    }
+
+    /**
+     * Set measure
+     *
+     * @param \AppBundle\Entity\Measure $measure
+     *
+     * @return Service
+     */
+    public function setMeasure(\AppBundle\Entity\Measure $measure = null)
+    {
+        $this->measure = $measure;
+
+        return $this;
+    }
+
+    /**
+     * Get measure
+     *
+     * @return \AppBundle\Entity\Measure
+     */
+    public function getMeasure()
+    {
+        return $this->measure;
     }
 
     /**
@@ -581,7 +483,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return User
+     * @return Service
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -605,7 +507,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return User
+     * @return Service
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -629,7 +531,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return User
+     * @return Service
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -653,7 +555,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return User
+     * @return Service
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -670,74 +572,6 @@ class User implements UserInterface, \Serializable
     public function getDeletedBy()
     {
         return $this->deleted_by;
-    }
-
-    /**
-     * Add workshop
-     *
-     * @param \AppBundle\Entity\Workshop $workshop
-     *
-     * @return User
-     */
-    public function addWorkshop(\AppBundle\Entity\Workshop $workshop)
-    {
-        $this->workshops[] = $workshop;
-
-        return $this;
-    }
-
-    /**
-     * Remove workshop
-     *
-     * @param \AppBundle\Entity\Workshop $workshop
-     */
-    public function removeWorkshop(\AppBundle\Entity\Workshop $workshop)
-    {
-        $this->workshops->removeElement($workshop);
-    }
-
-    /**
-     * Get workshops
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWorkshops()
-    {
-        return $this->workshops;
-    }
-
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
     }
 }
 

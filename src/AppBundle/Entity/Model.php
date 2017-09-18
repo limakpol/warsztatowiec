@@ -1,12 +1,11 @@
 <?php
 
 namespace AppBundle\Entity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * Model
  */
-class User implements UserInterface, \Serializable
+class Model
 {
     /**
      * @var integer
@@ -16,37 +15,22 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      */
-    private $current_workshop_id;
+    private $workshop_id;
 
     /**
      * @var string
      */
-    private $password;
+    private $brand;
 
     /**
      * @var string
      */
-    private $forename;
+    private $model;
 
     /**
      * @var string
      */
-    private $surname;
-
-    /**
-     * @var string
-     */
-    private $mobile_phone;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var integer
-     */
-    private $status = 1;
+    private $version;
 
     /**
      * @var \DateTime
@@ -91,12 +75,12 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $roles;
+    private $vehicles;
 
     /**
      * @var \AppBundle\Entity\Workshop
      */
-    private $current_workshop;
+    private $workshop;
 
     /**
      * @var \AppBundle\Entity\User
@@ -121,18 +105,15 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $workshops;
-
-
-    private $username;
+    private $goods;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->workshops = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->goods = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -146,171 +127,99 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentWorkshopId
+     * Set workshopId
      *
-     * @param integer $currentWorkshopId
+     * @param integer $workshopId
      *
-     * @return User
+     * @return Model
      */
-    public function setCurrentWorkshopId($currentWorkshopId)
+    public function setWorkshopId($workshopId)
     {
-        $this->current_workshop_id = $currentWorkshopId;
+        $this->workshop_id = $workshopId;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshopId
+     * Get workshopId
      *
      * @return integer
      */
-    public function getCurrentWorkshopId()
+    public function getWorkshopId()
     {
-        return $this->current_workshop_id;
+        return $this->workshop_id;
     }
 
     /**
-     * Set password
+     * Set brand
      *
-     * @param string $password
+     * @param string $brand
      *
-     * @return User
+     * @return Model
      */
-    public function setPassword($password)
+    public function setBrand($brand)
     {
-        $this->password = $password;
+        $this->brand = $brand;
 
         return $this;
     }
 
     /**
-     * Get password
+     * Get brand
      *
      * @return string
      */
-    public function getPassword()
+    public function getBrand()
     {
-        return $this->password;
+        return $this->brand;
     }
 
     /**
-     * Set forename
+     * Set model
      *
-     * @param string $forename
+     * @param string $model
      *
-     * @return User
+     * @return Model
      */
-    public function setForename($forename)
+    public function setModel($model)
     {
-        $this->forename = $forename;
+        $this->model = $model;
 
         return $this;
     }
 
     /**
-     * Get forename
+     * Get model
      *
      * @return string
      */
-    public function getForename()
+    public function getModel()
     {
-        return $this->forename;
+        return $this->model;
     }
 
     /**
-     * Set surname
+     * Set version
      *
-     * @param string $surname
+     * @param string $version
      *
-     * @return User
+     * @return Model
      */
-    public function setSurname($surname)
+    public function setVersion($version)
     {
-        $this->surname = $surname;
+        $this->version = $version;
 
         return $this;
     }
 
     /**
-     * Get surname
+     * Get version
      *
      * @return string
      */
-    public function getSurname()
+    public function getVersion()
     {
-        return $this->surname;
-    }
-
-    /**
-     * Set mobilePhone
-     *
-     * @param string $mobilePhone
-     *
-     * @return User
-     */
-    public function setMobilePhone($mobilePhone)
-    {
-        $this->mobile_phone = $mobilePhone;
-
-        return $this;
-    }
-
-    /**
-     * Get mobilePhone
-     *
-     * @return string
-     */
-    public function getMobilePhone()
-    {
-        return $this->mobile_phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return integer
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->version;
     }
 
     /**
@@ -318,7 +227,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $createdAt
      *
-     * @return User
+     * @return Model
      */
     public function setCreatedAt($createdAt)
     {
@@ -342,7 +251,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $updatedAt
      *
-     * @return User
+     * @return Model
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -366,7 +275,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $removedAt
      *
-     * @return User
+     * @return Model
      */
     public function setRemovedAt($removedAt)
     {
@@ -390,7 +299,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \DateTime $deletedAt
      *
-     * @return User
+     * @return Model
      */
     public function setDeletedAt($deletedAt)
     {
@@ -414,7 +323,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $createdById
      *
-     * @return User
+     * @return Model
      */
     public function setCreatedById($createdById)
     {
@@ -438,7 +347,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $updatedById
      *
-     * @return User
+     * @return Model
      */
     public function setUpdatedById($updatedById)
     {
@@ -462,7 +371,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $removedById
      *
-     * @return User
+     * @return Model
      */
     public function setRemovedById($removedById)
     {
@@ -486,7 +395,7 @@ class User implements UserInterface, \Serializable
      *
      * @param integer $deletedById
      *
-     * @return User
+     * @return Model
      */
     public function setDeletedById($deletedById)
     {
@@ -506,74 +415,61 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add role
+     * Add vehicle
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\Vehicle $vehicle
      *
-     * @return User
+     * @return Model
      */
-    public function addRole(\AppBundle\Entity\UserRole $role)
+    public function addVehicle(\AppBundle\Entity\Vehicle $vehicle)
     {
-        $this->roles[] = $role;
+        $this->vehicles[] = $vehicle;
 
         return $this;
     }
 
     /**
-     * Remove role
+     * Remove vehicle
      *
-     * @param \AppBundle\Entity\UserRole $role
+     * @param \AppBundle\Entity\Vehicle $vehicle
      */
-    public function removeRole(\AppBundle\Entity\UserRole $role)
+    public function removeVehicle(\AppBundle\Entity\Vehicle $vehicle)
     {
-        $this->roles->removeElement($role);
+        $this->vehicles->removeElement($vehicle);
     }
 
     /**
-     * Get roles
+     * Get vehicles
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRoles()
+    public function getVehicles()
     {
-        $workshop = $this->getCurrentWorkshop();
-
-        $roles = [];
-
-        /** @var UserRole $role */
-        foreach($this->roles as $role)
-        {
-            if($role->getWorkshop() === $workshop)
-            {
-                $roles[] = $role->getRole();
-            }
-        }
-
-        return $roles;
+        return $this->vehicles;
     }
 
     /**
-     * Set currentWorkshop
+     * Set workshop
      *
-     * @param \AppBundle\Entity\Workshop $currentWorkshop
+     * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return User
+     * @return Model
      */
-    public function setCurrentWorkshop(\AppBundle\Entity\Workshop $currentWorkshop = null)
+    public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
-        $this->current_workshop = $currentWorkshop;
+        $this->workshop = $workshop;
 
         return $this;
     }
 
     /**
-     * Get currentWorkshop
+     * Get workshop
      *
      * @return \AppBundle\Entity\Workshop
      */
-    public function getCurrentWorkshop()
+    public function getWorkshop()
     {
-        return $this->current_workshop;
+        return $this->workshop;
     }
 
     /**
@@ -581,7 +477,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return User
+     * @return Model
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -605,7 +501,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return User
+     * @return Model
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -629,7 +525,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return User
+     * @return Model
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -653,7 +549,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return User
+     * @return Model
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -673,71 +569,37 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add workshop
+     * Add good
      *
-     * @param \AppBundle\Entity\Workshop $workshop
+     * @param \AppBundle\Entity\Good $good
      *
-     * @return User
+     * @return Model
      */
-    public function addWorkshop(\AppBundle\Entity\Workshop $workshop)
+    public function addGood(\AppBundle\Entity\Good $good)
     {
-        $this->workshops[] = $workshop;
+        $this->goods[] = $good;
 
         return $this;
     }
 
     /**
-     * Remove workshop
+     * Remove good
      *
-     * @param \AppBundle\Entity\Workshop $workshop
+     * @param \AppBundle\Entity\Good $good
      */
-    public function removeWorkshop(\AppBundle\Entity\Workshop $workshop)
+    public function removeGood(\AppBundle\Entity\Good $good)
     {
-        $this->workshops->removeElement($workshop);
+        $this->goods->removeElement($good);
     }
 
     /**
-     * Get workshops
+     * Get goods
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getWorkshops()
+    public function getGoods()
     {
-        return $this->workshops;
-    }
-
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function serialize()
-    {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-        ]);
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
+        return $this->goods;
     }
 }
 

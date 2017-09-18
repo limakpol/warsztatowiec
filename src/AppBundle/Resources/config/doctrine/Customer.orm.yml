@@ -1,0 +1,184 @@
+AppBundle\Entity\Customer:
+    type: entity
+    table: customer
+    repositoryClass: AppBundle\Entity\Repository\CustomerRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        workshop_id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+        forename:
+            type: string
+            length: 35
+            nullable: true
+            options:
+                fixed: false
+        surname:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        company_name:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        is_customer:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+        is_supplier:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        is_recipient:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        street:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        house_number:
+            type: string
+            length: 5
+            nullable: true
+            options:
+                fixed: false
+        flat_number:
+            type: string
+            length: 5
+            nullable: true
+            options:
+                fixed: false
+        post_code:
+            type: string
+            length: 6
+            nullable: true
+            options:
+                fixed: true
+        city:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        province_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        mobile_phone1:
+            type: string
+            length: 12
+            nullable: true
+            options:
+                fixed: true
+        mobile_phone2:
+            type: string
+            length: 12
+            nullable: true
+            options:
+                fixed: true
+        landline_phone:
+            type: string
+            length: 9
+            nullable: true
+            options:
+                fixed: true
+        email:
+            type: string
+            length: 80
+            nullable: true
+            options:
+                fixed: false
+        nip:
+            type: string
+            length: 10
+            nullable: true
+            options:
+                fixed: true
+        pesel:
+            type: string
+            length: 11
+            nullable: true
+            options:
+                fixed: true
+        bank_account_number:
+            type: string
+            length: 26
+            nullable: true
+            options:
+                fixed: false
+        contact_person:
+            type: string
+            length: 50
+            nullable: true
+            options:
+                fixed: false
+        remarks:
+            type: string
+            length: 255
+            nullable: true
+            options:
+                fixed: false
+        created_at:
+            type: datetime
+            nullable: false
+        updated_at:
+            type: datetime
+            nullable: false
+        deleted_at:
+            type: datetime
+            nullable: true
+    manyToOne:
+        workshop:
+            targetEntity: Workshop
+            inversedBy: customers
+            joinColumn:
+                name: workshop_id
+                referencedColumnName: id
+        province:
+            targetEntity: Province
+            joinColumn:
+                name: province_id
+                referencedColumnName: id
+    manyToMany:
+        vehicles:
+            targetEntity: AppBundle\Entity\Vehicle
+            inversedBy: customers
+            joinTable:
+                name: customer_vehicle
+                joinColumns:
+                    customer_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    vehicle_id:
+                        referencedColumnName: id
+        groups:
+            targetEntity: AppBundle\Entity\Group
+            inversedBy: customers
+            joinTable:
+                name: customer_group
+                joinColumns:
+                    customer_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    group_id:
+                        referencedColumnName: id
