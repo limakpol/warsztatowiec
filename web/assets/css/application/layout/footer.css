@@ -1,0 +1,19 @@
+footer div {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font: 14px "Ubuntu", sans-serif;
+    margin: 1vw;
+}
+footer div span:nth-child(1) {
+    font-weight: bold;
+}
+footer div span:nth-child(2) {
+    margin-top: 5px;
+}
+footer div span:nth-child(3) {
+    margin-top: 10px;
+}
+footer div span:nth-child(4) {
+    margin-top: 2px;
+}
