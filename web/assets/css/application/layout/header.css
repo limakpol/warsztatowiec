@@ -9,7 +9,7 @@ header {
 }
 header a {
     display: flex;
-    height: 70%;
+    height: 60%;
     align-self: center;
 }
 header a img {
@@ -33,17 +33,20 @@ header > div:hover {
 }
 header > div div:first-child {
     color: #fff;
-    font: bold 16px "Ubuntu", sans-serif;
+    font:  20px "Ubuntu", sans-serif;
     display: flex;
     justify-content: center;
     align-content: center;
-    align-items: center;
+    align-items: flex-end;
+    align-self: center;
+    height: 60%;
 }
 header > div div:last-child {
     display: flex;
     flex-direction: column;
-    height: 35px;
+    height: 30px;
     align-self: center;
+    justify-content: space-between;
 }
 header > div div:last-child span {
     text-align: right;

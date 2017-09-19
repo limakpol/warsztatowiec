@@ -138,10 +138,10 @@ main_menu:
                 route: workflow_add_workman
             2:
                 name: pracownicy
-                route: workflow_workmen_index
+                route: workflow_workman_index
             3:
                 name: terminarz
                 route: workflow_index
             4:
                 name: kosz
-                route: workflow_index
+                route: trash_index
