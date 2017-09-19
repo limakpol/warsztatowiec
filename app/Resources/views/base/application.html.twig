@@ -8,6 +8,7 @@
     {% stylesheets
         'assets/css/application/layout/layout.css'
         'assets/css/application/layout/header.css'
+        'assets/css/application/layout/header-settings.css'
         'assets/css/application/layout/buttons.css'
     filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -79,6 +80,7 @@
             crossorigin="anonymous">
     </script> -->
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/application/layout.js') }}"></script>
 {% endblock %}
 </body>
 </html>
