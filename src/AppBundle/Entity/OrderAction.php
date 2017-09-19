@@ -798,11 +798,11 @@ class OrderAction
     /**
      * Add workman
      *
-     * @param \AppBundle\Entity\Workman $workman
+     * @param \AppBundle\Entity\User $workman
      *
      * @return OrderAction
      */
-    public function addWorkman(\AppBundle\Entity\Workman $workman)
+    public function addWorkman(\AppBundle\Entity\User $workman)
     {
         $this->workmans[] = $workman;
 
@@ -812,9 +812,9 @@ class OrderAction
     /**
      * Remove workman
      *
-     * @param \AppBundle\Entity\Workman $workman
+     * @param \AppBundle\Entity\User $workman
      */
-    public function removeWorkman(\AppBundle\Entity\Workman $workman)
+    public function removeWorkman(\AppBundle\Entity\User $workman)
     {
         $this->workmans->removeElement($workman);
     }

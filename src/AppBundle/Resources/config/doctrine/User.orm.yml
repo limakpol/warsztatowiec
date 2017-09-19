@@ -16,12 +16,6 @@ AppBundle\Entity\User:
             nullable: true
             options:
                 unsigned: true
-        password:
-            type: string
-            length: 60
-            nullable: false
-            options:
-                fixed: true
         forename:
             type: string
             length: 30
@@ -30,7 +24,34 @@ AppBundle\Entity\User:
             type: string
             length: 50
             nullable: false
-        mobile_phone:
+        password:
+            type: string
+            length: 60
+            nullable: false
+            options:
+                fixed: true
+        status:
+            type: smallint
+            length: 1
+            nullable: false
+            options:
+                default: 1
+                comment: '0 - użytkownik zweryfikował się negatywnie przez e-mail, 1 - użytkownik jeszcze się nie weryfikował, 2 - użytkownik zweryfikował się pozytywnie, 3 - użytkownik zbanowany przez nas'
+        hourly_rate_net:
+            type: decimal
+            nullable: true
+            precision: 5
+            scale: 2
+            options:
+                unsigned: true
+                comment: "Stawka netto na godzinę"
+        phone1:
+            type: string
+            length: 12
+            nullable: true
+            options:
+                fixed: true
+        phone2:
             type: string
             length: 12
             nullable: true
@@ -40,13 +61,29 @@ AppBundle\Entity\User:
             type: string
             length: 80
             nullable: false
-        status:
-            type: smallint
-            length: 1
-            nullable: false
+        address_id:
+            type: integer
+            nullable: true
             options:
-                default: 1
-                comment: '0 - użytkownik zweryfikował się negatywnie przez e-mail, 1 - użytkownik jeszcze się nie weryfikował, 2 - użytkownik zweryfikował się pozytywnie, 3 - użytkownik zbanowany przez nas'
+                unsigned: true
+        nip:
+            type: string
+            length: 10
+            nullable: true
+            options:
+                fixed: true
+        bank_account_number:
+            type: string
+            length: 26
+            nullable: true
+            options:
+                fixed: false
+        remarks:
+            type: string
+            length: 255
+            nullable: true
+            options:
+                fixed: false
         created_at:
             type: datetime
             nullable: false
@@ -79,6 +116,13 @@ AppBundle\Entity\User:
             nullable: true
             options:
                 unsigned: true
+    oneToOne:
+        address:
+            targetEntity: Address
+            inversedBy: user
+            joinColumn:
+                name: address_id
+                referencedColumnName: id
     oneToMany:
         roles:
             targetEntity: UserRole
@@ -95,6 +139,23 @@ AppBundle\Entity\User:
                 inverseJoinColumns:
                   workshop_id:
                     referencedColumnName: id
+        order_services:
+            targetEntity: OrderService
+            mappedBy: workmans
+        order_actions:
+            targetEntity: OrderAction
+            mappedBy: workmans
+        positions:
+            targetEntity: AppBundle\Entity\Position
+            inversedBy: workmans
+            joinTable:
+                name: workman_position
+                joinColumns:
+                    user_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    position_id:
+                        referencedColumnName: id
     manyToOne:
         current_workshop:
             targetEntity: Workshop

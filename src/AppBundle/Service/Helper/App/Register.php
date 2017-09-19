@@ -51,7 +51,12 @@ class Register
         $workshop   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $user       ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
 
-        $roleNames = [UserRole::ROLE_USER, UserRole::ROLE_TESTER];
+        $roleNames = [
+            UserRole::ROLE_USER,
+            UserRole::ROLE_TESTER,
+            UserRole::ROLE_ADMIN,
+            UserRole::ROLE_DEVELOPER
+        ];
 
         foreach($roleNames as $roleName)
         {
@@ -68,6 +73,7 @@ class Register
             $em->persist($userRole);
         }
 
+        $user->setAddress(null);
         $workshop->setAddress(null);
 
         $password = $this->encoder->encodePassword($user, $user->getPassword());
@@ -75,7 +81,7 @@ class Register
 
         $settings   ->setWorkshop($workshop);
         $parameters ->setWorkshop($workshop);
-        $workshop   ->setOwnerUser($user);
+        $workshop   ->setAdmin($user);
         $user       ->setCurrentWorkshop($workshop);
         $user       ->addWorkshop($workshop);
 

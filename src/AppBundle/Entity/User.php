@@ -21,11 +21,6 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      */
-    private $password;
-
-    /**
-     * @var string
-     */
     private $forename;
 
     /**
@@ -36,7 +31,27 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      */
-    private $mobile_phone;
+    private $password;
+
+    /**
+     * @var integer
+     */
+    private $status = 1;
+
+    /**
+     * @var string
+     */
+    private $hourly_rate_net;
+
+    /**
+     * @var string
+     */
+    private $phone1;
+
+    /**
+     * @var string
+     */
+    private $phone2;
 
     /**
      * @var string
@@ -46,7 +61,22 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      */
-    private $status = 1;
+    private $address_id;
+
+    /**
+     * @var string
+     */
+    private $nip;
+
+    /**
+     * @var string
+     */
+    private $bank_account_number;
+
+    /**
+     * @var string
+     */
+    private $remarks;
 
     /**
      * @var \DateTime
@@ -89,6 +119,11 @@ class User implements UserInterface, \Serializable
     private $deleted_by_id;
 
     /**
+     * @var \AppBundle\Entity\Address
+     */
+    private $address;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $roles;
@@ -123,6 +158,20 @@ class User implements UserInterface, \Serializable
      */
     private $workshops;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $order_services;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $order_actions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $positions;
 
     private $username;
 
@@ -133,6 +182,9 @@ class User implements UserInterface, \Serializable
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->workshops = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->order_services = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->order_actions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->positions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -167,30 +219,6 @@ class User implements UserInterface, \Serializable
     public function getCurrentWorkshopId()
     {
         return $this->current_workshop_id;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -242,27 +270,123 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set mobilePhone
+     * Set password
      *
-     * @param string $mobilePhone
+     * @param string $password
      *
      * @return User
      */
-    public function setMobilePhone($mobilePhone)
+    public function setPassword($password)
     {
-        $this->mobile_phone = $mobilePhone;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get mobilePhone
+     * Get password
      *
      * @return string
      */
-    public function getMobilePhone()
+    public function getPassword()
     {
-        return $this->mobile_phone;
+        return $this->password;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return User
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set hourlyRateNet
+     *
+     * @param string $hourlyRateNet
+     *
+     * @return User
+     */
+    public function setHourlyRateNet($hourlyRateNet)
+    {
+        $this->hourly_rate_net = $hourlyRateNet;
+
+        return $this;
+    }
+
+    /**
+     * Get hourlyRateNet
+     *
+     * @return string
+     */
+    public function getHourlyRateNet()
+    {
+        return $this->hourly_rate_net;
+    }
+
+    /**
+     * Set phone1
+     *
+     * @param string $phone1
+     *
+     * @return User
+     */
+    public function setPhone1($phone1)
+    {
+        $this->phone1 = $phone1;
+
+        return $this;
+    }
+
+    /**
+     * Get phone1
+     *
+     * @return string
+     */
+    public function getPhone1()
+    {
+        return $this->phone1;
+    }
+
+    /**
+     * Set phone2
+     *
+     * @param string $phone2
+     *
+     * @return User
+     */
+    public function setPhone2($phone2)
+    {
+        $this->phone2 = $phone2;
+
+        return $this;
+    }
+
+    /**
+     * Get phone2
+     *
+     * @return string
+     */
+    public function getPhone2()
+    {
+        return $this->phone2;
     }
 
     /**
@@ -290,27 +414,99 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set status
+     * Set addressId
      *
-     * @param integer $status
+     * @param integer $addressId
      *
      * @return User
      */
-    public function setStatus($status)
+    public function setAddressId($addressId)
     {
-        $this->status = $status;
+        $this->address_id = $addressId;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get addressId
      *
      * @return integer
      */
-    public function getStatus()
+    public function getAddressId()
     {
-        return $this->status;
+        return $this->address_id;
+    }
+
+    /**
+     * Set nip
+     *
+     * @param string $nip
+     *
+     * @return User
+     */
+    public function setNip($nip)
+    {
+        $this->nip = $nip;
+
+        return $this;
+    }
+
+    /**
+     * Get nip
+     *
+     * @return string
+     */
+    public function getNip()
+    {
+        return $this->nip;
+    }
+
+    /**
+     * Set bankAccountNumber
+     *
+     * @param string $bankAccountNumber
+     *
+     * @return User
+     */
+    public function setBankAccountNumber($bankAccountNumber)
+    {
+        $this->bank_account_number = $bankAccountNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get bankAccountNumber
+     *
+     * @return string
+     */
+    public function getBankAccountNumber()
+    {
+        return $this->bank_account_number;
+    }
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return User
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
     }
 
     /**
@@ -503,6 +699,30 @@ class User implements UserInterface, \Serializable
     public function getDeletedById()
     {
         return $this->deleted_by_id;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \AppBundle\Entity\Address $address
+     *
+     * @return User
+     */
+    public function setAddress(\AppBundle\Entity\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \AppBundle\Entity\Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**
@@ -706,6 +926,107 @@ class User implements UserInterface, \Serializable
         return $this->workshops;
     }
 
+    /**
+     * Add orderService
+     *
+     * @param \AppBundle\Entity\OrderService $orderService
+     *
+     * @return User
+     */
+    public function addOrderService(\AppBundle\Entity\OrderService $orderService)
+    {
+        $this->order_services[] = $orderService;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderService
+     *
+     * @param \AppBundle\Entity\OrderService $orderService
+     */
+    public function removeOrderService(\AppBundle\Entity\OrderService $orderService)
+    {
+        $this->order_services->removeElement($orderService);
+    }
+
+    /**
+     * Get orderServices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderServices()
+    {
+        return $this->order_services;
+    }
+
+    /**
+     * Add orderAction
+     *
+     * @param \AppBundle\Entity\OrderAction $orderAction
+     *
+     * @return User
+     */
+    public function addOrderAction(\AppBundle\Entity\OrderAction $orderAction)
+    {
+        $this->order_actions[] = $orderAction;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderAction
+     *
+     * @param \AppBundle\Entity\OrderAction $orderAction
+     */
+    public function removeOrderAction(\AppBundle\Entity\OrderAction $orderAction)
+    {
+        $this->order_actions->removeElement($orderAction);
+    }
+
+    /**
+     * Get orderActions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderActions()
+    {
+        return $this->order_actions;
+    }
+
+    /**
+     * Add position
+     *
+     * @param \AppBundle\Entity\Position $position
+     *
+     * @return User
+     */
+    public function addPosition(\AppBundle\Entity\Position $position)
+    {
+        $this->positions[] = $position;
+
+        return $this;
+    }
+
+    /**
+     * Remove position
+     *
+     * @param \AppBundle\Entity\Position $position
+     */
+    public function removePosition(\AppBundle\Entity\Position $position)
+    {
+        $this->positions->removeElement($position);
+    }
+
+    /**
+     * Get positions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
 
     public function getUsername()
     {

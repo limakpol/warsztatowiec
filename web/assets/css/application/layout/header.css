@@ -32,7 +32,7 @@ header > div:hover {
     cursor: pointer;
 }
 header > div div:first-child {
-    color: #ff5a00;
+    color: #fff;
     font: bold 16px "Ubuntu", sans-serif;
     display: flex;
     justify-content: center;

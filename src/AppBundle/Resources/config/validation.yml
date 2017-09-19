@@ -16,7 +16,7 @@ AppBundle\Entity\User:
                 max: 50
                 minMessage: 'Pole Nazwisko powinno zawierać co najmniej 2 litery'
                 maxMessage: 'Pole Nazwisko może zawierać maksymalnie 50 liter'
-        mobile_phone:
+        phone1:
             - Length:
                 max: 15
                 maxMessage: 'Pole Telefon może zawierać maksymalnie 15 liter'

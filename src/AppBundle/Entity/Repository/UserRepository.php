@@ -15,7 +15,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
     public function loadUserByUsername($username)
     {
         $user = $this->createQueryBuilder('u')
-            ->where('u.mobile_phone = :mobile_phone OR u.email = :email')
+            ->where('u.phone1 = :mobile_phone OR u.email = :email')
             ->andWhere('u.removed_at IS NULL')
             ->andWhere('u.deleted_at IS NULL')
             ->setParameter(':mobile_phone', $username)

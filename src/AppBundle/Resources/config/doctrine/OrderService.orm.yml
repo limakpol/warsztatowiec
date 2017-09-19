@@ -173,7 +173,7 @@ AppBundle\Entity\OrderService:
                 referencedColumnName: id
     manyToMany:
         workmans:
-            targetEntity: Workman
+            targetEntity: User
             inversedBy: order_services
             joinTable:
                 name: order_service_workman
@@ -181,7 +181,7 @@ AppBundle\Entity\OrderService:
                     order_service_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    workman_id:
+                    user_id:
                         referencedColumnName: id
         statuses:
             targetEntity: AppBundle\Entity\Status

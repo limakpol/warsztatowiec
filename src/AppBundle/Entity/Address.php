@@ -88,6 +88,11 @@ class Address
     private $workshop;
 
     /**
+     * @var \AppBundle\Entity\User
+     */
+    private $user;
+
+    /**
      * @var \AppBundle\Entity\Province
      */
     private $province;
@@ -481,6 +486,30 @@ class Address
     public function getWorkshop()
     {
         return $this->workshop;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Address
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

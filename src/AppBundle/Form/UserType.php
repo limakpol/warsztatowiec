@@ -48,7 +48,7 @@ class UserType extends AbstractType
                     'size' => 25,
                 ],
             ])
-            ->add('mobile_phone', TextType::class, [
+            ->add('phone1', TextType::class, [
                 'label' => 'Numer telefonu',
                 'required' => false,
                 'attr' => [

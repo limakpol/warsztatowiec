@@ -11,7 +11,7 @@ AppBundle\Entity\Workshop:
             generator:
                 strategy: IDENTITY
     fields:
-        owner_user_id:
+        admin_user_id:
             type: integer
             nullable: false
             options:
@@ -110,10 +110,10 @@ AppBundle\Entity\Workshop:
             targetEntity: User
             mappedBy: workshops
     manyToOne:
-        owner_user:
+        admin:
             targetEntity: User
             joinColumn:
-                name: owner_user_id
+                name: admin_user_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User

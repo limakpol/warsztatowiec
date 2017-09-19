@@ -15,7 +15,7 @@ class Workshop
     /**
      * @var integer
      */
-    private $owner_user_id;
+    private $admin_user_id;
 
     /**
      * @var string
@@ -145,7 +145,7 @@ class Workshop
     /**
      * @var \AppBundle\Entity\User
      */
-    private $owner_user;
+    private $admin;
 
     /**
      * @var \AppBundle\Entity\User
@@ -197,27 +197,27 @@ class Workshop
     }
 
     /**
-     * Set ownerUserId
+     * Set adminUserId
      *
-     * @param integer $ownerUserId
+     * @param integer $adminUserId
      *
      * @return Workshop
      */
-    public function setOwnerUserId($ownerUserId)
+    public function setAdminUserId($adminUserId)
     {
-        $this->owner_user_id = $ownerUserId;
+        $this->admin_user_id = $adminUserId;
 
         return $this;
     }
 
     /**
-     * Get ownerUserId
+     * Get adminUserId
      *
      * @return integer
      */
-    public function getOwnerUserId()
+    public function getAdminUserId()
     {
-        return $this->owner_user_id;
+        return $this->admin_user_id;
     }
 
     /**
@@ -881,27 +881,27 @@ class Workshop
     }
 
     /**
-     * Set ownerUser
+     * Set admin
      *
-     * @param \AppBundle\Entity\User $ownerUser
+     * @param \AppBundle\Entity\User $admin
      *
      * @return Workshop
      */
-    public function setOwnerUser(\AppBundle\Entity\User $ownerUser = null)
+    public function setAdmin(\AppBundle\Entity\User $admin = null)
     {
-        $this->owner_user = $ownerUser;
+        $this->admin = $admin;
 
         return $this;
     }
 
     /**
-     * Get ownerUser
+     * Get admin
      *
      * @return \AppBundle\Entity\User
      */
-    public function getOwnerUser()
+    public function getAdmin()
     {
-        return $this->owner_user;
+        return $this->admin;
     }
 
     /**

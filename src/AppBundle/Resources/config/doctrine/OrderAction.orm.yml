@@ -172,14 +172,14 @@ AppBundle\Entity\OrderAction:
                 referencedColumnName: id
     manyToMany:
         workmans:
-            targetEntity: Workman
+            targetEntity: User
             joinTable:
                 name: order_action_workman
                 joinColumns:
                     order_action_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    workman_id:
+                    user_id:
                         referencedColumnName: id
         statuses:
             targetEntity: AppBundle\Entity\Status

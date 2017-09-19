@@ -1,7 +1,7 @@
-AppBundle\Entity\Address:
+AppBundle\Entity\Position:
     type: entity
-    table: address
-    repositoryClass: AppBundle\Entity\Repository\AddressRepository
+    table: position
+    repositoryClass: AppBundle\Entity\Repository\PositionRepository
     id:
         id:
             type: integer
@@ -11,41 +11,17 @@ AppBundle\Entity\Address:
             generator:
                 strategy: IDENTITY
     fields:
-        street:
-            type: string
-            length: 50
-            nullable: true
-            options:
-                fixed: false
-        house_number:
-            type: string
-            length: 5
-            nullable: true
-            options:
-                fixed: false
-        flat_number:
-            type: string
-            length: 5
-            nullable: true
-            options:
-                fixed: false
-        post_code:
-            type: string
-            length: 6
-            nullable: true
-            options:
-                fixed: true
-        city:
-            type: string
-            length: 50
-            nullable: true
-            options:
-                fixed: false
-        province_id:
+        workshop_id:
             type: integer
-            nullable: true
+            nullable: false
             options:
                 unsigned: true
+        name:
+            type: string
+            length: 30
+            nullable: false
+            options:
+                fixed: false
         created_at:
             type: datetime
             nullable: false
@@ -79,11 +55,10 @@ AppBundle\Entity\Address:
             options:
                 unsigned: true
     manyToOne:
-        province:
-            targetEntity: Province
-            inversedBy: addresses
+        workshop:
+            targetEntity: Workshop
             joinColumn:
-                name: province_id
+                name: workshop_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User
@@ -105,10 +80,10 @@ AppBundle\Entity\Address:
             joinColumn:
                 name: deleted_by_id
                 referencedColumnName: id
-    oneToOne:
-        workshop:
-            targetEntity: Workshop
-            mappedBy: address
-        user:
+    manyToMany:
+        workmans:
             targetEntity: AppBundle\Entity\User
-            mappedBy: address
+            mappedBy: positions
+    uniqueConstraints:
+        workshop_name:
+            columns: [ workshop_id, name ]

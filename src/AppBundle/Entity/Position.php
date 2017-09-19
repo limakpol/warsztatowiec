@@ -3,24 +3,14 @@
 namespace AppBundle\Entity;
 
 /**
- * UserRole
+ * Position
  */
-class UserRole
+class Position
 {
-    const ROLE_USER         = 'ROLE_USER';
-    const ROLE_TESTER       = 'ROLE_TESTER';
-    const ROLE_ADMIN        = 'ROLE_ADMIN';
-    const ROLE_DEVELOPER    = 'ROLE_DEVELOPER';
-
     /**
      * @var integer
      */
     private $id;
-
-    /**
-     * @var integer
-     */
-    private $user_id;
 
     /**
      * @var integer
@@ -30,7 +20,7 @@ class UserRole
     /**
      * @var string
      */
-    private $role;
+    private $name;
 
     /**
      * @var \DateTime
@@ -73,11 +63,6 @@ class UserRole
     private $deleted_by_id;
 
     /**
-     * @var \AppBundle\Entity\User
-     */
-    private $user;
-
-    /**
      * @var \AppBundle\Entity\Workshop
      */
     private $workshop;
@@ -102,6 +87,18 @@ class UserRole
      */
     private $deleted_by;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $workmans;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->workmans = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -114,35 +111,11 @@ class UserRole
     }
 
     /**
-     * Set userId
-     *
-     * @param integer $userId
-     *
-     * @return UserRole
-     */
-    public function setUserId($userId)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
      * Set workshopId
      *
      * @param integer $workshopId
      *
-     * @return UserRole
+     * @return Position
      */
     public function setWorkshopId($workshopId)
     {
@@ -162,27 +135,27 @@ class UserRole
     }
 
     /**
-     * Set role
+     * Set name
      *
-     * @param string $role
+     * @param string $name
      *
-     * @return UserRole
+     * @return Position
      */
-    public function setRole($role)
+    public function setName($name)
     {
-        $this->role = $role;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get role
+     * Get name
      *
      * @return string
      */
-    public function getRole()
+    public function getName()
     {
-        return $this->role;
+        return $this->name;
     }
 
     /**
@@ -190,7 +163,7 @@ class UserRole
      *
      * @param \DateTime $createdAt
      *
-     * @return UserRole
+     * @return Position
      */
     public function setCreatedAt($createdAt)
     {
@@ -214,7 +187,7 @@ class UserRole
      *
      * @param \DateTime $updatedAt
      *
-     * @return UserRole
+     * @return Position
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -238,7 +211,7 @@ class UserRole
      *
      * @param \DateTime $removedAt
      *
-     * @return UserRole
+     * @return Position
      */
     public function setRemovedAt($removedAt)
     {
@@ -262,7 +235,7 @@ class UserRole
      *
      * @param \DateTime $deletedAt
      *
-     * @return UserRole
+     * @return Position
      */
     public function setDeletedAt($deletedAt)
     {
@@ -286,7 +259,7 @@ class UserRole
      *
      * @param integer $createdById
      *
-     * @return UserRole
+     * @return Position
      */
     public function setCreatedById($createdById)
     {
@@ -310,7 +283,7 @@ class UserRole
      *
      * @param integer $updatedById
      *
-     * @return UserRole
+     * @return Position
      */
     public function setUpdatedById($updatedById)
     {
@@ -334,7 +307,7 @@ class UserRole
      *
      * @param integer $removedById
      *
-     * @return UserRole
+     * @return Position
      */
     public function setRemovedById($removedById)
     {
@@ -358,7 +331,7 @@ class UserRole
      *
      * @param integer $deletedById
      *
-     * @return UserRole
+     * @return Position
      */
     public function setDeletedById($deletedById)
     {
@@ -378,35 +351,11 @@ class UserRole
     }
 
     /**
-     * Set user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return UserRole
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set workshop
      *
      * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return UserRole
+     * @return Position
      */
     public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
@@ -430,7 +379,7 @@ class UserRole
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return UserRole
+     * @return Position
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -454,7 +403,7 @@ class UserRole
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return UserRole
+     * @return Position
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -478,7 +427,7 @@ class UserRole
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return UserRole
+     * @return Position
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -502,7 +451,7 @@ class UserRole
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return UserRole
+     * @return Position
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -519,6 +468,40 @@ class UserRole
     public function getDeletedBy()
     {
         return $this->deleted_by;
+    }
+
+    /**
+     * Add workman
+     *
+     * @param \AppBundle\Entity\User $workman
+     *
+     * @return Position
+     */
+    public function addWorkman(\AppBundle\Entity\User $workman)
+    {
+        $this->workmans[] = $workman;
+
+        return $this;
+    }
+
+    /**
+     * Remove workman
+     *
+     * @param \AppBundle\Entity\User $workman
+     */
+    public function removeWorkman(\AppBundle\Entity\User $workman)
+    {
+        $this->workmans->removeElement($workman);
+    }
+
+    /**
+     * Get workmans
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkmans()
+    {
+        return $this->workmans;
     }
 }
 
