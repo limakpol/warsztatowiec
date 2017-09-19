@@ -80,6 +80,10 @@ AppBundle\Entity\Category:
             joinColumn:
                 name: deleted_by_id
                 referencedColumnName: id
+    manyToMany:
+        goods:
+            targetEntity: Good
+            mappedBy: categories
     uniqueConstraints:
         workshop_name:
             columns: [ workshop_id, name ]

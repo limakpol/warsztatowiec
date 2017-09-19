@@ -892,4 +892,3 @@ class Customer
         return $this->groups;
     }
 }
-

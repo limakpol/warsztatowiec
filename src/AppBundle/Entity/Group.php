@@ -504,4 +504,3 @@ class Group
         return $this->customers;
     }
 }
-

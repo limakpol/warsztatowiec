@@ -765,4 +765,3 @@ class SaleHeader
         return $this->deleted_by;
     }
 }
-

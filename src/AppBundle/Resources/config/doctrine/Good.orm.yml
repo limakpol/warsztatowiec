@@ -90,12 +90,6 @@ AppBundle\Entity\Good:
             joinColumn:
                 name: measure_id
                 referencedColumnName: id
-        category:
-            targetEntity: Category
-            inversedBy: goods
-            joinColumn:
-                name: category_id
-                referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User
             joinColumn:
@@ -129,6 +123,17 @@ AppBundle\Entity\Good:
                 name: model_good
                 joinColumns:
                     model_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    good_id:
+                        referencedColumnName: id
+        categories:
+            targetEntity: AppBundle\Entity\Category
+            inversedBy: goods
+            joinTable:
+                name: category_good
+                joinColumns:
+                    category_id:
                         referencedColumnName: id
                 inverseJoinColumns:
                     good_id:

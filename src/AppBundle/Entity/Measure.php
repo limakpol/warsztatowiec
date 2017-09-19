@@ -516,4 +516,3 @@ class Measure
         return $this->deleted_by;
     }
 }
-

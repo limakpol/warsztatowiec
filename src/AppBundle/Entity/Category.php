@@ -87,6 +87,18 @@ class Category
      */
     private $deleted_by;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $goods;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->goods = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -456,6 +468,40 @@ class Category
     public function getDeletedBy()
     {
         return $this->deleted_by;
+    }
+
+    /**
+     * Add good
+     *
+     * @param \AppBundle\Entity\Good $good
+     *
+     * @return Category
+     */
+    public function addGood(\AppBundle\Entity\Good $good)
+    {
+        $this->goods[] = $good;
+
+        return $this;
+    }
+
+    /**
+     * Remove good
+     *
+     * @param \AppBundle\Entity\Good $good
+     */
+    public function removeGood(\AppBundle\Entity\Good $good)
+    {
+        $this->goods->removeElement($good);
+    }
+
+    /**
+     * Get goods
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGoods()
+    {
+        return $this->goods;
     }
 }
 

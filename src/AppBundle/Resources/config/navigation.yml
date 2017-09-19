@@ -1,40 +1,49 @@
 header_menu:
     1:
         name: moje konto
-        route: main_header_account
+        route: header_user_edit_index
     2:
         name: zmiana hasła
-        route: main_header_change_password
+        route: header_change_password_index
     3:
         name: mój warsztat
-        route: main_header_workshop
+        route: header_workshop_edit_index
     4:
-        name: płatności
-        route: main_header_payment
+        name: inne moje warsztaty
+        route: header_workshop_index
     5:
-        name: ustawienia
-        route: main_header_settings
+        name: dodaj warsztat
+        route: header_workshop_add_index
     6:
-        name: parametry
-        route: main_header_parameters
+        name: płatności
+        route: header_payment_index
     7:
-        name: jednostki
-        route: main_header_units
+        name: ustawienia
+        route: header_settings_index
     8:
-        name: stanowiska
-        route: main_header_workstations
+        name: parametry
+        route: header_parameters_index
     9:
+        name: jednostki
+        route: header_measure_index
+    10:
+        name: stanowiska
+        route: header_workstation_index
+    11:
         name: statusy zleceń
-        route: main_header_statuses
+        route: header_status_index
+    12:
+        name: stanowiska pracowników
+        route: header_position_index
 main_menu:
     1:
-        tab: contractor
+        tab: customer
         name: klienci
-        route: contractor_index
+        route: customer_index
         submenu:
             1:
                 name: dodaj klienta
-                route: contractor_add
+                route: customer_add
             2:
                 name: pojazdy
                 route: vehicle_index
@@ -56,10 +65,10 @@ main_menu:
         submenu:
             1:
                 name: przyjmij
-                route: acceptance_header_add
+                route: delivery_header_add
             2:
                 name: przyjęcia
-                route: acceptance_header_index
+                route: delivery_header_index
             3:
                 name: wystaw
                 route: sale_header_add
@@ -72,31 +81,28 @@ main_menu:
             6:
                 name: kategorie
                 route: warehouse_category_index
-          #  7:
-           #     name: katalog
-            #    route: warehouse_good_catalog_index
     4:
         tab: service
         name: usługi
-        route: warehouse_service_index
+        route: service_index
         submenu:
             1:
                 name: czynności
-                route: warehouse_action_index
+                route: service_action_index
     5:
-        tab: bookkeeping
+        tab: invoice
         name: faktury
-        route: bookkeeping_index
+        route: invoice_index
         submenu:
             1:
                 name: wystaw fakturę
-                route: bookkeeping_index
+                route: invoice_index
             2:
                 name: paragony
-                route: bookkeeping_index
+                route: invoice_index
             3:
                 name: wystaw paragon
-                route: bookkeeping_index
+                route: invoice_index
     6:
         tab: storage
         name: przechowalnia
@@ -109,22 +115,19 @@ main_menu:
                 name: miejsca
                 route: storage_index
     7:
-        tab: communication
-        name: komunikacja
-        route: communication_index
+        tab: sms
+        name: SMS-y
+        route: sms_index
         submenu:
             1:
                 name: wyślij sms
-                route: communication_index
+                route: sms_index
             2:
                 name: wyślij e-mail
-                route: communication_index
+                route: email_index
             3:
-                name: sms-y wysłane
-                route: communication_index
-            4:
                 name: e-maile wysłane
-                route: communication_index
+                route: email_index
     8:
         tab: workflow
         name: zarządzanie
