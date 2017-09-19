@@ -1,0 +1,3 @@
+trash_index:
+    path: /
+    defaults: { _controller: TrashBundle:Trash:index }

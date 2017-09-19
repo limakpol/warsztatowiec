@@ -1,0 +1,3 @@
+warehouse_index:
+    path: /
+    defaults: { _controller: WarehouseBundle:Warehouse:index }

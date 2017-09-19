@@ -4,6 +4,22 @@ imports:
     - { resource: services.yml }
     - { resource: 'localized/parameters.pl.yml' }
     - { resource: '@AppBundle/Resources/config/services.yml' }
+    - { resource: '@CustomerBundle/Resources/config/services.yml' }
+    - { resource: '@VehicleBundle/Resources/config/services.yml' }
+    - { resource: '@OrderBundle/Resources/config/services.yml' }
+    - { resource: '@HeaderBundle/Resources/config/services.yml' }
+    - { resource: '@ServiceBundle/Resources/config/services.yml' }
+    - { resource: '@WarehouseBundle/Resources/config/services.yml' }
+    - { resource: '@DeliveryBundle/Resources/config/services.yml' }
+    - { resource: '@SaleBundle/Resources/config/services.yml' }
+    - { resource: '@InvoiceBundle/Resources/config/services.yml' }
+    - { resource: '@StorageBundle/Resources/config/services.yml' }
+    - { resource: '@SmsBundle/Resources/config/services.yml' }
+    - { resource: '@EmailBundle/Resources/config/services.yml' }
+    - { resource: '@UserBundle/Resources/config/services.yml' }
+    - { resource: '@WorkflowBundle/Resources/config/services.yml' }
+    - { resource: '@TrashBundle/Resources/config/services.yml' }
+
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

@@ -1,0 +1,3 @@
+sale_index:
+    path: /
+    defaults: { _controller: SaleBundle:Sale:index }

@@ -1,0 +1,3 @@
+order_index:
+    path: /
+    defaults: { _controller: OrderBundle:Order:index }

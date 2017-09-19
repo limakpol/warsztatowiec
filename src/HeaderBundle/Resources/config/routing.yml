@@ -1,0 +1,3 @@
+header_index:
+    path: /
+    defaults: { _controller: HeaderBundle:Header:index }

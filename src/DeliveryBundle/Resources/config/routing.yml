@@ -1,0 +1,3 @@
+delivery_index:
+    path: /
+    defaults: { _controller: DeliveryBundle:Delivery:index }

@@ -1,10 +1,24 @@
 <?php
 
 use CustomerBundle\CustomerBundle;
+use DeliveryBundle\DeliveryBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
+use EmailBundle\EmailBundle;
+use HeaderBundle\HeaderBundle;
+use InvoiceBundle\InvoiceBundle;
+use OrderBundle\OrderBundle;
+use SaleBundle\SaleBundle;
+use ServiceBundle\ServiceBundle;
+use SmsBundle\SmsBundle;
+use StorageBundle\StorageBundle;
 use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use TrashBundle\TrashBundle;
+use UserBundle\UserBundle;
+use VehicleBundle\VehicleBundle;
+use WarehouseBundle\WarehouseBundle;
+use WorkflowBundle\WorkflowBundle;
 
 class AppKernel extends Kernel
 {
@@ -22,6 +36,20 @@ class AppKernel extends Kernel
             new DoctrineMigrationsBundle(),
             new AsseticBundle(),
             new CustomerBundle(),
+            new SaleBundle(),
+            new VehicleBundle(),
+            new OrderBundle(),
+            new HeaderBundle(),
+            new ServiceBundle(),
+            new WarehouseBundle(),
+            new DeliveryBundle(),
+            new InvoiceBundle(),
+            new StorageBundle(),
+            new SmsBundle(),
+            new EmailBundle(),
+            new UserBundle(),
+            new WorkflowBundle(),
+            new TrashBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -5,7 +5,21 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
-            "CustomerBundle\\": "src/CustomerBundle"
+            "CustomerBundle\\": "src/CustomerBundle",
+            "SaleBundle\\": "src/SaleBundle",
+            "VehicleBundle\\": "src/VehicleBundle",
+            "OrderBundle\\": "src/OrderBundle",
+            "HeaderBundle\\": "src/HeaderBundle",
+            "ServiceBundle\\": "src/ServiceBundle",
+            "WarehouseBundle\\": "src/WarehouseBundle",
+            "DeliveryBundle\\": "src/DeliveryBundle",
+            "InvoiceBundle\\": "src/InvoiceBundle",
+            "StorageBundle\\": "src/StorageBundle",
+            "SmsBundle\\": "src/SmsBundle",
+            "EmailBundle\\": "src/EmailBundle",
+            "UserBundle\\": "src/UserBundle",
+            "WorkflowBundle\\": "src/WorkflowBundle",
+            "TrashBundle\\": "src/TrashBundle"
         },
         "classmap": [
             "app/AppKernel.php",

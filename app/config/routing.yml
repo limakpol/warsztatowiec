@@ -2,6 +2,64 @@ app:
     resource: '@AppBundle/Resources/config/routing.yml'
     prefix: /
 
+header:
+    resource: "@HeaderBundle/Resources/config/routing.yml"
+    prefix: /header
+
 customer:
     resource: '@CustomerBundle/Resources/config/routing.yml'
     prefix: /klienci
+
+vehicle:
+    resource: "@VehicleBundle/Resources/config/routing.yml"
+    prefix: /pojazdy
+
+order:
+    resource: "@OrderBundle/Resources/config/routing.yml"
+    prefix: /zlecenia-serwisowe
+
+delivery:
+    resource: "@DeliveryBundle/Resources/config/routing.yml"
+    prefix: /przyjecia-towaru
+
+sale:
+    resource: "@SaleBundle/Resources/config/routing.yml"
+    prefix: /wystawienia
+
+warehouse:
+    resource: "@WarehouseBundle/Resources/config/routing.yml"
+    prefix: /towary
+
+service:
+    resource: "@ServiceBundle/Resources/config/routing.yml"
+    prefix: /uslugi
+
+invoice:
+    resource: "@InvoiceBundle/Resources/config/routing.yml"
+    prefix: /faktury
+
+storage:
+    resource: "@StorageBundle/Resources/config/routing.yml"
+    prefix: /przechowalnia
+
+sms:
+    resource: "@SmsBundle/Resources/config/routing.yml"
+    prefix: /sms
+
+email:
+    resource: "@EmailBundle/Resources/config/routing.yml"
+    prefix: /e-mail
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix: /pracownicy
+
+workflow:
+    resource: "@WorkflowBundle/Resources/config/routing.yml"
+    prefix: /zarzadzanie
+
+trash:
+    resource: "@TrashBundle/Resources/config/routing.yml"
+    prefix: /kosz
+
+

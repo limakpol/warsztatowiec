@@ -1,0 +1,3 @@
+workflow_index:
+    path: /
+    defaults: { _controller: WorkflowBundle:Workflow:index }
