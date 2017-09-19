@@ -1,1 +1,9 @@
-header
+<a href="{{ path('app_homepage_index') }}"><img src="{{ asset('assets/img/logo_beta.png') }}"></a>
+<div>
+    <div>{{ app.user.currentWorkshop.name }}</div>
+    <div>
+        <span>{{ app.user.forename }} {{ app.user.surname }}</span>
+        <span>{{ app.user.email }}</span>
+    </div>
+</div>
+<a href="{{ path('app_logout') }}" class="a-logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>

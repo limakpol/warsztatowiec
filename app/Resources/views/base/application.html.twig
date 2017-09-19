@@ -7,6 +7,7 @@
     {% block stylesheets %}
     {% stylesheets
         'assets/css/application/layout/layout.css'
+        'assets/css/application/layout/header.css'
         'assets/css/application/layout/buttons.css'
     filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -20,47 +21,47 @@
 <body>
 {% block body %}
     <div id="wrapper">
-        <section>
+        <section class="header">
             <header class="section-inner">
                 {% block header %}
                     {% include 'AppBundle:layout:header.html.twig' %}
                 {% endblock %}
             </header>
         </section>
-        <section>
+        <section class="header">
             <div id="div-header-settings" class="section-inner">
                 {% block settings %}
                     {% include 'AppBundle:layout:settings.html.twig' %}
                 {% endblock %}
             </div>
         </section>
-        <section>
+        <section class="main">
             <nav class="section-inner">
                 {% block nav %}
                     {% include 'AppBundle:layout:nav.html.twig' %}
                 {% endblock %}
             </nav>
         </section>
-        <section>
+        <section class="main">
             <div id="div-navbar" class="section-inner">
                 {% block navbar %}
                     {% include 'AppBundle:layout:navbar.html.twig' %}
                 {% endblock %}
             </div>
         </section>
-        <section>
+        <section class="main">
             <div id="div-customerinfo" class="section-inner">
                 {% block customerinfo %}
                     {% include 'AppBundle:layout:customerinfo.html.twig' %}
                 {% endblock %}
             </div>
         </section>
-        <section>
+        <section class="main">
             <main class="section-inner">
                 {% block main %}{% endblock %}
             </main>
         </section>
-        <section>
+        <section class="footer">
             <footer class="section-inner">
                 {% block footer %}
                     {% include 'AppBundle:layout:footer.html.twig' %}
