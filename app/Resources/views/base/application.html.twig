@@ -20,21 +20,64 @@
 <body>
 {% block body %}
     <div id="wrapper">
-        <header>{% block header %}{% endblock %}</header>
-        <div id="customerinfo">{% block customerinfo %}{% endblock %}</div>
-        <nav>{% block nav %}{% endblock %}</nav>
-        <div id="navbar">{% block navbar %}{% endblock %}</div>
-        <main>{% block main %}{% endblock %}</main>
-        <footer>{% block footer %}{% endblock %}</footer>
+        <section>
+            <header class="section-inner">
+                {% block header %}
+                    {% include 'AppBundle:layout:header.html.twig' %}
+                {% endblock %}
+            </header>
+        </section>
+        <section>
+            <div id="div-header-settings" class="section-inner">
+                {% block settings %}
+                    {% include 'AppBundle:layout:settings.html.twig' %}
+                {% endblock %}
+            </div>
+        </section>
+        <section>
+            <nav class="section-inner">
+                {% block nav %}
+                    {% include 'AppBundle:layout:nav.html.twig' %}
+                {% endblock %}
+            </nav>
+        </section>
+        <section>
+            <div id="div-navbar" class="section-inner">
+                {% block navbar %}
+                    {% include 'AppBundle:layout:navbar.html.twig' %}
+                {% endblock %}
+            </div>
+        </section>
+        <section>
+            <div id="div-customerinfo" class="section-inner">
+                {% block customerinfo %}
+                    {% include 'AppBundle:layout:customerinfo.html.twig' %}
+                {% endblock %}
+            </div>
+        </section>
+        <section>
+            <main class="section-inner">
+                {% block main %}{% endblock %}
+            </main>
+        </section>
+        <section>
+            <footer class="section-inner">
+                {% block footer %}
+                    {% include 'AppBundle:layout:footer.html.twig' %}
+                {% endblock %}
+            </footer>
+        </section>
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="https://use.fontawesome.com/7bc874a398.js"></script>
-    <script
+    <!--<script src="https://use.fontawesome.com/7bc874a398.js"></script> -->
+    <script src="{{ asset('assets/js/font_awesome.js') }}"></script>
+    <!-- <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
-    </script>
+    </script> -->
+    <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>

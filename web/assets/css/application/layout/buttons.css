@@ -1,6 +1,3 @@
-body {
-    background-color: #fff;
-}
 .btn-square i {
     margin: 0 !important;
     width: 14px;
@@ -45,9 +42,6 @@ body {
 
 @media screen and (min-width: 960px)
 {
-    body {
-        background-color: #ddd;
-    }
     [class*='btn-'] {
         font-size: 14px;
         padding: 6px;
