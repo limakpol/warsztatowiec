@@ -12,4 +12,10 @@ class CustomerController extends Controller
 
         return $this->render('CustomerBundle::index.html.twig');
     }
+
+    public function addAction()
+    {
+
+        return $this->render('CustomerBundle::add.html.twig');
+    }
 }

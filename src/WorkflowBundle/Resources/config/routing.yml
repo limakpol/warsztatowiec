@@ -1,3 +1,11 @@
 workflow_index:
-    path: /
+    path: /zarzadzanie
     defaults: { _controller: WorkflowBundle:Workflow:index }
+
+workflow_workman_index:
+    path: /pracownicy
+    defaults: { _controller: WorkflowBundle:Workman:index }
+
+workflow_workman_add:
+    path: /dodaj-pracownika
+    defaults: { _controller: WorkflowBundle:Workman:add }

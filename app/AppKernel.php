@@ -47,7 +47,6 @@ class AppKernel extends Kernel
             new StorageBundle(),
             new SmsBundle(),
             new EmailBundle(),
-            new UserBundle(),
             new WorkflowBundle(),
             new TrashBundle(),
         ];

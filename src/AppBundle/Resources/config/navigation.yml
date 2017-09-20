@@ -129,7 +129,7 @@ main_menu:
         submenu:
             1:
                 name: dodaj pracownika
-                route: workflow_add_workman
+                route: workflow_workman_add
             2:
                 name: pracownicy
                 route: workflow_workman_index

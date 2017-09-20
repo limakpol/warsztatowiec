@@ -16,7 +16,6 @@ imports:
     - { resource: '@StorageBundle/Resources/config/services.yml' }
     - { resource: '@SmsBundle/Resources/config/services.yml' }
     - { resource: '@EmailBundle/Resources/config/services.yml' }
-    - { resource: '@UserBundle/Resources/config/services.yml' }
     - { resource: '@WorkflowBundle/Resources/config/services.yml' }
     - { resource: '@TrashBundle/Resources/config/services.yml' }
 

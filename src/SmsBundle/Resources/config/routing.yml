@@ -1,3 +1,3 @@
 sms_index:
-    path: /
+    path: /sms-y
     defaults: { _controller: SmsBundle:Sms:index }

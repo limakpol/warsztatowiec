@@ -9,6 +9,6 @@ class ServiceController extends Controller
     public function indexAction()
     {
 
-        return $this->render('ServiceBundle::index.html.twig');
+        return $this->render('ServiceBundle:service:index.html.twig');
     }
 }

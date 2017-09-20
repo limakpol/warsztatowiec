@@ -1,3 +1,7 @@
-order_index:
-    path: /
+order_header_index:
+    path: /zlecenia-serwisowe
     defaults: { _controller: OrderBundle:Order:index }
+
+order_header_add:
+    path: /nowe-zlecenie
+    defaults: { _controller: OrderBundle:Order:add }

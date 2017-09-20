@@ -9,6 +9,12 @@ class DeliveryController extends Controller
     public function indexAction()
     {
 
-        return $this->render('DeliveryBundle::index.html.twig');
+        return $this->render('DeliveryBundle:header:index.html.twig');
+    }
+
+    public function addAction()
+    {
+
+        return $this->render('DeliveryBundle:header:add.html.twig');
     }
 }

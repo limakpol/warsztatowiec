@@ -1,3 +1,7 @@
 vehicle_index:
-    path: /
+    path: /pojazdy
     defaults: { _controller: VehicleBundle:Vehicle:index }
+
+vehicle_add:
+    path: /dodaj-pojazd
+    defaults: { _controller: VehicleBundle:Vehicle:add }

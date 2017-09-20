@@ -11,4 +11,10 @@ class OrderController extends Controller
 
         return $this->render('OrderBundle::index.html.twig');
     }
+
+    public function addAction()
+    {
+
+        return $this->render('OrderBundle:header:add.html.twig');
+    }
 }

@@ -9,6 +9,12 @@ class SaleController extends Controller
     public function indexAction()
     {
 
-        return $this->render('SaleBundle::index.html.twig');
+        return $this->render('SaleBundle:header:index.html.twig');
+    }
+
+    public function addAction()
+    {
+
+        return $this->render('SaleBundle:header:add.html.twig');
     }
 }

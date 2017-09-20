@@ -11,4 +11,10 @@ class VehicleController extends Controller
 
         return $this->render('VehicleBundle::index.html.twig');
     }
+
+    public function addAction()
+    {
+
+        return $this->render('VehicleBundle::add.html.twig');
+    }
 }

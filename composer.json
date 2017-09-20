@@ -17,7 +17,6 @@
             "StorageBundle\\": "src/StorageBundle",
             "SmsBundle\\": "src/SmsBundle",
             "EmailBundle\\": "src/EmailBundle",
-            "UserBundle\\": "src/UserBundle",
             "WorkflowBundle\\": "src/WorkflowBundle",
             "TrashBundle\\": "src/TrashBundle"
         },

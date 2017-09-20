@@ -1,3 +1,7 @@
 service_index:
-    path: /
+    path: /uslugi
     defaults: { _controller: ServiceBundle:Service:index }
+
+action_index:
+    path: /czynnosci
+    defaults: { _controller: ServiceBundle:Action:index }

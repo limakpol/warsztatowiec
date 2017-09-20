@@ -8,58 +8,54 @@ header:
 
 customer:
     resource: '@CustomerBundle/Resources/config/routing.yml'
-    prefix: /klienci
+    prefix: /
 
 vehicle:
     resource: "@VehicleBundle/Resources/config/routing.yml"
-    prefix: /pojazdy
+    prefix: /
 
 order:
     resource: "@OrderBundle/Resources/config/routing.yml"
-    prefix: /zlecenia-serwisowe
+    prefix: /
 
 delivery:
     resource: "@DeliveryBundle/Resources/config/routing.yml"
-    prefix: /przyjecia-towaru
+    prefix: /
 
 sale:
     resource: "@SaleBundle/Resources/config/routing.yml"
-    prefix: /wystawienia
+    prefix: /
 
 warehouse:
     resource: "@WarehouseBundle/Resources/config/routing.yml"
-    prefix: /towary
+    prefix: /
 
 service:
     resource: "@ServiceBundle/Resources/config/routing.yml"
-    prefix: /uslugi
+    prefix: /
 
 invoice:
     resource: "@InvoiceBundle/Resources/config/routing.yml"
-    prefix: /faktury
+    prefix: /
 
 storage:
     resource: "@StorageBundle/Resources/config/routing.yml"
-    prefix: /przechowalnia
+    prefix: /
 
 sms:
     resource: "@SmsBundle/Resources/config/routing.yml"
-    prefix: /sms
+    prefix: /
 
 email:
     resource: "@EmailBundle/Resources/config/routing.yml"
-    prefix: /e-mail
-
-user:
-    resource: "@UserBundle/Resources/config/routing.yml"
-    prefix: /pracownicy
+    prefix: /
 
 workflow:
     resource: "@WorkflowBundle/Resources/config/routing.yml"
-    prefix: /zarzadzanie
+    prefix: /
 
 trash:
     resource: "@TrashBundle/Resources/config/routing.yml"
-    prefix: /kosz
+    prefix: /
 
 

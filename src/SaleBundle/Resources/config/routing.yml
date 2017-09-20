@@ -1,3 +1,7 @@
-sale_index:
-    path: /
+sale_header_index:
+    path: /wystawienia-towaru
     defaults: { _controller: SaleBundle:Sale:index }
+
+sale_header_add:
+    path: /wystaw-towar
+    defaults: { _controller: SaleBundle:Sale:add }

@@ -9,6 +9,8 @@ class WarehouseController extends Controller
     public function indexAction()
     {
 
-        return $this->render('WarehouseBundle::index.html.twig');
+        return $this->render('WarehouseBundle:good:index.html.twig');
     }
+
+
 }
