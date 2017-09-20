@@ -9,30 +9,24 @@ header_menu:
         name: mój warsztat
         route: header_workshop_edit_index
     4:
-        name: inne moje warsztaty
-        route: header_workshop_index
-    5:
-        name: dodaj warsztat
-        route: header_workshop_add_index
-    6:
         name: płatności
         route: header_payment_index
-    7:
+    5:
         name: ustawienia
         route: header_settings_index
-    8:
+    6:
         name: parametry
         route: header_parameters_index
-    9:
+    7:
         name: jednostki
         route: header_measure_index
-    10:
-        name: stanowiska
+    8:
+        name: stanowiska naprawcze
         route: header_workstation_index
-    11:
+    9:
         name: statusy zleceń
         route: header_status_index
-    12:
+    10:
         name: stanowiska pracowników
         route: header_position_index
 main_menu:
