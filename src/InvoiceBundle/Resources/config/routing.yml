@@ -1,3 +1,11 @@
 invoice_index:
     path: /faktury
     defaults: { _controller: InvoiceBundle:Invoice:index }
+
+invoice_add:
+    path: /wystaw-fakture
+    defaults: { _controller: InvoiceBundle:Invoice:add }
+
+bill_index:
+    path: /paragony
+    defaults: { _controller: InvoiceBundle:Bill:index }

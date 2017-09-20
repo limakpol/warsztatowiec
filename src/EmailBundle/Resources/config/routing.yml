@@ -1,3 +1,7 @@
 email_index:
     path: /e-maile
     defaults: { _controller: EmailBundle:Email:index }
+
+email_send:
+    path: /wyslij-e-mail
+    defaults: { _controller: EmailBundle:Email:send }

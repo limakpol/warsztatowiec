@@ -90,24 +90,21 @@ main_menu:
         submenu:
             1:
                 name: wystaw fakturę
-                route: invoice_index
+                route: invoice_add
             2:
                 name: paragony
-                route: invoice_index
-            3:
-                name: wystaw paragon
-                route: invoice_index
+                route: bill_index
     6:
         tab: storage
         name: przechowalnia
-        route: storage_index
+        route: storage_general_index
         submenu:
             1:
                 name: przechowalnia opon
-                route: storage_index
+                route: storage_tire_index
             2:
                 name: miejsca
-                route: storage_index
+                route: storage_place_index
     7:
         tab: sms
         name: SMS
@@ -115,10 +112,10 @@ main_menu:
         submenu:
             1:
                 name: wyślij sms
-                route: sms_index
+                route: sms_send
             2:
                 name: wyślij e-mail
-                route: email_index
+                route: email_send
             3:
                 name: e-maile wysłane
                 route: email_index
@@ -135,7 +132,7 @@ main_menu:
                 route: workflow_workman_index
             3:
                 name: terminarz
-                route: workflow_index
+                route: workflow_schedule_index
             4:
                 name: kosz
                 route: trash_index

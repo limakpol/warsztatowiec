@@ -8,13 +8,29 @@ class VehicleController extends Controller
 {
     public function indexAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('VehicleBundle::index.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('VehicleBundle::index.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Pojazdy',
+        ]);
     }
 
     public function addAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('VehicleBundle::add.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('VehicleBundle::add.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Dodawanie nowego pojazdu',
+        ]);
     }
 }

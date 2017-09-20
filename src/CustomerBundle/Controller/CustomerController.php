@@ -14,17 +14,25 @@ class CustomerController extends Controller
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
-
         return $this->render('CustomerBundle::index.html.twig', [
-            'headerMenu' => $headerMenu,
-            'mainMenu'   => $mainMenu,
-            'tab'       => 'customer',
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Klienci',
         ]);
     }
 
     public function addAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('CustomerBundle::add.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('CustomerBundle::add.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Dodawanie nowego klienta',
+        ]);
     }
 }

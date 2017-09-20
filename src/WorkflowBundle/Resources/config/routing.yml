@@ -9,3 +9,7 @@ workflow_workman_index:
 workflow_workman_add:
     path: /dodaj-pracownika
     defaults: { _controller: WorkflowBundle:Workman:add }
+
+workflow_schedule_index:
+    path: /terminarz
+    defaults: { _controller: WorkflowBundle:Schedule:index }

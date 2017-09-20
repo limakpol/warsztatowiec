@@ -1,3 +1,11 @@
-storage_index:
+storage_general_index:
     path: /przechowalnia
     defaults: { _controller: StorageBundle:Storage:index }
+
+storage_tire_index:
+    path: /przechowalnia-opon
+    defaults: { _controller: StorageBundle:TireStorage:index }
+
+storage_place_index:
+    path: /miejsca
+    defaults: { _controller: StorageBundle:Place:index }

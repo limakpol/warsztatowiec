@@ -3,28 +3,27 @@
  * Created by PhpStorm.
  * User: limakpol
  * Date: 9/20/17
- * Time: 2:30 AM
+ * Time: 1:10 PM
  */
 
-namespace ServiceBundle\Controller;
+namespace InvoiceBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ActionController extends Controller
+class BillController extends Controller
 {
-
     public function indexAction()
     {
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
-        return $this->render('ServiceBundle:action:index.html.twig', [
+        return $this->render('InvoiceBundle:bill:index.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
-            'tab'           => 'service',
-            'navbar'        => 'Czynności dodawane do towarów w zleceniach',
+            'tab'           => 'invoice',
+            'navbar'        => 'Paragony',
         ]);
     }
 }

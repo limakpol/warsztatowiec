@@ -1,0 +1,35 @@
+#div-navbar {
+    font: 12px "Ubuntu", sans-serif;
+    padding: 10px;
+    margin: 10px auto 10px auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    color: #666;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 700px)
+{
+    #div-navbar {
+        font-size: 12px;
+    }
+
+}
+@media screen and (min-width: 850px)
+{
+    #div-navbar {
+        font-size: 13px;
+    }
+}
+@media screen and (min-width: 960px)
+{
+    #div-navbar {
+        font-size: 15px;
+    }
+}
+@media screen and (min-width: 1150px)
+{
+    #div-navbar {
+        font-size: 16px;
+    }
+}

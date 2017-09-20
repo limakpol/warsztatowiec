@@ -1,3 +1,7 @@
 sms_index:
     path: /sms-y
     defaults: { _controller: SmsBundle:Sms:index }
+
+sms_send:
+    path: /wyslij-sms
+    defaults: { _controller: SmsBundle:Sms:send }

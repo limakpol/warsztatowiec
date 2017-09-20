@@ -42,6 +42,6 @@ section.footer {
     display: flex;
     margin: 0 auto 0 auto;
 }
-section.main {
-    min-height: 200px;
+main {
+    min-height: 600px;
 }

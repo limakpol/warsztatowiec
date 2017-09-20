@@ -8,7 +8,15 @@ class WorkflowController extends Controller
 {
     public function indexAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('WorkflowBundle::index.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('WorkflowBundle::index.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'workflow',
+            'navbar'        => 'Zarządzanie',
+        ]);
     }
 }

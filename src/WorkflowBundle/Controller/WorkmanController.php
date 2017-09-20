@@ -15,13 +15,30 @@ class WorkmanController extends Controller
 {
     public function indexAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('WorkflowBundle:workman:index.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('WorkflowBundle:workman:index.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'workflow',
+            'navbar'        => 'Pracownicy',
+        ]);
     }
 
     public function addAction()
     {
 
-        return $this->render('WorkflowBundle:workman:add.html.twig');
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('WorkflowBundle:workman:add.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'workflow',
+            'navbar'        => 'Dodawanie nowego pracownika',
+        ]);
     }
 }

@@ -8,7 +8,15 @@ class StorageController extends Controller
 {
     public function indexAction()
     {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
-        return $this->render('StorageBundle::index.html.twig');
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('StorageBundle:general:index.html.twig', [
+            'headerMenu' => $headerMenu,
+            'mainMenu' => $mainMenu,
+            'tab' => 'storage',
+            'navbar' => 'Przechowalnia ogólna',
+        ]);
     }
 }
