@@ -10,7 +10,16 @@ class CustomerController extends Controller
     public function indexAction()
     {
 
-        return $this->render('CustomerBundle::index.html.twig');
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+
+        return $this->render('CustomerBundle::index.html.twig', [
+            'headerMenu' => $headerMenu,
+            'mainMenu'   => $mainMenu,
+            'tab'       => 'customer',
+        ]);
     }
 
     public function addAction()

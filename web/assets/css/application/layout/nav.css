@@ -1,0 +1,108 @@
+nav > ul {
+    height: 100%;
+}
+nav > ul > li > a {
+    color: #aaa;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    display: inline-table;
+    text-align: left;
+}
+nav ul:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+nav ul li {
+    float: left;
+    height: 100%;
+}
+nav ul li:hover {
+    background: #ff5a00;
+    background: linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+    background: -moz-linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+    background: -webkit-linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+}
+nav ul li:hover a {
+    color: #fff;
+}
+nav ul li a {
+    display: block;
+    padding: 7px 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font: bold 10px 'Ubuntu', sans-serif;
+}
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul ul {
+    display: none;
+    position: absolute;
+    padding: 0;
+    background: #ff5a00;
+    box-shadow: 0 0 9px rgba(255, 69, 34, 0.15);
+}
+nav ul ul li {
+    float: none;
+    border-top: 1px solid #ff6b25;
+    border-bottom: 1px solid #ff6b25;
+}
+nav ul ul li a {
+    text-transform: none;
+    font: 10px 'Ubuntu', sans-serif;
+}
+.tabActive > a {
+    background: #ff5a00;
+    background: linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+    background: -moz-linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+    background: -webkit-linear-gradient(top, #ff5a00 0%, #ff6b25 40%);
+    color: #fff;
+}
+
+@media screen and (min-width: 700px)
+{
+    nav ul li a {
+        font-size: 12px;
+        padding: 8px 11px;
+    }
+    nav ul ul li a {
+        font-size: 12px;
+    }
+}
+@media screen and (min-width: 850px)
+{
+    nav ul li a {
+        font-size: 13px;
+        padding: 9px 12px;
+    }
+    nav ul ul li a {
+        font-size: 13px;
+    }
+}
+@media screen and (min-width: 960px)
+{
+    nav ul li a {
+        font-size: 15px;
+        padding: 10px 14px;
+    }
+    nav ul ul li a {
+        font-size: 15px;
+    }
+}
+@media screen and (min-width: 1150px)
+{
+    nav ul li a {
+        font-size: 16px;
+        padding: 11px 15px;
+    }
+    nav ul ul li a {
+        font-size: 16px;
+    }
+}
+

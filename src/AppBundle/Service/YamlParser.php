@@ -77,4 +77,27 @@ class YamlParser
 
         return $tableNames;
     }
+
+    public function getHeaderMenu()
+    {
+        $fileDir = __DIR__.'/../Resources/config';
+
+        $fileName = 'navigation.yml';
+
+        $nav = $this->parse($fileDir, $fileName);
+
+        return $nav['header_menu'];
+    }
+
+    public  function  getMainMenu()
+    {
+        $fileDir = __DIR__.'/../Resources/config';
+
+        $fileName = 'navigation.yml';
+
+        $nav = $this->parse($fileDir, $fileName);
+
+        return $nav['main_menu'];
+    }
+
 }

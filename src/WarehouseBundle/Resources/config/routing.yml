@@ -1,11 +1,11 @@
-warehouse_index:
+warehouse_good_index:
     path: /towary
     defaults: { _controller: WarehouseBundle:Warehouse:index }
 
-producer_index:
+warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
 
-category_index:
+warehouse_category_index:
     path: /kategorie-towarow
     defaults: { _controller: WarehouseBundle:Category:index }

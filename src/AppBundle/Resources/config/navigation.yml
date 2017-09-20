@@ -82,7 +82,7 @@ main_menu:
         submenu:
             1:
                 name: czynności
-                route: service_action_index
+                route: action_index
     5:
         tab: invoice
         name: faktury
@@ -110,7 +110,7 @@ main_menu:
                 route: storage_index
     7:
         tab: sms
-        name: SMS-y
+        name: SMS
         route: sms_index
         submenu:
             1:

@@ -6,11 +6,7 @@
     <title>{% block title %}Warsztatowiec{% endblock %}</title>
     {% block stylesheets %}
     {% stylesheets
-        'assets/css/application/layout/layout.css'
-        'assets/css/application/layout/header.css'
-        'assets/css/application/layout/header-settings.css'
-        'assets/css/application/layout/footer.css'
-        'assets/css/application/layout/buttons.css'
+        'assets/css/application/layout/*'
     filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin-ext" rel="stylesheet">
