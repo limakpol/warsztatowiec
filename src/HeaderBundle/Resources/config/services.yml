@@ -1,1 +1,5 @@
 services:
+    form.type.user_edit:
+        class: HeaderBundle\Form\UserEditType
+        tags:
+            - { name: form.type }

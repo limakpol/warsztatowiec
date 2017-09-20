@@ -33,7 +33,7 @@ header > div:hover {
 }
 header > div div:first-child {
     color: #fff;
-    font:  20px "Ubuntu", sans-serif;
+    font:  18px "Ubuntu", sans-serif;
     display: flex;
     justify-content: center;
     align-content: center;

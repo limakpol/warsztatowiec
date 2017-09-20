@@ -39,6 +39,9 @@
 .btn-remove {
     background-color: #833c00;
 }
+.btn-success {
+    filter: brightness(120%);
+}
 
 @media screen and (min-width: 960px)
 {

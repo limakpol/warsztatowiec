@@ -9,16 +9,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GenerateProvinces extends Command
 {
     protected $entityManager;
-    protected $parameterContainer;
+    protected $container;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterContainer $parameterContainer)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
     {
         $this->entityManager        = $entityManager;
-        $this->parameterContainer   = $parameterContainer;
+        $this->container            = $container;
 
         parent::__construct();
     }
@@ -53,11 +54,9 @@ class GenerateProvinces extends Command
 
     private function writeProvinceNames()
     {
-        $em = $this->container->get('doctrine.orm.default_entity_manager');
+        $em = $this->entityManager;
 
-        $parameters = $this->parameterContainer->getAppParameters();
-
-        $provinceNames = $parameters['provinces'];
+        $provinceNames = $this->container->getParameter('app')['provinces'];
 
         foreach ($provinceNames as $provinceName) {
 

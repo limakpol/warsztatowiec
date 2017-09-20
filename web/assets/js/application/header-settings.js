@@ -16,6 +16,8 @@ $(document).ready(function()
                     $('#div-header-settings-content').html(data);
                     $('#div-header-settings-menu ul li.active').removeClass('active');
                     selectedLi.addClass('active');
+
+                    addIcon();
                 }
             }
         });

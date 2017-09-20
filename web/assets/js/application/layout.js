@@ -2,8 +2,49 @@ $(document).ready(function()
 {
     $(document).on('click', 'header > div', function()
     {
-        $('section.header:nth-child(2)').slideToggle(1000);
+        var selectedLi = $('#div-header-settings-menu ul li:first-child');
+        var url = selectedLi.data('path');
 
-        //animate({height: "100vw"}, 700);
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function(data)
+            {
+                if(!data['error'])
+                {
+                    if($('section.header:nth-child(2)').is(":visible"))
+                    {
+                        headerToggle();
+                    }
+                    else
+                    {
+                        load(data, selectedLi);
+                        addIcon();
+                        headerToggle();
+                    }
+                }
+            }
+        });
     });
+
+
+
 });
+
+function headerToggle()
+{
+    $('section.header:nth-child(2)').slideToggle(1000);
+}
+
+function load(data, selectedLi)
+{
+    $('#div-header-settings-content').html(data);
+    $('#div-header-settings-menu ul li.active').removeClass('active');
+    selectedLi.addClass('active');
+}
+function addIcon()
+{
+    $('.add-i').append(function(){
+      return  '<i class="fa fa-' + $(this).data('add-i') + '" aria-hidden="true"></i>'
+    });
+}

@@ -15,6 +15,7 @@
 }
 #div-header-settings-menu ul li {
     padding: 4px;
+    white-space: nowrap;
 }
 #div-header-settings-menu ul li:hover {
     color: #fff;
@@ -25,6 +26,40 @@
 }
 #div-header-settings-content {
     display: flex;
-    padding: 1.5vw;
+    flex-direction: column;
+    padding: 1vw 1vw 1vw 3vw;
     color: #fff;
+}
+#div-header-settings-content form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+#div-header-settings-content form label:first-child {
+    margin: 0 0 1px 0;
+}
+#div-header-settings-content form label {
+    font: bold 14px 'Ubuntu', sans-serif;
+    margin: 12px 0 1px 0;
+}
+#div-header-settings-content form input {
+    border: 1px solid #000;
+    font: 14px 'Arial', sans-serif;
+    padding: 4px;
+    color: #333;
+}
+#div-header-settings-content form button {
+    margin-top: 12px;
+}
+#div-header-settings-content form select {
+    border: 1px solid #000;
+    background-color: #fff;
+    padding: 4px;
+}
+#div-header-settings-content form select option {
+    background-color: #fff;
+    font: 14px 'Ubuntu', sans-serif;
+    color: #333;
+    padding: 4px;
 }

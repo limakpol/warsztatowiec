@@ -1,7 +1,7 @@
 parameters:
      locale: pl
      app:
-         week_price: 19
+         week_price: 9
          currency: zł
          phone_prefix: '+48'
          demo_period_days: 2

@@ -8,16 +8,24 @@
 
 namespace HeaderBundle\Controller;
 
-
+use HeaderBundle\Form\UserEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller
 {
     public function indexAction()
     {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserEditType::class, [
+            'user' => $user,
+        ]);
 
         return $this->render('HeaderBundle::user.html.twig', [
             'error' => null,
+            'form' => $form->createView(),
         ]);
     }
+
+
 }

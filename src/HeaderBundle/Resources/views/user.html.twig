@@ -1,1 +1,44 @@
-user
+{{ form_start(form) }}
+{{ form_label(form.user.forename) }}
+{{ form_widget(form.user.forename) }}
+
+{{ form_label(form.user.surname) }}
+{{ form_widget(form.user.surname) }}
+
+{{ form_label(form.user.email) }}
+{{ form_widget(form.user.email) }}
+
+{{ form_label(form.user.phone1) }}
+{{ form_widget(form.user.phone1) }}
+
+{{ form_label(form.user.phone2) }}
+{{ form_widget(form.user.phone2) }}
+
+{{ form_label(form.user.address.street) }}
+{{ form_widget(form.user.address.street) }}
+
+{{ form_label(form.user.address.house_number) }}
+{{ form_widget(form.user.address.house_number) }}
+
+{{ form_label(form.user.address.flat_number) }}
+{{ form_widget(form.user.address.flat_number) }}
+
+{{ form_label(form.user.address.post_code) }}
+{{ form_widget(form.user.address.post_code) }}
+
+{{ form_label(form.user.address.city) }}
+{{ form_widget(form.user.address.city) }}
+
+{{ form_label(form.user.address.province.name) }}
+{{ form_widget(form.user.address.province.name) }}
+
+{{ form_label(form.user.nip) }}
+{{ form_widget(form.user.nip) }}
+
+{{ form_label(form.user.bank_account_number) }}
+{{ form_widget(form.user.bank_account_number) }}
+
+{{ form_widget(form._token) }}
+
+{{ form_widget(form.submit) }}
+{{ form_end(form, {'render_rest': false}) }}
