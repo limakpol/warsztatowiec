@@ -1,3 +1,39 @@
-header_index:
-    path: /
-    defaults: { _controller: HeaderBundle:Header:index }
+header_user_index:
+    path: /user-index
+    defaults: { _controller: HeaderBundle:User:index }
+
+header_password_index:
+    path: /password-index
+    defaults: { _controller: HeaderBundle:Password:index }
+
+header_workshop_index:
+    path: /workshop-index
+    defaults: { _controller: HeaderBundle:Workshop:index }
+
+header_payment_index:
+    path: /payment-index
+    defaults: { _controller: HeaderBundle:Payment:index }
+
+header_settings_index:
+    path: /settings-index
+    defaults: { _controller: HeaderBundle:Settings:index }
+
+header_parameters_index:
+    path: /parameters-index
+    defaults: { _controller: HeaderBundle:Parameters:index }
+
+header_measure_index:
+    path: /measure-index
+    defaults: { _controller: HeaderBundle:Measure:index }
+
+header_workstation_index:
+    path: /workstation-index
+    defaults: { _controller: HeaderBundle:Workstation:index }
+
+header_status_index:
+    path: /status-index
+    defaults: { _controller: HeaderBundle:Status:index }
+
+header_position_index:
+    path: /position-index
+    defaults: { _controller: HeaderBundle:Position:index }

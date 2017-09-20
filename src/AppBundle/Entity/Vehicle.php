@@ -20,6 +20,11 @@ class Vehicle
     /**
      * @var integer
      */
+    private $owner_id;
+
+    /**
+     * @var integer
+     */
     private $model_id;
 
     /**
@@ -128,6 +133,11 @@ class Vehicle
     private $workshop;
 
     /**
+     * @var \AppBundle\Entity\Customer
+     */
+    private $owner;
+
+    /**
      * @var \AppBundle\Entity\Model
      */
     private $model;
@@ -197,6 +207,30 @@ class Vehicle
     public function getWorkshopId()
     {
         return $this->workshop_id;
+    }
+
+    /**
+     * Set ownerId
+     *
+     * @param integer $ownerId
+     *
+     * @return Vehicle
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->owner_id = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * Get ownerId
+     *
+     * @return integer
+     */
+    public function getOwnerId()
+    {
+        return $this->owner_id;
     }
 
     /**
@@ -728,6 +762,30 @@ class Vehicle
     }
 
     /**
+     * Set owner
+     *
+     * @param \AppBundle\Entity\Customer $owner
+     *
+     * @return Vehicle
+     */
+    public function setOwner(\AppBundle\Entity\Customer $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \AppBundle\Entity\Customer
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
      * Set model
      *
      * @param \AppBundle\Entity\Model $model
@@ -881,3 +939,4 @@ class Vehicle
         return $this->customers;
     }
 }
+

@@ -729,4 +729,3 @@ class Good
         return $this->categories;
     }
 }
-

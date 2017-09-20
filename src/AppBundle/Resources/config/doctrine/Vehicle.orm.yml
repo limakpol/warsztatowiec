@@ -16,6 +16,11 @@ AppBundle\Entity\Vehicle:
             nullable: false
             options:
                 unsigned: true
+        owner_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
         model_id:
             type: integer
             nullable: false
@@ -123,6 +128,11 @@ AppBundle\Entity\Vehicle:
             inversedBy: vehicles
             joinColumn:
                 name: workshop_id
+                referencedColumnName: id
+        owner:
+            targetEntity: AppBundle\Entity\Customer
+            joinColumn:
+                name: customer_id
                 referencedColumnName: id
         model:
             targetEntity: Model

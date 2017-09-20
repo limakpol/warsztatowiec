@@ -1,1 +1,13 @@
-settings
+<div id="div-header-settings-menu">
+    <ul>
+        {% for link in headerMenu %}
+            <li
+                data-path="{{ path(link.route) }}"
+                {% if loop.index == 1 %}
+                    class="active"
+                {% endif %}
+            >{{ link.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="div-header-settings-content">bbbb</div>

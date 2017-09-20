@@ -1,0 +1,29 @@
+#div-header-settings {
+    display: flex;
+    flex-direction: row;
+}
+#div-header-settings-menu {
+    display: flex;
+    padding: 1vw;
+}
+#div-header-settings-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: 16px 'Ubuntu', sans-serif;
+    color: #aaa;
+}
+#div-header-settings-menu ul li {
+    padding: 4px;
+}
+#div-header-settings-menu ul li:hover {
+    color: #fff;
+    cursor: pointer;
+}
+#div-header-settings-menu ul li.active {
+    color: #fff;
+}
+#div-header-settings-content {
+    display: flex;
+    padding: 1.5vw;
+}
