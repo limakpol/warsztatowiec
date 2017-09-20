@@ -48,7 +48,7 @@ class UserType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'maxlength' => 80,
-                    'size' => 25,
+                    'size' => 30,
                 ],
             ])
             ->add('phone1', TextType::class, [

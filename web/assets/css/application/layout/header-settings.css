@@ -44,7 +44,7 @@
     margin: 12px 0 1px 0;
 }
 #div-header-settings-content form input {
-    border: 1px solid #000;
+    border: 1px solid #aaa;
     font: 14px 'Arial', sans-serif;
     padding: 4px;
     color: #333;
@@ -55,11 +55,10 @@
 #div-header-settings-content form select {
     border: 1px solid #000;
     background-color: #fff;
-    padding: 4px;
+    height: 26px;
 }
 #div-header-settings-content form select option {
     background-color: #fff;
     font: 14px 'Ubuntu', sans-serif;
     color: #333;
-    padding: 4px;
 }

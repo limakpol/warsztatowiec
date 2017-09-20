@@ -45,3 +45,8 @@ section.footer {
 main {
     min-height: 600px;
 }
+.error {
+    font: 13px 'Ubuntu', sans-serif;
+    color: red;
+    margin: 2px;
+}

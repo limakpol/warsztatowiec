@@ -40,7 +40,7 @@
     background-color: #833c00;
 }
 .btn-success {
-    filter: brightness(120%);
+    filter: brightness(140%);
 }
 
 @media screen and (min-width: 960px)
