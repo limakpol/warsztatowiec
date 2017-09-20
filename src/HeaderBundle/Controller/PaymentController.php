@@ -16,6 +16,8 @@ class PaymentController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::payment.html.twig', [
+            'error' => null,
+        ]);
     }
 }

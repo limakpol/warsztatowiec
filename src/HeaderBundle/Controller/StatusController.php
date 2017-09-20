@@ -16,6 +16,8 @@ class StatusController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::status.html.twig', [
+            'error' => null,
+        ]);
     }
 }

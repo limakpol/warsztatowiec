@@ -16,6 +16,8 @@ class PositionController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::position.html.twig', [
+            'error' => null,
+        ]);
     }
 }

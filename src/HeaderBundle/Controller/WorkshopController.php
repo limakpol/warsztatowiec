@@ -16,6 +16,8 @@ class WorkshopController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::workshop.html.twig', [
+            'error' => null,
+        ]);
     }
 }

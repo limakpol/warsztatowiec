@@ -16,6 +16,8 @@ class PasswordController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::password.html.twig', [
+            'error' => null,
+        ]);
     }
 }

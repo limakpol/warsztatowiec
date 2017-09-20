@@ -16,6 +16,8 @@ class SettingsController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::settings.html.twig', [
+            'error' => null,
+        ]);
     }
 }

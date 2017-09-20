@@ -16,6 +16,8 @@ class WorkstationController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::workstation.html.twig', [
+            'error' => null,
+        ]);
     }
 }

@@ -16,6 +16,8 @@ class ParametersController extends Controller
     public function indexAction()
     {
 
-        return $this->render('HeaderBundle::measure.html.twig');
+        return $this->render('HeaderBundle::parameters.html.twig', [
+            'error' => null,
+        ]);
     }
 }
