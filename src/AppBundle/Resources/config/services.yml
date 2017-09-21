@@ -65,6 +65,31 @@ services:
         tags:
             - { name: validator.constraint_validator }
 
+    app.validator.password:
+        class: AppBundle\Form\Validator\PasswordValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.validator.nip:
+        class: AppBundle\Form\Validator\NipValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.validator.nrb:
+        class: AppBundle\Form\Validator\NrbValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.validator.pesel:
+        class: AppBundle\Form\Validator\PeselValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+    app.validator.post_code:
+        class: AppBundle\Form\Validator\PostCodeValidator
+        tags:
+            - { name: validator.constraint_validator }
+
 # HELPERS
     app.helper.app.register:
         class: AppBundle\Service\Helper\App\Register

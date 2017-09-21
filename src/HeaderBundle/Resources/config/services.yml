@@ -1,9 +1,20 @@
 services:
+    # FORM TYPES
     form.type.user_edit:
         class: HeaderBundle\Form\UserEditType
         tags:
             - { name: form.type }
 
+    form.type.change_password:
+        class: HeaderBundle\Form\ChangePasswordType
+        tags:
+            - { name: form.type }
+
+    # HELPERS
     header.helper.user.edit:
         class: HeaderBundle\Service\Helper\User\Edit
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
+
+    header.helper.password.change:
+        class: HeaderBundle\Service\Helper\Password\Change
+        arguments: ["@request_stack", "@form.factory", "@doctrine.orm.default_entity_manager", "@security.password_encoder", "@security.token_storage"]

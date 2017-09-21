@@ -14,20 +14,20 @@ class UserController extends Controller
 {
     public function editAction()
     {
-        $editHelper = $this->get('header.helper.user.edit');
+        $userEditHelper = $this->get('header.helper.user.edit');
 
-        $form = $editHelper->createForm();
+        $form = $userEditHelper->createForm();
 
         $user = $form->getData()['user'];
 
-        if($editHelper->isRequestCorrect())
+        if($userEditHelper->isRequestCorrect())
         {
-            if($editHelper->isValid($form))
+            if($userEditHelper->isValid($form))
             {
-                return $editHelper->write($user);
+                return $userEditHelper->write($user);
             }
 
-            return $editHelper->getErrors($form);
+            return $userEditHelper->getErrors($form);
         }
 
         return $this->render('HeaderBundle::user.html.twig', [

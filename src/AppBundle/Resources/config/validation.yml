@@ -30,7 +30,15 @@ AppBundle\Entity\User:
                 match: true
                 message: 'Wpisany numer telefonu jest nieprawidłowy'
                 groups: [ user, workman ]
-            - AppBundle\Form\Validator\Constraint\MobilePhone:
+        phone2:
+            - Length:
+                max: 15
+                maxMessage: 'Pole Telefon może zawierać maksymalnie 15 liter'
+                groups: [ user, workman ]
+            - Regex:
+                pattern: '/^\+{1}[0-9]{11}$/'
+                match: true
+                message: 'Wpisany numer telefonu jest nieprawidłowy'
                 groups: [ user, workman ]
         email:
             - NotBlank:
@@ -38,27 +46,20 @@ AppBundle\Entity\User:
                 groups: [ registration, user, workman ]
             - Regex:
                 pattern: '/^[a-zA-Z]+[a-zA-Z0-9\.\-_]{1,32}\@[a-zA-Z0-9\.\-_]+\.[a-z]{2,4}$/D'
-                message: 'Wpisany adres e-mail jest nieprawidłowy'
+                message: 'Adres e-mail powinien być wpisany w formacie: nazwa@domena.pl'
                 match: true
                 groups: [ registration, user, workman ]
             - Length:
                 min: 6
                 max: 80
                 minMessage: 'Pole E-mail powinno zawierać co najmniej 6 znaków'
-                maxMessage: 'Pole E-amil może zawierać maksymalnie 80 znaków'
+                maxMessage: 'Pole E-mail może zawierać maksymalnie 80 znaków'
                 groups: [ registration, user, workman ]
             - AppBundle\Form\Validator\Constraint\Email:
                 groups: [registration]
         password:
-            - NotBlank:
-                message: 'Hasło nie może być puste'
-                groups: [registration]
-            - Length:
-                min: 6
-                max: 20
-                minMessage: 'Hasło powinno zawierać co najmniej 6 liter'
-                maxMessage: 'Hasło może zawierać maksymalnie 20 liter'
-                groups: [ registration ]
+            - AppBundle\Form\Validator\Constraint\Password:
+                groups: [ registration, change_password ]
         address:
             - Valid: ~
 AppBundle\Entity\Workshop:

@@ -48,7 +48,7 @@ main {
 .error {
     font: 13px 'Ubuntu', sans-serif;
     color: red;
-    margin: 2px;
+    margin-top: 3px;
 }
 .company-info {
     font: 14px 'Ubuntu', sans-serif;

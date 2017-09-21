@@ -2,9 +2,9 @@ header_user_edit:
     path: /user-edit
     defaults: { _controller: HeaderBundle:User:edit }
 
-header_password_index:
-    path: /password-index
-    defaults: { _controller: HeaderBundle:Password:index }
+header_password_change:
+    path: /password-change
+    defaults: { _controller: HeaderBundle:Password:change }
 
 header_workshop_index:
     path: /workshop-index

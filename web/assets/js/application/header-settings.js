@@ -41,11 +41,44 @@ $(document).ready(function()
             {
                 if(data['error'] == 0)
                 {
-                    displaySuccess(submit);
+                    displaySuccess(submit, 'zapisane!');
                 }
                 else
                 {
-                    console.log(data);
+                    data['messages'].forEach(function(value, index)
+                    {
+                        submit.after('<span class="error">' + value + '</span>');
+                    });
+
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#change_password_submit', function(event)
+    {
+        event.preventDefault();
+
+        $('.error').remove();
+
+        var submit = $(this);
+
+        if(submit.hasClass('btn-success')) return;
+
+        $.ajax({
+            type: "POST",
+            url: "/header/password-change",
+            data: $('#div-header-settings-content form').serialize(),
+            success: function(data)
+            {
+                console.log(data);
+                if(data['error'] == 0)
+                {
+                    displaySuccess(submit, 'hasło zmienione!');
+                    $('#div-header-settings-content form input').val('');
+                }
+                else
+                {
                     data['messages'].forEach(function(value, index)
                     {
                         submit.after('<span class="error">' + value + '</span>');
@@ -57,9 +90,9 @@ $(document).ready(function()
     });
 });
 
-function displaySuccess(submit)
+function displaySuccess(submit, msg)
 {
-    submit.text('zapisane!').addClass('btn-success');
+    submit.text(msg).addClass('btn-success');
 
     window.setTimeout(function()
     {
