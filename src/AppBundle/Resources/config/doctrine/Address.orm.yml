@@ -85,6 +85,7 @@ AppBundle\Entity\Address:
             joinColumn:
                 name: province_id
                 referencedColumnName: id
+            cascade: [persist]
         created_by:
             targetEntity: AppBundle\Entity\User
             joinColumn:

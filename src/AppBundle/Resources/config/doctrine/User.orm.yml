@@ -123,6 +123,7 @@ AppBundle\Entity\User:
             joinColumn:
                 name: address_id
                 referencedColumnName: id
+            cascade: [persist]
     oneToMany:
         roles:
             targetEntity: UserRole

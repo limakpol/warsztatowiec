@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Helper\App;
 
+use AppBundle\Entity\Address;
 use AppBundle\Entity\Parameters;
 use AppBundle\Entity\Settings;
 use AppBundle\Entity\User;
@@ -41,15 +42,18 @@ class Register
         /** @var EntityManagerInterface $em */
         $em = $this->em;
 
-        $settings   = new Settings();
-        $parameters = new Parameters();
-        
-        $dateTime   = new \DateTime();
+        $settings           = new Settings();
+        $parameters         = new Parameters();
+        $userAddress        = new Address();
+        $workshopAddress    = new Address();
+        $dateTime           = new \DateTime();
         
         $settings   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $parameters ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $workshop   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $user       ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $userAddress->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $workshopAddress->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
 
         $roleNames = [
             UserRole::ROLE_USER,
@@ -73,8 +77,8 @@ class Register
             $em->persist($userRole);
         }
 
-        $user->setAddress(null);
-        $workshop->setAddress(null);
+        $user->setAddress($userAddress);
+        $workshop->setAddress($workshopAddress);
 
         $password = $this->encoder->encodePassword($user, $user->getPassword());
         $user       ->setPassword($password);

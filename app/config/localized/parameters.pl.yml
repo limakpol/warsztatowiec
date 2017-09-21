@@ -10,7 +10,7 @@ parameters:
              good: [["sztuka", "szt."], ["metr", "m"], ["metr bieżący", "m b."], ["kilogram", "kg"], ["litr", "l"], ["opakowanie", "opak."], ["komplet", "kpl."]]
              service: [["roboczogodzina", "rg."]]
          default_good_unit: "sztuka"
-         provinces: ["dolnośląskie", "kujawsko-pomorskie", "lubelskie", "lubuskie", "łódzkie", "małopolskie", "mazowieckie", "opolskie", "podkarpackie", "podlaskie", "pomorskie", "śląskie", "świętokrzyskie", "warmińsko-mazurskie", "wielkopolskie"]
+         provinces: ["dolnośląskie", "kujawsko-pomorskie", "lubelskie", "lubuskie", "łódzkie", "małopolskie", "mazowieckie", "opolskie", "podkarpackie", "podlaskie", "pomorskie", "śląskie", "świętokrzyskie", "warmińsko-mazurskie", "wielkopolskie", "zachodniopomorskie"]
          engine_types: ["benzyna", "benzyna + gaz", "diesel", "hybryda"]
          order_statuses: [["przyjęte", "#00ff00"],  ["diagnoza", "#3399ff"], ["oczekuje na części", "#993333" ], ["w toku", "#006600"], ["odłożone", "#9999ff" ], ["przerwa", "#ff0066" ], ["naprawione", "#ffff00"]]
          order_actions: ["wymiana", "zmiana", "przegląd", "regulacja", "naprawa", "montaż", "demontaż", "usunięcie", "sprawdzenie", "robocizna", "spawanie", "lutowanie", "uszczelnienie", "programowanie", "ustawienie", "regeneracja", "wyczyszczenie", "dezynfekcja"]

@@ -105,6 +105,7 @@ AppBundle\Entity\Workshop:
             joinColumn:
                 name: address_id
                 referencedColumnName: id
+            cascade: [persist]
     manyToMany:
         users:
             targetEntity: User

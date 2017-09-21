@@ -5,11 +5,6 @@ services:
         arguments: ["@security.password_encoder", "@doctrine.orm.default_entity_manager"]
 
 # FORM TYPES
-    form.type.province:
-        class: AppBundle\Form\ProvinceType
-        tags:
-            - { name: form.type }
-
     form.type.address:
         class: AppBundle\Form\AddressType
         tags:

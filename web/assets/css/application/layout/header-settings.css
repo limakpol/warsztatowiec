@@ -27,7 +27,7 @@
 #div-header-settings-content {
     display: flex;
     flex-direction: column;
-    padding: 1vw 1vw 1vw 3vw;
+    padding: 1vw 1vw 1vw 4vw;
     color: #fff;
 }
 #div-header-settings-content form {

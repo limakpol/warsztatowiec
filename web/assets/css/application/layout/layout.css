@@ -50,3 +50,7 @@ main {
     color: red;
     margin: 2px;
 }
+.company-info {
+    font: 14px 'Ubuntu', sans-serif;
+    color: #3485ff;
+}

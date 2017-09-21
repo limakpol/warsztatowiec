@@ -3,3 +3,7 @@ services:
         class: HeaderBundle\Form\UserEditType
         tags:
             - { name: form.type }
+
+    header.helper.user.edit:
+        class: HeaderBundle\Service\Helper\User\Edit
+        arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]

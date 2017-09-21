@@ -1,7 +1,7 @@
 header_menu:
     1:
         name: moje konto
-        route: header_user_index
+        route: header_user_edit
     2:
         name: zmiana hasła
         route: header_password_index

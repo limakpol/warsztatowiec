@@ -2,57 +2,72 @@ AppBundle\Entity\User:
     properties:
         forename:
             - NotBlank:
-                  message: 'Pole Imię nie może być puste'
+                message: 'Pole Imię nie może być puste'
+                groups: [ registration, user, workman ]
             - Length:
                 min: 2
                 max: 30
                 minMessage: 'Pole Imię powinno zawierać co najmniej 2 litery'
                 maxMessage: 'Pole Imię może zawierać maksymalnie 30 liter'
+                groups: [ registration, user, workman ]
         surname:
             - NotBlank:
-                  message: 'Pole Nazwisko nie może być puste'
+                message: 'Pole Nazwisko nie może być puste'
+                groups: [ registration, user, workman ]
             - Length:
                 min: 2
                 max: 50
                 minMessage: 'Pole Nazwisko powinno zawierać co najmniej 2 litery'
                 maxMessage: 'Pole Nazwisko może zawierać maksymalnie 50 liter'
+                groups: [ registration, user, workman ]
         phone1:
             - Length:
                 max: 15
                 maxMessage: 'Pole Telefon może zawierać maksymalnie 15 liter'
+                groups: [ user, workman ]
             - Regex:
                 pattern: '/^\+{1}[0-9]{11}$/'
                 match: true
                 message: 'Wpisany numer telefonu jest nieprawidłowy'
-            - AppBundle\Form\Validator\Constraint\MobilePhone: ~
+                groups: [ user, workman ]
+            - AppBundle\Form\Validator\Constraint\MobilePhone:
+                groups: [ user, workman ]
         email:
             - NotBlank:
                 message: 'Pole E-amil nie może być puste'
+                groups: [ registration, user, workman ]
             - Regex:
                 pattern: '/^[a-zA-Z]+[a-zA-Z0-9\.\-_]{1,32}\@[a-zA-Z0-9\.\-_]+\.[a-z]{2,4}$/D'
                 message: 'Wpisany adres e-mail jest nieprawidłowy'
                 match: true
+                groups: [ registration, user, workman ]
             - Length:
                 min: 6
                 max: 80
                 minMessage: 'Pole E-mail powinno zawierać co najmniej 6 znaków'
                 maxMessage: 'Pole E-amil może zawierać maksymalnie 80 znaków'
-            - AppBundle\Form\Validator\Constraint\Email: ~
+                groups: [ registration, user, workman ]
+            - AppBundle\Form\Validator\Constraint\Email:
+                groups: [registration]
         password:
             - NotBlank:
                 message: 'Hasło nie może być puste'
+                groups: [registration]
             - Length:
                 min: 6
                 max: 20
                 minMessage: 'Hasło powinno zawierać co najmniej 6 liter'
                 maxMessage: 'Hasło może zawierać maksymalnie 20 liter'
+                groups: [ registration ]
 AppBundle\Entity\Workshop:
     properties:
         name:
             - NotBlank:
                 message: 'Nazwa warsztatu nie może być pusta'
+                groups: [ registration ]
             - Length:
                 min: 2
                 max: 30
                 minMessage: 'Nazwa warsztatu musi zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa warsztatu może zawierać maksymalnie 30 liter'
+                groups: [ registration ]

@@ -8,57 +8,30 @@
 
 namespace HeaderBundle\Controller;
 
-use HeaderBundle\Form\UserEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller
 {
-    public function indexAction()
+    public function editAction()
     {
+        $editHelper = $this->get('header.helper.user.edit');
 
-        $request = $this->get('request_stack')->getCurrentRequest();
+        $form = $editHelper->createForm();
 
-        $em = $this->getDoctrine()->getManager();
+        $user = $form->getData()['user'];
 
-        $user = $this->getUser();
-
-        $form = $this->createForm(UserEditType::class, [
-            'user' => $user,
-        ]);
-
-        if($request->getMethod() == 'POST' && $request->isXmlHttpRequest() && $request->get('user_edit'))
+        if($editHelper->isRequestCorrect())
         {
-            $form->handleRequest($request);
-
-            if($form->isValid())
+            if($editHelper->isValid($form))
             {
-                $em->persist($user);
-                $em->flush();
-
-                return new JsonResponse([
-                    'error' => 0,
-                ]);
+                return $editHelper->write($user);
             }
 
-            $msg = $form->getErrors(true)->count();
-            foreach($form->getErrors(true) as $error)
-            {
-                $msg = $error->getMessage();
-                break;
-            }
-
-            return new JsonResponse([
-                'error' => 1,
-                'msg' => $msg,
-            ]);
-
+            return $editHelper->getErrors($form);
         }
 
         return $this->render('HeaderBundle::user.html.twig', [
-            'error' => null,
             'form' => $form->createView(),
         ]);
     }
-
 }

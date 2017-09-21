@@ -1,6 +1,6 @@
-header_user_index:
-    path: /user-index
-    defaults: { _controller: HeaderBundle:User:index }
+header_user_edit:
+    path: /user-edit
+    defaults: { _controller: HeaderBundle:User:edit }
 
 header_password_index:
     path: /password-index

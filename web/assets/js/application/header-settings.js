@@ -35,7 +35,7 @@ $(document).ready(function()
 
         $.ajax({
             type: "POST",
-            url: "/header/user-index",
+            url: "/header/user-edit",
             data: $('#div-header-settings-content form').serialize(),
             success: function(data)
             {
@@ -45,7 +45,12 @@ $(document).ready(function()
                 }
                 else
                 {
-                    submit.after('<span class="error">' + data['msg'] + '</span>');
+                    console.log(data);
+                    data['messages'].forEach(function(value, index)
+                    {
+                        submit.after('<span class="error">' + value + '</span>');
+                    });
+
                 }
             }
         });

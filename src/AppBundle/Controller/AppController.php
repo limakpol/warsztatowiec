@@ -50,7 +50,9 @@ class AppController extends Controller
 
         $formData = $registerHelper->createFormData();
 
-        $form = $this->createForm(RegistrationType::class, $formData);
+        $form = $this->createForm(RegistrationType::class, $formData, [
+            'validation_groups' => ['registration']
+        ]);
 
         $form->handleRequest($request);
 
