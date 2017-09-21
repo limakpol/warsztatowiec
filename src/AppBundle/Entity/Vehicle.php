@@ -939,4 +939,3 @@ class Vehicle
         return $this->customers;
     }
 }
-

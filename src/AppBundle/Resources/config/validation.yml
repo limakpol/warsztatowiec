@@ -59,6 +59,8 @@ AppBundle\Entity\User:
                 minMessage: 'Hasło powinno zawierać co najmniej 6 liter'
                 maxMessage: 'Hasło może zawierać maksymalnie 20 liter'
                 groups: [ registration ]
+        address:
+            - Valid: ~
 AppBundle\Entity\Workshop:
     properties:
         name:
@@ -71,3 +73,8 @@ AppBundle\Entity\Workshop:
                 minMessage: 'Nazwa warsztatu musi zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa warsztatu może zawierać maksymalnie 30 liter'
                 groups: [ registration ]
+AppBundle\Entity\Address:
+    properties:
+        post_code:
+            - AppBundle\Form\Validator\Constraint\PostCode:
+                groups: [ user ]

@@ -71,6 +71,11 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      */
+    private $pesel;
+
+    /**
+     * @var string
+     */
     private $bank_account_number;
 
     /**
@@ -459,6 +464,30 @@ class User implements UserInterface, \Serializable
     public function getNip()
     {
         return $this->nip;
+    }
+
+    /**
+     * Set pesel
+     *
+     * @param string $pesel
+     *
+     * @return User
+     */
+    public function setPesel($pesel)
+    {
+        $this->pesel = $pesel;
+
+        return $this;
+    }
+
+    /**
+     * Get pesel
+     *
+     * @return string
+     */
+    public function getPesel()
+    {
+        return $this->pesel;
     }
 
     /**
@@ -1060,4 +1089,5 @@ class User implements UserInterface, \Serializable
             $this->password,
             ) = unserialize($serialized);
     }
+
 }
