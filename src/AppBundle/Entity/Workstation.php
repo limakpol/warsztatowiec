@@ -458,3 +458,4 @@ class Workstation
         return $this->deleted_by;
     }
 }
+

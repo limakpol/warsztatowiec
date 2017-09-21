@@ -504,3 +504,4 @@ class Category
         return $this->goods;
     }
 }
+

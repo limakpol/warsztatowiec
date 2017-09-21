@@ -27,6 +27,7 @@
 #div-header-settings-content {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     padding: 1vw 1vw 1vw 4vw;
     color: #fff;
 }
@@ -61,4 +62,22 @@
     background-color: #fff;
     font: 14px 'Ubuntu', sans-serif;
     color: #333;
+}
+#div-header-settings-content table {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+#div-header-settings-content table th {
+    border: 1px solid #ddd;
+    font: bold 16px 'Ubuntu', sans-serif;
+    padding: 5px;
+    color: #ddd;
+}
+#div-header-settings-content table td {
+    border: 1px solid #ddd;
+    font: 14px 'Courier New', Monospace;
+    padding: 5px;
+    color: #ddd;
 }

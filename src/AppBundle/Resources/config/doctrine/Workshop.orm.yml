@@ -112,7 +112,7 @@ AppBundle\Entity\Workshop:
             mappedBy: workshops
     manyToOne:
         admin:
-            targetEntity: User
+            targetEntity: AppBundle\Entity\User
             joinColumn:
                 name: admin_user_id
                 referencedColumnName: id

@@ -98,5 +98,5 @@ function displaySuccess(submit, msg)
     {
         submit.text('zapisz').removeClass('btn-success');
         addIcon();
-    },1500);
+    }, 1500);
 }

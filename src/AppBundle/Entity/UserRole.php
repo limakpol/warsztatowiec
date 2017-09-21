@@ -521,3 +521,4 @@ class UserRole
         return $this->deleted_by;
     }
 }
+

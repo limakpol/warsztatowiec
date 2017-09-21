@@ -1064,14 +1064,11 @@ class User implements UserInterface, \Serializable
 
     public function getSalt()
     {
-
         return null;
     }
-
     public function eraseCredentials()
     {
     }
-
     public function serialize()
     {
         return serialize([
@@ -1080,7 +1077,6 @@ class User implements UserInterface, \Serializable
             $this->password,
         ]);
     }
-
     public function unserialize($serialized)
     {
         list(
@@ -1089,5 +1085,5 @@ class User implements UserInterface, \Serializable
             $this->password,
             ) = unserialize($serialized);
     }
-
 }
+

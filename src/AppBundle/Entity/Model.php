@@ -602,3 +602,4 @@ class Model
         return $this->goods;
     }
 }
+

@@ -4,6 +4,7 @@ namespace AppBundle\Service\Helper\App;
 
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Parameters;
+use AppBundle\Entity\Position;
 use AppBundle\Entity\Settings;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRole;
@@ -46,6 +47,7 @@ class Register
         $parameters         = new Parameters();
         $userAddress        = new Address();
         $workshopAddress    = new Address();
+        $position           = new Position();
         $dateTime           = new \DateTime();
         
         $settings   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
@@ -54,6 +56,8 @@ class Register
         $user       ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $userAddress->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $workshopAddress->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+        $position->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user)->setName('administrator aplikacji')->setWorkshop($workshop);
+        $user->addPosition($position);
 
         $roleNames = [
             UserRole::ROLE_USER,
@@ -89,6 +93,7 @@ class Register
         $user       ->setCurrentWorkshop($workshop);
         $user       ->addWorkshop($workshop);
 
+        $em->persist($position);
         $em->persist($user);
         $em->persist($workshop);
         $em->persist($parameters);

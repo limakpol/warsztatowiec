@@ -1034,3 +1034,4 @@ class Workshop
         return $this->users;
     }
 }
+
