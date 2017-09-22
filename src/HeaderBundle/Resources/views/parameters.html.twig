@@ -1,1 +1,13 @@
-parameters
+{{ form_start(form) }}
+    {{ form_label(form.good_margin_pc) }}
+    {{ form_widget(form.good_margin_pc) }}
+
+    {{ form_label(form.good_vat_pc) }}
+    {{ form_widget(form.good_vat_pc) }}
+
+    {{ form_label(form.service_vat_pc) }}
+    {{ form_widget(form.service_vat_pc) }}
+
+    {{ form_widget(form.submit) }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}

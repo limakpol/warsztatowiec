@@ -62,7 +62,6 @@ class WorkshopController extends Controller
             return $switcherHelper->getErrorMessage('Nieprawidłowe żądanie');
         }
 
-
         if(!(($workshop = $switcherHelper->verifyWorkshop()) instanceof Workshop))
         {
             return $switcherHelper->getErrorMessage('Warsztat nie istnieje');
@@ -90,7 +89,5 @@ class WorkshopController extends Controller
         return $this->render('HeaderBundle::workshop_edit.html.twig', [
             'form' => $form->createView(),
         ]);
-
-
     }
 }

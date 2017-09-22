@@ -15,7 +15,16 @@ services:
         tags:
             - { name: form.type }
 
+    form.type.parameters:
+        class: HeaderBundle\Form\ParametersType
+        tags:
+            - { name: form.type }
+
     # HELPERS
+    header.helper.general:
+        class: HeaderBundle\Service\Helper\General
+        arguments: ["@request_stack"]
+
     header.helper.user.edit:
         class: HeaderBundle\Service\Helper\User\Edit
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
@@ -38,4 +47,8 @@ services:
 
     header.helper.workshop.edit:
         class: HeaderBundle\Service\Helper\Workshop\Edit
+        arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
+
+    header.helper.parameters.index:
+        class: HeaderBundle\Service\Helper\Parameters\Index
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]

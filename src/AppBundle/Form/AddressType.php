@@ -10,7 +10,6 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Address;
-use AppBundle\Entity\Repository\ProvinceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

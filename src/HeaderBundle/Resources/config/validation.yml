@@ -1,0 +1,20 @@
+AppBundle\Entity\Parameters:
+    properties:
+        good_margin_pc:
+            - Range:
+                min: 0
+                max: 100
+                minMessage: 'Marża musi się mieścić w zakresie od 0 do 100'
+                maxMessage: 'Marża musi się mieścić w zakresie od 0 do 100'
+        good_vat_pc:
+            - Range:
+                min: 0
+                max: 100
+                minMessage: 'VAT musi się mieścić w zakresie od 0 do 100'
+                maxMessage: 'VAT musi się mieścić w zakresie od 0 do 100'
+        service_vat_pc:
+            - Range:
+                min: 0
+                max: 100
+                minMessage: 'VAT musi się mieścić w zakresie od 0 do 100'
+                maxMessage: 'VAT musi się mieścić w zakresie od 0 do 100'
