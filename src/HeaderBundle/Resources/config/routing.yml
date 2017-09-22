@@ -14,6 +14,10 @@ header_workshop_add:
     path: /workshop-add
     defaults: { _controller: HeaderBundle:Workshop:add }
 
+header_workshop_switch:
+    path: /workshop-switch
+    defaults: { _controller: HeaderBundle:Workshop:switch }
+
 header_payment_index:
     path: /payment-index
     defaults: { _controller: HeaderBundle:Payment:index }

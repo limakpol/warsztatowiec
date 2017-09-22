@@ -10,4 +10,22 @@ namespace AppBundle\Entity\Repository;
  */
 class WorkshopRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne($id)
+    {
+        $workshop = $this->_em->createQueryBuilder()
+            ->select('w')
+            ->from('AppBundle:Workshop', 'w')
+            ->where('w.removed_at IS NULL')
+            ->andWhere('w.deleted_at IS NULL')
+            ->andWhere('w.id = :id')
+            ->setParameters([
+                ':id' => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+        return $workshop;
+    }
+
 }

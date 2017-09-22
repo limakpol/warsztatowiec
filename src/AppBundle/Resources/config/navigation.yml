@@ -24,11 +24,11 @@ header_menu:
         name: stanowiska naprawcze
         route: header_workstation_index
     9:
-        name: statusy zleceń
-        route: header_status_index
-    10:
         name: stanowiska pracowników
         route: header_position_index
+    10:
+        name: statusy zleceń
+        route: header_status_index
 main_menu:
     1:
         tab: customer

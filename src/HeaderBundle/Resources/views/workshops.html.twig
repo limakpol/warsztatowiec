@@ -1,8 +1,9 @@
-<table>
+<table id="table-workshops">
     <tr>
         <th>Nazwa warsztatu</th>
         <th>Stanowisko</th>
         <th>Typ użytkownika</th>
+        <th></th>
     </tr>
     {% for workshop in workshops %}
         <tr>
@@ -11,7 +12,11 @@
             <td>{{ workshop[2] }}</td>
             {% if (app.user.currentWorkshop != workshop[0]) %}
                 <td>
-                    <button class="btn-save switch-workshop">zaloguj się<i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                    <button class="btn-save switch-workshop" data-id="{{ workshop[0].id }}">zaloguj się<i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </td>
+            {% else %}
+                <td>
+                    <button id="workshop-edit-index" class="btn-next" data-id="{{ workshop[0].id }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></button>
                 </td>
             {% endif %}
         </tr>

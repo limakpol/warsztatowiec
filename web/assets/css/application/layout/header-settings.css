@@ -80,4 +80,14 @@
     font: 14px 'Courier New', Monospace;
     padding: 5px;
     color: #ddd;
+    height: 30px;
+}
+#div-header-settings-content table td .error {
+    display: block;
+    width: 100%;
+    text-align: center;
+    float: none;
+}
+#table-workshops td:not(:first-child) {
+    text-align: center;
 }

@@ -69,16 +69,21 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+
+    {% javascripts
+        'assets/js/jquery-3.2.1.min.js'
+        'assets/js/font_awesome.js'
+        'assets/js/application/layout.js'
+        'assets/js/application/header/*'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <!--<script src="https://use.fontawesome.com/7bc874a398.js"></script> -->
-    <script src="{{ asset('assets/js/font_awesome.js') }}"></script>
     <!-- <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script> -->
-    <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/application/layout.js') }}"></script>
-    <script src="{{ asset('assets/js/application/header-settings.js') }}"></script>
 {% endblock %}
 </body>
 </html>

@@ -139,4 +139,11 @@ class Add
         
         return true;
     }
+
+    public function getSuccessMessage()
+    {
+        return new JsonResponse([
+            'error' => 0,
+        ]);
+    }
 }

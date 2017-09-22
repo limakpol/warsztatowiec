@@ -8,6 +8,7 @@
 
 namespace HeaderBundle\Controller;
 
+use AppBundle\Entity\Workshop;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class WorkshopController extends Controller
@@ -41,7 +42,7 @@ class WorkshopController extends Controller
             {
                 $workshopAddHelper->write($form);
 
-                return $this->indexAction();
+                return $workshopAddHelper->getSuccessMessage();
             }
 
             return $workshopAddHelper->getErrors($form);
@@ -50,5 +51,28 @@ class WorkshopController extends Controller
         return $this->render('HeaderBundle::workshop.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    public function switchAction()
+    {
+        $switcherHelper = $this->get('header.helper.workshop.switcher');
+
+        if(!$switcherHelper->isRequestCorrect())
+        {
+            return $switcherHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+
+        if(!(($workshop = $switcherHelper->verifyWorkshop()) instanceof Workshop))
+        {
+            return $switcherHelper->getErrorMessage('Warsztat nie istnieje');
+        }
+
+        return $switcherHelper->switchWorkshop($workshop);
+    }
+
+    public function editAction()
+    {
+
     }
 }
