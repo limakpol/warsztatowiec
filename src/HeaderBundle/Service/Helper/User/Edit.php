@@ -46,8 +46,10 @@ class Edit
         &&  $request->get('user_edit');
     }
 
-    public function write($user)
+    public function write(Form $form)
     {
+        $user = $form->getData()['user'];
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

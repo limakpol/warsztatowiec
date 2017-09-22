@@ -8,63 +8,47 @@
 
 namespace HeaderBundle\Controller;
 
-
-use AppBundle\Entity\Position;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Workshop;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class WorkshopController extends Controller
 {
     public function indexAction()
     {
+        $workshopIndexHelper = $this->get('header.helper.workshop.index');
 
-        /** @var User $user */
-        $user = $this->getUser();
+        $workshops = $workshopIndexHelper->getWorkshops();
 
+        $positions = $workshopIndexHelper->getPositions();
 
-        $workshops = $user->getWorkshops()->filter(function(Workshop $workshop)
-        {
+        $workshopCollection = $workshopIndexHelper->getWorkshopCollection($workshops, $positions);
 
-            return $workshop->getRemovedAt() === null && $workshop->getDeletedAt() === null;
-        });
-
-        $positions = $user->getPositions()->filter(function(Position $position) use ($user)
-        {
-            return $position->getRemovedAt() === null && $position->getDeletedAt() === null;
-        });
-
-
-        $workshopCollection = [];
-
-        /** @var Workshop $workshop */
-        foreach($workshops as $workshop)
-        {
-            $positionName   = null;
-            $typeOfUser     = 'zwykły';
-
-            /** @var Position $position */
-            foreach($positions as $position)
-            {
-                if($workshop === $position->getWorkshop())
-                {
-                    $positionName = $position->getName();
-                }
-            }
-
-            if($user === $workshop->getAdmin())
-            {
-                $typeOfUser = 'administrator';
-            }
-
-            $workshopCollection[] = [$workshop, $positionName, $typeOfUser];
-        }
-
-
-        return $this->render('HeaderBundle::workshop.html.twig', [
+        return $this->render('HeaderBundle::workshops.html.twig', [
             'error'     => null,
             'workshops' => $workshopCollection,
+        ]);
+    }
+
+    public function addAction()
+    {
+
+        $workshopAddHelper = $this->get('header.helper.workshop.add');
+
+        $form = $workshopAddHelper->createForm();
+
+        if($workshopAddHelper->isRequestCorrect())
+        {
+            if($workshopAddHelper->isValid($form))
+            {
+                $workshopAddHelper->write($form);
+
+                return $this->indexAction();
+            }
+
+            return $workshopAddHelper->getErrors($form);
+        }
+
+        return $this->render('HeaderBundle::workshop.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

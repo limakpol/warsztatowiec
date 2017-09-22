@@ -1,20 +1,6 @@
-<table>
-    <tr>
-        <th>Nazwa warsztatu</th>
-        <th>Stanowisko</th>
-        <th>Typ użytkownika</th>
-    </tr>
-    {% for workshop in workshops %}
-        <tr>
-            <td>{{ workshop[0].name }}</td>
-            <td>{{ workshop[1] }}</td>
-            <td>{{ workshop[2] }}</td>
-            {% if (app.user.currentWorkshop != workshop[0]) %}
-                <td>
-                    <button class="btn-save">zaloguj się</button>
-                </td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-</table>
-<button id="new-workshop" class="btn-info">Nowy warsztat<i class="fa fa-plus" aria-hidden="true"></i></button>
+{{ form_start(form) }}
+    {{ form_label(form.workshop.name) }}
+    {{ form_widget(form.workshop.name, {'attr': {'autofocus': true}}) }}
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.submit) }}
+{{ form_end(form, {'render_rest': false}) }}

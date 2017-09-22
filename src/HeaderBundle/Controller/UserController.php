@@ -18,13 +18,11 @@ class UserController extends Controller
 
         $form = $userEditHelper->createForm();
 
-        $user = $form->getData()['user'];
-
         if($userEditHelper->isRequestCorrect())
         {
             if($userEditHelper->isValid($form))
             {
-                return $userEditHelper->write($user);
+                return $userEditHelper->write($form);
             }
 
             return $userEditHelper->getErrors($form);

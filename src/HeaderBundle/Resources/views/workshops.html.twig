@@ -1,1 +1,20 @@
-workshops
+<table>
+    <tr>
+        <th>Nazwa warsztatu</th>
+        <th>Stanowisko</th>
+        <th>Typ użytkownika</th>
+    </tr>
+    {% for workshop in workshops %}
+        <tr>
+            <td>{{ workshop[0].name }}</td>
+            <td>{{ workshop[1] }}</td>
+            <td>{{ workshop[2] }}</td>
+            {% if (app.user.currentWorkshop != workshop[0]) %}
+                <td>
+                    <button class="btn-save switch-workshop">zaloguj się<i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>
+<button id="new-workshop" class="btn-info">Nowy warsztat<i class="fa fa-plus" aria-hidden="true"></i></button>

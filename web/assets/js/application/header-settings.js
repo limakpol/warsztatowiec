@@ -71,7 +71,6 @@ $(document).ready(function()
             data: $('#div-header-settings-content form').serialize(),
             success: function(data)
             {
-                console.log(data);
                 if(data['error'] == 0)
                 {
                     displaySuccess(submit, 'hasło zmienione!');
@@ -88,7 +87,63 @@ $(document).ready(function()
             }
         });
     });
+
+    $(document).on('click', '#new-workshop', function(event)
+    {
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/header/workshop-add",
+            success: function(data)
+            {
+                if(!data['error'])
+                {
+                    $('#div-header-settings-content').html(data);
+
+                    addIcon();
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#workshop_add_submit', function(event)
+    {
+        event.preventDefault();
+
+        $('.error').remove();
+
+        var submit = $(this);
+
+        if(submit.hasClass('btn-success')) return;
+
+        $.ajax({
+            type: "POST",
+            url: "/header/workshop-add",
+            data: $('#div-header-settings-content form').serialize(),
+            success: function(data)
+            {
+                if(data['error'] == 0)
+                {
+                    $('#div-header-settings-content').html(data);
+                }
+                else
+                {
+                    data['messages'].forEach(function(value, index)
+                    {
+                        submit.after('<span class="error">' + value + '</span>');
+                    });
+
+                }
+            }
+        });
+    });
+
+
 });
+
+
+
 
 function displaySuccess(submit, msg)
 {

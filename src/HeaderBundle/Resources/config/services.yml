@@ -10,6 +10,11 @@ services:
         tags:
             - { name: form.type }
 
+    form.type.workshop_add:
+        class: HeaderBundle\Form\WorkshopAddType
+        tags:
+            - { name: form.type }
+
     # HELPERS
     header.helper.user.edit:
         class: HeaderBundle\Service\Helper\User\Edit
@@ -18,3 +23,11 @@ services:
     header.helper.password.change:
         class: HeaderBundle\Service\Helper\Password\Change
         arguments: ["@request_stack", "@form.factory", "@doctrine.orm.default_entity_manager", "@security.password_encoder", "@security.token_storage"]
+
+    header.helper.workshop.index:
+        class: HeaderBundle\Service\Helper\Workshop\Index
+        arguments: ["@security.token_storage"]
+
+    header.helper.workshop.add:
+        class: HeaderBundle\Service\Helper\Workshop\Add
+        arguments: ["@form.factory", "@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@app.helper.app.register"]
