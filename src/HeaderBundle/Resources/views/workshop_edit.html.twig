@@ -1,0 +1,40 @@
+{{ form_start(form) }}
+    {{ form_label(form.workshop.name) }}
+    {{ form_widget(form.workshop.name) }}
+
+    {{ form_label(form.workshop.phone) }}
+    {{ form_widget(form.workshop.phone) }}
+
+    {{ form_label(form.workshop.email) }}
+    {{ form_widget(form.workshop.email) }}
+
+    {{ form_label(form.workshop.address.street) }}
+    {{ form_widget(form.workshop.address.street) }}
+
+    {{ form_label(form.workshop.address.house_number) }}
+    {{ form_widget(form.workshop.address.house_number) }}
+
+    {{ form_label(form.workshop.address.flat_number) }}
+    {{ form_widget(form.workshop.address.flat_number) }}
+
+    {{ form_label(form.workshop.address.post_code) }}
+    {{ form_widget(form.workshop.address.post_code) }}
+
+    {{ form_label(form.workshop.address.city) }}
+    {{ form_widget(form.workshop.address.city) }}
+
+    {{ form_label(form.workshop.address.province) }}
+    {{ form_widget(form.workshop.address.province) }}
+
+    {{ form_label(form.workshop.nip) }}
+    {{ form_widget(form.workshop.nip) }}
+
+    {{ form_label(form.workshop.bank_account_number) }}
+    {{ form_widget(form.workshop.bank_account_number) }}
+
+    {{ form_label(form.workshop.website_url) }}
+    {{ form_widget(form.workshop.website_url) }}
+
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.submit) }}
+{{ form_end(form, {'render_rest': false}) }}

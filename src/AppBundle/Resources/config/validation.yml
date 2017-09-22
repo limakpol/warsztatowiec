@@ -67,15 +67,45 @@ AppBundle\Entity\Workshop:
         name:
             - NotBlank:
                 message: 'Nazwa warsztatu nie może być pusta'
-                groups: [ registration ]
+                groups: [ registration, workshop_edit ]
             - Length:
                 min: 2
                 max: 30
                 minMessage: 'Nazwa warsztatu musi zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa warsztatu może zawierać maksymalnie 30 liter'
-                groups: [ registration ]
+                groups: [ registration, workshop_edit ]
+        phone:
+            - Length:
+                max: 15
+                maxMessage: 'Pole Telefon może zawierać maksymalnie 15 liter'
+                groups: [ workshop_edit ]
+            - Regex:
+                pattern: '/^\+{1}[0-9]{11}$/'
+                match: true
+                message: 'Wpisany numer telefonu jest nieprawidłowy'
+                groups: [ workshop_edit, workshop_edit ]
+        email:
+            - Regex:
+                pattern: '/^[a-zA-Z]+[a-zA-Z0-9\.\-_]{1,32}\@[a-zA-Z0-9\.\-_]+\.[a-z]{2,4}$/D'
+                message: 'Adres e-mail powinien być wpisany w formacie: nazwa@domena.pl'
+                match: true
+                groups: [ registration, user, workman, workshop_edit ]
+            - Length:
+                min: 6
+                max: 80
+                minMessage: 'Pole E-mail powinno zawierać co najmniej 6 znaków'
+                maxMessage: 'Pole E-mail może zawierać maksymalnie 80 znaków'
+                groups: [ registration, user, workman, workshop_edit ]
+            - AppBundle\Form\Validator\Constraint\Email:
+                groups: [ workshop_edit ]
+        nip:
+            - AppBundle\Form\Validator\Constraint\Nip:
+                groups: [ workshop_edit ]
+        bank_account_number:
+            - AppBundle\Form\Validator\Constraint\Nrb:
+                groups: [ workshop_edit ]
 AppBundle\Entity\Address:
     properties:
         post_code:
             - AppBundle\Form\Validator\Constraint\PostCode:
-                groups: [ user ]
+                groups: [ user, workshop_edit ]

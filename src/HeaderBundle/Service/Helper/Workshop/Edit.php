@@ -1,14 +1,24 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: limakpol
+ * Date: 9/22/17
+ * Time: 7:45 PM
+ */
 
-namespace HeaderBundle\Service\Helper\User;
+namespace HeaderBundle\Service\Helper\Workshop;
 
+
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManagerInterface;
-use HeaderBundle\Form\UserEditType;
+use HeaderBundle\Form\WorkshopEditType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Edit
@@ -28,16 +38,21 @@ class Edit
 
     public function createForm()
     {
+        /** @var TokenStorage $token */
         $token = $this->tokenStorage->getToken();
 
+        /** @var User $user */
         $user = $token->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
 
         $formFactory = $this->formFactory;
 
-        return $form = $formFactory->create(UserEditType::class, [
-            'user' => $user,
+        return $form = $formFactory->create(WorkshopEditType::class, [
+            'workshop' => $workshop,
         ], [
-            'validation_groups' => 'user',
+            'validation_groups' => 'workshop_edit',
         ]);
     }
 
@@ -57,15 +72,15 @@ class Edit
 
         return
             $request->isMethod('POST')
-        &&  $request->isXmlHttpRequest()
-        &&  $request->get('user_edit');
+            &&  $request->isXmlHttpRequest()
+            &&  $request->get('workshop_edit');
     }
 
     public function write(Form $form)
     {
-        $user = $form->getData()['user'];
+        $workshop = $form->getData()['workshop'];
 
-        $this->entityManager->persist($user);
+        $this->entityManager->persist($workshop);
         $this->entityManager->flush();
 
         return new JsonResponse([

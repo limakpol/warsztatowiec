@@ -13,6 +13,7 @@
     text-decoration: none;
     color: #fff;
     padding: 5px;
+    white-space: nowrap;
 }
 [class*='btn-']:hover {
     cursor: pointer;

@@ -73,6 +73,24 @@ class WorkshopController extends Controller
 
     public function editAction()
     {
+        $workshopEditHelper = $this->get('header.helper.workshop.edit');
+
+        $form = $workshopEditHelper->createForm();
+
+        if($workshopEditHelper->isRequestCorrect())
+        {
+            if($workshopEditHelper->isValid($form))
+            {
+                return $workshopEditHelper->write($form);
+            }
+
+            return $workshopEditHelper->getErrors($form);
+        }
+
+        return $this->render('HeaderBundle::workshop_edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
 
     }
 }

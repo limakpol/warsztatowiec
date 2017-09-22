@@ -35,3 +35,7 @@ services:
     header.helper.workshop.switcher:
         class: HeaderBundle\Service\Helper\Workshop\Switcher
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.workshop.edit:
+        class: HeaderBundle\Service\Helper\Workshop\Edit
+        arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
