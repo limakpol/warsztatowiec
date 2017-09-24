@@ -140,3 +140,8 @@
 #div-header-settings-content .inputable .tr-th th {
     padding-top: 10px;
 }
+#div-header-settings-content .inputable.status input[type=color] {
+    height: 30px;
+    width: 32px;
+    padding: 1px;
+}

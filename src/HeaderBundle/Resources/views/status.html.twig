@@ -1,12 +1,16 @@
 <table class="inputable status">
     <tr class="tr-th">
         <th>Nazwa</th>
+        <th>Kolor</th>
         <th colspan="2"></th>
     </tr>
     {% for status in statuses %}
         <tr>
             <td>
                 <input type="text" maxlength="30" value="{{ status.name }}">
+            </td>
+            <td>
+                <input type="color" value="{{ status.hexColor }}">
             </td>
             <td>
                 <button class="btn-square btn-remove" data-id="{{ status.id }}">
@@ -23,6 +27,9 @@
     <tr>
         <td>
             <input maxlength="30" type="text">
+        </td>
+        <td>
+            <input type="color">
         </td>
         <td>
             <button class="btn-square btn-add" data-type="good">

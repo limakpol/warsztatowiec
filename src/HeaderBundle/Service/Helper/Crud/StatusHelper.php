@@ -182,6 +182,7 @@ class StatusHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
+        $color      = $request->get('color');
 
         $status    = new Status();
 
@@ -191,6 +192,7 @@ class StatusHelper
         $status->setWorkshop($user->getCurrentWorkshop());
 
         $status->setName($name);
+        $status->setHexColor($color);
 
         $em->persist($status);
 
@@ -211,8 +213,10 @@ class StatusHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
+        $color      = $request->get('color');
 
         $status->setName($name);
+        $status->setHexColor($color);
         $status->setUpdatedBy($user);
 
         $em->persist($status);

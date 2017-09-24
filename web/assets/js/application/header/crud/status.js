@@ -9,14 +9,16 @@ $(document).ready(function()
         var submit = $(this);
 
         var name = submit.parent().parent().find('td:nth-child(1) input').val();
+        var color = submit.parent().parent().find('td:nth-child(2) input').val();
 
-        if(name == '') return;
+        if(name == '' || color == '') return;
 
         $.ajax({
             type: "POST",
             url: "/header/status-add",
             data: {
                 name: name,
+                color: color,
             },
             success: function(data) {
                 if(!data['error'])
@@ -48,8 +50,9 @@ $(document).ready(function()
 
         var id = submit.data('id');
         var name = submit.parent().parent().find('td:nth-child(1) input').val();
+        var color = submit.parent().parent().find('td:nth-child(2) input').val();
 
-        if(name == '') return;
+        if(name == '' || color == '') return;
 
         $.ajax({
             type: "POST",
@@ -57,6 +60,7 @@ $(document).ready(function()
             data: {
                 id: id,
                 name: name,
+                color: color,
             },
             success: function(data) {
                 if(!data['error'])
