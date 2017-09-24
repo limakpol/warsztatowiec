@@ -5,7 +5,3 @@ warehouse_good_index:
 warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
-
-warehouse_category_index:
-    path: /kategorie-towarow
-    defaults: { _controller: WarehouseBundle:Category:index }

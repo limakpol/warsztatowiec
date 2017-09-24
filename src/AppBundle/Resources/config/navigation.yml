@@ -29,6 +29,12 @@ header_menu:
     10:
         name: statusy zleceń
         route: header_status_index
+    11:
+        name: grupy klientów
+        route: header_group_index
+    12:
+        name: kategorie towarów
+        route: header_category_index
 main_menu:
     1:
         tab: customer
@@ -72,9 +78,6 @@ main_menu:
             5:
                 name: producenci
                 route: warehouse_producer_index
-            6:
-                name: kategorie
-                route: warehouse_category_index
     4:
         tab: service
         name: usługi

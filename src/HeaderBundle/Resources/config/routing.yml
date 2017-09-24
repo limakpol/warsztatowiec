@@ -61,3 +61,11 @@ header_status_index:
 header_position_index:
     path: /position-index
     defaults: { _controller: HeaderBundle:Position:index }
+
+header_category_index:
+    path: /category-index
+    defaults: { _controller: HeaderBundle:Category:index }
+
+header_group_index:
+    path: /group-index
+    defaults: { _controller: HeaderBundle:Group:index }
