@@ -1,1 +1,112 @@
-measure
+<div>
+<div>
+    <table class="inputable measure">
+        <tr>
+            <th colspan="4" class="header">Jednostki towarów</th>
+        </tr>
+        <tr class="tr-th">
+            <th>Nazwa</th>
+            <th>Skrót</th>
+            <th></th>
+        </tr>
+        {% for goodMeasure in goodMeasures %}
+            <tr>
+                <td>
+                    <input type="text" maxlength="30" value="{{ goodMeasure.name }}">
+                </td>
+                <td>
+                    <input type="text" maxlength="5" value="{{ goodMeasure.shortcut }}">
+                </td>
+                {% if goodMeasures.count == 1 %}
+                    <td>
+                        <button class="btn-square btn-edit" data-id="{{ goodMeasure.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td></td>
+                {% else %}
+                    <td>
+                        <button class="btn-square btn-remove" data-id="{{ goodMeasure.id }}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-square btn-edit" data-id="{{ goodMeasure.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <input maxlength="30" type="text">
+            </td>
+            <td>
+                <input maxlength="5" type="text">
+            </td>
+            <td>
+                <button class="btn-square btn-add" data-type="good">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <table class="inputable measure">
+        <tr>
+            <th colspan="4" class="header">Jednostki usług</th>
+        </tr>
+        <tr class="tr-th">
+            <th>Nazwa</th>
+            <th>Skrót</th>
+            <th></th>
+        </tr>
+        {% for serviceMeasure in serviceMeasures %}
+            <tr>
+                <td>
+                    <input maxlength="30" type="text" value="{{ serviceMeasure.name }}">
+                </td>
+                <td>
+                    <input maxlength="5" type="text" value="{{ serviceMeasure.shortcut }}">
+                </td>
+                {% if serviceMeasures.count == 1 %}
+                    <td>
+                        <button class="btn-square btn-edit" data-id="{{ serviceMeasure.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td></td>
+                {% else %}
+                    <td>
+                        <button class="btn-square btn-remove" data-id="{{ serviceMeasure.id }}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-square btn-edit" data-id="{{ serviceMeasure.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <input maxlength="30" type="text">
+            </td>
+            <td>
+                <input maxlength="5" type="text">
+            </td>
+            <td>
+                <button class="btn-square btn-add" data-type="service">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+</div>

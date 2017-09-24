@@ -108,6 +108,7 @@ class Change
         $password = $this->encoder->encodePassword($user, $formData['new_password']);
 
         $user->setPassword($password);
+        $user->setUpdatedBy($user);
 
         $this->em->persist($user);
 

@@ -78,7 +78,13 @@ class Edit
 
     public function write(Form $form)
     {
+        /** @var Workshop $workshop */
         $workshop = $form->getData()['workshop'];
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $workshop->setUpdatedBy($user);
 
         $this->entityManager->persist($workshop);
         $this->entityManager->flush();

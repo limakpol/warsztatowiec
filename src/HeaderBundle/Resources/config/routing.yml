@@ -38,6 +38,18 @@ header_measure_index:
     path: /measure-index
     defaults: { _controller: HeaderBundle:Measure:index }
 
+header_measure_add:
+    path: /measure-add
+    defaults: { _controller: HeaderBundle:Measure:add }
+
+header_measure_edit:
+    path: /measure-edit
+    defaults: { _controller: HeaderBundle:Measure:edit }
+
+header_measure_remove:
+    path: /measure-remove
+    defaults: { _controller: HeaderBundle:Measure:remove }
+
 header_workstation_index:
     path: /workstation-index
     defaults: { _controller: HeaderBundle:Workstation:index }

@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * MeasureRepository
@@ -10,4 +11,69 @@ namespace AppBundle\Entity\Repository;
  */
 class MeasureRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $measure = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:Measure', 'm')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
+            ->andWhere('m.workshop = :workshop')
+            ->andWhere('m.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+        return $measure;
+    }
+
+    public function getByData(Workshop $workshop, $name, $shortcut, $type)
+    {
+        $measure = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:Measure', 'm')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
+            ->andWhere('m.workshop = :workshop')
+            ->andWhere('m.name = :name OR m.shortcut = :shortcut')
+            ->andWhere('m.type_of_quantity = :type')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+                ':shortcut' => $shortcut,
+                ':type'     => $type,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $measure;
+    }
+
+    public function getRemovedByData(Workshop $workshop, $name, $shortcut, $type)
+    {
+        $measure = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:Measure', 'm')
+            ->where('m.removed_at IS NOT NULL OR m.deleted_at IS NOT NULL')
+            ->andWhere('m.workshop = :workshop')
+            ->andWhere('m.name = :name OR m.shortcut = :shortcut')
+            ->andWhere('m.type_of_quantity = :type')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+                ':shortcut' => $shortcut,
+                ':type'     => $type,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $measure;
+    }
+
 }

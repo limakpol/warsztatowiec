@@ -52,3 +52,7 @@ services:
     header.helper.parameters.index:
         class: HeaderBundle\Service\Helper\Parameters\Index
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
+
+    header.helper.measure.general:
+        class: HeaderBundle\Service\Helper\Measure\General
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]

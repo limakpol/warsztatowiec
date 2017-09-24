@@ -9,14 +9,17 @@ header {
 }
 header a {
     display: flex;
-    height: 60%;
+    height: 100%;
     align-self: center;
 }
 header a img {
-    height: 100%;
+    height: 60%;
     object-fit: contain;
     object-position: center;
     align-self: center;
+}
+header a:hover {
+    filter: brightness(125%);
 }
 header > div {
     height: 100%;

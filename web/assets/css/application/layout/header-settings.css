@@ -30,6 +30,13 @@
     align-items: flex-start;
     padding: 1vw 1vw 1vw 4vw;
     color: #fff;
+    width: 100%;
+}
+#div-header-settings-content > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
 }
 #div-header-settings-content form {
     display: flex;
@@ -63,26 +70,26 @@
     font: 14px 'Ubuntu', sans-serif;
     color: #333;
 }
-#div-header-settings-content table {
+#table-workshops {
     border-collapse: collapse;
     border: 1px solid #ddd;
     margin-bottom: 15px;
     color: #ddd;
 }
-#div-header-settings-content table th {
+#table-workshops th {
     border: 1px solid #ddd;
     font: bold 16px 'Ubuntu', sans-serif;
     padding: 5px;
     color: #ddd;
 }
-#div-header-settings-content table td {
+#table-workshops td {
     border: 1px solid #ddd;
     font: 14px 'Courier New', Monospace;
     padding: 5px;
     color: #ddd;
     height: 30px;
 }
-#div-header-settings-content table td .error {
+#table-workshops td .error {
     display: block;
     width: 100%;
     text-align: center;
@@ -90,4 +97,42 @@
 }
 #table-workshops td:not(:first-child) {
     text-align: center;
+}
+#div-header-settings-content .inputable {
+    border: none;
+    border-collapse: collapse;
+    margin-right: 4vw;
+}
+#div-header-settings-content .inputable th {
+    font: bold 14px 'Ubuntu', sans-serif;
+    color: #fff;
+}
+#div-header-settings-content .inputable td {
+    box-sizing: border-box;
+    padding: 4px;
+    text-align: center;
+}
+#div-header-settings-content .inputable input {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    font: 13px 'Arial', sans-serif;
+    color: #333;
+    box-sizing: border-box;
+}
+#div-header-settings-content .inputable td:nth-child(1) input {
+    text-align: right;
+    max-width: 120px;
+}
+#div-header-settings-content .inputable td:nth-child(2) input {
+    text-align: left;
+    max-width: 60px;
+}
+#div-header-settings-content .inputable .header {
+    font-size: 16px;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 5px;
+}
+#div-header-settings-content .inputable .tr-th th {
+    padding-top: 10px;
 }

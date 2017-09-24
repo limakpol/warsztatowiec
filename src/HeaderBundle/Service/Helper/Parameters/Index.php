@@ -69,7 +69,13 @@ class Index
 
     public function write(Form $form)
     {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Parameters $parameters */
         $parameters = $form->getData();
+
+        $parameters->setUpdatedBy($user);
 
         $this->entityManager->persist($parameters);
 

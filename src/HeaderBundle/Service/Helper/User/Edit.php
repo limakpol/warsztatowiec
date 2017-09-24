@@ -2,6 +2,7 @@
 
 namespace HeaderBundle\Service\Helper\User;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use HeaderBundle\Form\UserEditType;
 use Symfony\Component\Form\Form;
@@ -63,8 +64,10 @@ class Edit
 
     public function write(Form $form)
     {
+        /** @var User $user */
         $user = $form->getData()['user'];
 
+        $user->setUpdatedBy($user);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

@@ -25,6 +25,9 @@ section {
 section.header {
     background-color: #333;
 }
+section.header:nth-child(1):hover {
+    background-color: #414141;
+}
 section.header:nth-child(2) {
     display: none;
     height: 100vh;
