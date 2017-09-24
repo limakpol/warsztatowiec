@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * PositionRepository
@@ -10,4 +11,80 @@ namespace AppBundle\Entity\Repository;
  */
 class PositionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $position = $this->_em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Position', 'p')
+            ->where('p.removed_at IS NULL')
+            ->andWhere('p.deleted_at IS NULL')
+            ->andWhere('p.workshop = :workshop')
+            ->andWhere('p.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $position;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $positions = $this->_em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Position', 'p')
+            ->where('p.removed_at IS NULL')
+            ->andWhere('p.deleted_at IS NULL')
+            ->andWhere('p.workshop = :workshop')
+            ->setParameters([
+                ':workshop' => $workshop,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $positions;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $position = $this->_em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Position', 'p')
+            ->where('p.removed_at IS NULL')
+            ->andWhere('p.deleted_at IS NULL')
+            ->andWhere('p.workshop = :workshop')
+            ->andWhere('p.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $position;
+    }
+
+    public function getOneRemovedByName(Workshop $workshop, $name)
+    {
+        $position = $this->_em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Position', 'p')
+            ->where('p.removed_at IS NOT NULL OR p.deleted_at IS NOT NULL')
+            ->andWhere('p.workshop = :workshop')
+            ->andWhere('p.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $position;
+    }
 }

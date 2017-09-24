@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * WorkstationRepository
@@ -10,4 +11,80 @@ namespace AppBundle\Entity\Repository;
  */
 class WorkstationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $workstation = $this->_em->createQueryBuilder()
+            ->select('w')
+            ->from('AppBundle:Workstation', 'w')
+            ->where('w.removed_at IS NULL')
+            ->andWhere('w.deleted_at IS NULL')
+            ->andWhere('w.workshop = :workshop')
+            ->andWhere('w.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $workstation;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $workstations = $this->_em->createQueryBuilder()
+            ->select('w')
+            ->from('AppBundle:Workstation', 'w')
+            ->where('w.removed_at IS NULL')
+            ->andWhere('w.deleted_at IS NULL')
+            ->andWhere('w.workshop = :workshop')
+            ->setParameters([
+                ':workshop' => $workshop,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $workstations;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $workstation = $this->_em->createQueryBuilder()
+            ->select('w')
+            ->from('AppBundle:Workstation', 'w')
+            ->where('w.removed_at IS NULL')
+            ->andWhere('w.deleted_at IS NULL')
+            ->andWhere('w.workshop = :workshop')
+            ->andWhere('w.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $workstation;
+    }
+
+    public function getOneRemovedByName(Workshop $workshop, $name)
+    {
+        $workstation = $this->_em->createQueryBuilder()
+            ->select('w')
+            ->from('AppBundle:Workstation', 'w')
+            ->where('w.removed_at IS NOT NULL OR w.deleted_at IS NOT NULL')
+            ->andWhere('w.workshop = :workshop')
+            ->andWhere('w.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $workstation;
+    } 
 }

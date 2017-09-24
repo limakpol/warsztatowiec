@@ -1,20 +1,20 @@
-<table class="inputable position">
+<table class="inputable groupp">
     <tr class="tr-th">
         <th>Nazwa</th>
         <th colspan="2"></th>
     </tr>
-    {% for position in positions %}
+    {% for groupp in groupps %}
         <tr>
             <td>
-                <input type="text" maxlength="30" value="{{ position.name }}">
+                <input type="text" maxlength="30" value="{{ groupp.name }}">
             </td>
             <td>
-                <button class="btn-square btn-remove" data-id="{{ position.id }}">
+                <button class="btn-square btn-remove" data-id="{{ groupp.id }}">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </button>
             </td>
             <td>
-                <button class="btn-square btn-edit" data-id="{{ position.id }}">
+                <button class="btn-square btn-edit" data-id="{{ groupp.id }}">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
                 </button>
             </td>

@@ -31,7 +31,7 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
         return $measure;
     }
 
-    public function getByData(Workshop $workshop, $name, $shortcut, $type)
+    public function getOneByData(Workshop $workshop, $name, $shortcut, $type)
     {
         $measure = $this->_em->createQueryBuilder()
             ->select('m')
@@ -54,7 +54,7 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
         return $measure;
     }
 
-    public function getRemovedByData(Workshop $workshop, $name, $shortcut, $type)
+    public function getOneRemovedByData(Workshop $workshop, $name, $shortcut, $type)
     {
         $measure = $this->_em->createQueryBuilder()
             ->select('m')

@@ -458,4 +458,3 @@ class Producer
         return $this->deleted_by;
     }
 }
-

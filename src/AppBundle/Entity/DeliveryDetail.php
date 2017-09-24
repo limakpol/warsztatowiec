@@ -806,4 +806,3 @@ class DeliveryDetail
         return $this->deleted_by;
     }
 }
-

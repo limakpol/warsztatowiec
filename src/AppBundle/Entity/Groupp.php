@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Group
+ * Groupp
  */
-class Group
+class Groupp
 {
     /**
      * @var integer
@@ -115,7 +115,7 @@ class Group
      *
      * @param integer $workshopId
      *
-     * @return Group
+     * @return Groupp
      */
     public function setWorkshopId($workshopId)
     {
@@ -139,7 +139,7 @@ class Group
      *
      * @param string $name
      *
-     * @return Group
+     * @return Groupp
      */
     public function setName($name)
     {
@@ -163,7 +163,7 @@ class Group
      *
      * @param \DateTime $createdAt
      *
-     * @return Group
+     * @return Groupp
      */
     public function setCreatedAt($createdAt)
     {
@@ -187,7 +187,7 @@ class Group
      *
      * @param \DateTime $updatedAt
      *
-     * @return Group
+     * @return Groupp
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -211,7 +211,7 @@ class Group
      *
      * @param \DateTime $removedAt
      *
-     * @return Group
+     * @return Groupp
      */
     public function setRemovedAt($removedAt)
     {
@@ -235,7 +235,7 @@ class Group
      *
      * @param \DateTime $deletedAt
      *
-     * @return Group
+     * @return Groupp
      */
     public function setDeletedAt($deletedAt)
     {
@@ -259,7 +259,7 @@ class Group
      *
      * @param integer $createdById
      *
-     * @return Group
+     * @return Groupp
      */
     public function setCreatedById($createdById)
     {
@@ -283,7 +283,7 @@ class Group
      *
      * @param integer $updatedById
      *
-     * @return Group
+     * @return Groupp
      */
     public function setUpdatedById($updatedById)
     {
@@ -307,7 +307,7 @@ class Group
      *
      * @param integer $removedById
      *
-     * @return Group
+     * @return Groupp
      */
     public function setRemovedById($removedById)
     {
@@ -331,7 +331,7 @@ class Group
      *
      * @param integer $deletedById
      *
-     * @return Group
+     * @return Groupp
      */
     public function setDeletedById($deletedById)
     {
@@ -355,7 +355,7 @@ class Group
      *
      * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return Group
+     * @return Groupp
      */
     public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
@@ -379,7 +379,7 @@ class Group
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return Group
+     * @return Groupp
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -403,7 +403,7 @@ class Group
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return Group
+     * @return Groupp
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -427,7 +427,7 @@ class Group
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return Group
+     * @return Groupp
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -451,7 +451,7 @@ class Group
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return Group
+     * @return Groupp
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -475,7 +475,7 @@ class Group
      *
      * @param \AppBundle\Entity\Customer $customer
      *
-     * @return Group
+     * @return Groupp
      */
     public function addCustomer(\AppBundle\Entity\Customer $customer)
     {
@@ -504,4 +504,3 @@ class Group
         return $this->customers;
     }
 }
-

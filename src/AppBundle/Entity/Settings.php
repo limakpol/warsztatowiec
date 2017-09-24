@@ -429,4 +429,3 @@ class Settings
         return $this->deleted_by;
     }
 }
-

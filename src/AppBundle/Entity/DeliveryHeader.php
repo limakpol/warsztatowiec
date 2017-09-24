@@ -794,4 +794,3 @@ class DeliveryHeader
         return $this->deleted_by;
     }
 }
-

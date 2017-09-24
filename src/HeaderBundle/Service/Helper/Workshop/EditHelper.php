@@ -1,20 +1,27 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: limakpol
+ * Date: 9/22/17
+ * Time: 7:45 PM
+ */
 
-namespace HeaderBundle\Service\Helper\Parameters;
+namespace HeaderBundle\Service\Helper\Workshop;
 
-use AppBundle\Entity\Parameters;
+
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManagerInterface;
-use HeaderBundle\Form\ParametersType;
+use HeaderBundle\Form\WorkshopEditType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class Index
+class EditHelper
 {
     private $requestStack;
     private $entityManager;
@@ -31,6 +38,7 @@ class Index
 
     public function createForm()
     {
+        /** @var TokenStorage $token */
         $token = $this->tokenStorage->getToken();
 
         /** @var User $user */
@@ -39,12 +47,13 @@ class Index
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        /** @var Parameters $parameters */
-        $parameters = $workshop->getParameters();
-
         $formFactory = $this->formFactory;
 
-        return $form = $formFactory->create(ParametersType::class, $parameters);
+        return $form = $formFactory->create(WorkshopEditType::class, [
+            'workshop' => $workshop,
+        ], [
+            'validation_groups' => 'workshop_edit',
+        ]);
     }
 
     public function isValid(Form $form)
@@ -64,21 +73,20 @@ class Index
         return
             $request->isMethod('POST')
             &&  $request->isXmlHttpRequest()
-            &&  $request->get('parameters');
+            &&  $request->get('workshop_edit');
     }
 
     public function write(Form $form)
     {
+        /** @var Workshop $workshop */
+        $workshop = $form->getData()['workshop'];
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        /** @var Parameters $parameters */
-        $parameters = $form->getData();
+        $workshop->setUpdatedBy($user);
 
-        $parameters->setUpdatedBy($user);
-
-        $this->entityManager->persist($parameters);
-
+        $this->entityManager->persist($workshop);
         $this->entityManager->flush();
 
         return new JsonResponse([
@@ -100,20 +108,4 @@ class Index
             'messages'  => $messages,
         ]);
     }
-
-    public function getErrorMessage($message)
-    {
-        return new JsonResponse([
-            'error' => 1,
-            'messages' => [$message],
-        ]);
-    }
-
-    public function getSuccessMessage()
-    {
-        return new JsonResponse([
-            'error' => 0,
-        ]);
-    }
-
 }

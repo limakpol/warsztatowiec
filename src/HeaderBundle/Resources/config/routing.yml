@@ -1,11 +1,14 @@
+# USER
 header_user_edit:
     path: /user-edit
     defaults: { _controller: HeaderBundle:User:edit }
 
+# PASSWORD
 header_password_change:
     path: /password-change
     defaults: { _controller: HeaderBundle:Password:change }
 
+#WORKSHOP
 header_workshop_index:
     path: /workshop-index
     defaults: { _controller: HeaderBundle:Workshop:index }
@@ -22,18 +25,22 @@ header_workshop_edit:
     path: /workshop-edit
     defaults: { _controller: HeaderBundle:Workshop:edit }
 
+# PAYMENT
 header_payment_index:
     path: /payment-index
     defaults: { _controller: HeaderBundle:Payment:index }
 
+# SETTINGS
 header_settings_index:
     path: /settings-index
     defaults: { _controller: HeaderBundle:Settings:index }
 
+# PARAMETERS
 header_parameters_index:
     path: /parameters-index
     defaults: { _controller: HeaderBundle:Parameters:index }
 
+# MEASURE
 header_measure_index:
     path: /measure-index
     defaults: { _controller: HeaderBundle:Measure:index }
@@ -50,22 +57,88 @@ header_measure_remove:
     path: /measure-remove
     defaults: { _controller: HeaderBundle:Measure:remove }
 
-header_workstation_index:
-    path: /workstation-index
-    defaults: { _controller: HeaderBundle:Workstation:index }
-
-header_status_index:
-    path: /status-index
-    defaults: { _controller: HeaderBundle:Status:index }
-
-header_position_index:
-    path: /position-index
-    defaults: { _controller: HeaderBundle:Position:index }
-
+# CATEGORY
 header_category_index:
     path: /category-index
     defaults: { _controller: HeaderBundle:Category:index }
 
-header_group_index:
-    path: /group-index
-    defaults: { _controller: HeaderBundle:Group:index }
+header_category_add:
+    path: /category-add
+    defaults: { _controller: HeaderBundle:Category:add }
+
+header_category_edit:
+    path: /category-edit
+    defaults: { _controller: HeaderBundle:Category:edit }
+
+header_category_remove:
+    path: /category-remove
+    defaults: { _controller: HeaderBundle:Category:remove }
+
+# GROUPP
+header_groupp_index:
+    path: /groupp-index
+    defaults: { _controller: HeaderBundle:Groupp:index }
+
+header_groupp_add:
+    path: /groupp-add
+    defaults: { _controller: HeaderBundle:Groupp:add }
+
+header_groupp_edit:
+    path: /groupp-edit
+    defaults: { _controller: HeaderBundle:Groupp:edit }
+
+header_groupp_remove:
+    path: /groupp-remove
+    defaults: { _controller: HeaderBundle:Groupp:remove }
+
+# POSITION
+header_position_index:
+    path: /position-index
+    defaults: { _controller: HeaderBundle:Position:index }
+
+header_position_add:
+    path: /position-add
+    defaults: { _controller: HeaderBundle:Position:add }
+
+header_position_edit:
+    path: /position-edit
+    defaults: { _controller: HeaderBundle:Position:edit }
+
+header_position_remove:
+    path: /position-remove
+    defaults: { _controller: HeaderBundle:Position:remove }
+
+# STATUS
+header_status_index:
+    path: /status-index
+    defaults: { _controller: HeaderBundle:Status:index }
+
+header_status_add:
+    path: /status-add
+    defaults: { _controller: HeaderBundle:Status:add }
+
+header_status_edit:
+    path: /status-edit
+    defaults: { _controller: HeaderBundle:Status:edit }
+
+header_status_remove:
+    path: /status-remove
+    defaults: { _controller: HeaderBundle:Status:remove }
+
+# WORKSTATION
+header_workstation_index:
+    path: /workstation-index
+    defaults: { _controller: HeaderBundle:Workstation:index }
+
+header_workstation_add:
+    path: /workstation-add
+    defaults: { _controller: HeaderBundle:Workstation:add }
+
+header_workstation_edit:
+    path: /workstation-edit
+    defaults: { _controller: HeaderBundle:Workstation:edit }
+
+header_workstation_remove:
+    path: /workstation-remove
+    defaults: { _controller: HeaderBundle:Workstation:remove }
+

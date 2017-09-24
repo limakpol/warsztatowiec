@@ -55,19 +55,19 @@ class WorkshopController extends Controller
 
     public function switchAction()
     {
-        $switcherHelper = $this->get('header.helper.workshop.switcher');
+        $switchHelper = $this->get('header.helper.workshop.switch');
 
-        if(!$switcherHelper->isRequestCorrect())
+        if(!$switchHelper->isRequestCorrect())
         {
-            return $switcherHelper->getErrorMessage('Nieprawidłowe żądanie');
+            return $switchHelper->getErrorMessage('Nieprawidłowe żądanie');
         }
 
-        if(!(($workshop = $switcherHelper->verifyWorkshop()) instanceof Workshop))
+        if(!(($workshop = $switchHelper->verifyWorkshop()) instanceof Workshop))
         {
-            return $switcherHelper->getErrorMessage('Warsztat nie istnieje');
+            return $switchHelper->getErrorMessage('Warsztat nie istnieje');
         }
 
-        return $switcherHelper->switchWorkshop($workshop);
+        return $switchHelper->switchWorkshop($workshop);
     }
 
     public function editAction()

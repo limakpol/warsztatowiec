@@ -31,7 +31,7 @@ header_menu:
         route: header_status_index
     11:
         name: grupy klientów
-        route: header_group_index
+        route: header_groupp_index
     12:
         name: kategorie towarów
         route: header_category_index

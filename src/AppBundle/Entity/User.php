@@ -786,9 +786,7 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         $workshop = $this->getCurrentWorkshop();
-
         $roles = [];
-
         /** @var UserRole $role */
         foreach($this->roles as $role)
         {
@@ -797,9 +795,9 @@ class User implements UserInterface, \Serializable
                 $roles[] = $role->getRole();
             }
         }
-
         return $roles;
     }
+
 
     /**
      * Set currentWorkshop
@@ -1066,9 +1064,11 @@ class User implements UserInterface, \Serializable
     {
         return null;
     }
+
     public function eraseCredentials()
     {
     }
+
     public function serialize()
     {
         return serialize([
@@ -1077,6 +1077,7 @@ class User implements UserInterface, \Serializable
             $this->password,
         ]);
     }
+
     public function unserialize($serialized)
     {
         list(
@@ -1086,4 +1087,3 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 }
-

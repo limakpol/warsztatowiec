@@ -1,6 +1,6 @@
 <?php
 
-namespace HeaderBundle\Service\Helper\Measure;
+namespace HeaderBundle\Service\Helper\Crud;
 
 
 use AppBundle\Entity\Measure;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class General
+class MeasureHelper
 {
     private $entityManager;
     private $requestStack;
@@ -54,9 +54,9 @@ class General
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return  $request->get('type') != ''
-            &&  $request->get('name') != ''
-            &&  $request->get('shortcut') != '';
+        return  $request->get('type')       != ''
+            &&  $request->get('name')       != ''
+            &&  $request->get('shortcut')   != '';
     }
 
     public function getOne()
@@ -97,7 +97,7 @@ class General
         $measure = $this
                     ->entityManager
                     ->getRepository('AppBundle:Measure')
-                    ->getByData($workshop, $name, $shortcut, $type)
+                    ->getOneByData($workshop, $name, $shortcut, $type)
             ;
 
         return null !== $measure;
@@ -121,7 +121,7 @@ class General
         $measure = $this
             ->entityManager
             ->getRepository('AppBundle:Measure')
-            ->getRemovedByData($workshop, $name, $shortcut, $type)
+            ->getOneRemovedByData($workshop, $name, $shortcut, $type)
         ;
 
         return $measure;
@@ -217,9 +217,6 @@ class General
 
     public function remove(Measure $measure)
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
         /** @var EntityManager $em */
         $em = $this->entityManager;
 

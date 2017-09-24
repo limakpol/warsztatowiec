@@ -15,7 +15,7 @@ class MeasureController extends Controller
     public function indexAction()
     {
 
-        $measureHelper = $this->get('header.helper.measure.general');
+        $measureHelper = $this->get('header.helper.measure');
 
         $goodMeasures = $measureHelper->getMeasures('good');
 
@@ -30,7 +30,7 @@ class MeasureController extends Controller
 
     public function addAction()
     {
-        $measureHelper = $this->get('header.helper.measure.general');
+        $measureHelper = $this->get('header.helper.measure');
 
         if(!$measureHelper->isRequestCorrect())
         {
@@ -61,7 +61,7 @@ class MeasureController extends Controller
 
     public function editAction()
     {
-        $measureHelper = $this->get('header.helper.measure.general');
+        $measureHelper = $this->get('header.helper.measure');
 
         if(!$measureHelper->isRequestCorrect())
         {
@@ -80,7 +80,7 @@ class MeasureController extends Controller
 
     public function removeAction()
     {
-        $measureHelper = $this->get('header.helper.measure.general');
+        $measureHelper = $this->get('header.helper.measure');
 
         if(!$measureHelper->isRequestCorrect())
         {

@@ -155,7 +155,7 @@ class Customer
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $groups;
+    private $groupps;
 
     /**
      * Constructor
@@ -163,7 +163,7 @@ class Customer
     public function __construct()
     {
         $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groupps = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -859,37 +859,36 @@ class Customer
     }
 
     /**
-     * Add group
+     * Add groupp
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param \AppBundle\Entity\Groupp $groupp
      *
      * @return Customer
      */
-    public function addGroup(\AppBundle\Entity\Group $group)
+    public function addGroupp(\AppBundle\Entity\Groupp $groupp)
     {
-        $this->groups[] = $group;
+        $this->groupps[] = $groupp;
 
         return $this;
     }
 
     /**
-     * Remove group
+     * Remove groupp
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param \AppBundle\Entity\Groupp $groupp
      */
-    public function removeGroup(\AppBundle\Entity\Group $group)
+    public function removeGroupp(\AppBundle\Entity\Groupp $groupp)
     {
-        $this->groups->removeElement($group);
+        $this->groupps->removeElement($groupp);
     }
 
     /**
-     * Get groups
+     * Get groupps
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGroups()
+    public function getGroupps()
     {
-        return $this->groups;
+        return $this->groupps;
     }
 }
-

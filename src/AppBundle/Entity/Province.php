@@ -98,4 +98,3 @@ class Province
         return $this->addresses;
     }
 }
-

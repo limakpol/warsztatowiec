@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * CategoryRepository
@@ -10,4 +11,80 @@ namespace AppBundle\Entity\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $category = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Category', 'c')
+            ->where('c.removed_at IS NULL')
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('c.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $category;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $categories = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Category', 'c')
+            ->where('c.removed_at IS NULL')
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->setParameters([
+                ':workshop' => $workshop,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $categories;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $category = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Category', 'c')
+            ->where('c.removed_at IS NULL')
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('c.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $category;
+    }
+
+    public function getOneRemovedByName(Workshop $workshop, $name)
+    {
+        $category = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Category', 'c')
+            ->where('c.removed_at IS NOT NULL OR c.deleted_at IS NOT NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('c.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $category;
+    }
 }

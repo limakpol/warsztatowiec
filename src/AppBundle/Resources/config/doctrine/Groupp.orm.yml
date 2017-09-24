@@ -1,7 +1,7 @@
-AppBundle\Entity\Group:
+AppBundle\Entity\Groupp:
     type: entity
-    table: group
-    repositoryClass: AppBundle\Entity\Repository\GroupRepository
+    table: groupp
+    repositoryClass: AppBundle\Entity\Repository\GrouppRepository
     id:
         id:
             type: integer
@@ -83,7 +83,7 @@ AppBundle\Entity\Group:
     manyToMany:
         customers:
             targetEntity: AppBundle\Entity\Customer
-            mappedBy: groups
+            mappedBy: groupps
     uniqueConstraints:
         workshop_name:
             columns: [ workshop_id, name ]

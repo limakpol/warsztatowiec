@@ -14,7 +14,7 @@ parameters:
          engine_types: ["benzyna", "benzyna + gaz", "diesel", "hybryda", "ee"]
          statuses: [["przyjęte", "#00ff00"],  ["diagnoza", "#3399ff"], ["oczekuje na części", "#993333" ], ["w toku", "#006600"], ["odłożone", "#9999ff" ], ["przerwa", "#ff0066" ], ["naprawione", "#ffff00"]]
          actions: ["wymiana", "zmiana", "przegląd", "regulacja", "naprawa", "montaż", "demontaż", "usunięcie", "sprawdzenie", "robocizna", "spawanie", "lutowanie", "uszczelnienie", "programowanie", "ustawienie", "regeneracja", "wyczyszczenie", "dezynfekcja"]
-         workstations: ['stanowisko 1', 'stanowisko 2']
+         workstations: ['stanowisko naprawcze 1', 'stanowisko naprawcze 2']
          positions: ['administrator aplikacji', 'mechanik']
          limit_set: [15, 30, 75, 150, 300]
          default_limit: 15

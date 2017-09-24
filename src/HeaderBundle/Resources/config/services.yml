@@ -21,38 +21,55 @@ services:
             - { name: form.type }
 
     # HELPERS
-    header.helper.general:
-        class: HeaderBundle\Service\Helper\General
-        arguments: ["@request_stack"]
-
     header.helper.user.edit:
-        class: HeaderBundle\Service\Helper\User\Edit
+        class: HeaderBundle\Service\Helper\User\EditHelper
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
 
     header.helper.password.change:
-        class: HeaderBundle\Service\Helper\Password\Change
+        class: HeaderBundle\Service\Helper\Password\ChangeHelper
         arguments: ["@request_stack", "@form.factory", "@doctrine.orm.default_entity_manager", "@security.password_encoder", "@security.token_storage"]
 
     header.helper.workshop.index:
-        class: HeaderBundle\Service\Helper\Workshop\Index
+        class: HeaderBundle\Service\Helper\Workshop\IndexHelper
         arguments: ["@security.token_storage"]
 
     header.helper.workshop.add:
-        class: HeaderBundle\Service\Helper\Workshop\Add
+        class: HeaderBundle\Service\Helper\Workshop\AddHelper
         arguments: ["@form.factory", "@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@app.helper.app.register"]
 
-    header.helper.workshop.switcher:
-        class: HeaderBundle\Service\Helper\Workshop\Switcher
+    header.helper.workshop.switch:
+        class: HeaderBundle\Service\Helper\Workshop\SwitchHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
 
     header.helper.workshop.edit:
-        class: HeaderBundle\Service\Helper\Workshop\Edit
+        class: HeaderBundle\Service\Helper\Workshop\EditHelper
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
 
     header.helper.parameters.index:
-        class: HeaderBundle\Service\Helper\Parameters\Index
+        class: HeaderBundle\Service\Helper\Parameters\IndexHelper
         arguments: ["@request_stack", "@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory"]
 
-    header.helper.measure.general:
-        class: HeaderBundle\Service\Helper\Measure\General
+    header.helper.measure:
+        class: HeaderBundle\Service\Helper\Crud\MeasureHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.category:
+        class: HeaderBundle\Service\Helper\Crud\CategoryHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.groupp:
+        class: HeaderBundle\Service\Helper\Crud\GrouppHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.position:
+        class: HeaderBundle\Service\Helper\Crud\PositionHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.status:
+        class: HeaderBundle\Service\Helper\Crud\StatusHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.workstation:
+        class: HeaderBundle\Service\Helper\Crud\WorkstationHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+

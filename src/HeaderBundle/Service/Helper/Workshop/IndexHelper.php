@@ -8,7 +8,7 @@ use AppBundle\Entity\Workshop;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class Index
+class IndexHelper
 {
 
     private $tokenStorage;

@@ -863,4 +863,3 @@ class OrderIndexx
         return $this->statuses;
     }
 }
-

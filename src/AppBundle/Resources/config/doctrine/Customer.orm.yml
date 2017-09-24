@@ -171,14 +171,14 @@ AppBundle\Entity\Customer:
                 inverseJoinColumns:
                     vehicle_id:
                         referencedColumnName: id
-        groups:
-            targetEntity: AppBundle\Entity\Group
+        groupps:
+            targetEntity: AppBundle\Entity\Groupp
             inversedBy: customers
             joinTable:
-                name: customer_group
+                name: customer_groupp
                 joinColumns:
                     customer_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    group_id:
+                    groupp_id:
                         referencedColumnName: id
