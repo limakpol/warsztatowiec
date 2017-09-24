@@ -16,7 +16,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class SwitchHelper
 {
@@ -90,5 +93,25 @@ class SwitchHelper
         return new JsonResponse([
             'error' => 0,
         ]);
+    }
+
+    public function regenerateToken()
+    {
+        /** @var TokenInterface $token */
+        $token = $this->tokenStorage->getToken();
+
+        /** @var User $user */
+        $user = $token->getUser();
+
+        $token = new UsernamePasswordToken(
+            $user,
+            $user->getPassword(),
+            'my_provider',
+            $user->getRoles()
+        );
+
+        $this->tokenStorage->setToken($token);
+
+        return;
     }
 }

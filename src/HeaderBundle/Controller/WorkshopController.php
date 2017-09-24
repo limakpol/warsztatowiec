@@ -67,6 +67,8 @@ class WorkshopController extends Controller
             return $switchHelper->getErrorMessage('Warsztat nie istnieje');
         }
 
+        $switchHelper->regenerateToken();
+
         return $switchHelper->switchWorkshop($workshop);
     }
 
