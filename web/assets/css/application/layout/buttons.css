@@ -44,6 +44,9 @@
 .btn-remove {
     background-color: #833c00;
 }
+.btn-system {
+    background-color: #3485ff;
+}
 .btn-success {
     filter: brightness(140%);
 }

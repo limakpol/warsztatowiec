@@ -99,3 +99,12 @@ services:
     app.yaml_parser:
         class: AppBundle\Service\YamlParser
 
+    app.test_data_generator:
+        class: AppBundle\Service\TestDataGenerator
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
+
+    app.previous_data_remover:
+        class: AppBundle\Service\PreviousDataRemover
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
+
+

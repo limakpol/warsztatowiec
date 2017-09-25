@@ -145,3 +145,8 @@
     width: 32px;
     padding: 1px;
 }
+#div-header-settings-content p.system-info {
+    color: #fff;
+    font: 14px 'Ubuntu', sans-serif;
+    width: 50%;
+}

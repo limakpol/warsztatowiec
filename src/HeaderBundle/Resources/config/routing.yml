@@ -142,3 +142,12 @@ header_workstation_remove:
     path: /workstation-remove
     defaults: { _controller: HeaderBundle:Workstation:remove }
 
+# SYSTEM
+header_system_index:
+    path: /system-index
+    defaults: { _controller: HeaderBundle:System:index }
+
+header_system_generate_test_data:
+    path: /system-generate-test-data
+    defaults: { _controller: HeaderBundle:System:generateTestData }
+

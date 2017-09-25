@@ -35,6 +35,9 @@ header_menu:
     12:
         name: kategorie towarów
         route: header_category_index
+    13:
+        name: opcje systemowe
+        route: header_system_index
 main_menu:
     1:
         tab: customer
