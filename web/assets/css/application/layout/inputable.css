@@ -1,0 +1,33 @@
+main .inputable {
+    border-collapse: collapse;
+    border: none;
+}
+main .inputable th {
+    font: bold 12px 'Ubuntu', sans-serif;
+    color: #333;
+    padding: 3px;
+}
+main .inputable td {
+    padding: 3px;
+}
+main .inputable input {
+    font: 13px 'Arial', sans-serif;
+    padding: 3px;
+    text-align: right;
+    color: #333;
+}
+
+@media screen and (min-width: 1200px)
+{
+    main .inputable th {
+        font-size: 14px;
+    }
+    main .inputable td {
+        padding: 4px;
+    }
+    main .inputable input {
+        font-size: 14px;
+        padding: 6px;
+        border: 1px solid #aaa;
+    }
+}

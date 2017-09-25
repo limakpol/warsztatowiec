@@ -47,6 +47,7 @@ section.footer {
 }
 main {
     min-height: 600px;
+    padding-bottom: 20px;
 }
 .error {
     font: 13px 'Ubuntu', sans-serif;

@@ -1,4 +1,20 @@
 {% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    'assets/css/application/layout/inputable.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 {% block main %}
-    Customer add
+ {% include 'WarehouseBundle:producer:content.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'assets/js/application/warehouse/producer.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

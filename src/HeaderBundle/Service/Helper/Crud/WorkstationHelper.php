@@ -121,6 +121,8 @@ class WorkstationHelper
         return null !== $workstation;
     }
 
+
+
     public function workstationExistsRemoved()
     {
         /** @var Request $request */

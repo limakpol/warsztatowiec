@@ -1,0 +1,34 @@
+<table class="inputable producer">
+    <tr class="tr-th">
+        <th>Nazwa producenta</th>
+        <th colspan="2"></th>
+    </tr>
+    {% for producer in producers %}
+        <tr>
+            <td>
+                <input type="text" maxlength="40" value="{{ producer.name }}">
+            </td>
+            <td>
+                <button class="btn-remove" data-id="{{ producer.id }}">
+                    usuń<i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn-edit" data-id="{{ producer.id }}">
+                    edytuj<i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            <input maxlength="40" type="text" autofocus="autofocus">
+        </td>
+        <td>
+            <button class="btn-add" data-type="good">
+                dodaj<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </td>
+        <td></td>
+    </tr>
+</table>

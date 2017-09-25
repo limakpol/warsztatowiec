@@ -5,3 +5,15 @@ warehouse_good_index:
 warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
+
+warehouse_producer_add:
+    path: /producer-add
+    defaults: { _controller: WarehouseBundle:Producer:add }
+
+warehouse_producer_edit:
+    path: /producer-edit
+    defaults: { _controller: WarehouseBundle:Producer:edit }
+
+warehouse_producer_remove:
+    path: /producer-remove
+    defaults: { _controller: WarehouseBundle:Producer:remove }

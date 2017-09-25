@@ -1,1 +1,4 @@
 services:
+    service.helper.action:
+        class: ServiceBundle\Service\ActionHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]

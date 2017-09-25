@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * ActionRepository
@@ -10,4 +11,80 @@ namespace AppBundle\Entity\Repository;
  */
 class ActionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $action = $this->_em->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Action', 'a')
+            ->where('a.removed_at IS NULL')
+            ->andWhere('a.deleted_at IS NULL')
+            ->andWhere('a.workshop = :workshop')
+            ->andWhere('a.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $action;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $actions = $this->_em->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Action', 'a')
+            ->where('a.removed_at IS NULL')
+            ->andWhere('a.deleted_at IS NULL')
+            ->andWhere('a.workshop = :workshop')
+            ->setParameters([
+                ':workshop' => $workshop,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $actions;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $action = $this->_em->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Action', 'a')
+            ->where('a.removed_at IS NULL')
+            ->andWhere('a.deleted_at IS NULL')
+            ->andWhere('a.workshop = :workshop')
+            ->andWhere('a.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $action;
+    }
+
+    public function getOneRemovedByName(Workshop $workshop, $name)
+    {
+        $action = $this->_em->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Action', 'a')
+            ->where('a.removed_at IS NOT NULL OR a.deleted_at IS NOT NULL')
+            ->andWhere('a.workshop = :workshop')
+            ->andWhere('a.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $action;
+    }
 }

@@ -16,15 +16,97 @@ class ActionController extends Controller
 
     public function indexAction()
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $actionHelper = $this->get('service.helper.action');
+        $yamlParser     = $this->get('app.yaml_parser');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        $headerMenu     = $yamlParser->getHeaderMenu();
+        $mainMenu       = $yamlParser->getMainMenu();
+
+        $actions = $actionHelper->getActions();
 
         return $this->render('ServiceBundle:action:index.html.twig', [
+            'actions'     => $actions,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'service',
             'navbar'        => 'Czynności dodawane do towarów w zleceniach',
+        ]);
+    }
+
+    public function addAction()
+    {
+        $actionHelper = $this->get('service.helper.action');
+
+        if(!$actionHelper->isRequestCorrect())
+        {
+            return $actionHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(!$actionHelper->isValid())
+        {
+            return $actionHelper->getErrorMessage('Wpisano nieprawidłowe dane');
+        }
+
+        if($actionHelper->actionExists())
+        {
+            return $actionHelper->getErrorMessage('Producent o takiej nazwie już istnieje');
+        }
+
+        if(null !== ($action = $actionHelper->actionExistsRemoved()))
+        {
+            $actionHelper->recover($action);
+
+            return $this->indexAction();
+        }
+
+        $actionHelper->write();
+
+        $actions = $actionHelper->getActions();
+
+        return $this->render('ServiceBundle:action:content.html.twig', [
+            'actions' => $actions,
+        ]);
+    }
+
+    public function editAction()
+    {
+        $actionHelper = $this->get('service.helper.action');
+
+        if(!$actionHelper->isRequestCorrect())
+        {
+            return $actionHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(null === ($action = $actionHelper->getOne()))
+        {
+            return $actionHelper->getErrorMessage('Wybrany producent nie istnieje');
+        }
+
+        $actionHelper->edit($action);
+
+        return $actionHelper->getSuccessMessage();
+    }
+
+    public function removeAction()
+    {
+        $actionHelper = $this->get('service.helper.action');
+
+        if(!$actionHelper->isRequestCorrect())
+        {
+            return $actionHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(null === ($action = $actionHelper->getOne()))
+        {
+            return $actionHelper->getErrorMessage('Wybrany producent nie istnieje');
+        }
+
+        $actionHelper->remove($action);
+
+        $actions = $actionHelper->getActions();
+
+        return $this->render('ServiceBundle:action:content.html.twig', [
+            'actions' => $actions,
         ]);
     }
 }

@@ -1,31 +1,27 @@
 $(document).ready(function()
 {
-    $(document).on('click', '.inputable.measure .btn-add', function(event)
+    $(document).on('click', '.inputable.producer .btn-add', function(event)
     {
         event.preventDefault();
 
         $('.error').remove();
 
         var submit = $(this);
-        
-        var type = submit.data('type');
-        var name = submit.parent().parent().find('td:nth-child(1) input').val();
-        var shortcut = submit.parent().parent().find('td:nth-child(2) input').val();
 
-        if(name == '' || shortcut == '') return;
+        var name = submit.parent().parent().find('td:nth-child(1) input').val();
+
+        if(name == '') return;
 
         $.ajax({
             type: "POST",
-            url: "/header/measure-add",
+            url: "/producer-add",
             data: {
-                type: type,
                 name: name,
-                shortcut: shortcut,
             },
             success: function(data) {
                 if(!data['error'])
                 {
-                    $('#div-header-settings-content').html(data);
+                    $('main').html(data);
                 }
                 else
                 {
@@ -42,7 +38,7 @@ $(document).ready(function()
         });
     });
 
-    $(document).on('click', '.inputable.measure .btn-edit', function(event)
+    $(document).on('click', '.inputable.producer .btn-edit', function(event)
     {
         event.preventDefault();
 
@@ -51,20 +47,16 @@ $(document).ready(function()
         var submit = $(this);
 
         var id = submit.data('id');
-        var type = submit.data('type');
         var name = submit.parent().parent().find('td:nth-child(1) input').val();
-        var shortcut = submit.parent().parent().find('td:nth-child(2) input').val();
 
-        if(name == '' || shortcut == '' || type == '') return;
+        if(name == '') return;
 
         $.ajax({
             type: "POST",
-            url: "/header/measure-edit",
+            url: "/producer-edit",
             data: {
                 id: id,
                 name: name,
-                shortcut: shortcut,
-                type: type,
             },
             success: function(data) {
                 if(!data['error'])
@@ -92,7 +84,7 @@ $(document).ready(function()
         });
     });
 
-    $(document).on('click', '.inputable.measure .btn-remove', function(event)
+    $(document).on('click', '.inputable.producer .btn-remove', function(event)
     {
         event.preventDefault();
 
@@ -104,14 +96,14 @@ $(document).ready(function()
 
         $.ajax({
             type: "POST",
-            url: "/header/measure-remove",
+            url: "/producer-remove",
             data: {
                 id: id,
             },
             success: function(data) {
                 if(!data['error'])
                 {
-                    $('#div-header-settings-content').html(data);
+                    $('main').html(data);
                 }
                 else
                 {

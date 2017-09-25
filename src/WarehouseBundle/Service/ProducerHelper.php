@@ -1,9 +1,8 @@
 <?php
 
-namespace HeaderBundle\Service\Helper\Crud;
+namespace WarehouseBundle\Service;
 
-
-use AppBundle\Entity\Measure;
+use AppBundle\Entity\Producer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class MeasureHelper
+class ProducerHelper
 {
     private $entityManager;
     private $requestStack;
@@ -54,9 +53,23 @@ class MeasureHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return  $request->get('type')       != ''
-            &&  $request->get('name')       != ''
-            &&  $request->get('shortcut')   != '';
+        return $request->get('name') != '';
+    }
+
+    public function getProducers()
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $producers = $this
+            ->entityManager
+            ->getRepository('AppBundle:Producer')
+            ->retrieve($workshop);
+
+        return $producers;
     }
 
     public function getOne()
@@ -73,61 +86,35 @@ class MeasureHelper
         $id = $request->get('id');
 
         return $this
-                    ->entityManager
-                    ->getRepository('AppBundle:Measure')
-                    ->getOne($workshop, $id);
-    }
-
-
-    public function measureExists()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-
-        $measure = $this
-                    ->entityManager
-                    ->getRepository('AppBundle:Measure')
-                    ->getOneByData($workshop, $name, $shortcut, $type)
-            ;
-
-        return null !== $measure;
-    }
-
-    public function measureExistsRemoved()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-
-        $measure = $this
             ->entityManager
-            ->getRepository('AppBundle:Measure')
-            ->getOneRemovedByData($workshop, $name, $shortcut, $type)
+            ->getRepository('AppBundle:Producer')
+            ->getOne($workshop, $id);
+    }
+
+
+    public function producerExists()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $name       = $request->get('name');
+
+        $producer    = $this
+            ->entityManager
+            ->getRepository('AppBundle:Producer')
+            ->getOneByName($workshop, $name)
         ;
 
-        return $measure;
+        return null !== $producer;
     }
 
-    public function othersSimilarExists()
+    public function producerExistsRemoved()
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -139,19 +126,17 @@ class MeasureHelper
         $workshop = $user->getCurrentWorkshop();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-        $id         = $request->get('id');
 
-        $measures   = $this
-                        ->entityManager
-                        ->getRepository('AppBundle:Measure')
-                        ->getOthersSimilar($workshop, $name, $shortcut, $type, $id);
+        $producer = $this
+            ->entityManager
+            ->getRepository('AppBundle:Producer')
+            ->getOneRemovedByName($workshop, $name)
+        ;
 
-        return count($measures) > 0;
+        return $producer;
     }
 
-    public function recover(Measure $measure)
+    public function recover(Producer $producer)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();
@@ -163,18 +148,16 @@ class MeasureHelper
         $user       = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
+        $producer->setName($name);
 
-        $measure->setDeletedAt(null);
-        $measure->setRemovedAt(null);
-        $measure->setRemovedBy(null);
-        $measure->setDeletedBy(null);
-        $measure->setUpdatedBy($user);
+        $producer->setDeletedAt(null);
+        $producer->setRemovedAt(null);
+        $producer->setRemovedBy(null);
+        $producer->setDeletedBy(null);
+        $producer->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($producer);
 
         $em->flush();
 
@@ -193,28 +176,24 @@ class MeasureHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
 
-        $measure    = new Measure();
+        $producer    = new Producer();
 
-        $measure->setCreatedAt(new \DateTime());
-        $measure->setCreatedBy($user);
-        $measure->setUpdatedBy($user);
-        $measure->setWorkshop($user->getCurrentWorkshop());
+        $producer->setCreatedAt(new \DateTime());
+        $producer->setCreatedBy($user);
+        $producer->setUpdatedBy($user);
+        $producer->setWorkshop($user->getCurrentWorkshop());
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
-        $measure->setTypeOfQuantity($type);
+        $producer->setName($name);
 
-        $em->persist($measure);
+        $em->persist($producer);
 
         $em->flush();
 
         return true;
     }
 
-    public function edit(Measure $measure)
+    public function edit(Producer $producer)
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -226,20 +205,18 @@ class MeasureHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
-        $measure->setUpdatedBy($user);
+        $producer->setName($name);
+        $producer->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($producer);
 
         $em->flush();
 
         return true;
     }
 
-    public function remove(Measure $measure)
+    public function remove(Producer $producer)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -247,40 +224,20 @@ class MeasureHelper
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        $measure->setRemovedAt(new \DateTime());
-        $measure->setRemovedBy($user);
-        $measure->setUpdatedBy($user);
+        $producer->setRemovedAt(new \DateTime());
+        $producer->setRemovedBy($user);
+        $producer->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($producer);
 
         $em->flush();
 
         return true;
     }
 
-    public function isLast(Measure $measure)
+    public function isLast()
     {
-        $type = $measure->getTypeOfQuantity();
 
-        return $this->getMeasures($type)->count() == 1;
+        return $this->getProducers()->count() == 1;
     }
-
-    public function getMeasures($type)
-    {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $meaures = $workshop->getMeasures()->filter(function(Measure $measure) use ($type)
-        {
-            return  $measure->getRemovedAt()        === null
-            &&      $measure->getDeletedAt()        === null
-            &&      $measure->getTypeOfQuantity()   == $type;
-        });
-
-        return $meaures;
-    }
-
 }

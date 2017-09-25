@@ -1,9 +1,8 @@
 <?php
 
-namespace HeaderBundle\Service\Helper\Crud;
+namespace ServiceBundle\Service;
 
-
-use AppBundle\Entity\Measure;
+use AppBundle\Entity\Action;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class MeasureHelper
+class ActionHelper
 {
     private $entityManager;
     private $requestStack;
@@ -54,9 +53,23 @@ class MeasureHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return  $request->get('type')       != ''
-            &&  $request->get('name')       != ''
-            &&  $request->get('shortcut')   != '';
+        return $request->get('name') != '';
+    }
+
+    public function getActions()
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $actions = $this
+            ->entityManager
+            ->getRepository('AppBundle:Action')
+            ->retrieve($workshop);
+
+        return $actions;
     }
 
     public function getOne()
@@ -73,61 +86,35 @@ class MeasureHelper
         $id = $request->get('id');
 
         return $this
-                    ->entityManager
-                    ->getRepository('AppBundle:Measure')
-                    ->getOne($workshop, $id);
-    }
-
-
-    public function measureExists()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-
-        $measure = $this
-                    ->entityManager
-                    ->getRepository('AppBundle:Measure')
-                    ->getOneByData($workshop, $name, $shortcut, $type)
-            ;
-
-        return null !== $measure;
-    }
-
-    public function measureExistsRemoved()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-
-        $measure = $this
             ->entityManager
-            ->getRepository('AppBundle:Measure')
-            ->getOneRemovedByData($workshop, $name, $shortcut, $type)
+            ->getRepository('AppBundle:Action')
+            ->getOne($workshop, $id);
+    }
+
+
+    public function actionExists()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $name       = $request->get('name');
+
+        $action    = $this
+            ->entityManager
+            ->getRepository('AppBundle:Action')
+            ->getOneByName($workshop, $name)
         ;
 
-        return $measure;
+        return null !== $action;
     }
 
-    public function othersSimilarExists()
+    public function actionExistsRemoved()
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -139,19 +126,17 @@ class MeasureHelper
         $workshop = $user->getCurrentWorkshop();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
-        $id         = $request->get('id');
 
-        $measures   = $this
-                        ->entityManager
-                        ->getRepository('AppBundle:Measure')
-                        ->getOthersSimilar($workshop, $name, $shortcut, $type, $id);
+        $action = $this
+            ->entityManager
+            ->getRepository('AppBundle:Action')
+            ->getOneRemovedByName($workshop, $name)
+        ;
 
-        return count($measures) > 0;
+        return $action;
     }
 
-    public function recover(Measure $measure)
+    public function recover(Action $action)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();
@@ -163,18 +148,16 @@ class MeasureHelper
         $user       = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
+        $action->setName($name);
 
-        $measure->setDeletedAt(null);
-        $measure->setRemovedAt(null);
-        $measure->setRemovedBy(null);
-        $measure->setDeletedBy(null);
-        $measure->setUpdatedBy($user);
+        $action->setDeletedAt(null);
+        $action->setRemovedAt(null);
+        $action->setRemovedBy(null);
+        $action->setDeletedBy(null);
+        $action->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($action);
 
         $em->flush();
 
@@ -193,28 +176,24 @@ class MeasureHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
-        $type       = $request->get('type');
 
-        $measure    = new Measure();
+        $action    = new Action();
 
-        $measure->setCreatedAt(new \DateTime());
-        $measure->setCreatedBy($user);
-        $measure->setUpdatedBy($user);
-        $measure->setWorkshop($user->getCurrentWorkshop());
+        $action->setCreatedAt(new \DateTime());
+        $action->setCreatedBy($user);
+        $action->setUpdatedBy($user);
+        $action->setWorkshop($user->getCurrentWorkshop());
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
-        $measure->setTypeOfQuantity($type);
+        $action->setName($name);
 
-        $em->persist($measure);
+        $em->persist($action);
 
         $em->flush();
 
         return true;
     }
 
-    public function edit(Measure $measure)
+    public function edit(Action $action)
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -226,20 +205,18 @@ class MeasureHelper
         $user = $this->tokenStorage->getToken()->getUser();
 
         $name       = $request->get('name');
-        $shortcut   = $request->get('shortcut');
 
-        $measure->setName($name);
-        $measure->setShortcut($shortcut);
-        $measure->setUpdatedBy($user);
+        $action->setName($name);
+        $action->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($action);
 
         $em->flush();
 
         return true;
     }
 
-    public function remove(Measure $measure)
+    public function remove(Action $action)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -247,40 +224,20 @@ class MeasureHelper
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        $measure->setRemovedAt(new \DateTime());
-        $measure->setRemovedBy($user);
-        $measure->setUpdatedBy($user);
+        $action->setRemovedAt(new \DateTime());
+        $action->setRemovedBy($user);
+        $action->setUpdatedBy($user);
 
-        $em->persist($measure);
+        $em->persist($action);
 
         $em->flush();
 
         return true;
     }
 
-    public function isLast(Measure $measure)
+    public function isLast()
     {
-        $type = $measure->getTypeOfQuantity();
 
-        return $this->getMeasures($type)->count() == 1;
+        return $this->getActions()->count() == 1;
     }
-
-    public function getMeasures($type)
-    {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $meaures = $workshop->getMeasures()->filter(function(Measure $measure) use ($type)
-        {
-            return  $measure->getRemovedAt()        === null
-            &&      $measure->getDeletedAt()        === null
-            &&      $measure->getTypeOfQuantity()   == $type;
-        });
-
-        return $meaures;
-    }
-
 }

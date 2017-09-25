@@ -73,6 +73,16 @@ class MeasureController extends Controller
             return $measureHelper->getErrorMessage('Wybrana jednostka nie istnieje');
         }
 
+        if(!$measureHelper->isValid())
+        {
+            return $measureHelper->getErrorMessage('Wpisano nieprawidłowe dane');
+        }
+
+        if(true === $measureHelper->othersSimilarExists())
+        {
+            return $measureHelper->getErrorMessage('Taka jednostka juz istnieje');
+        }
+
         $measureHelper->edit($measure);
 
         return $measureHelper->getSuccessMessage();

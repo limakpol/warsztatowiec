@@ -1,0 +1,34 @@
+<table class="inputable action">
+    <tr class="tr-th">
+        <th>Nazwa czynności</th>
+        <th colspan="2"></th>
+    </tr>
+    {% for action in actions %}
+        <tr>
+            <td>
+                <input type="text" maxlength="50" value="{{ action.name }}">
+            </td>
+            <td>
+                <button class="btn-remove" data-id="{{ action.id }}">
+                    usuń<i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn-edit" data-id="{{ action.id }}">
+                    edytuj<i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            <input maxlength="40" type="text" autofocus="autofocus">
+        </td>
+        <td>
+            <button class="btn-add" data-type="good">
+                dodaj<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </td>
+        <td></td>
+    </tr>
+</table>

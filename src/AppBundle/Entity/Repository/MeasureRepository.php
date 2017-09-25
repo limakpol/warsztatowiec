@@ -76,4 +76,30 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
         return $measure;
     }
 
+    public function getOthersSimilar(Workshop $workshop, $name, $shortcut, $type, $id)
+    {
+        $measures = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:Measure', 'm')
+            ->where('m.workshop = :workshop')
+            ->andWhere('m.removed_at IS NULL OR m.deleted_at IS NULL')
+            ->andWhere('m.name = :name OR m.shortcut = :shortcut')
+            ->andWhere('m.type_of_quantity = :type')
+            ->andWhere('m.id != :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'     => $name,
+                ':shortcut' => $shortcut,
+                ':type'     => $type,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $measures;
+    }
+
+
+
 }
