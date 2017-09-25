@@ -16,6 +16,6 @@ parameters:
          actions: ["wymiana", "zmiana", "przegląd", "regulacja", "naprawa", "montaż", "demontaż", "usunięcie", "sprawdzenie", "robocizna", "spawanie", "lutowanie", "uszczelnienie", "programowanie", "ustawienie", "regeneracja", "wyczyszczenie", "dezynfekcja"]
          workstations: ['stanowisko naprawcze 1', 'stanowisko naprawcze 2']
          positions: ['administrator aplikacji', 'mechanik']
-         limit_set: [15, 30, 75, 150, 300]
+         limit_set: [15, 30, 70, 125, 200]
          default_limit: 15
          warehouse_documents: ["invoice", "voucher", "issue"]

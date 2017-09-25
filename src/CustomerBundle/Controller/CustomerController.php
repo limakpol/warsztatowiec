@@ -10,6 +10,7 @@ class CustomerController extends Controller
     public function indexAction()
     {
 
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();

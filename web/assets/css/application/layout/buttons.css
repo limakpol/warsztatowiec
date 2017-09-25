@@ -47,6 +47,14 @@
 .btn-system {
     background-color: #3485ff;
 }
+.btn-disabled {
+    background-color: #ddd;
+    color: #888;
+}
+.btn-disabled:hover {
+    filter: none;
+    cursor: not-allowed;
+}
 .btn-success {
     filter: brightness(140%);
 }

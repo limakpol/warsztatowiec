@@ -25,7 +25,7 @@ class SystemController extends Controller
         $testDataGenerator = $this->get('app.test_data_generator');
 
         $previousDataRemover->removePreviousData();
-
+        $testDataGenerator->generateData();
 
         return new Response();
     }
