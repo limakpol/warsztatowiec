@@ -2,3 +2,7 @@ services:
     service.helper.action:
         class: ServiceBundle\Service\ActionHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    service.helper.service:
+        class: ServiceBundle\Service\ServiceHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage", "@app.transformer.price"]

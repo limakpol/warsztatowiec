@@ -9,12 +9,22 @@ main .inputable th {
 }
 main .inputable td {
     padding: 3px;
+    text-align: center;
 }
 main .inputable input {
     font: 13px 'Arial', sans-serif;
     padding: 3px;
     text-align: right;
     color: #333;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+main .inputable select {
+    font: 13px 'Ubuntu', sans-serif;
+    padding: 3px;
+    color: #333;
+    border: 1px solid #aaa;
+    background-color: #fff;
 }
 
 @media screen and (min-width: 1200px)
@@ -30,4 +40,17 @@ main .inputable input {
         padding: 6px;
         border: 1px solid #aaa;
     }
+    main .inputable select {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
+main .inputable .input-left {
+    text-align: left;
+}
+main .inputable .input-right {
+    text-align: right;
+}
+main .inputable .input-center {
+    text-align: center;
 }

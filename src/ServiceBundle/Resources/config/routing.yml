@@ -1,7 +1,21 @@
+# SERVICE
 service_index:
     path: /uslugi
     defaults: { _controller: ServiceBundle:Service:index }
 
+service_add:
+    path: /service-add
+    defaults: { _controller: ServiceBundle:Service:add }
+
+service_edit:
+    path: /service-edit
+    defaults: { _controller: ServiceBundle:Service:edit }
+
+service_remove:
+    path: /service-remove
+    defaults: { _controller: ServiceBundle:Service:remove }
+
+# ACTION
 action_index:
     path: /czynnosci
     defaults: { _controller: ServiceBundle:Action:index }

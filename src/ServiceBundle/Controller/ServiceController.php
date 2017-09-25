@@ -8,15 +8,103 @@ class ServiceController extends Controller
 {
     public function indexAction()
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $serviceHelper  = $this->get('service.helper.service');
+        $yamlParser     = $this->get('app.yaml_parser');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        $headerMenu     = $yamlParser->getHeaderMenu();
+        $mainMenu       = $yamlParser->getMainMenu();
+
+        $services       = $serviceHelper->getServices();
+        $measures       = $serviceHelper->getMeasures();
 
         return $this->render('ServiceBundle:service:index.html.twig', [
+            'services'      => $services,
+            'measures'      => $measures,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'service',
             'navbar'        => 'Usługi',
+        ]);
+    }
+
+    public function addAction()
+    {
+        $serviceHelper = $this->get('service.helper.service');
+
+        if(!$serviceHelper->isRequestCorrect())
+        {
+            return $serviceHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(!$serviceHelper->isValid())
+        {
+            return $serviceHelper->getErrorMessage('Wpisano nieprawidłowe dane');
+        }
+
+        if($serviceHelper->serviceExists())
+        {
+            return $serviceHelper->getErrorMessage('Usługa o takiej nazwie już istnieje');
+        }
+
+        if(null !== ($service = $serviceHelper->serviceExistsRemoved()))
+        {
+            $serviceHelper->recover($service);
+
+            return $this->indexService();
+        }
+
+        $serviceHelper->write();
+
+        $services   = $serviceHelper->getServices();
+        $measures   = $serviceHelper->getMeasures();
+
+        return $this->render('ServiceBundle:service:content.html.twig', [
+            'services' => $services,
+            'measures' => $measures,
+        ]);
+    }
+
+    public function editAction()
+    {
+        $serviceHelper = $this->get('service.helper.service');
+
+        if(!$serviceHelper->isRequestCorrect())
+        {
+            return $serviceHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(null === ($service = $serviceHelper->getOne()))
+        {
+            return $serviceHelper->getErrorMessage('Wybrana usługa nie istnieje');
+        }
+
+        $serviceHelper->edit($service);
+
+        return $serviceHelper->getSuccessMessage();
+    }
+
+    public function removeAction()
+    {
+        $serviceHelper = $this->get('service.helper.service');
+
+        if(!$serviceHelper->isRequestCorrect())
+        {
+            return $serviceHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(null === ($service = $serviceHelper->getOne()))
+        {
+            return $serviceHelper->getErrorMessage('Wybrana usługa nie istnieje');
+        }
+
+        $serviceHelper->remove($service);
+
+        $services   = $serviceHelper->getServices();
+        $measures   = $serviceHelper->getMeasures();
+
+        return $this->render('ServiceBundle:service:content.html.twig', [
+            'services' => $services,
+            'measures' => $measures,
         ]);
     }
 }

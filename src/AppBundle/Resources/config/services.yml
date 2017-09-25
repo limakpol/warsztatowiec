@@ -107,4 +107,7 @@ services:
         class: AppBundle\Service\PreviousDataRemover
         arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
 
+    app.transformer.price:
+        class: AppBundle\Service\PriceTransformer
+
 

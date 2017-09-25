@@ -1,0 +1,63 @@
+<table class="inputable service">
+    <tr class="tr-th">
+        <th>Nazwa usługi</th>
+        <th>Jednostka</th>
+        <th>Cena jedn. netto [zł]</th>
+        <th colspan="2"></th>
+    </tr>
+    {% for service in services %}
+        <tr>
+            <td>
+                <input class="input-left" type="text" maxlength="50" value="{{ service.name }}">
+            </td>
+            <td>
+                <select>
+                    <option></option>
+                    {% for measure in measures %}
+                        <option value="{{ measure.id }}"
+                        {% if service.measure is not null and measure.id == service.measure.id %}
+                            selected="selected"
+                        {% endif %}
+                        >{{ measure.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input class="input-center" type="text" maxlength="8" size="8" value="{{ service.unitPriceNet }}">
+            </td>
+            <td>
+                <button class="btn-remove" data-id="{{ service.id }}">
+                    usuń<i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn-edit" data-id="{{ service.id }}">
+                    edytuj<i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+
+        <td>
+            <input class="input-left" maxlength="50" type="text" autofocus="autofocus">
+        </td>
+        <td>
+            <select>
+                <option></option>
+                {% for measure in measures %}
+                    <option value="{{ measure.id }}">{{ measure.name }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <input class="input-center" type="text" maxlength="8" size="8">
+        </td>
+        <td>
+            <button class="btn-add" data-type="good">
+                dodaj<i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </td>
+        <td></td>
+    </tr>
+</table>
