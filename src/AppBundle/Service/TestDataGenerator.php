@@ -9,7 +9,9 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Action;
+use AppBundle\Entity\Address;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Groupp;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Model;
@@ -159,6 +161,7 @@ class TestDataGenerator
         $this->generatePositions();
         $this->generateWorkstations();
         $this->generateModels();
+        $this->generateCustomers();
 
         return;
     }
@@ -446,6 +449,130 @@ class TestDataGenerator
         return;
     }
 
+    public function generateCustomers()
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $customersCount = 234;
+        $forenamesCount = count($this::FORENAMES);
+        $surnames1Count = count($this::SURNAMES1);
+        $surnames2Count = count($this::SURNAMES2);
+        $surnames3Count = count($this::SURNAMES3);
+        $companiesCount = count($this::COMPANIES);
+
+        $provinces = $em->getRepository('AppBundle:Province')->findAll();
+        $provincesCount = count($provinces);
+
+
+        for($i = 0; $i < $customersCount; $i++)
+        {
+            $dateTime = new \DateTime();
+
+            $customer = new Customer();
+            $address = new Address();
+
+            $address->setCreatedAt($dateTime);
+            $address->setUpdatedBy($user);
+            $address->setCreatedBy($user);
+
+            $customer->setCreatedAt($dateTime);
+            $customer->setCreatedBy($user);
+            $customer->setUpdatedBy($user);
+            $customer->setWorkshop($workshop);
+            $customer->setAddress($address);
+
+            $forename = $this::FORENAMES[rand(0, $forenamesCount-1)];
+
+            $customer->setForename($forename);
+
+            $surname =      $this::SURNAMES1[rand(0, $surnames1Count-1)]
+                        .   $this::SURNAMES2[rand(0, $surnames2Count-1)]
+                        .   $this::SURNAMES3[rand(0, $surnames3Count-1)];
+
+            $customer->setSurname($surname);
+
+            $companyName = '';
+
+            if(rand(0,2) == 0)
+            {
+                $companyName = $this::COMPANIES[rand(0, $companiesCount-1)];
+                $customer->setCompanyName($companyName);
+            }
+
+            if(rand(0,9) > 2)
+            {
+                $prefix = '+48';
+
+                if(rand(0,9) > 7)
+                {
+                    $prefix = '+' . $this->getNumber(2);
+                }
+
+                $customer->setMobilePhone1($prefix . $this->getNumber(9));
+            }
+
+            if(rand(0,9) > 4)
+            {
+                $prefix = '+48';
+
+                if(rand(0,9) > 7)
+                {
+                    $prefix = '+' . $this->getNumber(2);
+                }
+
+                $customer->setMobilePhone2($prefix . $this->getNumber(9));
+            }
+
+            if(rand(0,9) > 4)
+            {
+                if($companyName == '')
+                {
+                    $domain = $this->getString(rand(5,15)) . '.pl';
+                }
+                else
+                {
+                    $domain = strtolower($companyName) . '.pl';
+                }
+
+                $email = strtolower($this->removePolishLetters($forename)) . '.' . strtolower($this->removePolishLetters($surname)) . '@' . str_replace(' ', '', $domain);
+
+                $customer->setEmail($email);
+            }
+
+            $customer->setNip($this->getNumber(10));
+            $customer->setPesel($this->getNumber(11));
+            $customer->setBankAccountNumber($this->getNumber(26));
+            $customer->setContactPerson($this->getString(rand(10,25)));
+            $customer->setRemarks($this->getString(rand(100,200)));
+
+            $address->setStreet($this->getString(rand(5,40)));
+            $address->setHouseNumber($this->getNumber(rand(1,5)));
+            $address->setFlatNumber($this->getNumber(rand(1,5)));
+            $address->setPostCode($this->getPostCode());
+            $address->setCity($this->getString(rand(8,25)));
+            $address->setProvince($provinces[rand(0, $provincesCount-1)]);
+
+            $em->persist($address);
+            $em->persist($customer);
+        }
+
+        $em->flush();
+
+        return;
+    }
+
+    public function getPostCode()
+    {
+        return $this->getNumber(2) . '-' . $this->getNumber(3);
+    }
+
     public function getNumber($length, $maxMin = [1, 9])
     {
         $number = '';
@@ -496,6 +623,15 @@ class TestDataGenerator
 
             return $string;
         }
+    }
+
+    public function removePolishLetters($string)
+    {
+        $polish = ['ę', 'ó', 'ą', 'ś', 'ł', 'ż', 'ź', 'ć', 'ń', 'Ę', 'Ó', 'Ą', 'Ś', 'Ł', 'Ż', 'Ź', 'Ć', 'Ń'];
+
+        $ascii = ['e', 'o', 'a', 's', 'l', 'z', 'z', 'c', 'n', 'E', 'O', 'A', 'S', 'L', 'Z', 'Z', 'C', 'N'];
+
+        return str_replace($polish, $ascii, $string);
     }
 
 }

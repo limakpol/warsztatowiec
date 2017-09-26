@@ -49,6 +49,7 @@ class PreviousDataRemover
 
     public function removePreviousData()
     {
+        $this->removeServices();
         $this->removeActions();
         $this->removeCategories();
         $this->removeCustomers();
@@ -61,7 +62,6 @@ class PreviousDataRemover
         $this->removePositions();
         $this->removeProducers();
         $this->removeSales();
-        $this->removeServices();
         $this->removeStatuses();
         $this->removeVehicles();
         $this->removeWorkstations();
@@ -165,6 +165,7 @@ class PreviousDataRemover
         /** @var Customer $customer */
         foreach($customers as $customer)
         {
+            $em->remove($customer->getAddress());
             $em->remove($customer);
         }
 
