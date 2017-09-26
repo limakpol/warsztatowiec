@@ -43,7 +43,7 @@ AppBundle\Entity\User:
         email:
             - NotBlank:
                 message: 'Pole E-amil nie może być puste'
-                groups: [ registration, user, workman ]
+                groups: [ registration, user ]
             - Regex:
                 pattern: '/^[a-zA-Z]+[a-zA-Z0-9\.\-_]{1,32}\@[a-zA-Z0-9\.\-_]+\.[a-z]{2,4}$/D'
                 message: 'Adres e-mail powinien być wpisany w formacie: nazwa@domena.pl'
@@ -60,6 +60,15 @@ AppBundle\Entity\User:
         password:
             - AppBundle\Form\Validator\Constraint\Password:
                 groups: [ registration, change_password ]
+        nip:
+            - AppBundle\Form\Validator\Constraint\Nip:
+                groups: [ workman ]
+        pesel:
+            - AppBundle\Form\Validator\Constraint\Pesel:
+                groups: [ workman ]
+        bank_account_number:
+            - AppBundle\Form\Validator\Constraint\Nrb:
+                groups: [ workman ]
         address:
             - Valid: ~
 AppBundle\Entity\Workshop:

@@ -1,5 +1,7 @@
 $(document).ready(function()
 {
+
+    addIcon();
     $(document).on('click', 'header > div', function()
     {
         var selectedLi = $('#div-header-settings-menu ul li:first-child');
@@ -26,9 +28,6 @@ $(document).ready(function()
             }
         });
     });
-
-
-
 });
 
 function headerToggle()
@@ -45,6 +44,8 @@ function load(data, selectedLi)
 function addIcon()
 {
     $('.add-i').append(function(){
-      return  '<i class="fa fa-' + $(this).data('add-i') + '" aria-hidden="true"></i>'
+        if($(this).find('i').length !=0) return;
+
+        return  '<i class="fa fa-' + $(this).data('add-i') + '" aria-hidden="true"></i>'
     });
 }

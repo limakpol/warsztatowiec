@@ -1,6 +1,7 @@
 main .inputable {
     border-collapse: collapse;
     border: none;
+    margin: 15px 0 0 15px;
 }
 main .inputable th {
     font: bold 12px 'Ubuntu', sans-serif;

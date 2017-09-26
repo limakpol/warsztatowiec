@@ -1,1 +1,4 @@
 services:
+# FORMS
+    workflow.form.type.workman:
+        class: WorkflowBundle\Form\WorkmanType

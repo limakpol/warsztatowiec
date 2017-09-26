@@ -46,7 +46,7 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label' => 'E-mail',
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'maxlength' => 80,
                     'size' => 30,
@@ -69,7 +69,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('hourly_rate_net', TextType::class, [
-                'label' => 'Stawka godzinowa netto',
+                'label' => 'Stawka godzinowa netto [zł]',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 8,
@@ -86,6 +86,14 @@ class UserType extends AbstractType
                 'attr' => [
                     'maxlength' => 10,
                     'size' => 12,
+                ],
+            ])
+            ->add('pesel', TextType::class, [
+                'label' => 'PESEL',
+                'required' => false,
+                'attr' => [
+                    'maxlength' => 11,
+                    'size' => 10,
                 ],
             ])
             ->add('bank_account_number', TextType::class, [
