@@ -4,7 +4,7 @@ namespace DeliveryBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DeliveryController extends Controller
+class DeliveryHeaderController extends Controller
 {
     public function indexAction()
     {

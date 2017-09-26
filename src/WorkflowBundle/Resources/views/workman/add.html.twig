@@ -16,6 +16,10 @@
     {{ form_widget(form.user.forename, {'attr': {'autofocus': true }})}}
     {{ form_errors(form.user.forename) }}
 
+    {{ form_label(form.user.surname) }}
+    {{ form_widget(form.user.surname) }}
+    {{ form_errors(form.user.surname) }}
+
     {{ form_label(form.user.address.street) }}
     {{ form_widget(form.user.address.street)}}
     {{ form_errors(form.user.address.street) }}
@@ -35,6 +39,10 @@
     {{ form_label(form.user.address.city) }}
     {{ form_widget(form.user.address.city)}}
     {{ form_errors(form.user.address.city) }}
+
+    {{ form_label(form.user.address.province) }}
+    {{ form_widget(form.user.address.province)}}
+    {{ form_errors(form.user.address.province) }}
 
     {{ form_label(form.user.hourly_rate_net) }}
     {{ form_widget(form.user.hourly_rate_net)}}

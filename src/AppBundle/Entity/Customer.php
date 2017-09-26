@@ -33,49 +33,9 @@ class Customer
     private $company_name;
 
     /**
-     * @var boolean
-     */
-    private $is_customer = 1;
-
-    /**
-     * @var boolean
-     */
-    private $is_supplier = 0;
-
-    /**
-     * @var boolean
-     */
-    private $is_recipient = 0;
-
-    /**
-     * @var string
-     */
-    private $street;
-
-    /**
-     * @var string
-     */
-    private $house_number;
-
-    /**
-     * @var string
-     */
-    private $flat_number;
-
-    /**
-     * @var string
-     */
-    private $post_code;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
      * @var integer
      */
-    private $province_id;
+    private $address_id;
 
     /**
      * @var string
@@ -135,7 +95,37 @@ class Customer
     /**
      * @var \DateTime
      */
+    private $removed_at;
+
+    /**
+     * @var \DateTime
+     */
     private $deleted_at;
+
+    /**
+     * @var integer
+     */
+    private $created_by_id;
+
+    /**
+     * @var integer
+     */
+    private $updated_by_id;
+
+    /**
+     * @var integer
+     */
+    private $removed_by_id;
+
+    /**
+     * @var integer
+     */
+    private $deleted_by_id;
+
+    /**
+     * @var \AppBundle\Entity\Address
+     */
+    private $address;
 
     /**
      * @var \AppBundle\Entity\Workshop
@@ -143,9 +133,24 @@ class Customer
     private $workshop;
 
     /**
-     * @var \AppBundle\Entity\Province
+     * @var \AppBundle\Entity\User
      */
-    private $province;
+    private $created_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $updated_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $removed_by;
+
+    /**
+     * @var \AppBundle\Entity\User
+     */
+    private $deleted_by;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -273,219 +278,27 @@ class Customer
     }
 
     /**
-     * Set isCustomer
+     * Set addressId
      *
-     * @param boolean $isCustomer
+     * @param integer $addressId
      *
      * @return Customer
      */
-    public function setIsCustomer($isCustomer)
+    public function setAddressId($addressId)
     {
-        $this->is_customer = $isCustomer;
+        $this->address_id = $addressId;
 
         return $this;
     }
 
     /**
-     * Get isCustomer
-     *
-     * @return boolean
-     */
-    public function getIsCustomer()
-    {
-        return $this->is_customer;
-    }
-
-    /**
-     * Set isSupplier
-     *
-     * @param boolean $isSupplier
-     *
-     * @return Customer
-     */
-    public function setIsSupplier($isSupplier)
-    {
-        $this->is_supplier = $isSupplier;
-
-        return $this;
-    }
-
-    /**
-     * Get isSupplier
-     *
-     * @return boolean
-     */
-    public function getIsSupplier()
-    {
-        return $this->is_supplier;
-    }
-
-    /**
-     * Set isRecipient
-     *
-     * @param boolean $isRecipient
-     *
-     * @return Customer
-     */
-    public function setIsRecipient($isRecipient)
-    {
-        $this->is_recipient = $isRecipient;
-
-        return $this;
-    }
-
-    /**
-     * Get isRecipient
-     *
-     * @return boolean
-     */
-    public function getIsRecipient()
-    {
-        return $this->is_recipient;
-    }
-
-    /**
-     * Set street
-     *
-     * @param string $street
-     *
-     * @return Customer
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    /**
-     * Get street
-     *
-     * @return string
-     */
-    public function getStreet()
-    {
-        return $this->street;
-    }
-
-    /**
-     * Set houseNumber
-     *
-     * @param string $houseNumber
-     *
-     * @return Customer
-     */
-    public function setHouseNumber($houseNumber)
-    {
-        $this->house_number = $houseNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get houseNumber
-     *
-     * @return string
-     */
-    public function getHouseNumber()
-    {
-        return $this->house_number;
-    }
-
-    /**
-     * Set flatNumber
-     *
-     * @param string $flatNumber
-     *
-     * @return Customer
-     */
-    public function setFlatNumber($flatNumber)
-    {
-        $this->flat_number = $flatNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get flatNumber
-     *
-     * @return string
-     */
-    public function getFlatNumber()
-    {
-        return $this->flat_number;
-    }
-
-    /**
-     * Set postCode
-     *
-     * @param string $postCode
-     *
-     * @return Customer
-     */
-    public function setPostCode($postCode)
-    {
-        $this->post_code = $postCode;
-
-        return $this;
-    }
-
-    /**
-     * Get postCode
-     *
-     * @return string
-     */
-    public function getPostCode()
-    {
-        return $this->post_code;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Customer
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set provinceId
-     *
-     * @param integer $provinceId
-     *
-     * @return Customer
-     */
-    public function setProvinceId($provinceId)
-    {
-        $this->province_id = $provinceId;
-
-        return $this;
-    }
-
-    /**
-     * Get provinceId
+     * Get addressId
      *
      * @return integer
      */
-    public function getProvinceId()
+    public function getAddressId()
     {
-        return $this->province_id;
+        return $this->address_id;
     }
 
     /**
@@ -753,6 +566,30 @@ class Customer
     }
 
     /**
+     * Set removedAt
+     *
+     * @param \DateTime $removedAt
+     *
+     * @return Customer
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removed_at = $removedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get removedAt
+     *
+     * @return \DateTime
+     */
+    public function getRemovedAt()
+    {
+        return $this->removed_at;
+    }
+
+    /**
      * Set deletedAt
      *
      * @param \DateTime $deletedAt
@@ -774,6 +611,126 @@ class Customer
     public function getDeletedAt()
     {
         return $this->deleted_at;
+    }
+
+    /**
+     * Set createdById
+     *
+     * @param integer $createdById
+     *
+     * @return Customer
+     */
+    public function setCreatedById($createdById)
+    {
+        $this->created_by_id = $createdById;
+
+        return $this;
+    }
+
+    /**
+     * Get createdById
+     *
+     * @return integer
+     */
+    public function getCreatedById()
+    {
+        return $this->created_by_id;
+    }
+
+    /**
+     * Set updatedById
+     *
+     * @param integer $updatedById
+     *
+     * @return Customer
+     */
+    public function setUpdatedById($updatedById)
+    {
+        $this->updated_by_id = $updatedById;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedById
+     *
+     * @return integer
+     */
+    public function getUpdatedById()
+    {
+        return $this->updated_by_id;
+    }
+
+    /**
+     * Set removedById
+     *
+     * @param integer $removedById
+     *
+     * @return Customer
+     */
+    public function setRemovedById($removedById)
+    {
+        $this->removed_by_id = $removedById;
+
+        return $this;
+    }
+
+    /**
+     * Get removedById
+     *
+     * @return integer
+     */
+    public function getRemovedById()
+    {
+        return $this->removed_by_id;
+    }
+
+    /**
+     * Set deletedById
+     *
+     * @param integer $deletedById
+     *
+     * @return Customer
+     */
+    public function setDeletedById($deletedById)
+    {
+        $this->deleted_by_id = $deletedById;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedById
+     *
+     * @return integer
+     */
+    public function getDeletedById()
+    {
+        return $this->deleted_by_id;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \AppBundle\Entity\Address $address
+     *
+     * @return Customer
+     */
+    public function setAddress(\AppBundle\Entity\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \AppBundle\Entity\Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**
@@ -801,27 +758,99 @@ class Customer
     }
 
     /**
-     * Set province
+     * Set createdBy
      *
-     * @param \AppBundle\Entity\Province $province
+     * @param \AppBundle\Entity\User $createdBy
      *
      * @return Customer
      */
-    public function setProvince(\AppBundle\Entity\Province $province = null)
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
-        $this->province = $province;
+        $this->created_by = $createdBy;
 
         return $this;
     }
 
     /**
-     * Get province
+     * Get createdBy
      *
-     * @return \AppBundle\Entity\Province
+     * @return \AppBundle\Entity\User
      */
-    public function getProvince()
+    public function getCreatedBy()
     {
-        return $this->province;
+        return $this->created_by;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \AppBundle\Entity\User $updatedBy
+     *
+     * @return Customer
+     */
+    public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
+    {
+        $this->updated_by = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updated_by;
+    }
+
+    /**
+     * Set removedBy
+     *
+     * @param \AppBundle\Entity\User $removedBy
+     *
+     * @return Customer
+     */
+    public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
+    {
+        $this->removed_by = $removedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get removedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getRemovedBy()
+    {
+        return $this->removed_by;
+    }
+
+    /**
+     * Set deletedBy
+     *
+     * @param \AppBundle\Entity\User $deletedBy
+     *
+     * @return Customer
+     */
+    public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
+    {
+        $this->deleted_by = $deletedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getDeletedBy()
+    {
+        return $this->deleted_by;
     }
 
     /**
@@ -892,3 +921,4 @@ class Customer
         return $this->groupps;
     }
 }
+

@@ -1,4 +1,9 @@
 services:
-# FORMS
+# FORM TYPES
     workflow.form.type.workman:
         class: WorkflowBundle\Form\WorkmanType
+
+# HELPERS
+    workflow.helper.workman_add:
+        class: WorkflowBundle\Service\Helper\WorkmanAddHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory", "@request_stack"]

@@ -1,0 +1,9 @@
+services:
+# FORM TYPES
+    form.type.customer:
+        class: CustomerBundle\Form\CustomerType
+
+# HELPERS
+    customer.helper.customer:
+        class: CustomerBundle\Service\Helper\CustomerHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager"]

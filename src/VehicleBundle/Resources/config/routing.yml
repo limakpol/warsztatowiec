@@ -5,3 +5,11 @@ vehicle_index:
 vehicle_add:
     path: /dodaj-pojazd
     defaults: { _controller: VehicleBundle:Vehicle:add }
+
+vehicle_edit:
+    path: /edytuj-pojazd/{vehicleId}
+    defaults: { _controller: VehicleBundle:Vehicle:edit }
+
+vehicle_remove:
+    path: /usun-pojazd
+    defaults: { _controller: VehicleBundle:Vehicle:remove }

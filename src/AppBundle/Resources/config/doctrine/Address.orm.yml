@@ -113,3 +113,6 @@ AppBundle\Entity\Address:
         user:
             targetEntity: AppBundle\Entity\User
             mappedBy: address
+        customer:
+            targetEntity: AppBundle\Entity\Customer
+            mappedBy: address

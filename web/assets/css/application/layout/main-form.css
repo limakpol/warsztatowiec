@@ -24,6 +24,9 @@
     border: 1px solid #aaa;
     background-color: #fff;
 }
+.main-form form select {
+    height: 22px;
+}
 .main-form form textarea {
     resize: vertical;
     height: 60px;
@@ -53,6 +56,10 @@
         height: 80px;
     }
     .main-form form input + ul {
+        font-size: 14px;
+    }
+    .main-form form select {
+        height: 26px;
         font-size: 14px;
     }
 }

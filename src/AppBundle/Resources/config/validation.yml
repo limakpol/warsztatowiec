@@ -117,4 +117,4 @@ AppBundle\Entity\Address:
     properties:
         post_code:
             - AppBundle\Form\Validator\Constraint\PostCode:
-                groups: [ user, workshop_edit ]
+                groups: [ user, workshop_edit, customer ]

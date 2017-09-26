@@ -34,52 +34,7 @@ AppBundle\Entity\Customer:
             nullable: true
             options:
                 fixed: false
-        is_customer:
-            type: boolean
-            nullable: false
-            options:
-                default: 1
-        is_supplier:
-            type: boolean
-            nullable: false
-            options:
-                default: 0
-        is_recipient:
-            type: boolean
-            nullable: false
-            options:
-                default: 0
-        street:
-            type: string
-            length: 50
-            nullable: true
-            options:
-                fixed: false
-        house_number:
-            type: string
-            length: 5
-            nullable: true
-            options:
-                fixed: false
-        flat_number:
-            type: string
-            length: 5
-            nullable: true
-            options:
-                fixed: false
-        post_code:
-            type: string
-            length: 6
-            nullable: true
-            options:
-                fixed: true
-        city:
-            type: string
-            length: 50
-            nullable: true
-            options:
-                fixed: false
-        province_id:
+        address_id:
             type: integer
             nullable: true
             options:
@@ -144,9 +99,40 @@ AppBundle\Entity\Customer:
         updated_at:
             type: datetime
             nullable: false
+        removed_at:
+            type: datetime
+            nullable: true
         deleted_at:
             type: datetime
             nullable: true
+        created_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        updated_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        removed_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+        deleted_by_id:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+    oneToOne:
+        address:
+            targetEntity: Address
+            inversedBy: user
+            joinColumn:
+                name: address_id
+                referencedColumnName: id
+            cascade: [persist]
     manyToOne:
         workshop:
             targetEntity: Workshop
@@ -154,10 +140,25 @@ AppBundle\Entity\Customer:
             joinColumn:
                 name: workshop_id
                 referencedColumnName: id
-        province:
-            targetEntity: Province
+        created_by:
+            targetEntity: AppBundle\Entity\User
             joinColumn:
-                name: province_id
+                name: created_by_id
+                referencedColumnName: id
+        updated_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: updated_by_id
+                referencedColumnName: id
+        removed_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: removed_by_id
+                referencedColumnName: id
+        deleted_by:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: deleted_by_id
                 referencedColumnName: id
     manyToMany:
         vehicles:

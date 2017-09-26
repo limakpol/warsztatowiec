@@ -5,3 +5,11 @@ customer_index:
 customer_add:
     path: /dodaj-klienta
     defaults: { _controller: CustomerBundle:Customer:add }
+
+customer_edit:
+    path: /edytuj-klienta/{customerId}
+    defaults: { _controller: CustomerBundle:Customer:edit }
+
+customer_remove:
+    path: /usun-klienta
+    defaults: { _controller: CustomerBundle:Customer:remove }
