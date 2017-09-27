@@ -90,7 +90,7 @@ class TestDataGenerator
 
     const WAREHOUSE_DOCUMENTS =  ["asygnata", "wydanie z magazynu"];
 
-    const CUSTOMER_GROUPS = ["stali klienci", "namolni klienci", "VIP-y", "odbiorcy towarów", "dostawcy towarów", "flotowi"];
+    const CUSTOMER_GROUPS = ["stali klienci", "namolni klienci", "VIP-y", "flotowi", "nie płacący"];
 
     const MODELS = [
         [

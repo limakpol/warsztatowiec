@@ -1,0 +1,53 @@
+<div class="header">
+    <div class="div-input">
+        <input type="text" size="20" maxlength="40" placeholder="Wyszukaj klienta" class="search">
+    </div>
+    <div class="div-filters system">
+        <button>dostawcy towaru</button>
+        <button>odbiorcy towaru</button>
+    </div>
+    <div class="div-filters label">
+        {% for groupp in groupps %}
+            <button>{{ groupp.name }}</button>
+        {% endfor %}
+    </div>
+    <div class="div-limit">
+        <span>Liczba rekordów na stronie:</span>
+        <select>
+            {% for limit in limitSet %}
+                <option value="{{ limit }}">{{ limit }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<table>
+    <tr class="tr-th">
+        <th>L.p.</th>
+        <th class="th-sort-column">Data utworzenia</th>
+        <th class="th-sort-column">Imię</th>
+        <th class="th-sort-column">Nazwisko</th>
+        <th class="th-sort-column">Nazwa firmy</th>
+        <th class="th-sort-column">Telefon kom.</th>
+        <th class="th-sort-column">E-mail</th>
+    </tr>
+    {% for key, customer in customers %}
+        <tr>
+            <td class="td-center">{{ key+1}}.</td>
+            <td class="td-center"><a href="{{ path('customer_show', {customerId: customer.id}) }}">{{ customer.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a></td>
+            <td class="td-left">{{ customer.forename }}</td>
+            <td class="td-left">{{ customer.surname }}</td>
+            <td class="td-left">{{ customer.companyName }}</td>
+            <td class="td-center">{{ customer.mobilePhone1|phone }}</td>
+            <td class="td-left">{{ customer.email }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="footer">
+    <div class="pagination-buttons">
+        <button class="btn-previous"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+        <button class="btn-next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="pagination-info">
+        <span>1</span>/<span>5</span>
+    </div>
+</div>

@@ -2,7 +2,7 @@ $(document).ready(function()
 {
 
     addIcon();
-    $(document).on('click', 'header > div', function()
+    $(document).on('click', 'header.section-inner > div', function()
     {
         var selectedLi = $('#div-header-settings-menu ul li:first-child');
         var url = selectedLi.data('path');

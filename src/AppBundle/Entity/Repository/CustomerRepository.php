@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * CustomerRepository
@@ -10,4 +11,98 @@ namespace AppBundle\Entity\Repository;
  */
 class CustomerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $customer = $this->_em
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Customer', 'c')
+            ->where('c.deleted_at IS NULL')
+            ->andWhere('c.removed_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('c.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+        return $customer;
+    }
+
+    public function retrieve(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = str_replace(' ', '', $sortableParameters['search']);
+        $limit      = (int) $sortableParameters['limit'];
+        $offset     = (int) $sortableParameters['offset'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        $systemFilters  = $sortableParameters['systemFilters'];
+        $customFilters  = $sortableParameters['customFilters'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Customer', 'c')
+            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id');
+
+        foreach($systemFilters as $systemFilter)
+        {
+            if($systemFilter == 'supplier')
+            {
+                $queryBuilder
+                    ->innerJoin('AppBundle:DeliveryHeader', 'd', 'WITH', 'c.id = d.customer_id')
+                    ->where('d.deleted_at IS NULL')
+                    ->andWhere('d.removed_at IS NULL')
+                ;
+            }
+
+            if($systemFilter == 'recipient')
+            {
+                $queryBuilder
+                    ->innerJoin('AppBundle:SaleHeader', 's', 'WITH', 'c.id = s.customer_id')
+                    ->where('s.deleted_at IS NULL')
+                    ->andWhere('s.removed_at IS NULL')
+                ;
+            }
+        }
+
+        if(count($customFilters) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('c.groupps', 'g')
+                ->where('g.name IN (:groupps)')
+                ->andWhere('g.deleted_at IS NULL')
+                ->andWhere('g.removed_at IS NULL')
+                ->setParameter(':groupps', $customFilters)
+            ;
+        }
+
+        $customers = $queryBuilder
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.removed_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('
+                    COALESCE(c.forename, c.surname, c.company_name) LIKE :search
+                OR  COALESCE(a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
+                OR  COALESCE(c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
+                OR  COALESCE(c.nip, c.pesel, c.bank_account_number) LIKE :search
+                OR  COALESCE(c.contact_person, c.remarks) LIKE :search
+            ')
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('c.updated_at', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->groupBy('c.id')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult()
+            ;
+
+        return $customers;
+    }
+
 }

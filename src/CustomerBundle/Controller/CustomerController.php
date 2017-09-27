@@ -3,12 +3,14 @@
 namespace CustomerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends Controller
 {
 
     public function indexAction()
     {
+
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
@@ -19,6 +21,37 @@ class CustomerController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'customer',
             'navbar'        => 'Klienci',
+        ]);
+    }
+
+    public function retrieveAction()
+    {
+        $customerHelper = $this->get('customer.helper.customer');
+
+        $customers  = $customerHelper->retrieve();
+        $groupps    = $customerHelper->retrieveGroupps();
+        $limitSet   = $this->getParameter('app')['limit_set'];
+
+        return $this->render('CustomerBundle::sortable_content.html.twig', [
+            'customers' => $customers,
+            'groupps' => $groupps,
+            'limitSet' => $limitSet,
+        ]);
+    }
+
+
+
+    public function showAction($customerId)
+    {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('CustomerBundle::show.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Klient',
         ]);
     }
 

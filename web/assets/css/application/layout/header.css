@@ -1,27 +1,26 @@
-header {
+header.section-inner {
     height: 50px;
-    padding: 0;
-    margin: 0;
+    padding: 0;;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-header a {
+header.section-inner a {
     display: flex;
     height: 100%;
     align-self: center;
 }
-header a img {
+header.section-inner a img {
     height: 60%;
     object-fit: contain;
     object-position: center;
     align-self: center;
 }
-header a:hover {
+header.section-inner a:hover {
     filter: brightness(125%);
 }
-header > div {
+header.section-inner > div {
     height: 100%;
     width: 100%;
     margin: 0 15px 0 35px;
@@ -31,10 +30,10 @@ header > div {
     box-sizing: border-box;
     color: #fff;
 }
-header > div:hover {
+header.section-inner > div:hover {
     cursor: pointer;
 }
-header > div div:first-child {
+header.section-inner > div div:first-child {
     color: #fff;
     font:  18px "Ubuntu", sans-serif;
     display: flex;
@@ -44,21 +43,21 @@ header > div div:first-child {
     align-self: center;
     height: 60%;
 }
-header > div div:last-child {
+header.section-inner > div div:last-child {
     display: flex;
     flex-direction: column;
     height: 30px;
     align-self: center;
     justify-content: space-between;
 }
-header > div div:last-child span {
+header.section-inner > div div:last-child span {
     text-align: right;
 }
-header > div div:last-child span:first-child {
+header.section-inner > div div:last-child span:first-child {
     font: bold 15px "Ubuntu", sans-serif;
     color: #ff5a00;
 }
-header > div div:last-child span:last-child {
+header.section-inner > div div:last-child span:last-child {
     font: 13px "Ubuntu", sans-serif;
     color: #fff;
 }

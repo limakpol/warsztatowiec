@@ -2,6 +2,14 @@ customer_index:
     path: /klienci
     defaults: { _controller: CustomerBundle:Customer:index }
 
+customer_retrieve:
+    path: /customer-retrieve
+    defaults: { _controller: CustomerBundle:Customer:retrieve }
+
+customer_show:
+    path: /klienci/{customerId}
+    defaults: { _controller: CustomerBundle:Customer:show }
+
 customer_add:
     path: /dodaj-klienta
     defaults: { _controller: CustomerBundle:Customer:add }

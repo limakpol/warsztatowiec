@@ -1,4 +1,14 @@
 {% extends ':base:application.html.twig' %}
 {% block main %}
-    Customer
+    <div id="div-customer-sortable" class="div-sortable">
+        {{ render(controller('CustomerBundle:Customer:retrieve')) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/customer/index.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
