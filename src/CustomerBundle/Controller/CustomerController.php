@@ -3,6 +3,7 @@
 namespace CustomerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends Controller
@@ -10,7 +11,15 @@ class CustomerController extends Controller
 
     public function indexAction()
     {
+        $indexHelper = $this->get('customer.helper.index');
 
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $customers  = $indexHelper->retrieve($sortableParameters);
+        $groupps    = $indexHelper->retrieveGroupps();
+        $limitSet   = $this->getParameter('app')['limit_set'];
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
@@ -21,25 +30,43 @@ class CustomerController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'customer',
             'navbar'        => 'Klienci',
+            'customers'     => $customers,
+            'groupps'       => $groupps,
+            'limitSet'      => $limitSet,
+            'sortableParameters' => $sortableParameters,
         ]);
     }
 
     public function retrieveAction()
     {
-        $customerHelper = $this->get('customer.helper.customer');
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
 
-        $customers  = $customerHelper->retrieve();
-        $groupps    = $customerHelper->retrieveGroupps();
+        if(!$request->isMethod('POST') || !$request->isXmlHttpRequest())
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nieprawidłowe żądanie'],
+            ]);
+        }
+
+        $indexHelper = $this->get('customer.helper.index');
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $customers  = $indexHelper->retrieve($sortableParameters);
+
+        $groupps    = $indexHelper->retrieveGroupps();
         $limitSet   = $this->getParameter('app')['limit_set'];
 
         return $this->render('CustomerBundle::sortable_content.html.twig', [
             'customers' => $customers,
             'groupps' => $groupps,
             'limitSet' => $limitSet,
+            'sortableParameters' => $sortableParameters,
         ]);
     }
-
-
 
     public function showAction($customerId)
     {
@@ -58,7 +85,7 @@ class CustomerController extends Controller
     public function addAction()
     {
 
-        $customerHelper = $this->get('customer.helper.customer');
+        $customerHelper = $this->get('customer.helper.add');
 
         $form = $customerHelper->createAddForm();
 

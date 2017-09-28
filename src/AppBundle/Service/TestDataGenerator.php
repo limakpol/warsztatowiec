@@ -482,7 +482,7 @@ class TestDataGenerator
             $address->setUpdatedBy($user);
             $address->setCreatedBy($user);
 
-            $customer->setCreatedAt($dateTime);
+            $customer->setCreatedAt((new \DateTime())->setTimestamp(rand($this::TIMESTAMP_01_01_2014, $this::TIMESTAMP_31_12_2016)));
             $customer->setCreatedBy($user);
             $customer->setUpdatedBy($user);
             $customer->setWorkshop($workshop);

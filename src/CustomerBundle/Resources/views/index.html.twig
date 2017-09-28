@@ -1,7 +1,31 @@
 {% extends ':base:application.html.twig' %}
 {% block main %}
     <div id="div-customer-sortable" class="div-sortable">
-        {{ render(controller('CustomerBundle:Customer:retrieve')) }}
+        <div class="header">
+            <div class="div-input">
+                <input type="text" size="20" maxlength="40" autofocus="autofocus" placeholder="Wyszukaj klienta" class="input-search" value="{{ sortableParameters['search'] }}">
+            </div>
+            <div class="div-filters system">
+                <button data-name="supplier">dostawcy towaru</button>
+                <button data-name="recipient">odbiorcy towaru</button>
+            </div>
+            <div class="div-filters custom">
+                {% for groupp in groupps %}
+                    <button data-id="{{ groupp.id }}">{{ groupp.name }}</button>
+                {% endfor %}
+            </div>
+            <div class="div-limit">
+                <span>Liczba rekordów na stronie:</span>
+                <select class="select-limit">
+                    {% for limit in limitSet %}
+                        <option value="{{ limit }}">{{ limit }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="content">
+        {% include 'CustomerBundle::sortable_content.html.twig' %}
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

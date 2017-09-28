@@ -1,34 +1,12 @@
-<div class="header">
-    <div class="div-input">
-        <input type="text" size="20" maxlength="40" placeholder="Wyszukaj klienta" class="search">
-    </div>
-    <div class="div-filters system">
-        <button>dostawcy towaru</button>
-        <button>odbiorcy towaru</button>
-    </div>
-    <div class="div-filters label">
-        {% for groupp in groupps %}
-            <button>{{ groupp.name }}</button>
-        {% endfor %}
-    </div>
-    <div class="div-limit">
-        <span>Liczba rekordów na stronie:</span>
-        <select>
-            {% for limit in limitSet %}
-                <option value="{{ limit }}">{{ limit }}</option>
-            {% endfor %}
-        </select>
-    </div>
-</div>
 <table>
     <tr class="tr-th">
         <th>L.p.</th>
-        <th class="th-sort-column">Data utworzenia</th>
-        <th class="th-sort-column">Imię</th>
-        <th class="th-sort-column">Nazwisko</th>
-        <th class="th-sort-column">Nazwa firmy</th>
-        <th class="th-sort-column">Telefon kom.</th>
-        <th class="th-sort-column">E-mail</th>
+        <th class="th-sort-column" data-column="c.created_at">Data utworzenia</th>
+        <th class="th-sort-column" data-column="c.forename">Imię</th>
+        <th class="th-sort-column" data-column="c.surname">Nazwisko</th>
+        <th class="th-sort-column" data-column="c.company_name">Nazwa firmy</th>
+        <th class="th-sort-column" data-column="c.mobile_phone1">Telefon kom.</th>
+        <th class="th-sort-column" data-column="c.email">E-mail</th>
     </tr>
     {% for key, customer in customers %}
         <tr>
@@ -48,6 +26,9 @@
         <button class="btn-next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
     </div>
     <div class="pagination-info">
-        <span>1</span>/<span>5</span>
+        <span>{{ sortableParameters['currentPage'] }}</span>/<span>{{ sortableParameters['lastPage'] }}</span>
+        <input type="hidden" class="retrievePath" value="{{ path('customer_retrieve') }}">
+        <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
+        <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
     </div>
 </div>
