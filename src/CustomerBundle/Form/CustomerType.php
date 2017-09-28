@@ -3,20 +3,43 @@
 namespace CustomerBundle\Form;
 
 use AppBundle\Entity\Customer;
+use AppBundle\Entity\Groupp;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use AppBundle\Form\AddressType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class CustomerType extends AbstractType
 {
+    public $em;
+    public $tokenStorage;
+
+    public function __construct(EntityManager $entityManager, TokenStorageInterface $tokenStorage)
+    {
+
+        $this->em = $entityManager;
+        $this->tokenStorage = $tokenStorage;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
         $builder
             ->add('forename', TextType::class, [
                 'label'     => 'Imię',
@@ -115,6 +138,13 @@ class CustomerType extends AbstractType
                 'attr'      => [
                     'maxlength' => 255,
                 ],
+            ])
+            ->add('groupps', CollectionType::class, [
+                'label' => 'Należy do grup:',
+                'entry_type' => GrouppType::class,
+                'entry_options' => ['label' => false,],
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'zapisz',

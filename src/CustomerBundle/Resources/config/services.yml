@@ -2,6 +2,15 @@ services:
 # FORM TYPES
     form.type.customer:
         class: CustomerBundle\Form\CustomerType
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
+        tags:
+            - { name: form.type}
+
+    form.type.groupp:
+        class: CustomerBundle\Form\GrouppType
+        arguments: ["@security.token_storage", "@doctrine.orm.default_entity_manager"]
+        tags:
+            - { name: form.type}
 
 # HELPERS
     customer.helper.add:

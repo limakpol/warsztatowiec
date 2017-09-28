@@ -96,15 +96,6 @@ class CustomerIndexHelper
             {
                 $sortableParameters['limit'] = 15;
             }
-
-            if($sortableParameters['sortOrder'] == 'DESC')
-            {
-                $sortableParameters['sortOrder'] = 'ASC';
-            }
-            else
-            {
-                $sortableParameters['sortOrder'] = 'DESC';
-            }
         }
 
         return $sortableParameters;
@@ -140,7 +131,7 @@ class CustomerIndexHelper
             $currentPage -= 1;
         }
 
-        if($currentPage > $lastPage)
+        if($currentPage > $lastPage || $requestedPage == 1)
         {
             $currentPage = 1;
         }

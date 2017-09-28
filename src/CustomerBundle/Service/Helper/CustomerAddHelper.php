@@ -4,6 +4,7 @@ namespace CustomerBundle\Service\Helper;
 
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Customer;
+use AppBundle\Entity\Groupp;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use CustomerBundle\Form\CustomerType;
@@ -86,6 +87,8 @@ class CustomerAddHelper
         $customer->setCreatedAt($dateTime);
         $customer->setWorkshop($workshop);
 
+        $customer = $this->assignGroupps($customer);
+
         $em->persist($address);
         $em->persist($customer);
 
@@ -94,8 +97,59 @@ class CustomerAddHelper
         return;
     }
 
+    public function retrieveGroupps()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
 
 
+        return $em->getRepository('AppBundle:Groupp')->retrieve($workshop);
+    }
 
+    public function assignGroupps(Customer $customer)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
 
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var Groupp $grouppName */
+        foreach($customer->getGroupps() as $grouppName)
+        {
+            $groupp = $this->entityManager->getRepository('AppBundle:Groupp')->getOneByName($workshop, $grouppName->getName());
+
+            if(null === $groupp)
+            {
+                $groupp = $this->entityManager->getRepository('AppBundle:Groupp')->getOneRemovedByName($workshop, $grouppName->getName());
+
+                if(null === $groupp)
+                {
+                    $groupp = new Groupp();
+                    $groupp->setName($grouppName->getName());
+                    $groupp->setCreatedAt(new \DateTime());
+                    $groupp->setCreatedBy($user);
+                    $groupp->setUpdatedBy($user);
+                    $groupp->setWorkshop($workshop);
+
+                }
+            }
+
+            $customer->removeGroupp($grouppName);
+            $customer->addGroupp($groupp);
+
+            $em->persist($groupp);
+        }
+
+        return $customer;
+    }
 }

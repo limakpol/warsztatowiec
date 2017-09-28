@@ -96,6 +96,8 @@ class CustomerController extends Controller
             return $this->redirectToRoute('customer_index');
         }
 
+        $groupps = $customerHelper->retrieveGroupps();
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -106,6 +108,7 @@ class CustomerController extends Controller
             'tab'           => 'customer',
             'navbar'        => 'Dodawanie nowego klienta',
             'form'          => $form->createView(),
+            'groupps'       => $groupps,
         ]);
     }
 

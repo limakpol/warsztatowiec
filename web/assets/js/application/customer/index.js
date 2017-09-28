@@ -69,6 +69,18 @@ $(document).ready(function(){
     {
         var sortableParameters = getSortableParameters();
         sortableParameters.sortColumnName = $(this).data('column');
+
+        var sortOrder = $('#div-customer-sortable .sortOrder').val();
+        if(sortOrder == 'DESC')
+        {
+            sortOrder = 'ASC';
+        }
+        else
+        {
+            sortOrder = 'DESC';
+        }
+        sortableParameters.sortOrder = sortOrder;
+
         request(sortableParameters);
     });
 

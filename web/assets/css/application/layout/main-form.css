@@ -19,7 +19,7 @@
 }
 .main-form form input, .main-form form textarea, .main-form form select {
     padding: 3px;
-    font: 12px 'Ubuntu', sans-serif;
+    font: 12px 'Arial', sans-serif;
     color: #333;
     border: 1px solid #aaa;
     background-color: #fff;
@@ -41,6 +41,32 @@
 .main-form form button {
     margin-top: 12px;
 }
+.main-form .div-form-labels button {
+    margin: 3px 5px 0 0;
+    color: #aaa;
+}
+.main-form .div-form-labels button:hover {
+    color: #fff;
+}
+.main-form .div-form-labels button.active {
+    color: #fff;
+}
+.main-form .div-form-labels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 40vw;
+}
+.main-form .div-form-labels .input-label-add {
+    margin: 3px 5px 0 0;
+    font: 11px 'Ubuntu', sans-serif;
+    border: 1px solid #49a800;
+    background-color: #fff;
+    color: #333;
+    padding: 3px;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
 
 @media screen and (min-width: 1200px) {
     .main-form form label {
@@ -61,5 +87,9 @@
     .main-form form select {
         height: 26px;
         font-size: 14px;
+    }
+    .main-form .div-form-labels .input-label-add {
+        font-size: 15px;
+        padding: 7px;
     }
 }

@@ -59,6 +59,31 @@
     filter: brightness(140%);
 }
 
+
+.customer-btn-filter-system, .customer-btn-filter-custom {
+    font: 11px 'Ubuntu', sans-serif;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    color: #333;
+    padding: 3px;
+}
+.customer-btn-filter-system:hover,
+.customer-btn-filter-system.active {
+    background-color: #e2c72c;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    filter: none;
+}
+.customer-btn-filter-custom:hover,
+.customer-btn-filter-custom.active
+{
+    background-color: #49a800;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    filter: none;
+}
 @media screen and (min-width: 1200px)
 {
     [class*='btn-'] {

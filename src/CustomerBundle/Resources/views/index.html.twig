@@ -6,12 +6,12 @@
                 <input type="text" size="20" maxlength="40" autofocus="autofocus" placeholder="Wyszukaj klienta" class="input-search" value="{{ sortableParameters['search'] }}">
             </div>
             <div class="div-filters system">
-                <button data-name="supplier">dostawcy towaru</button>
-                <button data-name="recipient">odbiorcy towaru</button>
+                <button class="customer-btn-filter-system" data-name="supplier">dostawcy towaru</button>
+                <button class="customer-btn-filter-system" data-name="recipient">odbiorcy towaru</button>
             </div>
             <div class="div-filters custom">
                 {% for groupp in groupps %}
-                    <button data-id="{{ groupp.id }}">{{ groupp.name }}</button>
+                    <button class="customer-btn-filter-custom" data-id="{{ groupp.id }}">{{ groupp.name }}</button>
                 {% endfor %}
             </div>
             <div class="div-limit">
