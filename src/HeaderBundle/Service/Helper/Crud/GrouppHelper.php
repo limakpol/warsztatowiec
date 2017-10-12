@@ -142,7 +142,7 @@ class GrouppHelper
         return $groupp;
     }
 
-    public function recover(Groupp $groupp)
+    public function restore(Groupp $groupp)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();

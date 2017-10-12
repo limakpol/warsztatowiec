@@ -12,7 +12,6 @@ class UserRole
     const ROLE_ADMIN        = 'ROLE_ADMIN';
     const ROLE_DEVELOPER    = 'ROLE_DEVELOPER';
 
-
     /**
      * @var integer
      */
@@ -522,3 +521,4 @@ class UserRole
         return $this->deleted_by;
     }
 }
+

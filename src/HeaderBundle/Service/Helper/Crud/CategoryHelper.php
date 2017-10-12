@@ -142,7 +142,7 @@ class CategoryHelper
         return $category;
     }
 
-    public function recover(Category $category)
+    public function restore(Category $category)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();

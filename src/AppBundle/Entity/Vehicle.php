@@ -25,7 +25,12 @@ class Vehicle
     /**
      * @var integer
      */
-    private $model_id;
+    private $car_model_id;
+
+    /**
+     * @var string
+     */
+    private $version;
 
     /**
      * @var string
@@ -138,9 +143,9 @@ class Vehicle
     private $owner;
 
     /**
-     * @var \AppBundle\Entity\Model
+     * @var \AppBundle\Entity\CarModel
      */
-    private $model;
+    private $car_model;
 
     /**
      * @var \AppBundle\Entity\User
@@ -234,27 +239,51 @@ class Vehicle
     }
 
     /**
-     * Set modelId
+     * Set carModelId
      *
-     * @param integer $modelId
+     * @param integer $carModelId
      *
      * @return Vehicle
      */
-    public function setModelId($modelId)
+    public function setCarModelId($carModelId)
     {
-        $this->model_id = $modelId;
+        $this->car_model_id = $carModelId;
 
         return $this;
     }
 
     /**
-     * Get modelId
+     * Get carModelId
      *
      * @return integer
      */
-    public function getModelId()
+    public function getCarModelId()
     {
-        return $this->model_id;
+        return $this->car_model_id;
+    }
+
+    /**
+     * Set version
+     *
+     * @param string $version
+     *
+     * @return Vehicle
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
     /**
@@ -786,27 +815,27 @@ class Vehicle
     }
 
     /**
-     * Set model
+     * Set carModel
      *
-     * @param \AppBundle\Entity\Model $model
+     * @param \AppBundle\Entity\CarModel $carModel
      *
      * @return Vehicle
      */
-    public function setModel(\AppBundle\Entity\Model $model = null)
+    public function setCarModel(\AppBundle\Entity\CarModel $carModel = null)
     {
-        $this->model = $model;
+        $this->car_model = $carModel;
 
         return $this;
     }
 
     /**
-     * Get model
+     * Get carModel
      *
-     * @return \AppBundle\Entity\Model
+     * @return \AppBundle\Entity\CarModel
      */
-    public function getModel()
+    public function getCarModel()
     {
-        return $this->model;
+        return $this->car_model;
     }
 
     /**
@@ -939,3 +968,4 @@ class Vehicle
         return $this->customers;
     }
 }
+

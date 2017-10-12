@@ -140,8 +140,8 @@ AppBundle\Entity\Workshop:
         workstations:
             targetEntity: AppBundle\Entity\Workstation
             mappedBy: workshop
-        models:
-            targetEntity: Model
+        car_brands:
+            targetEntity: AppBundle\Entity\CarBrand
             mappedBy: workshop
         vehicles:
             targetEntity: Vehicle

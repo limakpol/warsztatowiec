@@ -1,0 +1,39 @@
+{% if selectedBrandId is not null %}
+    <table class="inputable model">
+        <tr>
+            <th colspan="4" class="header">Model</th>
+        </tr>
+        <tr class="tr-th">
+            <th>Nazwa</th>
+            <th></th>
+        </tr>
+        {% for model in models %}
+            <tr>
+                <td>
+                    <input type="text" maxlength="30" value="{{ model.name }}">
+                </td>
+                <td>
+                    <button class="btn-square btn-remove" data-id="{{ model.id }}">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-square btn-edit" data-id="{{ model.id }}">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <input maxlength="20" type="text">
+            </td>
+            <td>
+                <button class="btn-square btn-add">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+{% endif %}

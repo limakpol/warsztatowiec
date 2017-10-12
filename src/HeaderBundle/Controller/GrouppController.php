@@ -45,7 +45,7 @@ class GrouppController extends Controller
 
         if(null !== ($groupp = $grouppHelper->grouppExistsRemoved()))
         {
-            $grouppHelper->recover($groupp);
+            $grouppHelper->restore($groupp);
 
             return $this->indexAction();
         }

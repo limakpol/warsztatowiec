@@ -145,6 +145,10 @@
     width: 32px;
     padding: 1px;
 }
+#div-header-settings-content .inputable tr.selected input {
+    background-color: #fce8ad;
+    border: 1px solid #333;
+}
 #div-header-settings-content p.system-info {
     color: #fff;
     font: 14px 'Ubuntu', sans-serif;

@@ -1,0 +1,49 @@
+<div>
+    <div>
+        <table class="inputable brand">
+            <tr>
+                <th colspan="4" class="header">Marka</th>
+            </tr>
+            <tr class="tr-th">
+                <th>Nazwa</th>
+                <th></th>
+            </tr>
+            {% for brand in brands %}
+                <tr
+                    {% if selectedBrandId == brand.id %}
+                        class="selected"
+                    {% endif %}
+                >
+                    <td>
+                        <input type="text" maxlength="30" value="{{ brand.name }}" data-id="{{ brand.id }}"
+                        >
+                    </td>
+                    <td>
+                        <button class="btn-square btn-remove" data-id="{{ brand.id }}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-square btn-edit" data-id="{{ brand.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <input maxlength="20" type="text">
+                </td>
+                <td>
+                    <button class="btn-square btn-add">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        {% include 'HeaderBundle::car_model.html.twig' %}
+    </div>
+</div>

@@ -120,7 +120,7 @@ class Workshop
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $models;
+    private $car_brands;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -178,7 +178,7 @@ class Workshop
     public function __construct()
     {
         $this->workstations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->car_brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->customers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->goods = new \Doctrine\Common\Collections\ArrayCollection();
@@ -711,37 +711,37 @@ class Workshop
     }
 
     /**
-     * Add model
+     * Add carBrand
      *
-     * @param \AppBundle\Entity\Model $model
+     * @param \AppBundle\Entity\CarBrand $carBrand
      *
      * @return Workshop
      */
-    public function addModel(\AppBundle\Entity\Model $model)
+    public function addCarBrand(\AppBundle\Entity\CarBrand $carBrand)
     {
-        $this->models[] = $model;
+        $this->car_brands[] = $carBrand;
 
         return $this;
     }
 
     /**
-     * Remove model
+     * Remove carBrand
      *
-     * @param \AppBundle\Entity\Model $model
+     * @param \AppBundle\Entity\CarBrand $carBrand
      */
-    public function removeModel(\AppBundle\Entity\Model $model)
+    public function removeCarBrand(\AppBundle\Entity\CarBrand $carBrand)
     {
-        $this->models->removeElement($model);
+        $this->car_brands->removeElement($carBrand);
     }
 
     /**
-     * Get models
+     * Get carBrands
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModels()
+    public function getCarBrands()
     {
-        return $this->models;
+        return $this->car_brands;
     }
 
     /**
@@ -1034,3 +1034,4 @@ class Workshop
         return $this->users;
     }
 }
+

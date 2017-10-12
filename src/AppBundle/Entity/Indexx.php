@@ -574,3 +574,4 @@ class Indexx
         return $this->deleted_by;
     }
 }
+

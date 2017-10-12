@@ -142,6 +142,39 @@ header_workstation_remove:
     path: /workstation-remove
     defaults: { _controller: HeaderBundle:Workstation:remove }
 
+# CAR
+header_car_brand_index:
+    path: /car-brand-index/{selectedBrandId}
+    defaults: { _controller: HeaderBundle:CarBrand:index, selectedBrandId: null }
+
+header_car_brand_add:
+    path: /car-brand-add
+    defaults: { _controller: HeaderBundle:CarBrand:add }
+
+header_car_brand_edit:
+    path: /car-brand-edit
+    defaults: { _controller: HeaderBundle:CarBrand:edit }
+
+header_car_brand_remove:
+    path: /car-brand-remove
+    defaults: { _controller: HeaderBundle:CarBrand:remove }
+
+header_car_model_index:
+    path: /car-model-index/{selectedBrandId}
+    defaults: { _controller: HeaderBundle:CarModel:index, selectedBrandId: null }
+
+header_car_model_add:
+    path: /car-model-add
+    defaults: { _controller: HeaderBundle:CarModel:add }
+
+header_car_model_edit:
+    path: /car-model-edit
+    defaults: { _controller: HeaderBundle:CarModel:edit }
+
+header_car_model_remove:
+    path: /car-model-remove
+    defaults: { _controller: HeaderBundle:CarModel:remove }
+
 # SYSTEM
 header_system_index:
     path: /system-index

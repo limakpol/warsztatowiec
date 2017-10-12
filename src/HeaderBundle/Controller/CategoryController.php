@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
         if(null !== ($category = $categoryHelper->categoryExistsRemoved()))
         {
-            $categoryHelper->recover($category);
+            $categoryHelper->restore($category);
 
             return $this->indexAction();
         }

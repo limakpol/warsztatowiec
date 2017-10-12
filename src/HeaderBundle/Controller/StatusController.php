@@ -45,7 +45,7 @@ class StatusController extends Controller
 
         if(null !== ($status = $statusHelper->statusExistsRemoved()))
         {
-            $statusHelper->recover($status);
+            $statusHelper->restore($status);
 
             return $this->indexAction();
         }

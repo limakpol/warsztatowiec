@@ -1,7 +1,7 @@
-AppBundle\Entity\Model:
+AppBundle\Entity\CarModel:
     type: entity
-    table: model
-    repositoryClass: AppBundle\Entity\Repository\ModelRepository
+    table: car_model
+    repositoryClass: AppBundle\Entity\Repository\CarModelRepository
     id:
         id:
             type: integer
@@ -11,27 +11,15 @@ AppBundle\Entity\Model:
             generator:
                 strategy: IDENTITY
     fields:
-        workshop_id:
+        brand_id:
             type: integer
             nullable: false
             options:
                 unsigned: true
-        brand:
+        name:
             type: string
             length: 20
             nullable: false
-            options:
-                fixed: false
-        model:
-            type: string
-            length: 20
-            nullable: false
-            options:
-                fixed: false
-        version:
-            type: string
-            length: 15
-            nullable: true
             options:
                 fixed: false
         created_at:
@@ -67,11 +55,11 @@ AppBundle\Entity\Model:
             options:
                 unsigned: true
     manyToOne:
-        workshop:
-            targetEntity: Workshop
+        brand:
+            targetEntity: CarBrand
             inversedBy: models
             joinColumn:
-                name: workshop_id
+                name: brand_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User
@@ -96,11 +84,11 @@ AppBundle\Entity\Model:
     oneToMany:
         vehicles:
             targetEntity: Vehicle
-            mappedBy: model
+            mappedBy: car_model
     manyToMany:
         goods:
             targetEntity: Good
-            mappedBy: models
+            mappedBy: car_models
     uniqueConstraints:
         name:
-            columns: [ workshop_id, brand, model, version ]
+            columns: [ brand_id, name ]

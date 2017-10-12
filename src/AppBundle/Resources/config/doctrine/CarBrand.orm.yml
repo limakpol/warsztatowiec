@@ -1,7 +1,7 @@
-AppBundle\Entity\Good:
+AppBundle\Entity\CarBrand:
     type: entity
-    table: good
-    repositoryClass: AppBundle\Entity\Repository\GoodRepository
+    table: car_brand
+    repositoryClass: AppBundle\Entity\Repository\CarBrandRepository
     id:
         id:
             type: integer
@@ -18,32 +18,8 @@ AppBundle\Entity\Good:
                 unsigned: true
         name:
             type: string
-            length: 40
+            length: 20
             nullable: false
-            options:
-                fixed: false
-        category_id:
-            type: integer
-            nullable: true
-            options:
-                unsigned: true
-        quantity:
-            type: decimal
-            nullable: false
-            precision: 8
-            scale: 2
-            options:
-                unsigned: true
-                default: 0.00
-        measure_id:
-            type: integer
-            nullable: false
-            options:
-                unsigned: true
-        remarks:
-            type: string
-            length: 255
-            nullable: true
             options:
                 fixed: false
         created_at:
@@ -78,17 +54,16 @@ AppBundle\Entity\Good:
             nullable: true
             options:
                 unsigned: true
+    oneToMany:
+        models:
+            targetEntity: AppBundle\Entity\CarModel
+            mappedBy: brand
     manyToOne:
         workshop:
             targetEntity: Workshop
-            inversedBy: goods
+            inversedBy: car_brands
             joinColumn:
                 name: workshop_id
-                referencedColumnName: id
-        measure:
-            targetEntity: Measure
-            joinColumn:
-                name: measure_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User
@@ -110,34 +85,6 @@ AppBundle\Entity\Good:
             joinColumn:
                 name: deleted_by_id
                 referencedColumnName: id
-    oneToMany:
-        indexxes:
-            targetEntity: AppBundle\Entity\Indexx
-            mappedBy: good
-            fetch: EAGER
-    manyToMany:
-        car_models:
-            targetEntity: AppBundle\Entity\CarModel
-            inversedBy: goods
-            joinTable:
-                name: car_model_good
-                joinColumns:
-                    car_model_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    good_id:
-                        referencedColumnName: id
-        categories:
-            targetEntity: AppBundle\Entity\Category
-            inversedBy: goods
-            joinTable:
-                name: category_good
-                joinColumns:
-                    category_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    good_id:
-                        referencedColumnName: id
     uniqueConstraints:
-        workshop_name:
+        name:
             columns: [ workshop_id, name ]

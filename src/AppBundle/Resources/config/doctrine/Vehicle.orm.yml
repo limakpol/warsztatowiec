@@ -21,11 +21,17 @@ AppBundle\Entity\Vehicle:
             nullable: true
             options:
                 unsigned: true
-        model_id:
+        car_model_id:
             type: integer
             nullable: false
             options:
                 unsigned: true
+        version:
+            type: string
+            length: 15
+            nullable: true
+            options:
+                fixed: false
         registration_number:
             type: string
             length: 10
@@ -134,11 +140,11 @@ AppBundle\Entity\Vehicle:
             joinColumn:
                 name: customer_id
                 referencedColumnName: id
-        model:
-            targetEntity: Model
+        car_model:
+            targetEntity: CarModel
             inversedBy: vehicles
             joinColumn:
-                name: model_id
+                name: car_model_id
                 referencedColumnName: id
         created_by:
             targetEntity: AppBundle\Entity\User

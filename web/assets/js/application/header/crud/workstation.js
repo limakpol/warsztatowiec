@@ -3,7 +3,7 @@ $(document).ready(function()
     $(document).on('click', '.inputable.workstation .btn-add', function(event)
     {
         event.preventDefault();
-
+console.log('dfdf');
         $('.error').remove();
 
         var submit = $(this);

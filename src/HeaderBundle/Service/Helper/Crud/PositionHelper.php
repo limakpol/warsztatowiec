@@ -142,7 +142,7 @@ class PositionHelper
         return $position;
     }
 
-    public function recover(Position $position)
+    public function restore(Position $position)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();

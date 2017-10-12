@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: limakpol
- * Date: 9/24/17
- * Time: 6:21 AM
- */
 
 namespace HeaderBundle\Service\Helper\Crud;
 
+
+use AppBundle\Entity\CarBrand;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
-use AppBundle\Entity\Workstation;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,18 +14,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class WorkstationHelper
+class CarModelHelper
 {
-
     private $entityManager;
     private $requestStack;
     private $tokenStorage;
+    private $brandHelper;
 
-    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage)
+    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage, CarBrandHelper $brandHelper)
     {
         $this->entityManager    = $entityManager;
         $this->requestStack     = $requestStack;
         $this->tokenStorage     = $tokenStorage;
+        $this->brandHelper      = $brandHelper;
     }
 
     public function isRequestCorrect()
@@ -60,24 +57,31 @@ class WorkstationHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return $request->get('name') != '';
+        return  $request->get('name') != '';
     }
 
-    public function getWorkstations()
+    public function getBrand()
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $workstations = $this
-            ->entityManager
-            ->getRepository('AppBundle:Workstation')
-            ->retrieve($workshop);
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
 
-        return $workstations;
+        $brand = $em
+            ->getRepository('AppBundle:CarBrand')
+            ->getOne($workshop, $request->get('brandId'))
+        ;
+
+        return $brand;
     }
+
 
     public function getOne()
     {
@@ -94,12 +98,27 @@ class WorkstationHelper
 
         return $this
             ->entityManager
-            ->getRepository('AppBundle:Workstation')
+            ->getRepository('AppBundle:CarModel')
             ->getOne($workshop, $id);
     }
 
+    public function getModels($brandId)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
 
-    public function workstationExists()
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $models = $em->getRepository('AppBundle:CarModel')->retrieveByBrandId($workshop, $brandId);
+
+        return $models;
+    }
+
+    public function modelExists()
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -112,18 +131,16 @@ class WorkstationHelper
 
         $name       = $request->get('name');
 
-        $workstation    = $this
+        $model = $this
             ->entityManager
-            ->getRepository('AppBundle:Workstation')
+            ->getRepository('AppBundle:CarModel')
             ->getOneByName($workshop, $name)
         ;
 
-        return null !== $workstation;
+        return null !== $model;
     }
 
-
-
-    public function workstationExistsRemoved()
+    public function modelExistsRemoved()
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -136,16 +153,16 @@ class WorkstationHelper
 
         $name       = $request->get('name');
 
-        $workstation = $this
+        $model      = $this
             ->entityManager
-            ->getRepository('AppBundle:Workstation')
+            ->getRepository('AppBundle:CarModel')
             ->getOneRemovedByName($workshop, $name)
         ;
 
-        return $workstation;
+        return $model;
     }
 
-    public function restore(Workstation $workstation)
+    public function restore(CarModel $model)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();
@@ -158,22 +175,23 @@ class WorkstationHelper
 
         $name       = $request->get('name');
 
-        $workstation->setName($name);
+        $model->setName($name);
 
-        $workstation->setDeletedAt(null);
-        $workstation->setRemovedAt(null);
-        $workstation->setRemovedBy(null);
-        $workstation->setDeletedBy(null);
-        $workstation->setUpdatedBy($user);
+        $model->setDeletedAt(null);
+        $model->setRemovedAt(null);
+        $model->setRemovedBy(null);
+        $model->setDeletedBy(null);
+        $model->setUpdatedBy($user);
 
-        $em->persist($workstation);
+        $em->persist($model);
 
         $em->flush();
 
         return true;
     }
 
-    public function write()
+
+    public function write(CarBrand $brand)
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -186,23 +204,23 @@ class WorkstationHelper
 
         $name       = $request->get('name');
 
-        $workstation    = new Workstation();
+        $model    = new CarModel();
 
-        $workstation->setCreatedAt(new \DateTime());
-        $workstation->setCreatedBy($user);
-        $workstation->setUpdatedBy($user);
-        $workstation->setWorkshop($user->getCurrentWorkshop());
+        $model->setCreatedAt(new \DateTime());
+        $model->setCreatedBy($user);
+        $model->setUpdatedBy($user);
+        $model->setBrand($brand);
 
-        $workstation->setName($name);
+        $model->setName($name);
 
-        $em->persist($workstation);
+        $em->persist($model);
 
         $em->flush();
 
         return true;
     }
 
-    public function edit(Workstation $workstation)
+    public function edit(CarModel $model)
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -215,17 +233,17 @@ class WorkstationHelper
 
         $name       = $request->get('name');
 
-        $workstation->setName($name);
-        $workstation->setUpdatedBy($user);
+        $model->setName($name);
+        $model->setUpdatedBy($user);
 
-        $em->persist($workstation);
+        $em->persist($model);
 
         $em->flush();
 
         return true;
     }
 
-    public function remove(Workstation $workstation)
+    public function remove(CarModel $model)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -233,22 +251,36 @@ class WorkstationHelper
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        $workstation->setRemovedAt(new \DateTime());
-        $workstation->setRemovedBy($user);
-        $workstation->setUpdatedBy($user);
+        $model->setRemovedAt(new \DateTime());
+        $model->setRemovedBy($user);
+        $model->setUpdatedBy($user);
 
-        $em->persist($workstation);
+        $em->persist($model);
 
         $em->flush();
 
         return true;
     }
 
-    public function isLast()
+    public function othersSimilarExists()
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
 
-        return $this->getWorkstations()->count() == 1;
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $name       = $request->get('name');
+        $id         = $request->get('id');
+
+        $measures   = $this
+            ->entityManager
+            ->getRepository('AppBundle:CarModel')
+            ->getOthersSimilar($workshop, $name, $id);
+
+        return count($measures) > 0;
     }
-
-
 }

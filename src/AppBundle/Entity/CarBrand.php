@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Model
+ * CarBrand
  */
-class Model
+class CarBrand
 {
     /**
      * @var integer
@@ -20,17 +20,7 @@ class Model
     /**
      * @var string
      */
-    private $brand;
-
-    /**
-     * @var string
-     */
-    private $model;
-
-    /**
-     * @var string
-     */
-    private $version;
+    private $name;
 
     /**
      * @var \DateTime
@@ -75,7 +65,7 @@ class Model
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $vehicles;
+    private $models;
 
     /**
      * @var \AppBundle\Entity\Workshop
@@ -103,17 +93,11 @@ class Model
     private $deleted_by;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $goods;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->goods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -131,7 +115,7 @@ class Model
      *
      * @param integer $workshopId
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setWorkshopId($workshopId)
     {
@@ -151,75 +135,27 @@ class Model
     }
 
     /**
-     * Set brand
+     * Set name
      *
-     * @param string $brand
+     * @param string $name
      *
-     * @return Model
+     * @return CarBrand
      */
-    public function setBrand($brand)
+    public function setName($name)
     {
-        $this->brand = $brand;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get brand
+     * Get name
      *
      * @return string
      */
-    public function getBrand()
+    public function getName()
     {
-        return $this->brand;
-    }
-
-    /**
-     * Set model
-     *
-     * @param string $model
-     *
-     * @return Model
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * Get model
-     *
-     * @return string
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * Set version
-     *
-     * @param string $version
-     *
-     * @return Model
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
-    /**
-     * Get version
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->version;
+        return $this->name;
     }
 
     /**
@@ -227,7 +163,7 @@ class Model
      *
      * @param \DateTime $createdAt
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setCreatedAt($createdAt)
     {
@@ -251,7 +187,7 @@ class Model
      *
      * @param \DateTime $updatedAt
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -275,7 +211,7 @@ class Model
      *
      * @param \DateTime $removedAt
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setRemovedAt($removedAt)
     {
@@ -299,7 +235,7 @@ class Model
      *
      * @param \DateTime $deletedAt
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setDeletedAt($deletedAt)
     {
@@ -323,7 +259,7 @@ class Model
      *
      * @param integer $createdById
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setCreatedById($createdById)
     {
@@ -347,7 +283,7 @@ class Model
      *
      * @param integer $updatedById
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setUpdatedById($updatedById)
     {
@@ -371,7 +307,7 @@ class Model
      *
      * @param integer $removedById
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setRemovedById($removedById)
     {
@@ -395,7 +331,7 @@ class Model
      *
      * @param integer $deletedById
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setDeletedById($deletedById)
     {
@@ -415,37 +351,37 @@ class Model
     }
 
     /**
-     * Add vehicle
+     * Add model
      *
-     * @param \AppBundle\Entity\Vehicle $vehicle
+     * @param \AppBundle\Entity\CarModel $model
      *
-     * @return Model
+     * @return CarBrand
      */
-    public function addVehicle(\AppBundle\Entity\Vehicle $vehicle)
+    public function addModel(\AppBundle\Entity\CarModel $model)
     {
-        $this->vehicles[] = $vehicle;
+        $this->models[] = $model;
 
         return $this;
     }
 
     /**
-     * Remove vehicle
+     * Remove model
      *
-     * @param \AppBundle\Entity\Vehicle $vehicle
+     * @param \AppBundle\Entity\CarModel $model
      */
-    public function removeVehicle(\AppBundle\Entity\Vehicle $vehicle)
+    public function removeModel(\AppBundle\Entity\CarModel $model)
     {
-        $this->vehicles->removeElement($vehicle);
+        $this->models->removeElement($model);
     }
 
     /**
-     * Get vehicles
+     * Get models
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVehicles()
+    public function getModels()
     {
-        return $this->vehicles;
+        return $this->models;
     }
 
     /**
@@ -453,7 +389,7 @@ class Model
      *
      * @param \AppBundle\Entity\Workshop $workshop
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setWorkshop(\AppBundle\Entity\Workshop $workshop = null)
     {
@@ -477,7 +413,7 @@ class Model
      *
      * @param \AppBundle\Entity\User $createdBy
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
     {
@@ -501,7 +437,7 @@ class Model
      *
      * @param \AppBundle\Entity\User $updatedBy
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setUpdatedBy(\AppBundle\Entity\User $updatedBy = null)
     {
@@ -525,7 +461,7 @@ class Model
      *
      * @param \AppBundle\Entity\User $removedBy
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setRemovedBy(\AppBundle\Entity\User $removedBy = null)
     {
@@ -549,7 +485,7 @@ class Model
      *
      * @param \AppBundle\Entity\User $deletedBy
      *
-     * @return Model
+     * @return CarBrand
      */
     public function setDeletedBy(\AppBundle\Entity\User $deletedBy = null)
     {
@@ -567,38 +503,5 @@ class Model
     {
         return $this->deleted_by;
     }
-
-    /**
-     * Add good
-     *
-     * @param \AppBundle\Entity\Good $good
-     *
-     * @return Model
-     */
-    public function addGood(\AppBundle\Entity\Good $good)
-    {
-        $this->goods[] = $good;
-
-        return $this;
-    }
-
-    /**
-     * Remove good
-     *
-     * @param \AppBundle\Entity\Good $good
-     */
-    public function removeGood(\AppBundle\Entity\Good $good)
-    {
-        $this->goods->removeElement($good);
-    }
-
-    /**
-     * Get goods
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGoods()
-    {
-        return $this->goods;
-    }
 }
+

@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: limakpol
- * Date: 9/24/17
- * Time: 6:21 AM
- */
 
 namespace HeaderBundle\Service\Helper\Crud;
 
+
+use AppBundle\Entity\CarBrand;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
-use AppBundle\Entity\Workstation;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,9 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class WorkstationHelper
+class CarBrandHelper
 {
-
     private $entityManager;
     private $requestStack;
     private $tokenStorage;
@@ -60,23 +55,168 @@ class WorkstationHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return $request->get('name') != '';
+        return  $request->get('name')   != '';
     }
 
-    public function getWorkstations()
+
+    public function getBrands()
     {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $workstations = $this
-            ->entityManager
-            ->getRepository('AppBundle:Workstation')
-            ->retrieve($workshop);
+        $brands = $em->getRepository('AppBundle:CarBrand')->retrieve($workshop);
 
-        return $workstations;
+        return $brands;
+    }
+
+    public function brandExists()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $name       = $request->get('name');
+
+        $brand = $this
+            ->entityManager
+            ->getRepository('AppBundle:CarBrand')
+            ->getOneByName($workshop, $name)
+        ;
+
+        return null !== $brand;
+    }
+
+    public function brandExistsRemoved()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $name       = $request->get('name');
+
+        $brand      = $this
+            ->entityManager
+            ->getRepository('AppBundle:CarBrand')
+            ->getOneRemovedByName($workshop, $name)
+        ;
+
+        return $brand;
+    }
+
+    public function restore(CarBrand $brand)
+    {
+        /** @var Request $request */
+        $request    = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em         = $this->entityManager;
+
+        /** @var User $user */
+        $user       = $this->tokenStorage->getToken()->getUser();
+
+        $name       = $request->get('name');
+
+        $brand->setName($name);
+
+        $brand->setDeletedAt(null);
+        $brand->setRemovedAt(null);
+        $brand->setRemovedBy(null);
+        $brand->setDeletedBy(null);
+        $brand->setUpdatedBy($user);
+
+        $em->persist($brand);
+
+        $em->flush();
+
+        return true;
+    }
+
+
+    public function write()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $name       = $request->get('name');
+
+        $brand    = new CarBrand();
+
+        $brand->setCreatedAt(new \DateTime());
+        $brand->setCreatedBy($user);
+        $brand->setUpdatedBy($user);
+        $brand->setWorkshop($user->getCurrentWorkshop());
+
+        $brand->setName($name);
+
+        $em->persist($brand);
+
+        $em->flush();
+
+        return $brand;
+    }
+
+    public function edit(CarBrand $brand)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $name       = $request->get('name');
+
+        $brand->setName($name);
+        $brand->setUpdatedBy($user);
+
+        $em->persist($brand);
+
+        $em->flush();
+
+        return true;
+    }
+
+    public function remove(CarBrand $brand)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $brand->setRemovedAt(new \DateTime());
+        $brand->setRemovedBy($user);
+        $brand->setUpdatedBy($user);
+
+        $em->persist($brand);
+
+        $em->flush();
+
+        return true;
     }
 
     public function getOne()
@@ -94,12 +234,28 @@ class WorkstationHelper
 
         return $this
             ->entityManager
-            ->getRepository('AppBundle:Workstation')
+            ->getRepository('AppBundle:CarBrand')
             ->getOne($workshop, $id);
     }
 
+    public function getOneById($brandId)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
 
-    public function workstationExists()
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        return $this
+            ->entityManager
+            ->getRepository('AppBundle:CarBrand')
+            ->getOne($workshop, $brandId);
+    }
+
+    public function othersSimilarExists()
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -111,144 +267,14 @@ class WorkstationHelper
         $workshop = $user->getCurrentWorkshop();
 
         $name       = $request->get('name');
+        $id         = $request->get('id');
 
-        $workstation    = $this
+        $measures   = $this
             ->entityManager
-            ->getRepository('AppBundle:Workstation')
-            ->getOneByName($workshop, $name)
-        ;
+            ->getRepository('AppBundle:CarBrand')
+            ->getOthersSimilar($workshop, $name, $id);
 
-        return null !== $workstation;
+        return count($measures) > 0;
     }
-
-
-
-    public function workstationExistsRemoved()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $name       = $request->get('name');
-
-        $workstation = $this
-            ->entityManager
-            ->getRepository('AppBundle:Workstation')
-            ->getOneRemovedByName($workshop, $name)
-        ;
-
-        return $workstation;
-    }
-
-    public function restore(Workstation $workstation)
-    {
-        /** @var Request $request */
-        $request    = $this->requestStack->getCurrentRequest();
-
-        /** @var EntityManager $em */
-        $em         = $this->entityManager;
-
-        /** @var User $user */
-        $user       = $this->tokenStorage->getToken()->getUser();
-
-        $name       = $request->get('name');
-
-        $workstation->setName($name);
-
-        $workstation->setDeletedAt(null);
-        $workstation->setRemovedAt(null);
-        $workstation->setRemovedBy(null);
-        $workstation->setDeletedBy(null);
-        $workstation->setUpdatedBy($user);
-
-        $em->persist($workstation);
-
-        $em->flush();
-
-        return true;
-    }
-
-    public function write()
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        $name       = $request->get('name');
-
-        $workstation    = new Workstation();
-
-        $workstation->setCreatedAt(new \DateTime());
-        $workstation->setCreatedBy($user);
-        $workstation->setUpdatedBy($user);
-        $workstation->setWorkshop($user->getCurrentWorkshop());
-
-        $workstation->setName($name);
-
-        $em->persist($workstation);
-
-        $em->flush();
-
-        return true;
-    }
-
-    public function edit(Workstation $workstation)
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        $name       = $request->get('name');
-
-        $workstation->setName($name);
-        $workstation->setUpdatedBy($user);
-
-        $em->persist($workstation);
-
-        $em->flush();
-
-        return true;
-    }
-
-    public function remove(Workstation $workstation)
-    {
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        $workstation->setRemovedAt(new \DateTime());
-        $workstation->setRemovedBy($user);
-        $workstation->setUpdatedBy($user);
-
-        $em->persist($workstation);
-
-        $em->flush();
-
-        return true;
-    }
-
-    public function isLast()
-    {
-
-        return $this->getWorkstations()->count() == 1;
-    }
-
 
 }

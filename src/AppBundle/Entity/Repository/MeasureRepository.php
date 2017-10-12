@@ -99,7 +99,4 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
 
         return $measures;
     }
-
-
-
 }

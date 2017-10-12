@@ -45,7 +45,7 @@ class WorkstationController extends Controller
 
         if(null !== ($workstation = $workstationHelper->workstationExistsRemoved()))
         {
-            $workstationHelper->recover($workstation);
+            $workstationHelper->restore($workstation);
 
             return $this->indexAction();
         }

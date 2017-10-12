@@ -120,7 +120,7 @@ class Good
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $models;
+    private $car_models;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -133,7 +133,7 @@ class Good
     public function __construct()
     {
         $this->indexxes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->car_models = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -662,37 +662,37 @@ class Good
     }
 
     /**
-     * Add model
+     * Add carModel
      *
-     * @param \AppBundle\Entity\Model $model
+     * @param \AppBundle\Entity\CarModel $carModel
      *
      * @return Good
      */
-    public function addModel(\AppBundle\Entity\Model $model)
+    public function addCarModel(\AppBundle\Entity\CarModel $carModel)
     {
-        $this->models[] = $model;
+        $this->car_models[] = $carModel;
 
         return $this;
     }
 
     /**
-     * Remove model
+     * Remove carModel
      *
-     * @param \AppBundle\Entity\Model $model
+     * @param \AppBundle\Entity\CarModel $carModel
      */
-    public function removeModel(\AppBundle\Entity\Model $model)
+    public function removeCarModel(\AppBundle\Entity\CarModel $carModel)
     {
-        $this->models->removeElement($model);
+        $this->car_models->removeElement($carModel);
     }
 
     /**
-     * Get models
+     * Get carModels
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModels()
+    public function getCarModels()
     {
-        return $this->models;
+        return $this->car_models;
     }
 
     /**
@@ -729,3 +729,4 @@ class Good
         return $this->categories;
     }
 }
+

@@ -73,3 +73,12 @@ services:
         class: HeaderBundle\Service\Helper\Crud\WorkstationHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
 
+    header.helper.car_brand:
+        class: HeaderBundle\Service\Helper\Crud\CarBrandHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+    header.helper.car_model:
+        class: HeaderBundle\Service\Helper\Crud\CarModelHelper
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage", "@header.helper.car_brand"]
+
+

@@ -49,7 +49,7 @@ class MeasureController extends Controller
 
         if(null !== ($measure = $measureHelper->measureExistsRemoved()))
         {
-            $measureHelper->recover($measure);
+            $measureHelper->restore($measure);
 
             return $this->indexAction();
         }

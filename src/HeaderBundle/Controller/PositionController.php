@@ -45,7 +45,7 @@ class PositionController extends Controller
 
         if(null !== ($position = $positionHelper->positionExistsRemoved()))
         {
-            $positionHelper->recover($position);
+            $positionHelper->restore($position);
 
             return $this->indexAction();
         }

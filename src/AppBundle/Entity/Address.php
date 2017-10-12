@@ -93,6 +93,11 @@ class Address
     private $user;
 
     /**
+     * @var \AppBundle\Entity\Customer
+     */
+    private $customer;
+
+    /**
      * @var \AppBundle\Entity\Province
      */
     private $province;
@@ -513,6 +518,30 @@ class Address
     }
 
     /**
+     * Set customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     *
+     * @return Address
+     */
+    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \AppBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
      * Set province
      *
      * @param \AppBundle\Entity\Province $province
@@ -631,33 +660,5 @@ class Address
     {
         return $this->deleted_by;
     }
-    /**
-     * @var \AppBundle\Entity\Customer
-     */
-    private $customer;
-
-
-    /**
-     * Set customer
-     *
-     * @param \AppBundle\Entity\Customer $customer
-     *
-     * @return Address
-     */
-    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return \AppBundle\Entity\Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
 }
+

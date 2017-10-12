@@ -151,7 +151,7 @@ class MeasureHelper
         return count($measures) > 0;
     }
 
-    public function recover(Measure $measure)
+    public function restore(Measure $measure)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();
@@ -273,14 +273,14 @@ class MeasureHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $meaures = $workshop->getMeasures()->filter(function(Measure $measure) use ($type)
+        $measures = $workshop->getMeasures()->filter(function(Measure $measure) use ($type)
         {
             return  $measure->getRemovedAt()        === null
             &&      $measure->getDeletedAt()        === null
             &&      $measure->getTypeOfQuantity()   == $type;
         });
 
-        return $meaures;
+        return $measures;
     }
 
 }

@@ -142,7 +142,7 @@ class StatusHelper
         return $status;
     }
 
-    public function recover(Status $status)
+    public function restore(Status $status)
     {
         /** @var Request $request */
         $request    = $this->requestStack->getCurrentRequest();
