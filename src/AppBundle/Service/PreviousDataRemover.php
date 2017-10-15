@@ -57,7 +57,7 @@ class PreviousDataRemover
         $this->removeGoods();
         $this->removeGroupps();
         $this->removeMeasures();
-        $this->removeModels();
+       // $this->removeModels();
         $this->removeOrders();
         $this->removePositions();
         $this->removeProducers();

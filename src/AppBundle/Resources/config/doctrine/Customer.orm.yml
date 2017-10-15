@@ -127,8 +127,8 @@ AppBundle\Entity\Customer:
                 unsigned: true
     oneToOne:
         address:
-            targetEntity: Address
-            inversedBy: user
+            targetEntity: AppBundle\Entity\Address
+            inversedBy: customer
             joinColumn:
                 name: address_id
                 referencedColumnName: id

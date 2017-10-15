@@ -10,6 +10,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Address;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Groupp;
@@ -160,7 +161,7 @@ class TestDataGenerator
         $this->generateStatuses();
         $this->generatePositions();
         $this->generateWorkstations();
-        $this->generateModels();
+       // $this->generateModels();
         $this->generateCustomers();
 
         return;
@@ -426,7 +427,7 @@ class TestDataGenerator
 
                 for($i = 0; $i < $countVersions; $i++)
                 {
-                    $model = new Model();
+                    $model = new CarModel();
                     $model->setWorkshop($workshop);
                     $model->setCreatedBy($user);
                     $model->setUpdatedBy($user);
@@ -449,7 +450,7 @@ class TestDataGenerator
         return;
     }
 
-    public function generateCustomers()
+    public function generateCustomers($customersCount = 234)
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
@@ -460,7 +461,6 @@ class TestDataGenerator
         /** @var EntityManager $em */
         $em = $this->entityManager;
 
-        $customersCount = 234;
         $forenamesCount = count($this::FORENAMES);
         $surnames1Count = count($this::SURNAMES1);
         $surnames2Count = count($this::SURNAMES2);

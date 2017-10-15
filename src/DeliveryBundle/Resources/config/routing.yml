@@ -5,3 +5,7 @@ delivery_header_index:
 delivery_header_add:
     path: /przyjmij-towar
     defaults: { _controller: DeliveryBundle:DeliveryHeader:add }
+
+delivery_header_retrieve_customers:
+    path: /delivery/retrieve-customers
+    defaults: { _controller: DeliveryBundle:DeliveryHeader:retrieveCustomers }

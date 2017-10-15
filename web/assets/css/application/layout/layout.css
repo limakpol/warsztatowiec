@@ -43,6 +43,7 @@ section.footer {
     width: 95%;
     max-width: 1350px;
     display: flex;
+    flex-direction: column;
     margin: 0 auto 0 auto;
 }
 main {
@@ -57,4 +58,17 @@ main {
 .company-info {
     font: 14px 'Ubuntu', sans-serif;
     color: #3485ff;
+}
+.h-enum {
+    font: 13px 'Ubuntu', sans-serif;
+    color: #666;
+    margin: 12px 0 5px 0;
+}
+
+@media screen and (min-width: 1200px)
+{
+    .h-enum {
+        font-size: 15px;
+        margin: 20px 0 10px 0;
+    }
 }

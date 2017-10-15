@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * CustomerRepository
@@ -34,7 +35,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
 
     public function retrieve(Workshop $workshop, $sortableParameters = [])
     {
-        $search     = str_replace(' ', '', $sortableParameters['search']);
+        $search     = $sortableParameters['search'];
         $limit      = (int) $sortableParameters['limit'];
         $offset     = (int) $sortableParameters['offset'];
         $sortOrder  = $sortableParameters['sortOrder'];
@@ -84,13 +85,13 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('c.deleted_at IS NULL')
             ->andWhere('c.removed_at IS NULL')
             ->andWhere('c.workshop = :workshop')
-            ->andWhere('
-                    COALESCE(c.forename, c.surname, c.company_name) LIKE :search
-                OR  COALESCE(a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
-                OR  COALESCE(c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
-                OR  COALESCE(c.nip, c.pesel, c.bank_account_number) LIKE :search
-                OR  COALESCE(c.contact_person, c.remarks) LIKE :search
-            ')
+            ->andWhere("
+                    CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
+                OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
+                OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
+                OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search
+            ")
             ->orderBy($sortColumnName, $sortOrder)
             ->addOrderBy('c.updated_at', 'DESC')
             ->setFirstResult($offset)
@@ -107,7 +108,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
 
     public function getCountAllRetrieved(Workshop $workshop, $sortableParameters = [])
     {
-        $search     = str_replace(' ', '', $sortableParameters['search']);
+        $search     = $sortableParameters['search'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
         $systemFilters  = $sortableParameters['systemFilters'];
@@ -155,13 +156,13 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('c.deleted_at IS NULL')
             ->andWhere('c.removed_at IS NULL')
             ->andWhere('c.workshop = :workshop')
-            ->andWhere('
-                    COALESCE(c.forename, c.surname, c.company_name) LIKE :search
-                OR  COALESCE(a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
-                OR  COALESCE(c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
-                OR  COALESCE(c.nip, c.pesel, c.bank_account_number) LIKE :search
-                OR  COALESCE(c.contact_person, c.remarks) LIKE :search
-            ')
+            ->andWhere("
+                    CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
+                OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
+                OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
+                OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search
+            ")
             ->orderBy($sortColumnName, $sortOrder)
             ->addOrderBy('c.updated_at', 'DESC')
             ->setParameter(':workshop', $workshop)

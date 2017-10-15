@@ -86,6 +86,7 @@ doctrine:
                 MONTH: DoctrineExtensions\Query\Mysql\Month
                 YEAR: DoctrineExtensions\Query\Mysql\Year
                 DAY: DoctrineExtensions\Query\Mysql\Day
+                CONCAT_WS: Luxifer\DQL\String\ConcatWs
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"

@@ -119,7 +119,7 @@ class CustomerIndexHelper
 
         $countAllRetrieved = $em->getRepository('AppBundle:Customer')->getCountAllRetrieved($workshop, $inputSortableParameters);
 
-        $lastPage = floor(abs($countAllRetrieved-1)/$limit)+1;
+        $lastPage = (int) floor(abs($countAllRetrieved-1)/$limit)+1;
 
         if($requestedPage > 1)
         {

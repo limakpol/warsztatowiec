@@ -1,0 +1,125 @@
+.searchable {
+    min-width: 400px;
+    width: 40%;
+    margin-left: 15px; ;
+}
+.searchable > input {
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    color: #333;
+    font: 12px 'Ubuntu', sans-serif;
+    padding: 2px;
+    width: 100%;
+}
+.searchable > div {
+    width: 100%;
+    display: none;
+}
+.searchable header {
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+.searchable header div {
+    align-items: center;
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    font: 12px 'Ubuntu', sans-serif;
+    justify-content: center;
+    padding: 2px;
+}
+.searchable table {
+    border: none;
+    width: 100%;
+    border-collapse: collapse;
+}
+.searchable tr:nth-child(odd) {
+    background-color: #efefef;
+}
+.searchable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.searchable th {
+    font: bold 12px 'Ubuntu', sans-serif;
+    color: #333;
+    border: none;
+    padding: 3px;
+}
+.searchable th.sort-column {
+    cursor: pointer;
+}
+.searchable tr:not(:first-child):hover td {
+    cursor: pointer;
+    color: #666;
+}
+.searchable td {
+    border: none;
+    font: 12px 'Courier New', Monospace;
+    color: #333;
+    padding: 3px;
+}
+.searchable footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.searchable footer .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.searchable footer button {
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    font: 12px 'Ubuntu', sans-serif;
+    border: 1px solid #efefef;
+    padding: 4px;
+    margin: 10px;
+    outline: none;
+}
+.searchable .prev i {
+    margin-right: 4px;
+}
+.searchable .next i {
+    margin-left: 4px;
+}
+.searchable footer .page-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.searchable footer .page-info span {
+    font: 12px 'Ubuntu', sans-serif;
+    color: #333;
+}
+@media screen and (min-width: 1200px)
+{
+    .searchable > input {
+        font-size: 15px;
+        padding: 5px;
+    }
+    .searchable header div {
+        font-size: 15px;
+        padding: 5px;
+    }
+    .searchable th {
+        font-size: 15px;
+        padding: 5px;
+    }
+    .searchable td {
+        font-size: 15px;
+        padding: 5px;
+    }
+    .searchable footer button {
+        font-size: 15px;
+    }
+    .searchable footer .page-info span {
+        font-size: 15px;
+    }
+}

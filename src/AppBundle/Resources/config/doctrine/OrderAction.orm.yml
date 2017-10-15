@@ -173,6 +173,7 @@ AppBundle\Entity\OrderAction:
     manyToMany:
         workmans:
             targetEntity: User
+            inversedBy: order_actions
             joinTable:
                 name: order_action_workman
                 joinColumns:
