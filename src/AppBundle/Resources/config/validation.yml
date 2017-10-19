@@ -118,3 +118,23 @@ AppBundle\Entity\Address:
         post_code:
             - AppBundle\Form\Validator\Constraint\PostCode:
                 groups: [ user, workshop_edit, customer ]
+        street:
+            - Length:
+                max: 50
+                maxMessage: 'Pole Ulica może zawierać maksymalnie 50 liter'
+                groups: [ user, workshop_edit, customer ]
+        house_number:
+            - Length:
+                max: 5
+                maxMessage: 'Pole Nr domu może zawierać maksymalnie 5 liter'
+                groups: [ user, workshop_edit, customer ]
+        flat_number:
+            - Length:
+                max: 5
+                maxMessage: 'Pole Nr mieszkania może zawierać maksymalnie 5 liter'
+                groups: [ user, workshop_edit, customer ]
+        city:
+            - Length:
+                max: 50
+                maxMessage: 'Pole Miasto może zawierać maksymalnie 50 liter'
+                groups: [ user, workshop_edit, customer ]
