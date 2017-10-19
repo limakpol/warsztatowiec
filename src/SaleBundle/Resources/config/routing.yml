@@ -13,3 +13,7 @@ sale_header_add:
 sale_header_retrieve_customers:
     path: /sale/retrieve-customers
     defaults: { _controller: SaleBundle:SaleHeader:retrieveCustomers }
+
+sale_header_get_next_number:
+    path: /sale/get-next-number
+    defaults: { _controller: SaleBundle:SaleHeader:getNextDocumentNumber }

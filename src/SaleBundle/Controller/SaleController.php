@@ -40,4 +40,6 @@ class SaleController extends Controller
     {
         return new Response();
     }
+
+
 }

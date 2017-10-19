@@ -70,4 +70,12 @@ class SaleHeaderController extends Controller
         ]);
     }
 
+    public function getNextDocumentNumberAction()
+    {
+        /** @var SaleHeaderAddHelper $headerAddHelper */
+        $headerAddHelper = $this->get('sale.helper.header_add');
+
+        return $headerAddHelper->getNextDocumentNumber();
+    }
+
 }

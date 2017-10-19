@@ -199,7 +199,32 @@ $(document).ready(function(){
             $(this).before(hidden);
             $(this).val('');
         }
+    });
 
+    $(document).on('change', '#sale_header_add_document_type', function(){
+        var documentType = $(this).val();
+
+        if(documentType == '')
+        {
+            $('#sale_header_add_document_number').val('');
+
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/sale/get-next-number",
+            data: {
+                documentType: documentType,
+            },
+            success: function(data)
+            {
+                if(data['error'] == 0)
+                {
+                    $('#sale_header_add_document_number').val(data['documentNumber']);
+                }
+            }
+        });
     });
 
 });
@@ -230,7 +255,6 @@ function getSortableParameters()
 
 function request(sortableParameters)
 {
-
     $.ajax({
         type: "POST",
         url: $('#searchable-customer footer .retrievePath').val(),

@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -168,6 +169,55 @@ class SaleHeaderAddHelper
         $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
 
         return $sortableParameters;
+    }
+
+    public function getNextDocumentNumber()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $documentType = $request->get('documentType');
+
+        if($documentType == 'asygnata')
+        {
+            $documentNumber = 'As\\';
+        }
+        elseif($documentType == 'wydanie z magazynu')
+        {
+            $documentNumber = 'WZ\\';
+        }
+        else
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nieprawidłowy typ dokumentu'],
+            ]);
+        }
+
+        $numberingMode = 'monthly';
+
+        $headersCount = $em->getRepository('AppBundle:SaleHeader')->getCount($workshop, $documentType, $numberingMode);
+
+        if($numberingMode == 'monthly')
+        {
+            $documentNumber .= date('m') . '\\';
+        }
+
+        $documentNumber .= date('Y') . '\\' . ($headersCount + 1);
+
+        return new JsonResponse([
+            'error' => 0,
+            'documentNumber' => $documentNumber,
+        ]);
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * SaleHeaderRepository
@@ -10,4 +11,46 @@ namespace AppBundle\Entity\Repository;
  */
 class SaleHeaderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCount(Workshop $workshop, $documentType, $numberingMode)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder()
+            ->select('COUNT(s)')
+            ->from('AppBundle:SaleHeader', 's')
+            ->where('s.workshop = :workshop')
+            ->andWhere('s.document_type = :documentType')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('s.deleted_at IS NULL')
+            ;
+
+        if($numberingMode == 'monthly')
+        {
+            $queryBuilder
+                ->andWhere('MONTH(s.created_at) = :month')
+                ->andWhere('YEAR(s.created_at) = :year')
+                ->setParameter(':month', date('m'))
+                ->setParameter(':year', date('Y'))
+                ;
+        }
+        elseif($numberingMode == 'yearly')
+        {
+            $queryBuilder
+                ->andWhere('YEAR(s.created_at) = :year')
+                ->setParameter(':year', date('Y'))
+            ;
+        }
+        else
+        {
+            return null;
+        }
+
+        $count = $queryBuilder
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':documentType', $documentType)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $count;
+    }
+
 }
