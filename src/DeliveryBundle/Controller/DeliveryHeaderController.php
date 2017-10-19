@@ -37,7 +37,8 @@ class DeliveryHeaderController extends Controller
 
         $sortableParameters = $headerAddHelper->getSortableParameters();
 
-        $customers = $customerIndexHelper->retrieve($sortableParameters);
+        $customers  = $customerIndexHelper->retrieve($sortableParameters);
+        $groupps    = $customerIndexHelper->retrieveGroupps();
 
         return $this->render('DeliveryBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
@@ -46,6 +47,7 @@ class DeliveryHeaderController extends Controller
             'navbar'        => 'Nowe przyjęcie towaru',
             'form'          => $form->createView(),
             'customers'     => $customers,
+            'groupps'       => $groupps,
             'sortableParameters' => $sortableParameters,
         ]);
     }

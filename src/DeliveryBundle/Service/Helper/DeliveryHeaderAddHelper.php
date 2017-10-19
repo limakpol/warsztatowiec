@@ -8,6 +8,7 @@ use AppBundle\Entity\DeliveryHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
+use CustomerBundle\Service\Helper\CustomerAddHelper;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use DeliveryBundle\Form\DeliveryHeaderAddType;
 use Doctrine\ORM\EntityManager;
@@ -25,15 +26,17 @@ class DeliveryHeaderAddHelper
     private $entityManager;
     private $formFactory;
     private $customerIndexHelper;
+    private $customerAddHelper;
     private $trade;
 
-    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, Trade $trade)
+    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, CustomerAddHelper $customerAddHelper, Trade $trade)
     {
         $this->tokenStorage     = $tokenStorage;
         $this->requestStack     = $requestStack;
         $this->entityManager    = $entityManager;
         $this->formFactory      = $formFactory;
         $this->customerIndexHelper = $customerIndexHelper;
+        $this->customerAddHelper = $customerAddHelper;
         $this->trade            = $trade;
     }
 
@@ -75,16 +78,6 @@ class DeliveryHeaderAddHelper
             array_push($validationGroups, "customer");
         }
 
-/*
-        if(null === $customer && $customerId !== 'new')
-        {
-            $validationGroups = ['delivery_header_add'];
-        }
-        else
-        {
-            $validationGroups = ['Default'];
-        }
-*/
         $form = $this->formFactory->create(DeliveryHeaderAddType::class, $deliveryHeader, [
             'validation_groups' => $validationGroups,
         ]);
@@ -137,13 +130,14 @@ class DeliveryHeaderAddHelper
         {
             $customer = $deliveryHeader->getCustomer();
 
-
             $customer
                 ->setWorkshop($workshop)
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user)
                 ->setCreatedAt($dateTime)
                 ;
+
+            $customer = $this->customerAddHelper->assignGroupps($customer);
 
             $address = $customer->getAddress();
 

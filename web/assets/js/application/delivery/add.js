@@ -161,8 +161,47 @@ $(document).ready(function(){
         $('#searchable-customer > div').slideUp();
 
         $('#customer-form').slideDown();
+    });
+
+    $(document).on('click', '.customer-btn-filter-custom', function(event)
+    {
+        event.preventDefault();
+
+        var button = $(this);
+
+        if(button.hasClass('active'))
+        {
+
+            $('input[class="groupp"][type=hidden][value="' + button.text() + '"]').remove();
+            button.removeClass('active');
+        }
+        else
+        {
+
+            button.after('<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + button.text() + '">');
+            button.addClass('active');
+        }
+    });
+
+    $(document).on('keypress', '.input-groupp-add', function(event)
+    {
+
+        if(event.which == 13)
+        {
+
+            event.preventDefault();
+
+            var name = $(this).val();
+            var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
+            var hidden = '<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
+
+            $(this).before(button);
+            $(this).before(hidden);
+            $(this).val('');
+        }
 
     });
+
 });
 
 function getSortableParameters()

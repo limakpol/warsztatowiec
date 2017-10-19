@@ -96,6 +96,14 @@
                 {{ form_label(form.customer.remarks) }}
                 {{ form_widget(form.customer.remarks) }}
                 {{ form_errors(form.customer.remarks) }}
+
+                {{ form_label(form.customer.groupps) }}
+                <div class="div-form-labels">
+                    {% for groupp in groupps %}
+                        <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
+                    {% endfor %}
+                    <input type="text" size="10" maxlength="25" class="input-groupp-add">
+                </div>
             </div>
         </div>
         <h1 class="h-enum">3. Możesz wpisać ręcznie całkowite wartości przyjęcia lub pozostawić je do automatycznego wyliczenia</h1>
