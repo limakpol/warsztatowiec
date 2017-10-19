@@ -80,7 +80,7 @@ main_menu:
                 route: sale_header_add
             4:
                 name: wystawienia
-                route: sale_header_index
+                route: sale_index
             5:
                 name: producenci
                 route: warehouse_producer_index

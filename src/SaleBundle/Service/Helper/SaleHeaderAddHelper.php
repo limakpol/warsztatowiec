@@ -1,16 +1,16 @@
 <?php
 
-namespace DeliveryBundle\Service\Helper;
+namespace SaleBundle\Service\Helper;
 
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Customer;
-use AppBundle\Entity\DeliveryHeader;
+use AppBundle\Entity\SaleHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
 use CustomerBundle\Service\Helper\CustomerAddHelper;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
-use DeliveryBundle\Form\DeliveryHeaderAddType;
+use SaleBundle\Form\SaleHeaderAddType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class DeliveryHeaderAddHelper
+class SaleHeaderAddHelper
 {
     private $tokenStorage;
     private $requestStack;
@@ -27,9 +27,8 @@ class DeliveryHeaderAddHelper
     private $formFactory;
     private $customerIndexHelper;
     private $customerAddHelper;
-    private $trade;
 
-    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, CustomerAddHelper $customerAddHelper, Trade $trade)
+    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, CustomerAddHelper $customerAddHelper)
     {
         $this->tokenStorage     = $tokenStorage;
         $this->requestStack     = $requestStack;
@@ -37,7 +36,6 @@ class DeliveryHeaderAddHelper
         $this->formFactory      = $formFactory;
         $this->customerIndexHelper = $customerIndexHelper;
         $this->customerAddHelper = $customerAddHelper;
-        $this->trade            = $trade;
     }
 
     public function createForm()
@@ -54,18 +52,18 @@ class DeliveryHeaderAddHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $deliveryHeader = new DeliveryHeader();
+        $saleHeader = new SaleHeader();
 
-        $customerId = $request->get('delivery_header_add')['customer_id'];
+        $customerId = $request->get('sale_header_add')['customer_id'];
 
         $customer = $em->getRepository('AppBundle:Customer')->getOne($workshop, $customerId);
 
-        $validationGroups = ['delivery_header_add'];
+        $validationGroups = ['sale_header_add'];
 
         if(null !== $customer)
         {
             array_push($validationGroups, "customer");
-            $deliveryHeader->setCustomer($customer);
+            $saleHeader->setCustomer($customer);
         }
 
         if($customerId === 'new')
@@ -73,12 +71,12 @@ class DeliveryHeaderAddHelper
             $address = new Address();
             $customer = new Customer();
             $customer->setAddress($address);
-            $deliveryHeader->setCustomer($customer);
+            $saleHeader->setCustomer($customer);
 
             array_push($validationGroups, "customer");
         }
 
-        $form = $this->formFactory->create(DeliveryHeaderAddType::class, $deliveryHeader, [
+        $form = $this->formFactory->create(SaleHeaderAddType::class, $saleHeader, [
             'validation_groups' => $validationGroups,
         ]);
 
@@ -111,24 +109,24 @@ class DeliveryHeaderAddHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        /** @var DeliveryHeader $deliveryHeader */
-        $deliveryHeader = $form->getData();
+        /** @var SaleHeader $saleHeader */
+        $saleHeader = $form->getData();
 
         $dateTime = new \DateTime();
 
-        $deliveryHeader->setWorkshop($workshop);
-        $deliveryHeader->setCreatedAt($dateTime);
-        $deliveryHeader->setCreatedBy($user);
-        $deliveryHeader->setUpdatedBy($user);
+        $saleHeader->setWorkshop($workshop);
+        $saleHeader->setCreatedAt($dateTime);
+        $saleHeader->setCreatedBy($user);
+        $saleHeader->setUpdatedBy($user);
 
-        if(null === $deliveryHeader->getCustomerId())
+        if(null === $saleHeader->getCustomerId())
         {
-            $deliveryHeader->setCustomer(null);
+            $saleHeader->setCustomer(null);
         }
 
-        if($deliveryHeader->getCustomerId() == 'new')
+        if($saleHeader->getCustomerId() == 'new')
         {
-            $customer = $deliveryHeader->getCustomer();
+            $customer = $saleHeader->getCustomer();
 
             $customer
                 ->setWorkshop($workshop)
@@ -150,13 +148,12 @@ class DeliveryHeaderAddHelper
             $em->persist($customer);
         }
 
-        $deliveryHeader = $this->trade->normalizeHeader($deliveryHeader);
 
-        $em->persist($deliveryHeader);
+        $em->persist($saleHeader);
 
         $em->flush();
 
-        return $deliveryHeader->getId();
+        return $saleHeader->getId();
     }
 
     public function getSortableParameters()
@@ -165,7 +162,7 @@ class DeliveryHeaderAddHelper
 
         $inputSortableParameters = $customerIndexHelper->getInputSortableParameters();
         $inputSortableParameters['limit'] = 15;
-        $inputSortableParameters['systemFilters'] = ['supplier'];
+        $inputSortableParameters['systemFilters'] = ['recipient'];
         $outputSortableParameters = $customerIndexHelper->getOutputSortableParameters($inputSortableParameters);
 
         $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);

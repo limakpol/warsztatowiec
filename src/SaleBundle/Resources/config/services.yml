@@ -1,1 +1,11 @@
 services:
+# FORM TYPES
+  form.type.sale_header_add:
+      class: SaleBundle\Form\SaleHeaderAddType
+      tags:
+          - { name: form.type }
+# SERVICES
+
+  sale.helper.header_add:
+      class: SaleBundle\Service\Helper\SaleHeaderAddHelper
+      arguments: ["@security.token_storage", "@request_stack", "@doctrine.orm.default_entity_manager", "@form.factory", "@customer.helper.index", "@customer.helper.add"]

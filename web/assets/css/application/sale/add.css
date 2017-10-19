@@ -1,0 +1,12 @@
+#searchable-customer header div:nth-child(1):hover,
+#searchable-customer header div:nth-child(2):hover,
+#searchable-customer header div:nth-child(3):hover {
+    cursor: pointer;
+    color: #777;
+}
+#searchable-customer td:nth-child(4) {
+    text-align: center;
+}
+#customer-form {
+    display: none;
+}

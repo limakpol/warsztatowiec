@@ -3,6 +3,7 @@
 namespace SaleBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class SaleController extends Controller
 {
@@ -12,7 +13,7 @@ class SaleController extends Controller
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
-        return $this->render('SaleBundle:header:index.html.twig', [
+        return $this->render('SaleBundle::index.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
@@ -20,17 +21,23 @@ class SaleController extends Controller
         ]);
     }
 
-    public function addAction()
+    public function showAction($saleHeaderId)
     {
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
-        return $this->render('SaleBundle:header:add.html.twig', [
+        return $this->render('SaleBundle::show.html.twig', [
+            'saleHeaderId' => $saleHeaderId,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
-            'navbar'        => 'Nowe wystawienie towaru',
+            'navbar'        => 'Wystawienie towaru',
         ]);
+    }
+
+    public function removeAction()
+    {
+        return new Response();
     }
 }
