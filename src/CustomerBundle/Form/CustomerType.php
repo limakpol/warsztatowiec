@@ -7,6 +7,7 @@ use AppBundle\Entity\Groupp;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Form\AddressType;
+use AppBundle\Form\Transformer\PhoneTransformer;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -34,12 +35,6 @@ class CustomerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
         $builder
             ->add('forename', TextType::class, [
                 'label'     => 'Imię',
@@ -78,7 +73,7 @@ class CustomerType extends AbstractType
                 'required'  => false,
                 'attr'      => [
                     'maxlength' => 12,
-                    'size'      => 10,
+                    'size'      => 12,
                 ],
             ])
             ->add('mobile_phone2', TextType::class, [
@@ -86,7 +81,7 @@ class CustomerType extends AbstractType
                 'required'  => false,
                 'attr'      => [
                     'maxlength' => 12,
-                    'size'      => 10,
+                    'size'      => 12,
                 ],
             ])
             ->add('landline_phone', TextType::class, [
@@ -154,6 +149,10 @@ class CustomerType extends AbstractType
                 ],
             ])
             ;
+
+            $builder->get('mobile_phone1')->addModelTransformer(new PhoneTransformer());
+            $builder->get('mobile_phone2')->addModelTransformer(new PhoneTransformer());
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

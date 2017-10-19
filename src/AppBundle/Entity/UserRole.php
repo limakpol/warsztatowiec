@@ -7,6 +7,7 @@ namespace AppBundle\Entity;
  */
 class UserRole
 {
+
     const ROLE_USER         = 'ROLE_USER';
     const ROLE_TESTER       = 'ROLE_TESTER';
     const ROLE_ADMIN        = 'ROLE_ADMIN';

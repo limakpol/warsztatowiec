@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Customer
@@ -919,6 +920,37 @@ class Customer
     public function getGroupps()
     {
         return $this->groupps;
+    }
+
+    public function validate(ExecutionContextInterface $context)
+    {
+        if(null == $this->getCompanyName())
+        {
+
+            if($this->getForename() && !$this->getSurname())
+            {
+                $context->buildViolation('Pole Nazwisko nie może być puste')
+                    ->atPath('surname')
+                    ->addViolation();
+            }
+            if(!$this->getForename() && $this->getSurname())
+            {
+                $context->buildViolation('Pole Imię nie może być puste')
+                    ->atPath('forename')
+                    ->addViolation();
+            }
+            if(!$this->getForename() && !$this->getSurname())
+            {
+                $context->buildViolation('Pola Imię nie może być puste')
+                    ->atPath('forename')
+                    ->addViolation();
+
+                $context->buildViolation('Pola Nazwisko nie może być puste')
+                    ->atPath('surname')
+                    ->addViolation();
+
+            }
+        }
     }
 }
 

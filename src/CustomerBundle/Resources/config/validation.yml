@@ -1,9 +1,6 @@
 AppBundle\Entity\Customer:
     properties:
         forename:
-            - NotBlank:
-                message: 'Pole Imię nie może być puste'
-                groups: [ customer ]
             - Length:
                 min: 2
                 max: 30
@@ -11,14 +8,18 @@ AppBundle\Entity\Customer:
                 maxMessage: 'Pole Imię może zawierać maksymalnie 30 liter'
                 groups: [ customer ]
         surname:
-            - NotBlank:
-                message: 'Pole Nazwisko nie może być puste'
-                groups: [ customer ]
             - Length:
                 min: 2
                 max: 50
                 minMessage: 'Pole Nazwisko powinno zawierać co najmniej 2 litery'
                 maxMessage: 'Pole Nazwisko może zawierać maksymalnie 50 liter'
+                groups: [ customer ]
+        company_name:
+            - Length:
+                min: 2
+                max: 50
+                minMessage: 'Pole Nazwa firmy powinno zawierać co najmniej 2 litery'
+                maxMessage: 'Pole Nazwa firmy może zawierać maksymalnie 50 liter'
                 groups: [ customer ]
         mobile_phone1:
             - Length:
@@ -63,3 +64,8 @@ AppBundle\Entity\Customer:
                 groups: [ customer ]
         address:
             - Valid: ~
+    constraints:
+        - Callback:
+            callback: validate
+            groups: [ customer ]
+

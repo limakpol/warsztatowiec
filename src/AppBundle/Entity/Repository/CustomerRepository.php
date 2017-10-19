@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
@@ -12,7 +13,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class CustomerRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getOne(Workshop $workshop, $id)
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
     {
         $customer = $this->_em
             ->createQueryBuilder()
@@ -27,7 +28,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
                 ':id'       => $id,
             ])
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult($hydrationMode)
             ;
 
         return $customer;
@@ -47,7 +48,9 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder()
             ->select('c')
             ->from('AppBundle:Customer', 'c')
-            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id');
+            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id')
+            ->leftJoin('AppBundle:Province', 'p', 'WITH', 'a.province_id = p.id')
+        ;
 
         foreach($systemFilters as $systemFilter)
         {
@@ -87,7 +90,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('c.workshop = :workshop')
             ->andWhere("
                     CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
-                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city, p.name) LIKE :search
                 OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
                 OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
                 OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search
@@ -118,7 +121,9 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder()
             ->select('COUNT(c)')
             ->from('AppBundle:Customer', 'c')
-            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id');
+            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id')
+            ->leftJoin('AppBundle:Province', 'p', 'WITH', 'a.province_id = p.id')
+        ;
 
         foreach($systemFilters as $systemFilter)
         {
@@ -158,7 +163,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('c.workshop = :workshop')
             ->andWhere("
                     CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
-                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city, p.name) LIKE :search
                 OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
                 OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
                 OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search

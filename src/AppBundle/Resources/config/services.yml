@@ -90,6 +90,19 @@ services:
         tags:
             - { name: validator.constraint_validator }
 
+    app.validator.trade:
+        class: AppBundle\Form\Validator\TradeValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+# TRANSFORMERS
+    app.transformer.trade:
+        class: AppBundle\Form\Transformer\TradeTransformer
+
+    app.transformer.phone:
+        class: AppBundle\Form\Transformer\PhoneTransformer
+
+
 # HELPERS
     app.helper.app.register:
         class: AppBundle\Service\Helper\App\Register
@@ -107,7 +120,7 @@ services:
         class: AppBundle\Service\PreviousDataRemover
         arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
 
-    app.transformer.price:
-        class: AppBundle\Service\PriceTransformer
+    app.trade:
+        class: AppBundle\Service\Trade\Trade
 
 

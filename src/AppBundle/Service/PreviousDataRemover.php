@@ -165,7 +165,11 @@ class PreviousDataRemover
         /** @var Customer $customer */
         foreach($customers as $customer)
         {
-            $em->remove($customer->getAddress());
+            if(null !== $customer->getAddress())
+            {
+                $em->remove($customer->getAddress());
+            }
+
             $em->remove($customer);
         }
 

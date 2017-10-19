@@ -1,11 +1,12 @@
 <?php
 
 namespace AppBundle\Entity;
+use AppBundle\Service\Trade\TradeHeaderInterface;
 
 /**
  * DeliveryHeader
  */
-class DeliveryHeader
+class DeliveryHeader implements TradeHeaderInterface
 {
     /**
      * @var integer
@@ -60,7 +61,7 @@ class DeliveryHeader
     /**
      * @var boolean
      */
-    private $autocomplete = 1;
+    private $autocomplete = true;
 
     /**
      * @var string

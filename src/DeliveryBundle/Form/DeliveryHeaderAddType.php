@@ -3,14 +3,18 @@
 namespace DeliveryBundle\Form;
 
 use AppBundle\Entity\DeliveryHeader;
+use AppBundle\Form\Transformer\TradeTransformer;
 use CustomerBundle\Form\CustomerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 
@@ -19,53 +23,62 @@ class DeliveryHeaderAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('customer_id', HiddenType::class, [
+                'required' => true,
+                'empty_data' => null,
+            ])
             ->add('customer', CustomerType::class, [
                 'required' => false,
                 'constraints' => [new Valid()],
             ])
             ->add('total_net_before_discount', TextType::class, [
-                'label' => 'Wartość całkowita netto przed rabatem',
+                'label' => 'Wartość całkowita netto przed rabatem [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade',
-                ]
+                    'class' => 'trade input-total-net-before-discount',
+                ],
             ])
             ->add('discount', TextType::class, [
-                'label' => 'Suma rabatu',
+                'label' => 'Suma rabatu [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade',
-                ]
+                    'class' => 'trade input-discount',
+                ],
             ])
             ->add('total_net', TextType::class, [
-                'label' => 'Wartość całkowita netto',
+                'label' => 'Wartość całkowita netto [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade',
+                    'class' => 'trade input-total-net',
                 ]
             ])
             ->add('vat', TextType::class, [
-                'label' => 'Suma VAT',
+                'label' => 'Suma VAT [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade',
+                    'class' => 'trade input-vat',
                 ]
             ])
             ->add('total_due', TextType::class, [
-                'label' => 'Należność całkowita',
+                'label' => 'Należność całkowita [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade',
+                    'class' => 'trade input-total-due',
                 ]
             ])
             ->add('document_type', ChoiceType::class, [
@@ -73,10 +86,10 @@ class DeliveryHeaderAddType extends AbstractType
                 'required' => false,
                 'placeholder' => '',
                 'choices' => [
-                    'faktura',
-                    'paragon',
-                    'wydanie z magazynu',
-                    'asygnata',
+                    'faktura' => 'faktura',
+                    'paragon' => 'paragon',
+                    'wydanie z magazynu'    => 'wydanie z magazynu',
+                    'asygnata'  =>'asygnata',
                 ],
             ])
             ->add('document_number', TextType::class, [
@@ -88,10 +101,17 @@ class DeliveryHeaderAddType extends AbstractType
             ])
             ->add('autocomplete', CheckboxType::class, [
                 'label' => 'Uzupełnij dane automatycznie',
+                'required' => false,
+                'attr' => [
+                    'class' => 'trade-autocomplete',
+                ],
             ])
             ->add('remarks', TextareaType::class, [
                 'label' => 'Uwagi',
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 255,
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'zapisz',
@@ -101,8 +121,8 @@ class DeliveryHeaderAddType extends AbstractType
                 ],
             ])
             ;
-
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

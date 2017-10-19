@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use Doctrine\ORM\Query;
 
 /**
  * AddressRepository
@@ -10,4 +11,18 @@ namespace AppBundle\Entity\Repository;
  */
 class AddressRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne($id, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $address = $this->_em
+            ->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Address', 'a')
+            ->where('a.id = :id')
+            ->setParameter(':id', $id)
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+            ;
+
+        return $address;
+    }
 }

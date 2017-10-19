@@ -798,7 +798,6 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-
     /**
      * Set currentWorkshop
      *
@@ -1054,21 +1053,17 @@ class User implements UserInterface, \Serializable
     {
         return $this->positions;
     }
-
     public function getUsername()
     {
         return $this->username;
     }
-
     public function getSalt()
     {
         return null;
     }
-
     public function eraseCredentials()
     {
     }
-
     public function serialize()
     {
         return serialize([
@@ -1077,7 +1072,6 @@ class User implements UserInterface, \Serializable
             $this->password,
         ]);
     }
-
     public function unserialize($serialized)
     {
         list(

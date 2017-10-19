@@ -2,6 +2,12 @@
 
 namespace CustomerBundle\Controller;
 
+use AppBundle\Entity\Address;
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -138,5 +144,29 @@ class CustomerController extends Controller
             'tab'           => 'customer',
             'navbar'        => 'Klienci',
         ]);
+    }
+
+    public function getOneAction($hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var Customer $customer */
+        $customer =  $em->getRepository('AppBundle:Customer')
+            ->getOne($workshop, $request->get('customerId'), $hydrationMode);
+
+        /** @var Address $address */
+        $address = $em->getRepository('AppBundle:Address')->getOne($customer['address_id'], $hydrationMode);
+
+        return new JsonResponse([$customer, $address]);
     }
 }

@@ -7,3 +7,6 @@
 #searchable-customer td:nth-child(4) {
     text-align: center;
 }
+#customer-form {
+    display: none;
+}

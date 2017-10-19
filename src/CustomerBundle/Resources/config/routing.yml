@@ -6,6 +6,10 @@ customer_retrieve:
     path: /customer-retrieve
     defaults: { _controller: CustomerBundle:Customer:retrieve }
 
+customer_get_one:
+    path: /customer/get-one/{hydrationMode}
+    defaults: { _controller: CustomerBundle:Customer:getOne }
+
 customer_show:
     path: /klienci/{customerId}
     defaults: { _controller: CustomerBundle:Customer:show }

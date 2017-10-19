@@ -1,0 +1,52 @@
+AppBundle\Entity\DeliveryHeader:
+    properties:
+        document_type:
+            - Choice:
+                choices: ['faktura', 'paragon', 'wydanie z magazynu', 'asygnata']
+                message: 'Wybrano nieprawidłowy typ dokumentu'
+                groups: [ delivery_header_add ]
+        document_number:
+            - Length:
+                max: 100
+                maxMessage: 'Numer dokumentu nie powinien być dłuższy niż 100 znaków'
+                groups: [ delivery_header_add ]
+        remarks:
+            - Length:
+                max: 255
+                maxMessage: 'Pole Uwagi powinno zawierać maksymalnie 255 znaków'
+                groups: [ delivery_header_add ]
+        total_net_before_discount:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_header_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_header_add ]
+        discount:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_header_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_header_add ]
+        total_net:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_header_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_header_add ]
+        vat:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_header_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_header_add ]
+        total_due:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_header_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_header_add ]

@@ -1,6 +1,10 @@
-delivery_header_index:
+delivery_index:
     path: /przyjecia-towarow
-    defaults: { _controller: DeliveryBundle:DeliveryHeader:index }
+    defaults: { _controller: DeliveryBundle:Delivery:index }
+
+delivery_show:
+    path: /przyjecia-towarow/{deliveryHeaderId}
+    defaults: { _controller: DeliveryBundle:Delivery:show }
 
 delivery_header_add:
     path: /przyjmij-towar

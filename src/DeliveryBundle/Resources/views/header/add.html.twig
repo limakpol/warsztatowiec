@@ -15,14 +15,145 @@
              {% include 'DeliveryBundle:header:customer_searchable_content.html.twig' %}
         </div>
     </div>
-    <h1 class="h-enum h-selected-customer">2. Przyjęcie wewnętrzne (brak dostawcy)</h1>
-    <h1 class="h-enum">3. Możesz wpisać ręcznie całkowite wartości przyjęcia lub pozostawić je do automatycznego wyliczenia</h1>
-    <h1 class="h-enum">4. Pozostałe dane</h1>
+    <h1 class="h-enum selected-customer">2. Przyjęcie wewnętrzne (brak dostawcy)</h1>
+    {{ form_start(form, {'attr':{'class':'main-form'}}) }}
+        <div id="customer-form" class="form-part"
+            {% if form.customer_id.vars.value != '' %}
+                style="display:flex;"
+            {% endif %}
+        >
+            <div class="div-slider">
+                {{ form_widget(form.customer_id) }}
+
+                {{ form_label(form.customer.forename) }}
+                {{ form_widget(form.customer.forename) }}
+                {{ form_errors(form.customer.forename) }}
+
+                {{ form_label(form.customer.surname) }}
+                {{ form_widget(form.customer.surname) }}
+                {{ form_errors(form.customer.surname) }}
+
+                {{ form_label(form.customer.company_name) }}
+                {{ form_widget(form.customer.company_name) }}
+                {{ form_errors(form.customer.company_name) }}
+
+                {{ form_label(form.customer.mobile_phone1) }}
+                {{ form_widget(form.customer.mobile_phone1) }}
+                {{ form_errors(form.customer.mobile_phone1) }}
+
+                {{ form_label(form.customer.mobile_phone2) }}
+                {{ form_widget(form.customer.mobile_phone2) }}
+                {{ form_errors(form.customer.mobile_phone2) }}
+
+                {{ form_label(form.customer.landline_phone) }}
+                {{ form_widget(form.customer.landline_phone) }}
+                {{ form_errors(form.customer.landline_phone) }}
+
+                {{ form_label(form.customer.contact_person) }}
+                {{ form_widget(form.customer.contact_person) }}
+                {{ form_errors(form.customer.contact_person) }}
+
+                {{ form_label(form.customer.email) }}
+                {{ form_widget(form.customer.email) }}
+                {{ form_errors(form.customer.email) }}
+
+                {{ form_label(form.customer.nip) }}
+                {{ form_widget(form.customer.nip) }}
+                {{ form_errors(form.customer.nip) }}
+
+                {{ form_label(form.customer.pesel) }}
+                {{ form_widget(form.customer.pesel) }}
+                {{ form_errors(form.customer.pesel) }}
+
+                {{ form_label(form.customer.address.street) }}
+                {{ form_widget(form.customer.address.street) }}
+                {{ form_errors(form.customer.address.street) }}
+
+                {{ form_label(form.customer.address.house_number) }}
+                {{ form_widget(form.customer.address.house_number) }}
+                {{ form_errors(form.customer.address.house_number) }}
+
+                {{ form_label(form.customer.address.flat_number) }}
+                {{ form_widget(form.customer.address.flat_number) }}
+                {{ form_errors(form.customer.address.flat_number) }}
+
+                {{ form_label(form.customer.address.post_code) }}
+                {{ form_widget(form.customer.address.post_code) }}
+                {{ form_errors(form.customer.address.post_code) }}
+
+                {{ form_label(form.customer.address.city) }}
+                {{ form_widget(form.customer.address.city) }}
+                {{ form_errors(form.customer.address.city) }}
+
+                {{ form_label(form.customer.address.province) }}
+                {{ form_widget(form.customer.address.province) }}
+                {{ form_errors(form.customer.address.province) }}
+
+                {{ form_label(form.customer.bank_account_number) }}
+                {{ form_widget(form.customer.bank_account_number) }}
+                {{ form_errors(form.customer.bank_account_number) }}
+
+                {{ form_label(form.customer.remarks) }}
+                {{ form_widget(form.customer.remarks) }}
+                {{ form_errors(form.customer.remarks) }}
+            </div>
+        </div>
+        <h1 class="h-enum">3. Możesz wpisać ręcznie całkowite wartości przyjęcia lub pozostawić je do automatycznego wyliczenia</h1>
+        <div class="form-part">
+            <div class="main-form-checkbox">
+                {{ form_label(form.autocomplete) }}
+                {{ form_widget(form.autocomplete) }}
+                {{ form_errors(form.autocomplete) }}
+            </div>
+
+            {{ form_label(form.total_net_before_discount) }}
+            {{ form_widget(form.total_net_before_discount, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_net_before_discount) }}
+
+
+            {{ form_label(form.discount) }}
+            {{ form_widget(form.discount, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.discount) }}
+
+
+            {{ form_label(form.total_net) }}
+            {{ form_widget(form.total_net, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_net) }}
+
+
+            {{ form_label(form.vat) }}
+            {{ form_widget(form.vat, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.vat) }}
+
+
+            {{ form_label(form.total_due) }}
+            {{ form_widget(form.total_due, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_due) }}
+        </div>
+        <h1 class="h-enum">4. Pozostałe dane</h1>
+        <div class="form-part">
+            {{ form_label(form.document_type) }}
+            {{ form_widget(form.document_type) }}
+            {{ form_errors(form.document_type) }}
+
+            {{ form_label(form.document_number) }}
+            {{ form_widget(form.document_number) }}
+            {{ form_errors(form.document_number) }}
+
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
+
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.submit)}}
+        </div>
+    {{ form_end(form, {'render_rest': false})}}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'assets/js/application/delivery/add.js'
+        'assets/js/application/delivery/add.js'
+        'assets/js/application/trade.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

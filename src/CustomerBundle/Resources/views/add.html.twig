@@ -1,92 +1,91 @@
 {% extends ':base:application.html.twig' %}
 {% block main %}
-    <div class="main-form">
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'class':'main-form'}}) }}
+        <div class="form-part">
+            {{ form_label(form.forename) }}
+            {{ form_widget(form.forename, {'attr': {'autofocus': true}}) }}
+            {{ form_errors(form.forename) }}
 
-        {{ form_label(form.forename) }}
-        {{ form_widget(form.forename, {'attr': {'autofocus': true}}) }}
-        {{ form_errors(form.forename) }}
+            {{ form_label(form.surname) }}
+            {{ form_widget(form.surname) }}
+            {{ form_errors(form.surname) }}
 
-        {{ form_label(form.surname) }}
-        {{ form_widget(form.surname) }}
-        {{ form_errors(form.surname) }}
+            {{ form_label(form.company_name) }}
+            {{ form_widget(form.company_name) }}
+            {{ form_errors(form.company_name) }}
 
-        {{ form_label(form.company_name) }}
-        {{ form_widget(form.company_name) }}
-        {{ form_errors(form.company_name) }}
+            {{ form_label(form.nip) }}
+            {{ form_widget(form.nip) }}
+            {{ form_errors(form.nip) }}
 
-        {{ form_label(form.nip) }}
-        {{ form_widget(form.nip) }}
-        {{ form_errors(form.nip) }}
+            {{ form_label(form.mobile_phone1) }}
+            {{ form_widget(form.mobile_phone1) }}
+            {{ form_errors(form.mobile_phone1) }}
 
-        {{ form_label(form.mobile_phone1) }}
-        {{ form_widget(form.mobile_phone1) }}
-        {{ form_errors(form.mobile_phone1) }}
+            {{ form_label(form.mobile_phone2) }}
+            {{ form_widget(form.mobile_phone2) }}
+            {{ form_errors(form.mobile_phone2) }}
 
-        {{ form_label(form.mobile_phone2) }}
-        {{ form_widget(form.mobile_phone2) }}
-        {{ form_errors(form.mobile_phone2) }}
+            {{ form_label(form.landline_phone) }}
+            {{ form_widget(form.landline_phone) }}
+            {{ form_errors(form.landline_phone) }}
 
-        {{ form_label(form.landline_phone) }}
-        {{ form_widget(form.landline_phone) }}
-        {{ form_errors(form.landline_phone) }}
+            {{ form_label(form.contact_person) }}
+            {{ form_widget(form.contact_person) }}
+            {{ form_errors(form.contact_person) }}
 
-        {{ form_label(form.contact_person) }}
-        {{ form_widget(form.contact_person) }}
-        {{ form_errors(form.contact_person) }}
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
 
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email) }}
-        {{ form_errors(form.email) }}
+            {{ form_label(form.address.street) }}
+            {{ form_widget(form.address.street) }}
+            {{ form_errors(form.address.street) }}
 
-        {{ form_label(form.address.street) }}
-        {{ form_widget(form.address.street) }}
-        {{ form_errors(form.address.street) }}
+            {{ form_label(form.address.house_number) }}
+            {{ form_widget(form.address.house_number) }}
+            {{ form_errors(form.address.house_number) }}
 
-        {{ form_label(form.address.house_number) }}
-        {{ form_widget(form.address.house_number) }}
-        {{ form_errors(form.address.house_number) }}
+            {{ form_label(form.address.flat_number) }}
+            {{ form_widget(form.address.flat_number) }}
+            {{ form_errors(form.address.flat_number) }}
 
-        {{ form_label(form.address.flat_number) }}
-        {{ form_widget(form.address.flat_number) }}
-        {{ form_errors(form.address.flat_number) }}
+            {{ form_label(form.address.post_code) }}
+            {{ form_widget(form.address.post_code) }}
+            {{ form_errors(form.address.post_code) }}
 
-        {{ form_label(form.address.post_code) }}
-        {{ form_widget(form.address.post_code) }}
-        {{ form_errors(form.address.post_code) }}
+            {{ form_label(form.address.city) }}
+            {{ form_widget(form.address.city) }}
+            {{ form_errors(form.address.city) }}
 
-        {{ form_label(form.address.city) }}
-        {{ form_widget(form.address.city) }}
-        {{ form_errors(form.address.city) }}
+            {{ form_label(form.address.province) }}
+            {{ form_widget(form.address.province) }}
+            {{ form_errors(form.address.province) }}
 
-        {{ form_label(form.address.province) }}
-        {{ form_widget(form.address.province) }}
-        {{ form_errors(form.address.province) }}
+            {{ form_label(form.pesel) }}
+            {{ form_widget(form.pesel) }}
+            {{ form_errors(form.pesel) }}
 
-        {{ form_label(form.pesel) }}
-        {{ form_widget(form.pesel) }}
-        {{ form_errors(form.pesel) }}
+            {{ form_label(form.bank_account_number) }}
+            {{ form_widget(form.bank_account_number) }}
+            {{ form_errors(form.bank_account_number) }}
 
-        {{ form_label(form.bank_account_number) }}
-        {{ form_widget(form.bank_account_number) }}
-        {{ form_errors(form.bank_account_number) }}
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
 
-        {{ form_label(form.remarks) }}
-        {{ form_widget(form.remarks) }}
-        {{ form_errors(form.remarks) }}
+            {{ form_label(form.groupps) }}
+            <div class="div-form-labels">
+                {% for groupp in groupps %}
+                    <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
+                {% endfor %}
+                <input type="text" size="10" maxlength="25" class="input-label-add">
+            </div>
 
-        {{ form_label(form.groupps) }}
-        <div class="div-form-labels">
-            {% for groupp in groupps %}
-                <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
-            {% endfor %}
-            <input type="text" size="10" maxlength="25" class="input-label-add">
+            {{ form_widget(form.submit) }}
+            {{ form_widget(form._token) }}
         </div>
-
-        {{ form_widget(form.submit) }}
-        {{ form_widget(form._token) }}
     {{ form_end(form, {'render_rest': false})}}
-    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

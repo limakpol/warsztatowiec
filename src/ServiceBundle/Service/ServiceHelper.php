@@ -7,6 +7,7 @@ use AppBundle\Entity\Service;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\PriceTransformer;
+use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,14 +20,14 @@ class ServiceHelper
     private $entityManager;
     private $requestStack;
     private $tokenStorage;
-    private $priceTransformer;
+    private $trade;
 
-    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage, PriceTransformer $priceTransformer)
+    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack, TokenStorageInterface $tokenStorage, Trade $trade)
     {
         $this->entityManager    = $entityManager;
         $this->requestStack     = $requestStack;
         $this->tokenStorage     = $tokenStorage;
-        $this->priceTransformer = $priceTransformer;
+        $this->trade            = $trade;
     }
 
     public function isRequestCorrect()
@@ -204,7 +205,7 @@ class ServiceHelper
 
         if($unitPriceNet != '')
         {
-            $unitPriceNet = $this->priceTransformer->transform($unitPriceNet);
+            $unitPriceNet = $this->trade->normalize($unitPriceNet);
         }
         else
         {
@@ -251,7 +252,7 @@ class ServiceHelper
 
         if($unitPriceNet != '')
         {
-            $unitPriceNet = $this->priceTransformer->transform($unitPriceNet);
+            $unitPriceNet = $this->trade->normalize($unitPriceNet);
         }
         else
         {
@@ -294,9 +295,6 @@ class ServiceHelper
 
     public function getMeasures()
     {
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 

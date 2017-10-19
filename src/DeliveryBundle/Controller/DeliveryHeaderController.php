@@ -9,27 +9,9 @@ use Symfony\Component\Form\Form;
 
 class DeliveryHeaderController extends Controller
 {
-    public function indexAction()
-    {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
-
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
-
-        return $this->render('DeliveryBundle:header:index.html.twig', [
-            'headerMenu'    => $headerMenu,
-            'mainMenu'      => $mainMenu,
-            'tab'           => 'warehouse',
-            'navbar'        => 'Przyjęcia towarów',
-        ]);
-    }
 
     public function addAction()
     {
-        /** @var DeliveryHeaderAddHelper $headerAddHelper */
-        $headerAddHelper = $this->get('delivery.helper.header_add');
-
-        /** @var Form $form */
-        $form = $headerAddHelper->createForm();
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
@@ -38,11 +20,22 @@ class DeliveryHeaderController extends Controller
         /** @var CustomerIndexHelper $customerIndexHelper */
         $customerIndexHelper = $this->get('customer.helper.index');
 
-        $inputSortableParameters = $customerIndexHelper->getInputSortableParameters();
-        $inputSortableParameters['limit'] = 15;
-        $inputSortableParameters['systemFilters'] = ['supplier'];
-        $outputSortableParameters = $customerIndexHelper->getOutputSortableParameters($inputSortableParameters);
-        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+        /** @var DeliveryHeaderAddHelper $headerAddHelper */
+        $headerAddHelper = $this->get('delivery.helper.header_add');
+
+        /** @var Form $form */
+        $form = $headerAddHelper->createForm();
+
+        if($headerAddHelper->isValid($form))
+        {
+            $deliveryHeaderId = $headerAddHelper->write($form);
+
+            return $this->redirectToRoute('delivery_show', [
+                'deliveryHeaderId' => $deliveryHeaderId,
+            ]);
+        }
+
+        $sortableParameters = $headerAddHelper->getSortableParameters();
 
         $customers = $customerIndexHelper->retrieve($sortableParameters);
 
@@ -74,4 +67,5 @@ class DeliveryHeaderController extends Controller
             'sortableParameters' => $sortableParameters,
         ]);
     }
+
 }

@@ -85,6 +85,8 @@ class CustomerAddHelper
         $address->setUpdatedBy($user);
 
         $customer->setCreatedAt($dateTime);
+        $customer->setCreatedBy($user);
+        $customer->setUpdatedBy($user);
         $customer->setWorkshop($workshop);
 
         $customer = $this->assignGroupps($customer);
