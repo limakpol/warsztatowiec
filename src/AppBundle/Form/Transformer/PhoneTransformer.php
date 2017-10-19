@@ -27,7 +27,14 @@ class PhoneTransformer implements DataTransformerInterface
 
         if($plus == '+' && is_numeric($prefix))
         {
-            return $value;
+            $rest = substr($value, 3, 1);
+
+            if($rest > 0)
+            {
+                return $value;
+            }
+
+            return '';
         }
 
         return '+48' . $value;

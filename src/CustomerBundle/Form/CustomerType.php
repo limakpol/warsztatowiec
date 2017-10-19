@@ -71,6 +71,7 @@ class CustomerType extends AbstractType
             ->add('mobile_phone1', TextType::class, [
                 'label'     => 'Telefon kom. 1',
                 'required'  => false,
+                'data'      => '+48',
                 'attr'      => [
                     'maxlength' => 12,
                     'size'      => 12,
@@ -79,6 +80,7 @@ class CustomerType extends AbstractType
             ->add('mobile_phone2', TextType::class, [
                 'label'     => 'Telefon kom. 2',
                 'required'  => false,
+                'data'      => '+48',
                 'attr'      => [
                     'maxlength' => 12,
                     'size'      => 12,

@@ -11,73 +11,74 @@
 {% block main %}
 <div class="main-form">
     {{ form_start(form) }}
+        <div class="form-part">
+            {{ form_label(form.user.forename) }}
+            {{ form_widget(form.user.forename, {'attr': {'autofocus': true }})}}
+            {{ form_errors(form.user.forename) }}
 
-    {{ form_label(form.user.forename) }}
-    {{ form_widget(form.user.forename, {'attr': {'autofocus': true }})}}
-    {{ form_errors(form.user.forename) }}
+            {{ form_label(form.user.surname) }}
+            {{ form_widget(form.user.surname) }}
+            {{ form_errors(form.user.surname) }}
 
-    {{ form_label(form.user.surname) }}
-    {{ form_widget(form.user.surname) }}
-    {{ form_errors(form.user.surname) }}
+            {{ form_label(form.user.address.street) }}
+            {{ form_widget(form.user.address.street)}}
+            {{ form_errors(form.user.address.street) }}
 
-    {{ form_label(form.user.address.street) }}
-    {{ form_widget(form.user.address.street)}}
-    {{ form_errors(form.user.address.street) }}
+            {{ form_label(form.user.address.house_number) }}
+            {{ form_widget(form.user.address.house_number)}}
+            {{ form_errors(form.user.address.house_number) }}
 
-    {{ form_label(form.user.address.house_number) }}
-    {{ form_widget(form.user.address.house_number)}}
-    {{ form_errors(form.user.address.house_number) }}
+            {{ form_label(form.user.address.flat_number) }}
+            {{ form_widget(form.user.address.flat_number)}}
+            {{ form_errors(form.user.address.flat_number) }}
 
-    {{ form_label(form.user.address.flat_number) }}
-    {{ form_widget(form.user.address.flat_number)}}
-    {{ form_errors(form.user.address.flat_number) }}
+            {{ form_label(form.user.address.post_code) }}
+            {{ form_widget(form.user.address.post_code)}}
+            {{ form_errors(form.user.address.post_code) }}
 
-    {{ form_label(form.user.address.post_code) }}
-    {{ form_widget(form.user.address.post_code)}}
-    {{ form_errors(form.user.address.post_code) }}
+            {{ form_label(form.user.address.city) }}
+            {{ form_widget(form.user.address.city)}}
+            {{ form_errors(form.user.address.city) }}
 
-    {{ form_label(form.user.address.city) }}
-    {{ form_widget(form.user.address.city)}}
-    {{ form_errors(form.user.address.city) }}
+            {{ form_label(form.user.address.province) }}
+            {{ form_widget(form.user.address.province)}}
+            {{ form_errors(form.user.address.province) }}
 
-    {{ form_label(form.user.address.province) }}
-    {{ form_widget(form.user.address.province)}}
-    {{ form_errors(form.user.address.province) }}
+            {{ form_label(form.user.hourly_rate_net) }}
+            {{ form_widget(form.user.hourly_rate_net)}}
+            {{ form_errors(form.user.hourly_rate_net) }}
 
-    {{ form_label(form.user.hourly_rate_net) }}
-    {{ form_widget(form.user.hourly_rate_net)}}
-    {{ form_errors(form.user.hourly_rate_net) }}
+            {{ form_label(form.user.phone1) }}
+            {{ form_widget(form.user.phone1)}}
+            {{ form_errors(form.user.phone1) }}
 
-    {{ form_label(form.user.phone1) }}
-    {{ form_widget(form.user.phone1)}}
-    {{ form_errors(form.user.phone1) }}
+            {{ form_label(form.user.phone2) }}
+            {{ form_widget(form.user.phone2)}}
+            {{ form_errors(form.user.phone2) }}
 
-    {{ form_label(form.user.phone2) }}
-    {{ form_widget(form.user.phone2)}}
-    {{ form_errors(form.user.phone2) }}
+            {{ form_label(form.user.email) }}
+            {{ form_widget(form.user.email)}}
+            {{ form_errors(form.user.email) }}
 
-    {{ form_label(form.user.email) }}
-    {{ form_widget(form.user.email)}}
-    {{ form_errors(form.user.email) }}
+            {{ form_label(form.user.nip) }}
+            {{ form_widget(form.user.nip)}}
+            {{ form_errors(form.user.nip) }}
 
-    {{ form_label(form.user.nip) }}
-    {{ form_widget(form.user.nip)}}
-    {{ form_errors(form.user.nip) }}
+            {{ form_label(form.user.pesel) }}
+            {{ form_widget(form.user.pesel)}}
+            {{ form_errors(form.user.pesel) }}
 
-    {{ form_label(form.user.pesel) }}
-    {{ form_widget(form.user.pesel)}}
-    {{ form_errors(form.user.pesel) }}
+            {{ form_label(form.user.bank_account_number) }}
+            {{ form_widget(form.user.bank_account_number)}}
+            {{ form_errors(form.user.bank_account_number) }}
 
-    {{ form_label(form.user.bank_account_number) }}
-    {{ form_widget(form.user.bank_account_number)}}
-    {{ form_errors(form.user.bank_account_number) }}
+            {{ form_label(form.user.remarks) }}
+            {{ form_widget(form.user.remarks)}}
+            {{ form_errors(form.user.remarks) }}
 
-    {{ form_label(form.user.remarks) }}
-    {{ form_widget(form.user.remarks)}}
-    {{ form_errors(form.user.remarks) }}
-
-    {{ form_widget(form._token) }}
-    {{ form_widget(form.submit) }}
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.submit) }}
+        </div>
     {{ form_end(form, {'render_rest': false}) }}
 </div>
 {% endblock %}

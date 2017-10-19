@@ -261,6 +261,8 @@ function clearCustomerForm()
     $("input[name*='delivery_header_add[customer]']").val('').change();
     $("select[name*='delivery_header_add[customer]']").val('').change();
     $("textarea[name*='delivery_header_add[customer]']").val('').change();
+    $('#delivery_header_add_customer_mobile_phone1').val('+48');
+    $('#delivery_header_add_customer_mobile_phone2').val('+48');
 
     return null;
 }
