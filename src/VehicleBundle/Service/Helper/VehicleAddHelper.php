@@ -8,6 +8,7 @@ use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
+use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use HeaderBundle\Service\Helper\Crud\CarBrandHelper;
@@ -30,8 +31,9 @@ class VehicleAddHelper
     private $container;
     private $carBrandHelper;
     private $carModelHelper;
+    private $trade;
 
-    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, EntityManagerInterface $entityManager, ContainerInterface $container, CarBrandHelper $carBrandHelper, CarModelHelper $carModelHelper)
+    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, EntityManagerInterface $entityManager, ContainerInterface $container, CarBrandHelper $carBrandHelper, CarModelHelper $carModelHelper, Trade $trade)
     {
         $this->requestStack     = $requestStack;
         $this->tokenStorage     = $tokenStorage;
@@ -40,6 +42,7 @@ class VehicleAddHelper
         $this->container        = $container;
         $this->carBrandHelper   = $carBrandHelper;
         $this->carModelHelper   = $carModelHelper;
+        $this->trade            = $trade;
     }
 
     public function createAddForm()
@@ -89,6 +92,8 @@ class VehicleAddHelper
 
         $vehicle->setCarModel($model);
 
+        $vehicle = $this->evaluateTradeValues($vehicle);
+
         $vehicle->setCreatedAt($dateTime);
         $vehicle->setCreatedBy($user);
         $vehicle->setUpdatedBy($user);
@@ -100,6 +105,43 @@ class VehicleAddHelper
 
         return;
     }
+
+    public function evaluateTradeValues(Vehicle $vehicle)
+    {
+        $engineDisplacementL = $vehicle->getEngineDisplacementL();
+
+        $engineDisplacementL = $this->trade->normalize($engineDisplacementL);
+
+        if($engineDisplacementL > 50)
+        {
+            $vehicle->setEngineDisplacementCm3($engineDisplacementL);
+
+            $engineDisplacementL = round($engineDisplacementL/1000, 1);
+
+            $vehicle->setEngineDisplacementL($engineDisplacementL);
+        }
+        else
+        {
+            $vehicle->setEngineDisplacementL($engineDisplacementL);
+
+            $engineDisplacementCm3 = 1000 * $engineDisplacementL;
+
+            $vehicle->setEngineDisplacementCm3($engineDisplacementCm3);
+        }
+
+        $enginePowerKm = $vehicle->getEnginePowerKm();
+
+        $enginePowerKm = $this->trade->normalize($enginePowerKm);
+
+        $vehicle->setEnginePowerKm($enginePowerKm);
+
+        $enginePowerKw = 0.73549875 * $enginePowerKm;
+
+        $vehicle->setEnginePowerKw($enginePowerKw);
+
+        return $vehicle;
+    }
+
 
     public function getModel()
     {

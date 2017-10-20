@@ -88,11 +88,11 @@ class VehicleType extends AbstractType
                 ],
             ])
             ->add('mileage', TextType::class, [
-                'label'     => 'Przebieg',
+                'label'     => 'Przebieg [tys. km]',
                 'required'  => false,
                 'attr'      => [
-                    'maxlength' => 10,
-                    'size'      => 10,
+                    'maxlength' => 3,
+                    'size'      => 3,
                 ],
             ])
             ->add('engine_type', ChoiceType::class, [
