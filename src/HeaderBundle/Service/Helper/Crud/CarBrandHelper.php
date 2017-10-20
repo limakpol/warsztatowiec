@@ -240,8 +240,6 @@ class CarBrandHelper
 
     public function getOneById($brandId)
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
 
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
@@ -254,6 +252,26 @@ class CarBrandHelper
             ->getRepository('AppBundle:CarBrand')
             ->getOne($workshop, $brandId);
     }
+
+    public function getOneByName()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $brand = $this->entityManager
+            ->getRepository('AppBundle:CarBrand')
+            ->getOneByName($workshop, $request->get('brandName'))
+            ;
+
+        return $brand;
+    }
+
 
     public function othersSimilarExists()
     {

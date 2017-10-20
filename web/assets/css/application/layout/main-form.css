@@ -40,7 +40,7 @@
     resize: vertical;
     height: 60px;
 }
-.main-form input + ul, .main-form select + ul, .main-form textarea + ul {
+.main-form input + ul, .main-form select + ul, .main-form textarea + ul, .main-form .div-form-widget + ul {
     list-style-type: none;
     padding: 0;
     margin: 1px 0 0 0;

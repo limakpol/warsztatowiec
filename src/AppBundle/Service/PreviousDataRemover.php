@@ -11,6 +11,8 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Address;
+use AppBundle\Entity\CarBrand;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\DeliveryHeader;
@@ -52,16 +54,16 @@ class PreviousDataRemover
         $this->removeServices();
         $this->removeActions();
         $this->removeCategories();
-        $this->removeCustomers();
         $this->removeDeliveries();
+        $this->removeSales();
+        $this->removeCustomers();
         $this->removeGoods();
         $this->removeGroupps();
         $this->removeMeasures();
-       // $this->removeModels();
+        $this->removeBrands();
         $this->removeOrders();
         $this->removePositions();
         $this->removeProducers();
-        $this->removeSales();
         $this->removeStatuses();
         $this->removeVehicles();
         $this->removeWorkstations();
@@ -304,7 +306,7 @@ class PreviousDataRemover
         return;
     }
 
-    public function removeModels()
+    public function removeBrands()
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
@@ -315,20 +317,26 @@ class PreviousDataRemover
         /** @var EntityManager $em */
         $em = $this->entityManager;
 
-        $models = $em->getRepository('AppBundle:Model')->findBy([
+        $brands = $em->getRepository('AppBundle:CarBrand')->findBy([
             'workshop' => $workshop,
         ]);
 
-        /** @var Model $model */
-        foreach($models as $model)
+        /** @var CarBrand $brand */
+        foreach($brands as $brand)
         {
-            $em->remove($model);
+            foreach($brand->getModels() as $model)
+            {
+                $em->remove($model);
+            }
+
+            $em->remove($brand);
         }
 
         $em->flush();
 
         return;
     }
+
 
     public function removeOrders()
     {

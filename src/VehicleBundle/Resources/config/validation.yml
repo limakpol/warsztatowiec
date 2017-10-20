@@ -1,0 +1,52 @@
+AppBundle\Entity\Vehicle:
+    properties:
+        version:
+            - NotBlank:
+                message: 'Pole Marka nie może być puste'
+            - Length:
+                max: 15
+                maxMessage: 'Pole Wersja może zawierać maksymalnie 15 znaków'
+                groups: [ vehicle ]
+        registration_number:
+            - Length:
+                min: 5
+                max: 10
+                minMessage: 'Nr rejestracyjny powinien zawierać przynajmniej 5 znaków'
+                maxMessage: 'Nr rejestracyjny może zawierać maksymalnie 10 znaków'
+                groups: [ vehicle ]
+        vin:
+            - Length:
+                min: 17
+                max: 17
+                minMessage: 'Numer VIN musi zawierać dokładnie 17 znaków'
+                maxMessage: 'Nr VIN musi zawierać dokładnie 17 znaków'
+                groups: [ vehicle ]
+        model_year:
+            - Range:
+                min: 1900
+                max: 2020
+                minMessage: 'Rok produkcji musi się mieścić między 1900 a 2020'
+                maxMessage: 'Rok produkcji musi się mieścić między 1900 a 2020'
+                groups: [ vehicle ]
+        mileage:
+            - Range:
+                min: 0
+                max: 999
+                minMessage: 'Przebieg musi się mieścić między 0 a 999 (tys. km)'
+                maxMessage: 'Przebieg musi się mieścić między 0 a 999 (tys. km)'
+                groups: [ vehicle ]
+        engine_displacement_l:
+            - VehicleBundle\Form\Validator\Constraint\EngineDisplacement:
+                groups: [ vehicle ]
+        engine_power_km:
+            - Range:
+                min: 1
+                max: 2000
+                minMessage: 'Moc silnika musi się mieścić między 1 a 200 (KM)'
+                maxMessage: 'Moc silnika musi się mieścic między 1 a 200 (KM)'
+                groups: [ vehicle ]
+        remarks:
+            - Length:
+                max: 255
+                maxMessage: 'Pole Uwagi może zawierać maksymalnie 255 znaków'
+                groups: [ vehicle ]

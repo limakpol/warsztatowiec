@@ -13,3 +13,11 @@ vehicle_edit:
 vehicle_remove:
     path: /usun-pojazd
     defaults: { _controller: VehicleBundle:Vehicle:remove }
+
+vehicle_retrieve_brands:
+    path: /vehicle/retrieve-brands
+    defaults: { _controller: VehicleBundle:Vehicle:retrieveBrands }
+
+vehicle_retrieve_models:
+    path: /vehicle/retrieve-models
+    defaults: { _controller: VehicleBundle:Vehicle:retrieveModels }

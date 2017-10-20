@@ -43,6 +43,7 @@ class CarBrandRepository extends \Doctrine\ORM\EntityRepository
             ->setParameters([
                 ':workshop' => $workshop,
             ])
+            ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult()
             ;

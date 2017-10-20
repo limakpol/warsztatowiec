@@ -14,15 +14,15 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
     public function getOne(Workshop $workshop, $id)
     {
         $carModel = $this->_em->createQueryBuilder()
-            ->select('c')
-            ->from('AppBundle:CarModel', 'c')
-            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'c.brand_id = b.id')
-            ->where('c.removed_at IS NULL')
-            ->andWhere('c.deleted_at IS NULL')
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
             ->andWhere('b.deleted_at IS NULL')
             ->andWhere('b.removed_at IS NULL')
             ->andWhere('b.workshop = :workshop')
-            ->andWhere('c.id = :id')
+            ->andWhere('m.id = :id')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':id'       => $id,
@@ -37,11 +37,11 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
     public function retrieveByBrandId(Workshop $workshop, $brandId)
     {
         $carModels = $this->_em->createQueryBuilder()
-            ->select('c')
-            ->from('AppBundle:CarModel', 'c')
-            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'c.brand_id = b.id')
-            ->where('c.removed_at IS NULL')
-            ->andWhere('c.deleted_at IS NULL')
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
             ->andWhere('b.deleted_at IS NULL')
             ->andWhere('b.removed_at IS NULL')
             ->andWhere('b.workshop = :workshop')
@@ -50,6 +50,7 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
                 ':workshop' => $workshop,
                 ':brandId'  => $brandId,
             ])
+            ->orderBy('m.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
@@ -60,15 +61,15 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
     public function getOneByName(Workshop $workshop, $name)
     {
         $carModel = $this->_em->createQueryBuilder()
-            ->select('c')
-            ->from('AppBundle:CarModel', 'c')
-            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'c.brand_id = b.id')
-            ->where('c.removed_at IS NULL')
-            ->andWhere('c.deleted_at IS NULL')
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
             ->andWhere('b.deleted_at IS NULL')
             ->andWhere('b.removed_at IS NULL')
             ->andWhere('b.workshop = :workshop')
-            ->andWhere('b.name = :name')
+            ->andWhere('m.name = :name')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':name'     => $name,
@@ -83,12 +84,12 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
     public function getOneRemovedByName(Workshop $workshop, $name)
     {
         $carModel = $this->_em->createQueryBuilder()
-            ->select('c')
-            ->from('AppBundle:CarModel', 'c')
-            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'c.brand_id = b.id')
-            ->where('c.removed_at IS NOT NULL OR c.deleted_at IS NOT NULL')
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->where('m.removed_at IS NOT NULL OR m.deleted_at IS NOT NULL')
             ->andWhere('b.workshop = :workshop')
-            ->andWhere('c.name = :name')
+            ->andWhere('m.name = :name')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':name'     => $name,
@@ -103,13 +104,13 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
     public function getOthersSimilar(Workshop $workshop, $name, $id)
     {
         $carModels = $this->_em->createQueryBuilder()
-            ->select('c')
-            ->from('AppBundle:CarModel', 'c')
-            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'c.brand_id = b.id')
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
             ->where('b.workshop = :workshop')
-            ->andWhere('c.removed_at IS NULL OR c.deleted_at IS NULL')
-            ->andWhere('c.name = :name')
-            ->andWhere('c.id != :id')
+            ->andWhere('m.removed_at IS NULL OR m.deleted_at IS NULL')
+            ->andWhere('m.name = :name')
+            ->andWhere('m.id != :id')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':name'     => $name,

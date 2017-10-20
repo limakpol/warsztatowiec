@@ -1,4 +1,85 @@
 {% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    'assets/css/application/vehicle/add.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 {% block main %}
-    Customer add
+    {{ form_start(form, {'attr': {'class':'main-form'}}) }}
+    <div class="form-part">
+        {{ form_label(form.car_brand) }}
+        <div id="selectable-brand" class="selectable">
+            {{ form_widget(form.car_brand, {'attr': {'autofocus': true}}) }}
+            <div class="content">
+                {{ render(controller('VehicleBundle:Vehicle:retrieveBrands')) }}
+            </div>
+        </div>
+        {{ form_errors(form.car_brand) }}
+
+        {{ form_label(form.car_model) }}
+        <div id="selectable-model" class="selectable">
+            {{ form_widget(form.car_model) }}
+            <div class="content"></div>
+        </div>
+        {{ form_errors(form.car_model) }}
+
+        {{ form_label(form.version) }}
+        {{ form_widget(form.version) }}
+        {{ form_errors(form.version) }}
+
+        {{ form_label(form.registration_number) }}
+        {{ form_widget(form.registration_number) }}
+        {{ form_errors(form.registration_number) }}
+
+        {{ form_label(form.vin) }}
+        {{ form_widget(form.vin) }}
+        {{ form_errors(form.vin) }}
+
+        {{ form_label(form.model_year) }}
+        {{ form_widget(form.model_year) }}
+        {{ form_errors(form.model_year) }}
+
+        {{ form_label(form.mileage) }}
+        {{ form_widget(form.mileage) }}
+        {{ form_errors(form.mileage) }}
+
+        {{ form_label(form.engine_type) }}
+        {{ form_widget(form.engine_type) }}
+        {{ form_errors(form.engine_type) }}
+
+        {{ form_label(form.engine_displacement_l) }}
+        {{ form_widget(form.engine_displacement_l) }}
+        {{ form_errors(form.engine_displacement_l) }}
+
+        {{ form_label(form.engine_power_km) }}
+        {{ form_widget(form.engine_power_km) }}
+        {{ form_errors(form.engine_power_km) }}
+
+        {{ form_label(form.date_of_inspection) }}
+        {{ form_widget(form.date_of_inspection, {'attr': {'class': 'div-form-widget'}}) }}
+        {{ form_errors(form.date_of_inspection) }}
+
+        {{ form_label(form.date_of_oil_change) }}
+        {{ form_widget(form.date_of_oil_change, {'attr': {'class': 'ul-error'}}) }}
+        {{ form_errors(form.date_of_oil_change) }}
+
+        {{ form_label(form.remarks) }}
+        {{ form_widget(form.remarks) }}
+        {{ form_errors(form.remarks) }}
+
+        {{ form_widget(form.submit) }}
+        {{ form_widget(form._token) }}
+    </div>
+    {{ form_end(form, {'render_rest': false})}}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/vehicle/add.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

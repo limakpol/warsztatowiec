@@ -10,6 +10,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Address;
+use AppBundle\Entity\CarBrand;
 use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Customer;
@@ -91,7 +92,7 @@ class TestDataGenerator
 
     const WAREHOUSE_DOCUMENTS =  ["asygnata", "wydanie z magazynu"];
 
-    const CUSTOMER_GROUPS = ["stali klienci", "namolni klienci", "VIP-y", "flotowi", "nie płacący"];
+    const CUSTOMER_GROUPS = ["stali klienci", "VIP-y", "flotowi", "niepłacący"];
 
     const MODELS = [
         [
@@ -161,7 +162,7 @@ class TestDataGenerator
         $this->generateStatuses();
         $this->generatePositions();
         $this->generateWorkstations();
-       // $this->generateModels();
+        $this->generateModels();
         $this->generateCustomers();
 
         return;
@@ -419,30 +420,29 @@ class TestDataGenerator
         /** @var EntityManager $em */
         $em = $this->entityManager;
 
-        foreach($this::MODELS as $brand)
+        foreach($this::MODELS as $brandName)
         {
-            foreach($brand['models'] as $modelName)
+            $brand = new CarBrand();
+            $brand->setWorkshop($workshop);
+            $brand->setCreatedAt(new \DateTime());
+            $brand->setCreatedBy($user);
+            $brand->setUpdatedBy($user);
+            $brand->setName($brandName['name']);
+            
+            
+            foreach($brandName['models'] as $modelName)
             {
-                $countVersions = rand(3,6);
+                $model = new CarModel();
+                $model->setBrand($brand);
+                $model->setCreatedAt(new \DateTime());
+                $model->setCreatedBy($user);
+                $model->setUpdatedBy($user);
+                $model->setName($modelName);
 
-                for($i = 0; $i < $countVersions; $i++)
-                {
-                    $model = new CarModel();
-                    $model->setWorkshop($workshop);
-                    $model->setCreatedBy($user);
-                    $model->setUpdatedBy($user);
-                    $model->setCreatedAt(new \DateTime());
-                    $model->setBrand($brand['name']);
-                    $model->setModel($modelName);
-
-                    if(rand(0,1) == 0)
-                    {
-                        $model->setVersion($this->getString(rand(2,4), 2));
-                    }
-
-                    $em->persist($model);
-                }
+                $em->persist($model);
             }
+            
+            $em->persist($brand);
         }
 
         $em->flush();

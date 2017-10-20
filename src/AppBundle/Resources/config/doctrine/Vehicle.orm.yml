@@ -50,7 +50,7 @@ AppBundle\Entity\Vehicle:
             nullable: true
         mileage:
             type: integer
-            length: 6
+            length: 3
             nullable: true
             options:
                 unsigned: true

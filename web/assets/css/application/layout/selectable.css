@@ -1,0 +1,32 @@
+.selectable {
+    display: flex;
+    flex-direction: column;
+}
+.selectable .content {
+    display: none;
+    flex-direction: column;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.selectable .content div {
+    font: 12px 'Courier New', Monospace;
+    color: #333;
+    padding: 3px;
+}
+.selectable .content div:hover {
+    cursor: pointer;
+    color: #666;
+}
+.selectable .content div:nth-child(odd) {
+    background-color: #efefef;
+}
+.selectable .content div:nth-child(even) {
+    background-color: #f9f9f9;
+}
+@media screen and (min-width: 1200px)
+{
+    .selectable .content div {
+        font-size: 15px;
+        padding: 5px;
+    }
+}

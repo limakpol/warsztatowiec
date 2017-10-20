@@ -3,13 +3,9 @@
 namespace CustomerBundle\Form;
 
 use AppBundle\Entity\Customer;
-use AppBundle\Entity\Groupp;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Workshop;
 use AppBundle\Form\AddressType;
 use AppBundle\Form\Transformer\PhoneTransformer;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

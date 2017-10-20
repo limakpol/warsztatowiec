@@ -2,6 +2,7 @@
 
 namespace WorkflowBundle\Service\Helper;
 
+use AppBundle\Entity\Address;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRole;
@@ -33,7 +34,9 @@ class WorkmanAddHelper
 
     public function createAddForm()
     {
+        $address = new Address();
         $user = new User();
+        $user->setAddress($address);
 
         $form = $this->formFactory->create(WorkmanType::class, [
             'user' => $user,
