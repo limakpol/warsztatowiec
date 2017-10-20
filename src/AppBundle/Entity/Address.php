@@ -661,4 +661,3 @@ class Address
         return $this->deleted_by;
     }
 }
-

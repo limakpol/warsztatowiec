@@ -3,13 +3,23 @@
 namespace VehicleBundle\Controller;
 
 use AppBundle\Entity\CarBrand;
-use AppBundle\Entity\CarModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class VehicleController extends Controller
 {
     public function indexAction()
     {
+        $indexHelper = $this->get('vehicle.helper.index');
+
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $vehicles  = $indexHelper->retrieve($sortableParameters);
+        $limitSet   = $this->getParameter('app')['limit_set'];
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -19,6 +29,9 @@ class VehicleController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'customer',
             'navbar'        => 'Pojazdy',
+            'vehicles'     => $vehicles,
+            'limitSet'      => $limitSet,
+            'sortableParameters' => $sortableParameters,
         ]);
     }
 
@@ -49,6 +62,49 @@ class VehicleController extends Controller
         ]);
     }
 
+    public function showAction($vehicleId)
+    {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('VehicleBundle::show.html.twig', [
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'customer',
+            'navbar'        => 'Pojazd',
+            'vehicleId'     => $vehicleId,
+        ]);
+    }
+
+    public function retrieveAction()
+    {
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        if(!$request->isMethod('POST') || !$request->isXmlHttpRequest())
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nieprawidłowe żądanie'],
+            ]);
+        }
+
+        $indexHelper = $this->get('vehicle.helper.index');
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $vehicles  = $indexHelper->retrieve($sortableParameters);
+
+        $limitSet   = $this->getParameter('app')['limit_set'];
+
+        return $this->render('VehicleBundle::sortable_content.html.twig', [
+            'vehicles' => $vehicles,
+            'limitSet' => $limitSet,
+            'sortableParameters' => $sortableParameters,
+        ]);
+    }
 
     public function editAction()
     {

@@ -17,6 +17,6 @@ services:
         class: VehicleBundle\Service\Helper\VehicleAddHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container", "@header.helper.car_brand", "@header.helper.car_model", "@app.trade"]
 
-    #customer.helper.index:
-     #   class: CustomerBundle\Service\Helper\CustomerIndexHelper
-     #   arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+    vehicle.helper.index:
+        class: VehicleBundle\Service\Helper\VehicleIndexHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]

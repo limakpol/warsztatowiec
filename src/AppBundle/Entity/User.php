@@ -1081,4 +1081,3 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 }
-

@@ -1,9 +1,9 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * CustomerRepository
@@ -178,5 +178,4 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
 
         return $countCustomers;
     }
-
 }

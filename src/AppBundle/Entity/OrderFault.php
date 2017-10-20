@@ -458,4 +458,3 @@ class OrderFault
         return $this->deleted_by;
     }
 }
-

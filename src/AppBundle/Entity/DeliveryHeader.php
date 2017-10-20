@@ -795,4 +795,3 @@ class DeliveryHeader implements TradeHeaderInterface
         return $this->deleted_by;
     }
 }
-

@@ -56,11 +56,11 @@ class PreviousDataRemover
         $this->removeCategories();
         $this->removeDeliveries();
         $this->removeSales();
+        $this->removeVehicles();
         $this->removeCustomers();
         $this->removeGoods();
         $this->removeGroupps();
         $this->removeMeasures();
-        $this->removeVehicles();
         $this->removeBrands();
         $this->removeOrders();
         $this->removePositions();

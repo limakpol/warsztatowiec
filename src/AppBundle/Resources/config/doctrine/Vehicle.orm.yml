@@ -138,7 +138,7 @@ AppBundle\Entity\Vehicle:
         owner:
             targetEntity: AppBundle\Entity\Customer
             joinColumn:
-                name: customer_id
+                name: owner_id
                 referencedColumnName: id
         car_model:
             targetEntity: CarModel

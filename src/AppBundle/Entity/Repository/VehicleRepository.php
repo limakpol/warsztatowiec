@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity\Repository;
 
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
+
 /**
  * VehicleRepository
  *
@@ -10,4 +13,107 @@ namespace AppBundle\Entity\Repository;
  */
 class VehicleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $vehicle = $this->_em
+            ->createQueryBuilder()
+            ->select('v')
+            ->from('AppBundle:Vehicle', 'v')
+            ->where('v.deleted_at IS NULL')
+            ->andWhere('v.removed_at IS NULL')
+            ->andWhere('v.workshop = :workshop')
+            ->andWhere('v.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+        ;
+
+        return $vehicle;
+    }
+
+    public function retrieve(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $limit      = (int) $sortableParameters['limit'];
+        $offset     = (int) $sortableParameters['offset'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        // $systemFilters  = $sortableParameters['systemFilters'];
+        // $customFilters  = $sortableParameters['customFilters'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('v')
+            ->from('AppBundle:Vehicle', 'v')
+            ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'v.owner_id = c.id')
+        ;
+
+        $vehicles = $queryBuilder
+            ->andWhere('v.deleted_at IS NULL')
+            ->andWhere('v.removed_at IS NULL')
+            ->andWhere('v.workshop = :workshop')
+            ->andWhere("
+                    CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
+                OR  CONCAT_WS(' ', v.registration_number, v.vin) LIKE :search
+                OR  CONCAT_WS(' ', v.model_year, v.engine_displacement_l) LIKE :search
+                OR  CONCAT_WS(' ', v.mileage, v.engine_type, v.remarks) LIKE :search
+                OR  CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('v.updated_at', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->groupBy('v.id')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $vehicles;
+    }
+
+    public function getCountAllRetrieved(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        // $systemFilters  = $sortableParameters['systemFilters'];
+        // $customFilters  = $sortableParameters['customFilters'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('COUNT(v)')
+            ->from('AppBundle:Vehicle', 'v')
+            ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'v.owner_id = c.id')
+        ;
+
+        $countVehicles = $queryBuilder
+            ->andWhere('v.deleted_at IS NULL')
+            ->andWhere('v.removed_at IS NULL')
+            ->andWhere('v.workshop = :workshop')
+            ->andWhere("
+                    CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
+                OR  CONCAT_WS(' ', v.registration_number, v.vin) LIKE :search
+                OR  CONCAT_WS(' ', v.model_year, v.engine_displacement_l) LIKE :search
+                OR  CONCAT_WS(' ', v.mileage, v.engine_type, v.remarks) LIKE :search
+                OR  CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('v.updated_at', 'DESC')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $countVehicles;
+    }
 }

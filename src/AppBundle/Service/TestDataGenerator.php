@@ -21,6 +21,7 @@ use AppBundle\Entity\Position;
 use AppBundle\Entity\Producer;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
 use AppBundle\Entity\Workstation;
 use Doctrine\ORM\EntityManager;
@@ -164,6 +165,7 @@ class TestDataGenerator
         $this->generateWorkstations();
         $this->generateModels();
         $this->generateCustomers();
+        $this->generateVehicles();
 
         return;
     }
@@ -561,6 +563,83 @@ class TestDataGenerator
 
             $em->persist($address);
             $em->persist($customer);
+        }
+
+        $em->flush();
+
+        return;
+    }
+
+    public function generateVehicles($vehicleCount = 234)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $brands = $this->entityManager->getRepository('AppBundle:CarBrand')->retrieve($workshop);
+        $customers = $this->entityManager->getRepository('AppBundle:Customer')->findBy([
+            'workshop' => $workshop,
+            'removed_at' => null,
+            'deleted_at' => null,
+        ]);
+
+        for($i=0; $i < $vehicleCount; $i ++)
+        {
+            $dateTime = new \DateTime();
+
+            $vehicle = new Vehicle();
+            $vehicle->setCreatedAt($dateTime);
+            $vehicle->setCreatedBy($user);
+            $vehicle->setUpdatedBy($user);
+            $vehicle->setWorkshop($workshop);
+
+            /** @var CarBrand $brand */
+            $brand = $brands[array_rand($brands)];
+
+            $models = $this->entityManager
+                ->getRepository('AppBundle:CarModel')
+                ->retrieveByBrandId($workshop, $brand->getId());
+
+            $model = $models[array_rand($models)];
+
+            $vehicle->setCarModel($model);
+
+            $vehicle->setVersion($this->getString(2) . '.' . $this->getNumber(2));
+
+            $vehicle->setRegistrationNumber($this->getString(3, 1) . $this->getNumber(3));
+
+            $vehicle->setVin($this->getNumber(17));
+            $vehicle->setModelYear(rand(1990, 2017));
+            $vehicle->setMileage(rand(10, 500));
+            $vehicle->setEngineType(array_rand($this::ENGINE_TYPES));
+            $vehicle->setRemarks($this->getString(rand(100, 200)));
+
+            $customerCount = rand(0, 4);
+
+            for($j = 0; $j < $customerCount; $j++)
+            {
+                /** @var Customer $customer */
+                $customer = $customers[array_rand($customers)];
+
+                if(!$customer->getVehicles()->contains($vehicle))
+                {
+                    $customer->addVehicle($vehicle);
+                }
+                if($j == ($customerCount-1))
+                {
+                    $vehicle->setOwner($customer);
+                }
+
+                $em->persist($customer);
+
+            }
+
+            $em->persist($vehicle);
         }
 
         $em->flush();

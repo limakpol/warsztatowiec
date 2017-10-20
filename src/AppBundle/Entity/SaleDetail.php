@@ -777,4 +777,3 @@ class SaleDetail
         return $this->deleted_by;
     }
 }
-

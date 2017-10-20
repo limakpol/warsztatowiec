@@ -504,4 +504,3 @@ class Groupp
         return $this->customers;
     }
 }
-

@@ -6,6 +6,10 @@ vehicle_add:
     path: /dodaj-pojazd
     defaults: { _controller: VehicleBundle:Vehicle:add }
 
+vehicle_show:
+    path: /pojazdy/{vehicleId}
+    defaults: { _controller: VehicleBundle:Vehicle:show }
+
 vehicle_edit:
     path: /edytuj-pojazd/{vehicleId}
     defaults: { _controller: VehicleBundle:Vehicle:edit }
@@ -13,6 +17,10 @@ vehicle_edit:
 vehicle_remove:
     path: /usun-pojazd
     defaults: { _controller: VehicleBundle:Vehicle:remove }
+
+vehicle_retrieve:
+    path: /vehicle-retrieve
+    defaults: { _controller: VehicleBundle:Vehicle:retrieve }
 
 vehicle_retrieve_brands:
     path: /vehicle/retrieve-brands

@@ -18,7 +18,7 @@ class OrderHeaderController extends Controller
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
-        
+
 
         return $this->render('OrderBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
