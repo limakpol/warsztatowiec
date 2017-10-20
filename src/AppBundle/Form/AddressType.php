@@ -10,6 +10,7 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Address;
+use AppBundle\Entity\Province;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -66,7 +67,7 @@ class AddressType extends AbstractType
             ->add('province', EntityType::class, [
                 'label' => 'Województwo',
                 'required' => false,
-                'class' => 'AppBundle\Entity\Province',
+                'class' => Province::class,
                 'choice_label' => 'name',
                 'placeholder' => '-- wybierz --',
                 'multiple' => false,

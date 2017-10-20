@@ -4,4 +4,4 @@ order_header_index:
 
 order_header_add:
     path: /nowe-zlecenie
-    defaults: { _controller: OrderBundle:Order:add }
+    defaults: { _controller: OrderBundle:OrderHeader:add }

@@ -2,21 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: limakpol
- * Date: 9/28/17
- * Time: 5:16 PM
+ * Date: 10/20/17
+ * Time: 2:29 PM
  */
 
-namespace CustomerBundle\Form;
+namespace OrderBundle\Form;
 
 
-use AppBundle\Entity\Groupp;
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Entity\OrderSymptom;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class GrouppType extends AbstractType
+class SymptomType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,13 +24,13 @@ class GrouppType extends AbstractType
                 'required' => true,
                 'constraints' => [new Valid()],
             ])
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'data_class' => Groupp::class,
+            'data_class' => OrderSymptom::class,
         ]);
     }
 }

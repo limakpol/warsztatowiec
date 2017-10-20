@@ -1,1 +1,17 @@
 services:
+# FORM TYPES
+    form.type.order_header_add:
+        class: OrderBundle\Form\OrderHeaderAddType
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
+        tags:
+            - { name: form.type}
+
+    form.type.symptom:
+        class: OrderBundle\Form\SymptomType
+        tags:
+            - { name: form.type}
+
+# HELPERS
+    order.helper.header_add:
+        class: OrderBundle\Service\Helper\OrderHeaderAddHelper
+        arguments: ["@security.token_storage", "@request_stack", "@doctrine.orm.default_entity_manager", "@form.factory"]

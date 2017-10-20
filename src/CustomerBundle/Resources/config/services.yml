@@ -8,7 +8,6 @@ services:
 
     form.type.groupp:
         class: CustomerBundle\Form\GrouppType
-        arguments: ["@security.token_storage", "@doctrine.orm.default_entity_manager"]
         tags:
             - { name: form.type}
 

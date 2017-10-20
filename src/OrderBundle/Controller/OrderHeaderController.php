@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: limakpol
+ * Date: 10/20/17
+ * Time: 2:04 PM
+ */
 
 namespace OrderBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class OrderController extends Controller
+class OrderHeaderController extends Controller
 {
-    public function indexAction()
+    public function addAction()
     {
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        
 
-        return $this->render('OrderBundle:header:index.html.twig', [
+        return $this->render('OrderBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'order',
-            'navbar'        => 'Zlecenia serwisowe',
+            'navbar'        => 'Nowe zlecenie serwisowe',
         ]);
     }
-
-
 }

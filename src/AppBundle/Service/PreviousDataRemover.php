@@ -60,12 +60,12 @@ class PreviousDataRemover
         $this->removeGoods();
         $this->removeGroupps();
         $this->removeMeasures();
+        $this->removeVehicles();
         $this->removeBrands();
         $this->removeOrders();
         $this->removePositions();
         $this->removeProducers();
         $this->removeStatuses();
-        $this->removeVehicles();
         $this->removeWorkstations();
 
         return;
