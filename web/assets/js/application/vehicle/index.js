@@ -111,7 +111,7 @@ function getSortableParameters()
         "limit": $('#div-vehicle-sortable .select-limit option:checked').val(),
         "sortColumnName": $('#div-vehicle-sortable .sortColumnName').val(),
         "sortOrder": $('#div-vehicle-sortable .sortOrder').val(),
-        "currentPage": $('#div-vehicle-sortable .pagination-info span:first-child').text(),
+        "currentPage": $('#div-vehicle-sortable .pagination-info .currentPage').text(),
         "requestedPage": 1,
         "systemFilters": systemFilters,
         "customFilters": customFilters,

@@ -73,7 +73,6 @@ class OrderHeaderAddType extends AbstractType
                 ],
             ])
             ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

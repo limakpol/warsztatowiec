@@ -12,6 +12,9 @@
 }
 .div-sortable .header .div-input {
     width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .div-sortable .header .div-input input {
     width: 100%;
@@ -130,13 +133,18 @@
 .div-sortable table tr:not(.tr-th):nth-child(odd):hover {
     background-color: #ededed;
 }
-
 .div-sortable .footer {
     margin-top: 1vw;
 }
 .div-sortable .footer .pagination-info {
     margin-top: 0.5vw;
-    font: 12px 'Ubuntu Mono', sans-serif;
+    font: 12px 'Ubuntu', sans-serif;
+}
+.div-sortable .footer .count-all {
+    margin: 5px;
+    font: 12px 'Ubuntu', sans-serif;
+    color: #333;
+    white-space: nowrap;
 }
 @media screen and (min-width: 1200px)
 {
@@ -172,5 +180,9 @@
     .div-sortable .footer .pagination-info {
         margin-top: 0.5vw;
         font-size: 14px;
+    }
+    .div-sortable .footer .count-all {
+        font-size: 14px;
+        margin: 7px;
     }
 }

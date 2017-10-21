@@ -5,6 +5,7 @@ namespace DeliveryBundle\Service\Helper;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\DeliveryHeader;
+use AppBundle\Entity\Groupp;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
@@ -125,25 +126,33 @@ class DeliveryHeaderAddHelper
         {
             $deliveryHeader->setCustomer(null);
         }
-
-        if($deliveryHeader->getCustomerId() == 'new')
+        else
         {
             $customer = $deliveryHeader->getCustomer();
 
-            $customer
-                ->setWorkshop($workshop)
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user)
-                ->setCreatedAt($dateTime)
+            if($deliveryHeader->getCustomerId() == 'new')
+            {
+                $customer
+                    ->setWorkshop($workshop)
+                    ->setCreatedBy($user)
+                    ->setUpdatedBy($user)
+                    ->setCreatedAt($dateTime)
                 ;
-
-            $customer = $this->customerAddHelper->assignGroupps($customer);
+            }
 
             $address = $customer->getAddress();
 
-            $address->setCreatedAt($dateTime);
-            $address->setCreatedBy($user);
-            $address->setUpdatedBy($user);
+            if($address === null || $deliveryHeader->getCustomerId() == 'new')
+            {
+                $address = new Address();
+                $address->setCreatedAt($dateTime);
+                $address->setCreatedBy($user);
+                $address->setUpdatedBy($user);
+
+                $customer->setAddress($address);
+            }
+
+            $customer = $this->customerAddHelper->assignGroupps($customer);
 
             $em->persist($address);
 

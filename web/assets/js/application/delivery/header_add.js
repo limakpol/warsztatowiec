@@ -27,21 +27,21 @@ $(document).ready(function(){
         request(sortableParameters);
     });
 
-    $(document).on('click', '#only-recipients span', function(){
-        if($('#only-recipients input').is(':checked'))
+    $(document).on('click', '#only-suppliers span', function(){
+        if($('#only-suppliers input').is(':checked'))
         {
-            $('#only-recipients input').prop('checked', false);
+            $('#only-suppliers input').prop('checked', false);
         }
         else
         {
-            $('#only-recipients input').prop('checked', true);
+            $('#only-suppliers input').prop('checked', true);
         }
 
         var sortableParameters = getSortableParameters();
         request(sortableParameters);
     });
 
-    $(document).on('click', '#only-recipients input', function(){
+    $(document).on('click', '#only-suppliers input', function(){
         var sortableParameters = getSortableParameters();
         request(sortableParameters);
     });
@@ -86,15 +86,15 @@ $(document).ready(function(){
 
     $(document).on('click', '#customer-new', function()
     {
-        $('#sale_header_add_customer_forename').focus();
+        $('#delivery_header_add_customer_forename').focus();
 
         clearCustomerForm();
 
         removeCustomerErrors();
 
-        $('.h-enum.selected-customer').text('2. Wpisz dane odbiorcy');
+        $('.h-enum.selected-customer').text('2. Wpisz dane dostawcy');
 
-        $('#sale_header_add_customer_id').val('new');
+        $('#delivery_header_add_customer_id').val('new');
 
         $('#searchable-customer > div').slideUp();
 
@@ -104,9 +104,9 @@ $(document).ready(function(){
 
     $(document).on('click', '#customer-empty', function()
     {
-        $('#sale_header_add_customer_id').val('');
+        $('#delivery_header_add_customer_id').val('');
 
-        $('.h-enum.selected-customer').text('2. Wystawienie wewnętrzne (brak odbiorcy)');
+        $('.h-enum.selected-customer').text('2. Przyjęcie wewnętrzne (brak dostawcy)');
 
         $('#searchable-customer > div').slideUp();
 
@@ -128,35 +128,43 @@ $(document).ready(function(){
                 customerId: customerId,
             },
             success: function(data) {
-                if(data.error > 0)
-                {
+                console.log(data);
+                if (data.error > 0) {
 
                 }
                 else
                 {
-                    for(value in data[0])
-                    {
-                        var cssId = '#sale_header_add_customer_' + value;
+                    clearCustomerForm();
+                    for (value in data[0]) {
+                        var cssId = '#delivery_header_add_customer_' + value;
 
                         $(cssId).val(data[0][value]).change();
                     }
 
-                    for(value in data[1])
-                    {
-                        cssId = '#sale_header_add_customer_address_' + value;
+                    for (value in data[1]) {
+                        cssId = '#delivery_header_add_customer_address_' + value;
 
                         $(cssId).val(data[1][value]).change();
                     }
 
-                    $('#sale_header_add_customer_address_province').val(data[1]['province_id']);
-                }
+                    $('#delivery_header_add_customer_address_province').val(data[1]['province_id']);
 
+                    var buttonsLabels = $('#customer-form .div-form-labels .customer-btn-filter-custom');
+                    for (var key in data[2]) {
+                        buttonsLabels.each(function () {
+                            if ($(this).text() == data[2][key]) {
+                                $(this).addClass('active');
+                                $(this).after('<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + data[2][key] + '">');
+                            }
+                        });
+                    }
+                }
             }
         });
 
         removeCustomerErrors();
 
-        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane odbiorcy');
+        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane dostawcy');
 
         $('#searchable-customer > div').slideUp();
 
@@ -177,54 +185,44 @@ $(document).ready(function(){
         }
         else
         {
+            var input = '<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][' + button.data('id') + '][name]" required="required" value="' + button.text() + '">';
 
-            button.after('<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + button.text() + '">');
+            button.after(input);
             button.addClass('active');
         }
     });
 
-    $(document).on('keypress', '.input-groupp-add', function(event)
+    $(document).on('keypress', '.input-label-add', function(event)
     {
-
         if(event.which == 13)
         {
-
             event.preventDefault();
 
             var name = $(this).val();
+
+            if(name == '') return;
+
+            var buttons = $('.customer-btn-filter-custom');
+
+            var error = false;
+
+            buttons.each(function()
+            {
+                if($(this).text() == name)
+                {
+                    error = true;
+                }
+            });
+
+            if(error) return;
+
             var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
-            var hidden = '<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
+            var hidden = '<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
 
             $(this).before(button);
             $(this).before(hidden);
             $(this).val('');
         }
-    });
-
-    $(document).on('change', '#sale_header_add_document_type', function(){
-        var documentType = $(this).val();
-
-        if(documentType == '')
-        {
-            $('#sale_header_add_document_number').val('');
-
-            return;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/sale/get-next-number",
-            data: {
-                documentType: documentType,
-            },
-            success: function(data)
-            {
-                if(data['error'] == 0)
-                {
-                    $('#sale_header_add_document_number').val(data['documentNumber']);
-                }
-            }
-        });
     });
 
 });
@@ -234,9 +232,9 @@ function getSortableParameters()
     var systemFilters = [];
     var customFilters = [];
 
-    if($('#only-recipients input').is(':checked'))
+    if($('#only-suppliers input').is(':checked'))
     {
-        systemFilters = ['recipient'];
+        systemFilters = ['supplier'];
     }
 
     sortableParameters = {
@@ -255,6 +253,7 @@ function getSortableParameters()
 
 function request(sortableParameters)
 {
+
     $.ajax({
         type: "POST",
         url: $('#searchable-customer footer .retrievePath').val(),
@@ -263,6 +262,7 @@ function request(sortableParameters)
         },
         success: function(data)
         {
+            console.log(data);
             if(!data['error'])
             {
                 $('#searchable-customer > div').html(data);
@@ -273,20 +273,22 @@ function request(sortableParameters)
 
 function removeCustomerErrors()
 {
-    $("input[name*='sale_header_add[customer]'] + ul").remove();
-    $("select[name*='sale_header_add[customer]'] + ul").remove();
-    $("textarea[name*='sale_header_add[customer]'] + ul").remove();
+    $("input[name*='delivery_header_add[customer]'] + ul").remove();
+    $("select[name*='delivery_header_add[customer]'] + ul").remove();
+    $("textarea[name*='delivery_header_add[customer]'] + ul").remove();
 
     return null;
 }
 
 function clearCustomerForm()
 {
-    $("input[name*='sale_header_add[customer]']").val('').change();
-    $("select[name*='sale_header_add[customer]']").val('').change();
-    $("textarea[name*='sale_header_add[customer]']").val('').change();
-    $('#sale_header_add_customer_mobile_phone1').val('+48');
-    $('#sale_header_add_customer_mobile_phone2').val('+48');
+    $("input[name*='delivery_header_add[customer]']").val('').change();
+    $("select[name*='delivery_header_add[customer]']").val('').change();
+    $("textarea[name*='delivery_header_add[customer]']").val('').change();
+    $('#delivery_header_add_customer_mobile_phone1').val('+48');
+    $('#delivery_header_add_customer_mobile_phone2').val('+48');
+    $('#customer-form .div-form-labels input[type=hidden]').remove();
+    $('#customer-form .div-form-labels button.active').removeClass('active');
 
     return null;
 }

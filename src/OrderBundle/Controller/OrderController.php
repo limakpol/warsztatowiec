@@ -19,6 +19,21 @@ class OrderController extends Controller
             'navbar'        => 'Zlecenia serwisowe',
         ]);
     }
+    
+    public function showAction($orderHeaderId)
+    {
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
+        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
+        return $this->render('OrderBundle::show.html.twig', [
+            'orderHeaderId' => $orderHeaderId,
+            'headerMenu'    => $headerMenu,
+            'mainMenu'      => $mainMenu,
+            'tab'           => 'warehouse',
+            'navbar'        => 'Przyjęcie towaru',
+        ]);
+    }
+    
 
 }

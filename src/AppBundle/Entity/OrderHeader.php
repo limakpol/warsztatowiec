@@ -40,7 +40,7 @@ class OrderHeader
     /**
      * @var boolean
      */
-    private $priority = 0;
+    private $priority = false;
 
     /**
      * @var integer

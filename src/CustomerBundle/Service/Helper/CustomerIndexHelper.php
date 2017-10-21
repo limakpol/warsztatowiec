@@ -144,9 +144,10 @@ class CustomerIndexHelper
         $offset = ($currentPage-1)*$limit;
 
         $outputSortableParameters = [
-            'offset' => $offset,
-            'currentPage' => $currentPage,
-            'lastPage' => $lastPage,
+            'offset'        => $offset,
+            'currentPage'   => $currentPage,
+            'lastPage'      => $lastPage,
+            'countAll'      => $countAllRetrieved,
         ];
 
         return $outputSortableParameters;

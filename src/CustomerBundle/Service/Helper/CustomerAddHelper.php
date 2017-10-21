@@ -125,33 +125,63 @@ class CustomerAddHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        /** @var Groupp $grouppName */
-        foreach($customer->getGroupps() as $grouppName)
+        $grouppNames = [];
+
+        /** @var Groupp $groupp */
+        foreach($customer->getGroupps() as $groupp)
         {
-            $groupp = $this->entityManager->getRepository('AppBundle:Groupp')->getOneByName($workshop, $grouppName->getName());
+            $grouppNames[] = $groupp->getName();
+        }
+
+        $customer->getGroupps()->clear();
+
+        /** @var Groupp $groupp */
+        foreach($grouppNames as $grouppName)
+        {
+
+            //$grouppName = $groupp->getName();
+
+            $groupp     = $this->entityManager
+                        ->getRepository('AppBundle:Groupp')
+                        ->getOneByName($workshop, $grouppName);
 
             if(null === $groupp)
             {
-                $groupp = $this->entityManager->getRepository('AppBundle:Groupp')->getOneRemovedByName($workshop, $grouppName->getName());
+                /** @var Groupp $groupp */
+                $groupp     = $this->entityManager
+                            ->getRepository('AppBundle:Groupp')
+                            ->getOneRemovedByName($workshop, $grouppName);
 
                 if(null === $groupp)
                 {
-                    $groupp = new Groupp();
-                    $groupp->setName($grouppName->getName());
-                    $groupp->setCreatedAt(new \DateTime());
-                    $groupp->setCreatedBy($user);
-                    $groupp->setUpdatedBy($user);
-                    $groupp->setWorkshop($workshop);
-
+                    $groupp = $this->createGroupp($user, $grouppName);
+                }
+                else
+                {
+                    $groupp->setRemovedBy(null);
+                    $groupp->setRemovedAt(null);
+                    $groupp->setDeletedBy(null);
+                    $groupp->setDeletedAt(null);
                 }
             }
 
-            $customer->removeGroupp($grouppName);
-            $customer->addGroupp($groupp);
-
             $em->persist($groupp);
+
+            $customer->addGroupp($groupp);
         }
 
         return $customer;
+    }
+
+    public function createGroupp(User $user, $grouppName)
+    {
+        $groupp = new Groupp();
+        $groupp->setName($grouppName);
+        $groupp->setCreatedAt(new \DateTime());
+        $groupp->setCreatedBy($user);
+        $groupp->setUpdatedBy($user);
+        $groupp->setWorkshop($user->getCurrentWorkshop());
+
+        return $groupp;
     }
 }

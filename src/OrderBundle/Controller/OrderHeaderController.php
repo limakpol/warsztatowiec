@@ -9,6 +9,7 @@
 namespace OrderBundle\Controller;
 
 
+use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class OrderHeaderController extends Controller
@@ -19,12 +20,58 @@ class OrderHeaderController extends Controller
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
+        $orderHeaderAddHelper   = $this->get('order.helper.header_add');
+
+        $form = $orderHeaderAddHelper->createForm();
+
+        if($orderHeaderAddHelper->isValid($form))
+        {
+            $orderHeaderId = $orderHeaderAddHelper->write($form);
+
+            return $this->redirectToRoute('order_show', [
+                'orderHeaderId' => $orderHeaderId,
+            ]);
+        }
+
+        $customerIndexHelper    = $this->get('customer.helper.index');
+        $vehicleIndexHelper     = $this->get('vehicle.helper.index');
+
+        $customerSortableParameters = $orderHeaderAddHelper->getCustomerSortableParameters();
+        $vehicleSortableParameters = $orderHeaderAddHelper->getVehicleSortableParameters();
+
+        $customers = $customerIndexHelper->retrieve($customerSortableParameters);
+        $groupps = $customerIndexHelper->retrieveGroupps();
+        $vehicles = $vehicleIndexHelper->retrieve($vehicleSortableParameters);
 
         return $this->render('OrderBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'order',
             'navbar'        => 'Nowe zlecenie serwisowe',
+            'form'          => $form->createView(),
+            'customers'     => $customers,
+            'vehicles'      => $vehicles,
+            'groupps'       => $groupps,
+            'customerSortableParameters' => $customerSortableParameters,
+            'vehicleSortableParameters' => $vehicleSortableParameters,
+        ]);
+    }
+
+    public function retrieveCustomersAction()
+    {
+        /** @var CustomerIndexHelper $customerIndexHelper */
+        $customerIndexHelper = $this->get('customer.helper.index');
+
+        $inputSortableParameters = $customerIndexHelper->getInputSortableParameters();
+        $inputSortableParameters['limit'] = 15;
+        $outputSortableParameters = $customerIndexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $customers = $customerIndexHelper->retrieve($sortableParameters);
+
+        return $this->render('OrderBundle:header:customer_searchable_content.html.twig', [
+            'customers' => $customers,
+            'customerSortableParameters' => $sortableParameters,
         ]);
     }
 }

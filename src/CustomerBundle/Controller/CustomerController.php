@@ -167,6 +167,17 @@ class CustomerController extends Controller
         /** @var Address $address */
         $address = $em->getRepository('AppBundle:Address')->getOne($customer['address_id'], $hydrationMode);
 
-        return new JsonResponse([$customer, $address]);
+        if($hydrationMode == 2)
+        {
+            $groupps = $em->getRepository('AppBundle:Groupp')
+                ->retrieveByCustomerId($workshop, $customer['id']);
+        }
+        else
+        {
+            $groupps = $em->getRepository('AppBundle:Groupp')
+                ->retrieveByCustomerId($workshop, $customer->getId(), 1);
+        }
+
+        return new JsonResponse([$customer, $address, $groupps]);
     }
 }

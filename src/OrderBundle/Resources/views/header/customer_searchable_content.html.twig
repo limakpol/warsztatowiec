@@ -1,0 +1,34 @@
+<header>
+    <div id="customer-new">-- nowy --</div>
+</header>
+<table>
+    <tr>
+        <th class="sort-column" data-column="c.forename">Imię</th>
+        <th class="sort-column" data-column="c.surname">Nazwisko</th>
+        <th class="sort-column" data-column="c.company_name">Firma</th>
+        <th class="sort-column" data-column="c.mobile_phone1">Telefon</th>
+    </tr>
+    {% for customer in customers %}
+        <tr data-id="{{ customer.id }}">
+            <td>{{ customer.forename }}</td>
+            <td>{{ customer.surname }}</td>
+            <td>{{ customer.companyName }}</td>
+            <td>{{ customer.mobilePhone1|phone }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<footer>
+    {% if customerSortableParameters.lastPage > 1 %}
+        <div class="buttons">
+            <button class="prev"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+            <button class="next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="page-info">
+            <span>{{ customerSortableParameters.currentPage }}</span>/<span>{{ customerSortableParameters.lastPage }}</span>
+        </div>
+    {% endif %}
+    <input type="hidden" class="currentPage" value="{{ customerSortableParameters['currentPage'] }}">
+    <input type="hidden" class="retrievePath" value="{{ path('order_header_retrieve_customers') }}">
+    <input type="hidden" class="sortColumnName" value="{{ customerSortableParameters['sortColumnName'] }}">
+    <input type="hidden" class="sortOrder" value="{{ customerSortableParameters['sortOrder'] }}">
+</footer>

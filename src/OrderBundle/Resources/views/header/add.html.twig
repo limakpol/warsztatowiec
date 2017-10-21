@@ -1,4 +1,218 @@
 {% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    'assets/css/application/order/header_add.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 {% block main %}
-    Customer add
+    <h1 class="h-enum">1. Wybierz klienta lub dodaj nowego</h1>
+    <div id="searchable-customer" class="searchable">
+        <input type="text" placeholder="Wyszukaj klienta">
+        <div>
+            {% include 'OrderBundle:header:customer_searchable_content.html.twig' %}
+        </div>
+    </div>
+    <h1 class="h-enum selected-customer">2. Wpisz dane nowego klienta</h1>
+    {{ form_start(form, {'attr':{'class':'main-form'}}) }}
+    <div id="customer-form" class="form-part">
+        <div class="div-slider">
+            {{ form_widget(form.customer_id) }}
+
+            {{ form_label(form.customer.forename) }}
+            {{ form_widget(form.customer.forename, {'attr': {'autofocus': true}}) }}
+            {{ form_errors(form.customer.forename) }}
+
+            {{ form_label(form.customer.surname) }}
+            {{ form_widget(form.customer.surname) }}
+            {{ form_errors(form.customer.surname) }}
+
+            {{ form_label(form.customer.company_name) }}
+            {{ form_widget(form.customer.company_name) }}
+            {{ form_errors(form.customer.company_name) }}
+
+            {{ form_label(form.customer.mobile_phone1) }}
+            {{ form_widget(form.customer.mobile_phone1) }}
+            {{ form_errors(form.customer.mobile_phone1) }}
+
+            {{ form_label(form.customer.mobile_phone2) }}
+            {{ form_widget(form.customer.mobile_phone2) }}
+            {{ form_errors(form.customer.mobile_phone2) }}
+
+            {{ form_label(form.customer.landline_phone) }}
+            {{ form_widget(form.customer.landline_phone) }}
+            {{ form_errors(form.customer.landline_phone) }}
+
+            {{ form_label(form.customer.contact_person) }}
+            {{ form_widget(form.customer.contact_person) }}
+            {{ form_errors(form.customer.contact_person) }}
+
+            {{ form_label(form.customer.email) }}
+            {{ form_widget(form.customer.email) }}
+            {{ form_errors(form.customer.email) }}
+
+            {{ form_label(form.customer.nip) }}
+            {{ form_widget(form.customer.nip) }}
+            {{ form_errors(form.customer.nip) }}
+
+            {{ form_label(form.customer.pesel) }}
+            {{ form_widget(form.customer.pesel) }}
+            {{ form_errors(form.customer.pesel) }}
+
+            {{ form_label(form.customer.address.street) }}
+            {{ form_widget(form.customer.address.street) }}
+            {{ form_errors(form.customer.address.street) }}
+
+            {{ form_label(form.customer.address.house_number) }}
+            {{ form_widget(form.customer.address.house_number) }}
+            {{ form_errors(form.customer.address.house_number) }}
+
+            {{ form_label(form.customer.address.flat_number) }}
+            {{ form_widget(form.customer.address.flat_number) }}
+            {{ form_errors(form.customer.address.flat_number) }}
+
+            {{ form_label(form.customer.address.post_code) }}
+            {{ form_widget(form.customer.address.post_code) }}
+            {{ form_errors(form.customer.address.post_code) }}
+
+            {{ form_label(form.customer.address.city) }}
+            {{ form_widget(form.customer.address.city) }}
+            {{ form_errors(form.customer.address.city) }}
+
+            {{ form_label(form.customer.address.province) }}
+            {{ form_widget(form.customer.address.province) }}
+            {{ form_errors(form.customer.address.province) }}
+
+            {{ form_label(form.customer.bank_account_number) }}
+            {{ form_widget(form.customer.bank_account_number) }}
+            {{ form_errors(form.customer.bank_account_number) }}
+
+            {{ form_label(form.customer.remarks) }}
+            {{ form_widget(form.customer.remarks) }}
+            {{ form_errors(form.customer.remarks) }}
+
+            {{ form_label(form.customer.groupps) }}
+            <div class="div-form-labels">
+                {% for groupp in groupps %}
+                    <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
+                {% endfor %}
+                <input type="text" size="10" maxlength="25" class="input-label-add">
+            </div>
+        </div>
+    </div>
+    <h1 class="h-enum">3. Wybierz pojazd lub dodaj nowy</h1>
+    <div id="searchable-vehicle" class="searchable">
+        <input type="text" placeholder="Wyszukaj pojazd">
+        <div>
+            {% include 'OrderBundle:header:vehicle_searchable_content.html.twig' %}
+        </div>
+    </div>
+    <h1 class="h-enum selected-vehicle">4. Wpisz dane nowego pojazdu</h1>
+    <div id="vehicle-form" class="form-part">
+        <div class="div-slider">
+            {{ form_label(form.vehicle.car_brand) }}
+            <div id="selectable-brand" class="selectable">
+                {{ form_widget(form.vehicle.car_brand) }}
+                <div class="content">
+                    {{ render(controller('VehicleBundle:Vehicle:retrieveBrands')) }}
+                </div>
+            </div>
+            {{ form_errors(form.vehicle.car_brand) }}
+
+            {{ form_label(form.vehicle.car_model) }}
+            <div id="selectable-model" class="selectable">
+                {{ form_widget(form.vehicle.car_model) }}
+                <div class="content"></div>
+            </div>
+            {{ form_errors(form.vehicle.car_model) }}
+
+            {{ form_label(form.vehicle.version) }}
+            {{ form_widget(form.vehicle.version) }}
+            {{ form_errors(form.vehicle.version) }}
+
+            {{ form_label(form.vehicle.registration_number) }}
+            {{ form_widget(form.vehicle.registration_number) }}
+            {{ form_errors(form.vehicle.registration_number) }}
+
+            {{ form_label(form.vehicle.vin) }}
+            {{ form_widget(form.vehicle.vin) }}
+            {{ form_errors(form.vehicle.vin) }}
+
+            {{ form_label(form.vehicle.model_year) }}
+            {{ form_widget(form.vehicle.model_year) }}
+            {{ form_errors(form.vehicle.model_year) }}
+
+            {{ form_label(form.vehicle.mileage) }}
+            {{ form_widget(form.vehicle.mileage) }}
+            {{ form_errors(form.vehicle.mileage) }}
+
+            {{ form_label(form.vehicle.engine_type) }}
+            {{ form_widget(form.vehicle.engine_type) }}
+            {{ form_errors(form.vehicle.engine_type) }}
+
+            {{ form_label(form.vehicle.engine_displacement_l) }}
+            {{ form_widget(form.vehicle.engine_displacement_l) }}
+            {{ form_errors(form.vehicle.engine_displacement_l) }}
+
+            {{ form_label(form.vehicle.engine_power_km) }}
+            {{ form_widget(form.vehicle.engine_power_km) }}
+            {{ form_errors(form.vehicle.engine_power_km) }}
+
+            {{ form_label(form.vehicle.date_of_inspection) }}
+            {{ form_widget(form.vehicle.date_of_inspection, {'attr': {'class': 'div-form-widget'}}) }}
+            {{ form_errors(form.vehicle.date_of_inspection) }}
+
+            {{ form_label(form.vehicle.date_of_oil_change) }}
+            {{ form_widget(form.vehicle.date_of_oil_change, {'attr': {'class': 'ul-error'}}) }}
+            {{ form_errors(form.vehicle.date_of_oil_change) }}
+
+            {{ form_label(form.vehicle.remarks) }}
+            {{ form_widget(form.vehicle.remarks) }}
+            {{ form_errors(form.vehicle.remarks) }}
+        </div>
+    </div>
+    <h1 class="h-enum">5. Pozostałe dane</h1>
+    <div class="form-part">
+        <div class="div-slider">
+            {{ form_label(form.symptoms) }}
+            <div class="form-inputable">
+                <div class="add">
+                    <input type="text" maxlength="120">
+                    <button class="btn-square btn-add" data-type="good">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="selectable-symptoms" class="selectable">
+                <div class="content"></div>
+            </div>
+
+            {{ form_label(form.workstation) }}
+            {{ form_widget(form.workstation) }}
+            {{ form_errors(form.workstation) }}
+            <div class="main-form-checkbox">
+                {{ form_label(form.priority) }}
+                {{ form_widget(form.priority) }}
+                {{ form_errors(form.priority) }}
+            </div>
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
+
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.submit) }}
+            
+        </div>
+    </div>
+    {{ form_end(form, {'render_rest': false})}}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/order/header_add.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

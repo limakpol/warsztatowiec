@@ -1,7 +1,15 @@
-order_header_index:
+order_index:
     path: /zlecenia-serwisowe
     defaults: { _controller: OrderBundle:Order:index }
+
+order_show:
+    path: /zlecenia-serwisowe/{orderHeaderId}
+    defaults: { _controller: OrderBundle:Order:show }
 
 order_header_add:
     path: /nowe-zlecenie
     defaults: { _controller: OrderBundle:OrderHeader:add }
+
+order_header_retrieve_customers:
+    path: /order/retrieve-customers
+    defaults: { _controller: OrderBundle:OrderHeader:retrieveCustomers }

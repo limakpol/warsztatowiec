@@ -63,7 +63,7 @@ main_menu:
         submenu:
             1:
                 name: zlecenia serwisowe
-                route: order_header_index
+                route: order_index
     3:
         tab: warehouse
         name: towary

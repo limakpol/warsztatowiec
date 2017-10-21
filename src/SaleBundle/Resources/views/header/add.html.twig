@@ -2,7 +2,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-    'assets/css/application/sale/add.css'
+    'assets/css/application/sale/header_add.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -102,7 +102,7 @@
                 {% for groupp in groupps %}
                     <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
                 {% endfor %}
-                <input type="text" size="10" maxlength="25" class="input-groupp-add">
+                <input type="text" size="10" maxlength="25" class="input-label-add">
             </div>
         </div>
     </div>
@@ -128,7 +128,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'assets/js/application/sale/add.js'
+    'assets/js/application/sale/header_add.js'
     'assets/js/application/trade.js'
     %}
     <script src="{{ asset_url }}"></script>

@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\Groupp;
 use AppBundle\Entity\Workshop;
 
 /**
@@ -48,6 +50,46 @@ class GrouppRepository extends \Doctrine\ORM\EntityRepository
 
         return $groups;
     }
+
+
+    public function retrieveByCustomerId(Workshop $workshop, $customerId, $hydrationMode = 'array')
+    {
+        /** @var Customer $customer */
+        $customer = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Customer', 'c')
+            ->where('c.removed_at IS NULL')
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('c.id = :customerId')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':customerId' => $customerId,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        $groupps = $customer->getGroupps()->filter(function(Groupp $groupp){
+            return null === $groupp->getRemovedAt() && null === $groupp->getDeletedAt();
+        });
+
+        if($hydrationMode == 'array')
+        {
+            $grouppNames = [];
+
+            /** @var Groupp $groupp */
+            foreach($groupps as $groupp)
+            {
+                $grouppNames[] = $groupp->getName();
+            }
+
+            return $grouppNames;
+        }
+
+        return $groupps;
+    }
+
 
     public function getOneByName(Workshop $workshop, $name)
     {

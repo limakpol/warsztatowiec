@@ -27,21 +27,21 @@ $(document).ready(function(){
         request(sortableParameters);
     });
 
-    $(document).on('click', '#only-suppliers span', function(){
-        if($('#only-suppliers input').is(':checked'))
+    $(document).on('click', '#only-recipients span', function(){
+        if($('#only-recipients input').is(':checked'))
         {
-            $('#only-suppliers input').prop('checked', false);
+            $('#only-recipients input').prop('checked', false);
         }
         else
         {
-            $('#only-suppliers input').prop('checked', true);
+            $('#only-recipients input').prop('checked', true);
         }
 
         var sortableParameters = getSortableParameters();
         request(sortableParameters);
     });
 
-    $(document).on('click', '#only-suppliers input', function(){
+    $(document).on('click', '#only-recipients input', function(){
         var sortableParameters = getSortableParameters();
         request(sortableParameters);
     });
@@ -86,15 +86,15 @@ $(document).ready(function(){
 
     $(document).on('click', '#customer-new', function()
     {
-        $('#delivery_header_add_customer_forename').focus();
+        $('#sale_header_add_customer_forename').focus();
 
         clearCustomerForm();
 
         removeCustomerErrors();
 
-        $('.h-enum.selected-customer').text('2. Wpisz dane dostawcy');
+        $('.h-enum.selected-customer').text('2. Wpisz dane odbiorcy');
 
-        $('#delivery_header_add_customer_id').val('new');
+        $('#sale_header_add_customer_id').val('new');
 
         $('#searchable-customer > div').slideUp();
 
@@ -104,9 +104,9 @@ $(document).ready(function(){
 
     $(document).on('click', '#customer-empty', function()
     {
-        $('#delivery_header_add_customer_id').val('');
+        $('#sale_header_add_customer_id').val('');
 
-        $('.h-enum.selected-customer').text('2. Przyjęcie wewnętrzne (brak dostawcy)');
+        $('.h-enum.selected-customer').text('2. Wystawienie wewnętrzne (brak odbiorcy)');
 
         $('#searchable-customer > div').slideUp();
 
@@ -136,19 +136,19 @@ $(document).ready(function(){
                 {
                     for(value in data[0])
                     {
-                        var cssId = '#delivery_header_add_customer_' + value;
+                        var cssId = '#sale_header_add_customer_' + value;
 
                         $(cssId).val(data[0][value]).change();
                     }
 
                     for(value in data[1])
                     {
-                        cssId = '#delivery_header_add_customer_address_' + value;
+                        cssId = '#sale_header_add_customer_address_' + value;
 
                         $(cssId).val(data[1][value]).change();
                     }
 
-                    $('#delivery_header_add_customer_address_province').val(data[1]['province_id']);
+                    $('#sale_header_add_customer_address_province').val(data[1]['province_id']);
                 }
 
             }
@@ -156,7 +156,7 @@ $(document).ready(function(){
 
         removeCustomerErrors();
 
-        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane dostawcy');
+        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane odbiorcy');
 
         $('#searchable-customer > div').slideUp();
 
@@ -171,35 +171,61 @@ $(document).ready(function(){
 
         if(button.hasClass('active'))
         {
-
             $('input[class="groupp"][type=hidden][value="' + button.text() + '"]').remove();
             button.removeClass('active');
         }
         else
         {
 
-            button.after('<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + button.text() + '">');
+            button.after('<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + button.text() + '">');
             button.addClass('active');
         }
     });
 
-    $(document).on('keypress', '.input-groupp-add', function(event)
+    $(document).on('keypress', '.input-label-add', function(event)
     {
 
         if(event.which == 13)
         {
-
             event.preventDefault();
 
+
             var name = $(this).val();
+
+
             var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
-            var hidden = '<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
+            var hidden = '<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
 
             $(this).before(button);
             $(this).before(hidden);
             $(this).val('');
         }
+    });
 
+    $(document).on('change', '#sale_header_add_document_type', function(){
+        var documentType = $(this).val();
+
+        if(documentType == '')
+        {
+            $('#sale_header_add_document_number').val('');
+
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/sale/get-next-number",
+            data: {
+                documentType: documentType,
+            },
+            success: function(data)
+            {
+                if(data['error'] == 0)
+                {
+                    $('#sale_header_add_document_number').val(data['documentNumber']);
+                }
+            }
+        });
     });
 
 });
@@ -209,9 +235,9 @@ function getSortableParameters()
     var systemFilters = [];
     var customFilters = [];
 
-    if($('#only-suppliers input').is(':checked'))
+    if($('#only-recipients input').is(':checked'))
     {
-        systemFilters = ['supplier'];
+        systemFilters = ['recipient'];
     }
 
     sortableParameters = {
@@ -230,7 +256,6 @@ function getSortableParameters()
 
 function request(sortableParameters)
 {
-
     $.ajax({
         type: "POST",
         url: $('#searchable-customer footer .retrievePath').val(),
@@ -249,20 +274,22 @@ function request(sortableParameters)
 
 function removeCustomerErrors()
 {
-    $("input[name*='delivery_header_add[customer]'] + ul").remove();
-    $("select[name*='delivery_header_add[customer]'] + ul").remove();
-    $("textarea[name*='delivery_header_add[customer]'] + ul").remove();
+    $("input[name*='sale_header_add[customer]'] + ul").remove();
+    $("select[name*='sale_header_add[customer]'] + ul").remove();
+    $("textarea[name*='sale_header_add[customer]'] + ul").remove();
 
     return null;
 }
 
 function clearCustomerForm()
 {
-    $("input[name*='delivery_header_add[customer]']").val('').change();
-    $("select[name*='delivery_header_add[customer]']").val('').change();
-    $("textarea[name*='delivery_header_add[customer]']").val('').change();
-    $('#delivery_header_add_customer_mobile_phone1').val('+48');
-    $('#delivery_header_add_customer_mobile_phone2').val('+48');
+    $("input[name*='sale_header_add[customer]']").val('').change();
+    $("select[name*='sale_header_add[customer]']").val('').change();
+    $("textarea[name*='sale_header_add[customer]']").val('').change();
+    $('#sale_header_add_customer_mobile_phone1').val('+48');
+    $('#sale_header_add_customer_mobile_phone2').val('+48');
+    $('#customer-form .div-form-labels input[type=hidden]').remove();
+    $('#customer-form .div-form-labels button.active').removeClass('active');
 
     return null;
 }

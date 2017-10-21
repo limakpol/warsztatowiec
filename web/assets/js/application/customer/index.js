@@ -111,7 +111,7 @@ function getSortableParameters()
         "limit": $('#div-customer-sortable .select-limit option:checked').val(),
         "sortColumnName": $('#div-customer-sortable .sortColumnName').val(),
         "sortOrder": $('#div-customer-sortable .sortOrder').val(),
-        "currentPage": $('#div-customer-sortable .pagination-info span:first-child').text(),
+        "currentPage": $('#div-customer-sortable .pagination-info .currentPage').text(),
         "requestedPage": 1,
         "systemFilters": systemFilters,
         "customFilters": customFilters,

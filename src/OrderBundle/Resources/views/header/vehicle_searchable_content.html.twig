@@ -30,10 +30,10 @@
         <button class="btn-next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
     </div>
     <div class="pagination-info">
-        <span>strona <span class="currentPage">{{ sortableParameters['currentPage'] }}</span></span> z <span>{{ sortableParameters['lastPage'] }}</span>
+        <span>strona <span class="currentPage">{{ vehicleSortableParameters['currentPage'] }}</span></span> z <span>{{ vehicleSortableParameters['lastPage'] }}</span>
         <input type="hidden" class="retrievePath" value="{{ path('vehicle_retrieve') }}">
-        <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
-        <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
+        <input type="hidden" class="sortColumnName" value="{{ vehicleSortableParameters['sortColumnName'] }}">
+        <input type="hidden" class="sortOrder" value="{{ vehicleSortableParameters['sortOrder'] }}">
     </div>
-    <div class="count-all">{{ sortableParameters.countAll }} rekordów</div>
+    <div class="count-all">{{ vehicleSortableParameters.countAll }} rekordów</div>
 </div>
