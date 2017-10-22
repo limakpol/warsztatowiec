@@ -409,6 +409,57 @@ $(document).ready(function()
         $('#symptoms-inputable .selectable .content').slideUp();
     });
 
+    $(document).on('click', '#symptoms-inputable .add .btn-add', function(event)
+    {
+        event.preventDefault();
+
+        var symptom = $('#symptoms-inputable .add input').val();
+
+        insertSymptom(symptom);
+    });
+
+    $(document).on('keypress', '#symptoms-inputable .add input', function(event)
+    {
+
+        if(event.which == 13)
+        {
+            var symptom = $(this).val();
+
+            insertSymptom(symptom);
+        }
+    });
+
+    $(document).on('click', '#symptoms-inputable .item .btn-remove', function(event)
+    {
+        $(this).parent().remove();
+    });
+
+    $(document).on('keyup', '#order_header_add_vehicle_engine_displacement_l', function()
+    {
+
+        $('#order_header_add_vehicle_engine_displacement_l + ul').remove();
+
+        var ed = parseFloat($('#order_header_add_vehicle_engine_displacement_l').val().replace(",", "."));
+
+        if(ed == '') return;
+
+        if(ed < 0.5 || (ed > 20 && ed < 500) || ed > 20000)
+        {
+            $('label[for="order_header_add_vehicle_engine_displacement_l"]').text('Pojemność silnika');
+            $('#order_header_add_vehicle_engine_displacement_l').after('<ul><li>Błędna wartość</li></ul>');
+        }
+        else
+        {
+            if(ed < 50)
+            {
+                $('label[for="order_header_add_vehicle_engine_displacement_l"]').text('Pojemność silnika [l]');
+            }
+            else
+            {
+                $('label[for="order_header_add_vehicle_engine_displacement_l"]').text('Pojemność silnika [cm3]');
+            }
+        }
+    });
 });
 
 /* FUNCTIONS - CUSTOMER */
@@ -516,6 +567,7 @@ function removeVehicleErrors()
     $("input[name*='order_header_add[vehicle]'] + ul").remove();
     $("select[name*='order_header_add[vehicle]'] + ul").remove();
     $("textarea[name*='order_header_add[vehicle]'] + ul").remove();
+    $('.selectable + ul').remove();
 
     return null;
 }
@@ -548,4 +600,24 @@ function getModels(brandName)
             }
         }
     });
+}
+function insertSymptom(symptom)
+{
+    if(symptom == '') return;
+
+    var error = false;
+    $('#symptoms-inputable .item input').each(function()
+    {
+        if($(this).val() == symptom) error = true;
+    });
+
+    if(error) return;
+
+    var item = '<div class="item"><input type="text" maxlength="120" name="order_header_add[symptoms][][name]" value="' + symptom + '"><button class="btn-square btn-remove"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>';
+
+    $('#symptoms-inputable .add').before(item);
+
+    $('#symptoms-inputable .add input').val('');
+
+    return;
 }

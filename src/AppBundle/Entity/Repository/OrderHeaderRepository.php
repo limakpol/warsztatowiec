@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * OrderHeaderRepository
@@ -10,4 +11,44 @@ namespace AppBundle\Entity\Repository;
  */
 class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCountMonthly(Workshop $workshop)
+    {
+        $count = $this->_em->createQueryBuilder()
+            ->select('COUNT(o)')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->where('o.workshop = :workshop')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('MONTH(o.created_at) = :month')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':month' => date('m')
+            ])
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $count;
+    }
+
+    public function getCountYearly(Workshop $workshop)
+    {
+        $count = $this->_em->createQueryBuilder()
+            ->select('COUNT(o)')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->where('o.workshop = :workshop')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('YEAR(o.created_at) = :year')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':year' => date('Y')
+            ])
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $count;
+    }
+
 }

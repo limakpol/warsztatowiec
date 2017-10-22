@@ -18,3 +18,9 @@ order_header_retrieve_vehicles:
     path: /order/retrieve-vehicles
     defaults: { _controller: OrderBundle:OrderHeader:retrieveVehicles }
 
+order_header_retrieve_symptoms:
+    path: /order/retrieve-symptoms
+    defaults: { _controller: OrderBundle:OrderHeader:retrieveSymptoms }
+
+
+

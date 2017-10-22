@@ -50,9 +50,11 @@ class VehicleController extends Controller
 
         if($vehicleHelper->isValid($form))
         {
-            $vehicleHelper->write($form);
+            $vehicleId = $vehicleHelper->write($form);
 
-            return $this->redirectToRoute('vehicle_index');
+            return $this->redirectToRoute('vehicle_show', [
+                'vehicleId' => $vehicleId,
+            ]);
         }
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();

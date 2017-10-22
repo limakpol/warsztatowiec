@@ -9,7 +9,10 @@
 namespace OrderBundle\Controller;
 
 
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
@@ -43,6 +46,7 @@ class OrderHeaderController extends Controller
         $customers = $customerIndexHelper->retrieve($customerSortableParameters);
         $groupps = $customerIndexHelper->retrieveGroupps();
         $vehicles = $vehicleIndexHelper->retrieve($vehicleSortableParameters);
+        $symptoms = $orderHeaderAddHelper->retrieveSymptoms();
 
         return $this->render('OrderBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
@@ -55,6 +59,7 @@ class OrderHeaderController extends Controller
             'groupps'       => $groupps,
             'customerSortableParameters' => $customerSortableParameters,
             'vehicleSortableParameters' => $vehicleSortableParameters,
+            'symptoms'      => $symptoms,
         ]);
     }
 
@@ -92,6 +97,22 @@ class OrderHeaderController extends Controller
             'vehicles' => $vehicles,
             'vehicleSortableParameters' => $sortableParameters,
         ]);
+    }
+
+    public function retrieveSymptomsAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $symptoms = $em->getRepository('AppBundle:OrderSymptom')->retrieveNames($workshop);
+
+        return $symptoms;
     }
 
 

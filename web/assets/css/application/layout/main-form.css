@@ -121,7 +121,13 @@
     flex-direction: column;
 }
 .main-form .form-inputable .add .selectable input {
-    min-width: 400px;
+    min-width: 500px;
+}
+.main-form .form-inputable .item input {
+    min-width: 500px;
+}
+.main-form .form-inputable .item {
+    margin: 0 0 6px 0;
 }
 .main-form .form-inputable button {
     margin: 0 0 0 6px;

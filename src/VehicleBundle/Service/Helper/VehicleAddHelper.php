@@ -73,6 +73,9 @@ class VehicleAddHelper
 
     public function write(Form $form)
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
         /** @var EntityManager $em */
         $em = $this->entityManager;
 
@@ -87,8 +90,11 @@ class VehicleAddHelper
 
         $dateTime = new \DateTime();
 
+        $brandName = $request->get('vehicle')['car_brand'];
+        $modelName = $request->get('vehicle')['car_model'];
+
         /** @var CarModel $model */
-        $model = $this->getModel();
+        $model = $this->getModel($brandName, $modelName);
 
         $vehicle->setCarModel($model);
 
@@ -103,7 +109,7 @@ class VehicleAddHelper
 
         $em->flush();
 
-        return;
+        return $vehicle->getId();
     }
 
     public function evaluateTradeValues(Vehicle $vehicle)
@@ -146,10 +152,8 @@ class VehicleAddHelper
     }
 
 
-    public function getModel()
+    public function getModel($brandName, $modelName)
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
 
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -159,9 +163,6 @@ class VehicleAddHelper
 
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
-
-        $brandName = $request->get('vehicle')['car_brand'];
-        $modelName = $request->get('vehicle')['car_model'];
 
         $brand = $em->getRepository('AppBundle:CarBrand')->getOneByName($workshop, $brandName);
 

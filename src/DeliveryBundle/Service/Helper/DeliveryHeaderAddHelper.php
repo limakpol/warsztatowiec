@@ -142,9 +142,8 @@ class DeliveryHeaderAddHelper
 
             $address = $customer->getAddress();
 
-            if($address === null || $deliveryHeader->getCustomerId() == 'new')
+            if($deliveryHeader->getCustomerId() == 'new')
             {
-                $address = new Address();
                 $address->setCreatedAt($dateTime);
                 $address->setCreatedBy($user);
                 $address->setUpdatedBy($user);
@@ -155,7 +154,6 @@ class DeliveryHeaderAddHelper
             $customer = $this->customerAddHelper->assignGroupps($customer);
 
             $em->persist($address);
-
             $em->persist($customer);
         }
 

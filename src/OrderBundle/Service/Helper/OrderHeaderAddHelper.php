@@ -3,11 +3,14 @@
 namespace OrderBundle\Service\Helper;
 
 use AppBundle\Entity\Address;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\OrderHeader;
+use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
+use CustomerBundle\Service\Helper\CustomerAddHelper;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +20,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use VehicleBundle\Service\Helper\VehicleAddHelper;
 use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
 class OrderHeaderAddHelper
@@ -27,15 +31,19 @@ class OrderHeaderAddHelper
     private $formFactory;
     private $customerIndexHelper;
     private $vehicleIndexHelper;
+    private $vehicleAddHelper;
+    private $customerAddHelper;
 
-    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, VehicleIndexHelper $vehicleIndexHelper)
+    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, CustomerIndexHelper $customerIndexHelper, VehicleIndexHelper $vehicleIndexHelper, VehicleAddHelper $vehicleAddHelper, CustomerAddHelper $customerAddHelper)
     {
         $this->tokenStorage     = $tokenStorage;
         $this->requestStack     = $requestStack;
         $this->entityManager    = $entityManager;
         $this->formFactory      = $formFactory;
-        $this->customerIndexHelper = $customerIndexHelper;
-        $this->vehicleIndexHelper = $vehicleIndexHelper;
+        $this->customerIndexHelper  = $customerIndexHelper;
+        $this->vehicleIndexHelper   = $vehicleIndexHelper;
+        $this->vehicleAddHelper     = $vehicleAddHelper;
+        $this->customerAddHelper    = $customerAddHelper;
     }
 
     public function createForm()
@@ -54,25 +62,23 @@ class OrderHeaderAddHelper
 
         $orderHeader = new OrderHeader();
 
-        $customerId = $request->get('delivery_header_add')['customer_id'];
+        $customerId = $request->get('order_header_add')['customer_id'];
 
+        /** @var Customer $customer */
         $customer = $em->getRepository('AppBundle:Customer')->getOne($workshop, $customerId);
 
-        $vehicleId = $request->get('delivery_header_add')['vehicle_id'];
+        $vehicleId = $request->get('order_header_add')['vehicle_id'];
 
-        $vehicle = $em->getRepository('AppBundle:Customer')->getOne($workshop, $vehicleId);
+        /** @var Vehicle $vehicle */
+        $vehicle = $em->getRepository('AppBundle:Vehicle')->getOne($workshop, $vehicleId);
 
-        if(null === $customer)
+        if(null !== $customer)
         {
-            $address = new Address();
-            $customer = new Customer();
-            $customer->setAddress($address);
             $orderHeader->setCustomer($customer);
         }
 
-        if(null === $vehicle)
+        if(null !== $vehicle)
         {
-            $vehicle = new Vehicle();
             $orderHeader->setVehicle($vehicle);
         }
 
@@ -100,8 +106,85 @@ class OrderHeaderAddHelper
 
     public function write(Form $form)
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+        
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
 
-        return;
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $form->getData();
+
+        $dateTime = new \DateTime();
+
+        $orderHeader->setWorkshop($workshop);
+        $orderHeader->setCreatedAt($dateTime);
+        $orderHeader->setCreatedBy($user);
+        $orderHeader->setUpdatedBy($user);
+
+        $customer = $orderHeader->getCustomer();
+
+        if(null === $orderHeader->getCustomerId())
+        {
+            $customer->setWorkshop($workshop);
+            $customer->setCreatedAt($dateTime);
+            $customer->setCreatedBy($user);
+            $customer->setUpdatedBy($user);
+
+            $address = $customer->getAddress();
+
+            if(null !== $address)
+            {
+                $address = new Address();
+                $customer->setAddress($address);
+            }
+
+            $address->setWorkshop($workshop);
+            $address->setCreatedAt($dateTime);
+            $address->setCreatedBy($user);
+            $address->setUpdatedBy($user);
+
+        }
+
+        /** @var Customer $customer */
+        $customer = $this->customerAddHelper->assignGroupps($customer);
+
+        $vehicle = $orderHeader->getVehicle();
+
+        if(null === $orderHeader->getVehicleId())
+        {
+            $vehicle->setWorkshop($workshop);
+            $vehicle->setCreatedAt($dateTime);
+            $vehicle->setCreatedBy($user);
+            $vehicle->setUpdatedBy($user);
+        }
+        
+        $brandName = $request->get('order_header_add')['vehicle']['car_brand'];
+        $modelName = $request->get('order_header_add')['vehicle']['car_model'];
+        
+        /** @var CarModel $model */
+        $model = $this->vehicleAddHelper->getModel($brandName, $modelName);
+        
+        $vehicle->setCarModel($model);
+
+        $vehicle = $this->vehicleAddHelper->evaluateTradeValues($vehicle);
+
+        $orderHeader = $this->setOrderNumbers($orderHeader);
+        $orderHeader = $this->setSymptoms($orderHeader);
+
+        $em->persist($customer);
+        $em->persist($vehicle);
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return $orderHeader->getId();
     }
 
     public function getCustomerSortableParameters()
@@ -130,6 +213,70 @@ class OrderHeaderAddHelper
         return $sortableParameters;
     }
 
+    public function retrieveSymptoms()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
 
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $symptoms = $em->getRepository('AppBundle:OrderSymptom')->retrieve($workshop);
+
+        return $symptoms;
+    }
+
+    public function setOrderNumbers(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $countMonthly = $em->getRepository('AppBundle:OrderHeader')->getCountMonthly($workshop);
+        $countYearly = $em->getRepository('AppBundle:OrderHeader')->getCountYearly($workshop);
+
+        $numberMonthly = date('m') . '\\' . $countMonthly;
+        $numberYearly = date('m') . '\\' . date('Y') . $countYearly;
+
+        $orderHeader->setNumberMonthly($numberMonthly);
+        $orderHeader->setNumberYearly($numberYearly);
+
+        return $orderHeader;
+    }
+
+    public function setSymptoms(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $dateTime = new \DateTime();
+
+        /** @var OrderSymptom $symptom */
+        foreach($orderHeader->getSymptoms() as $symptom)
+        {
+            $symptom->setCreatedAt($dateTime);
+            $symptom->setCreatedBy($user);
+            $symptom->setUpdatedBy($user);
+            $symptom->setOrderHeader($orderHeader);
+
+            $em->persist($symptom);
+        }
+
+        return $orderHeader;
+    }
 
 }

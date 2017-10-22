@@ -31,11 +31,11 @@ class OrderHeaderAddType extends AbstractType
                 'empty_data' => null,
             ])
             ->add('customer', CustomerType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [new Valid()],
             ])
             ->add('vehicle', VehicleType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [new Valid()],
             ])
             ->add('symptoms', CollectionType::class, [

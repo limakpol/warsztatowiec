@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * OrderSymptomRepository
@@ -10,4 +11,46 @@ namespace AppBundle\Entity\Repository;
  */
 class OrderSymptomRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function retrieveNames(Workshop $workshop)
+    {
+        $symptomNames = $this->_em->createQueryBuilder()
+            ->select('s.name')
+            ->from('AppBundle:OrderSymptom', 's')
+            ->leftJoin('AppBundle:OrderHeader', 'h', 'WITH', 's.order_header_id = h.id')
+            ->where('h.workshop = :workshop')
+            ->andWhere('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->setParameter(':workshop', $workshop)
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult()
+            ;
+
+        return $symptomNames;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $symptoms = $this->_em->createQueryBuilder()
+            ->select('s.name')
+            ->from('AppBundle:OrderSymptom', 's')
+            ->leftJoin('AppBundle:OrderHeader', 'h', 'WITH', 's.order_header_id = h.id')
+            ->where('h.workshop = :workshop')
+            ->andWhere('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->setParameter(':workshop', $workshop)
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $symptoms;
+    }
+
+
+
 }
