@@ -112,6 +112,7 @@
     <h1 class="h-enum selected-vehicle">4. Wpisz dane nowego pojazdu</h1>
     <div id="vehicle-form" class="form-part">
         <div class="div-slider">
+            {{ form_widget(form.vehicle_id) }}
             {{ form_label(form.vehicle.car_brand) }}
             <div id="selectable-brand" class="selectable">
                 {{ form_widget(form.vehicle.car_brand) }}
@@ -177,16 +178,16 @@
     <div class="form-part">
         <div class="div-slider">
             {{ form_label(form.symptoms) }}
-            <div class="form-inputable">
+            <div id="symptoms-inputable" class="form-inputable">
                 <div class="add">
-                    <input type="text" maxlength="120">
+                    <div class="selectable">
+                        <input type="text" maxlength="120">
+                        <div class="content"><div>chuj</div><div>jutro</div></div>
+                    </div>
                     <button class="btn-square btn-add" data-type="good">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
-            </div>
-            <div id="selectable-symptoms" class="selectable">
-                <div class="content"></div>
             </div>
 
             {{ form_label(form.workstation) }}

@@ -3,7 +3,10 @@
 }
 #searchable-customer header div:nth-child(1):hover,
 #searchable-customer header div:nth-child(2):hover,
-#searchable-customer header div:nth-child(3):hover {
+#searchable-customer header div:nth-child(3):hover,
+#searchable-vehicle header div:nth-child(1):hover,
+#searchable-vehicle header div:nth-child(2):hover,
+#searchable-vehicle header div:nth-child(3):hover{
     cursor: pointer;
     color: #777;
 }

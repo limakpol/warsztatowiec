@@ -3,6 +3,7 @@
     align-items: flex-start;
     flex-direction: column;
     margin: 0;
+    width: 100%;
 }
 .main-form .form-part {
     display: flex;
@@ -90,6 +91,41 @@
     background-color: #eee;
     border: 1px solid #aaa;
     color: #333;
+}
+.main-form .td-left {
+    text-align: left;
+}
+.main-form .td-center {
+    text-align: center;
+}
+.main-form .td-right {
+    text-align: right;
+}
+.main-form .input-center {
+    text-align: center;
+}
+
+.main-form .form-inputable {
+    display: flex;
+    flex-direction: column;
+}
+.main-form .form-inputable .add {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.main-form .form-inputable .add .selectable {
+    display: flex;
+    flex-direction: column;
+}
+.main-form .form-inputable .add .selectable input {
+    min-width: 400px;
+}
+.main-form .form-inputable button {
+    margin: 0 0 0 6px;
+    align-self: flex-start;
 }
 
 @media screen and (min-width: 1200px) {

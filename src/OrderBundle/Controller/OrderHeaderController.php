@@ -11,6 +11,7 @@ namespace OrderBundle\Controller;
 
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
 class OrderHeaderController extends Controller
 {
@@ -74,4 +75,24 @@ class OrderHeaderController extends Controller
             'customerSortableParameters' => $sortableParameters,
         ]);
     }
+
+    public function retrieveVehiclesAction()
+    {
+        /** @var VehicleIndexHelper $vehicleIndexHelper */
+        $vehicleIndexHelper = $this->get('vehicle.helper.index');
+
+        $inputSortableParameters = $vehicleIndexHelper->getInputSortableParameters();
+        $inputSortableParameters['limit'] = 15;
+        $outputSortableParameters = $vehicleIndexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $vehicles = $vehicleIndexHelper->retrieve($sortableParameters);
+
+        return $this->render('OrderBundle:header:vehicle_searchable_content.html.twig', [
+            'vehicles' => $vehicles,
+            'vehicleSortableParameters' => $sortableParameters,
+        ]);
+    }
+
+
 }

@@ -22,6 +22,10 @@ vehicle_retrieve:
     path: /vehicle-retrieve
     defaults: { _controller: VehicleBundle:Vehicle:retrieve }
 
+vehicle_get_one:
+    path: /vehicle/get-one/{hydrationMode}
+    defaults: { _controller: VehicleBundle:Vehicle:getOne }
+
 vehicle_retrieve_brands:
     path: /vehicle/retrieve-brands
     defaults: { _controller: VehicleBundle:Vehicle:retrieveBrands }

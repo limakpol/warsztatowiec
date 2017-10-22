@@ -3,6 +3,12 @@
 namespace VehicleBundle\Controller;
 
 use AppBundle\Entity\CarBrand;
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Vehicle;
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,5 +174,61 @@ class VehicleController extends Controller
         return $this->render('VehicleBundle::selectable_model_content.html.twig', [
             'models' => $models,
         ]);
+    }
+
+    public function getOneAction($hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var array $vehicleArray */
+        $vehicleArray =  $em->getRepository('AppBundle:Vehicle')
+            ->getOne($workshop, $request->get('vehicleId'), $hydrationMode);
+
+        /** @var Vehicle $vehicle */
+        $vehicle = $em->getRepository('AppBundle:Vehicle')->getOne($workshop, $request->get('vehicleId'), 1);
+
+        $brandName = $vehicle->getCarModel()->getBrand()->getName();
+        $modelName = $vehicle->getCarModel()->getName();
+        $dateOfInspection = $vehicle->getDateOfInspection();
+
+        if(null !== $dateOfInspection)
+        {
+            $dateOfInspection = [
+                $dateOfInspection->format('j'),
+                $dateOfInspection->format('n'),
+                $dateOfInspection->format('Y')
+            ];
+        }
+        else
+        {
+            $dateOfInspection = [];
+        }
+
+        $dateOfOilChange = $vehicle->getDateOfOilChange();
+
+        if(null !== $dateOfOilChange)
+        {
+            $dateOfOilChange = [
+                $dateOfOilChange->format('j'),
+                $dateOfOilChange->format('n'),
+                $dateOfOilChange->format('Y')
+            ];
+        }
+        else
+        {
+            $dateOfOilChange = [];
+        }
+
+        return new JsonResponse([$vehicleArray, $brandName, $modelName, $dateOfInspection, $dateOfOilChange]);
     }
 }

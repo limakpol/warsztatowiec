@@ -110,34 +110,37 @@ class VehicleAddHelper
     {
         $engineDisplacementL = $vehicle->getEngineDisplacementL();
 
-        $engineDisplacementL = $this->trade->normalize($engineDisplacementL);
-
-        if($engineDisplacementL > 50)
+        if(null !== $engineDisplacementL)
         {
-            $vehicle->setEngineDisplacementCm3($engineDisplacementL);
+            $engineDisplacementL = $this->trade->normalize($engineDisplacementL);
 
-            $engineDisplacementL = round($engineDisplacementL/1000, 1);
+            if ($engineDisplacementL > 50) {
+                $vehicle->setEngineDisplacementCm3($engineDisplacementL);
 
-            $vehicle->setEngineDisplacementL($engineDisplacementL);
-        }
-        else
-        {
-            $vehicle->setEngineDisplacementL($engineDisplacementL);
+                $engineDisplacementL = round($engineDisplacementL / 1000, 1);
 
-            $engineDisplacementCm3 = 1000 * $engineDisplacementL;
+                $vehicle->setEngineDisplacementL($engineDisplacementL);
+            } else {
+                $vehicle->setEngineDisplacementL($engineDisplacementL);
 
-            $vehicle->setEngineDisplacementCm3($engineDisplacementCm3);
+                $engineDisplacementCm3 = 1000 * $engineDisplacementL;
+
+                $vehicle->setEngineDisplacementCm3($engineDisplacementCm3);
+            }
         }
 
         $enginePowerKm = $vehicle->getEnginePowerKm();
 
-        $enginePowerKm = $this->trade->normalize($enginePowerKm);
+        if(null !== $enginePowerKm)
+        {
+            $enginePowerKm = $this->trade->normalize($enginePowerKm);
 
-        $vehicle->setEnginePowerKm($enginePowerKm);
+            $vehicle->setEnginePowerKm($enginePowerKm);
 
-        $enginePowerKw = 0.73549875 * $enginePowerKm;
+            $enginePowerKw = 0.73549875 * $enginePowerKm;
 
-        $vehicle->setEnginePowerKw($enginePowerKw);
+            $vehicle->setEnginePowerKw($enginePowerKw);
+        }
 
         return $vehicle;
     }

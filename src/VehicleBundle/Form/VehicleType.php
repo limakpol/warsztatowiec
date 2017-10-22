@@ -93,6 +93,7 @@ class VehicleType extends AbstractType
                 'attr'      => [
                     'maxlength' => 3,
                     'size'      => 3,
+                    'class'     => 'input-center',
                 ],
             ])
             ->add('engine_type', ChoiceType::class, [
@@ -110,17 +111,21 @@ class VehicleType extends AbstractType
             ->add('engine_displacement_l', TextType::class, [
                 'label' => 'Pojemność silnika [l]',
                 'required' => false,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 5,
                     'size' => 4,
+                    'class'     => 'input-center',
                 ],
             ])
             ->add('engine_power_km', TextType::class, [
                 'label' => 'Moc silnika [KM]',
                 'required' => false,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 4,
                     'size' => 3,
+                    'class'     => 'input-center',
                 ],
             ])
             ->add('date_of_inspection', DateType::class, [

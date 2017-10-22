@@ -168,7 +168,6 @@
         </div>
     {{ form_end(form, {'render_rest': false})}}
     {% for groupp in form.customer.groupps %}
-    {{ dump(groupp.vars.value.name) }}
     {% endfor %}
 {% endblock %}
 {% block javascripts %}

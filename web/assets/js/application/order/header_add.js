@@ -82,9 +82,333 @@ $(document).ready(function()
         $('#searchable-customer > div').slideUp();
 
         $('#customer-form').slideDown();
+    });
+
+    $(document).on('click', '#searchable-customer tr:not(:first-child)', function()
+    {
+        var customerId = $(this).data('id');
+
+        $.ajax({
+            type: "POST",
+            url: "/customer/get-one/2",
+            data: {
+                customerId: customerId,
+            },
+            success: function(data) {
+                if(data.error > 0)
+                {
+
+                }
+                else
+                {
+                    clearCustomerForm();
+                    for(value in data[0])
+                    {
+                        var cssId = '#order_header_add_customer_' + value;
+
+                        $(cssId).val(data[0][value]).change();
+                    }
+
+                    for(value in data[1])
+                    {
+                        cssId = '#order_header_add_customer_address_' + value;
+
+                        $(cssId).val(data[1][value]).change();
+                    }
+
+                    $('#order_header_add_customer_address_province').val(data[1]['province_id']);
+
+                    var buttonsLabels = $('#customer-form .div-form-labels .customer-btn-filter-custom');
+
+                    for (var key in data[2])
+                    {
+                        buttonsLabels.each(function ()
+                        {
+                            if ($(this).text() == data[2][key])
+                            {
+                                $(this).addClass('active');
+                                $(this).after('<input class="groupp" type="hidden" name="order_header_add[customer][groupps][' + key + '][name]" required="required" value="' + data[2][key] + '">');
+                            }
+                        });
+                    }
+                }
+
+            }
+        });
+
+        removeCustomerErrors();
+
+        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane klienta');
+
+        $('#searchable-customer > div').slideUp();
 
     });
+
+    $(document).on('click', '.customer-btn-filter-custom', function(event)
+    {
+        event.preventDefault();
+
+        var button = $(this);
+
+        if(button.hasClass('active'))
+        {
+            $('input[class="groupp"][type=hidden][value="' + button.text() + '"]').remove();
+            button.removeClass('active');
+        }
+        else
+        {
+            var input = '<input class="groupp" type="hidden" name="order_header_add[customer][groupps][' + button.data('id') + '][name]" required="required" value="' + button.text() + '">';
+
+            button.after(input);
+            button.addClass('active');
+        }
+    });
+
+    $(document).on('keypress', '.input-label-add', function(event)
+    {
+
+        if(event.which == 13)
+        {
+            event.preventDefault();
+
+            var name = $(this).val();
+
+            if(name == '') return;
+
+            var buttons = $('.customer-btn-filter-custom');
+
+            var error = false;
+
+            buttons.each(function()
+            {
+                if($(this).text() == name)
+                {
+                    error = true;
+                }
+            });
+
+            if(error) return;
+
+            var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
+            var hidden = '<input class="groupp" type="hidden" name="order_header_add[customer][groupps][][name]" required="required" value="' + name + '">';
+
+            $(this).before(button);
+            $(this).before(hidden);
+            $(this).val('');
+        }
+    });
     
+    
+    /* VEHICLE */
+
+    $(document).on('click', '#searchable-vehicle > input', function() {
+        $('#searchable-vehicle > div').slideDown();
+    });
+
+    $(document).on('keyup', '#searchable-vehicle > input', function() {
+        $('#searchable-vehicle > div').slideDown();
+    });
+
+    $(document).on('dblclick', '#searchable-vehicle > input', function() {
+
+        $('#searchable-vehicle > div').slideUp();
+    });
+
+    $(document).on('click', '#searchable-vehicle .prev', function(event){
+        event.preventDefault();
+        var sortableParameters = getVehicleSortableParameters();
+        sortableParameters.requestedPage = 0;
+        vehicleRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-vehicle .next', function(event){
+        event.preventDefault();
+        var sortableParameters = getVehicleSortableParameters();
+        sortableParameters.requestedPage = 2;
+        vehicleRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-vehicle th.sort-column', function(){
+        var sortableParameters = getVehicleSortableParameters();
+
+        sortableParameters.sortColumnName = $(this).data('column');
+
+        var sortOrder = $('#searchable-vehicle footer .sortOrder').val();
+        if(sortOrder == 'DESC')
+        {
+            sortOrder = 'ASC';
+        }
+        else
+        {
+            sortOrder = 'DESC';
+        }
+
+        sortableParameters.sortOrder = sortOrder;
+
+        vehicleRequest(sortableParameters);
+    });
+
+    $(document).on('keyup', '#searchable-vehicle > input', function()
+    {
+        if(globalTimeout != null)
+        {
+            clearTimeout(globalTimeout);
+        }
+
+        globalTimeout = setTimeout(function()
+        {
+            globalTimeout = null;
+
+            var sortableParameters = getVehicleSortableParameters();
+            vehicleRequest(sortableParameters);
+
+        }, 1000);
+    });
+
+    $(document).on('click', '#vehicle-new', function()
+    {
+        $('#order_header_add_vehicle_car_brand').focus();
+
+        clearVehicleForm();
+
+        removeVehicleErrors();
+
+        $('.h-enum.selected-vehicle').text('4. Wpisz dane nowego pojazdu');
+
+        $('#order_header_add_vehicle_id').val('new');
+
+        $('#searchable-vehicle > div').slideUp();
+
+    });
+
+    $(document).on('click', '#searchable-vehicle tr:not(:first-child)', function()
+    {
+        var vehicleId = $(this).data('id');
+
+        $.ajax({
+            type: "POST",
+            url: "/vehicle/get-one/2",
+            data: {
+                vehicleId: vehicleId,
+            },
+            success: function(data) {
+                if(data.error > 0)
+                {
+
+                }
+                else
+                {
+                    clearVehicleForm();
+                    for(value in data[0])
+                    {
+                        var cssId = '#order_header_add_vehicle_' + value;
+
+                        $(cssId).val(data[0][value]).change();
+                    }
+
+                    $('#order_header_add_vehicle_car_brand').val(data[1]);
+                    $('#order_header_add_vehicle_car_model').val(data[2]);
+                    
+                    $('#order_header_add_vehicle_date_of_inspection_day').val(data[3][0]);
+                    $('#order_header_add_vehicle_date_of_inspection_month').val(data[3][1]);
+                    $('#order_header_add_vehicle_date_of_inspection_year').val(data[3][2]);
+
+                    $('#order_header_add_vehicle_date_of_oil_change_day').val(data[4][0]);
+                    $('#order_header_add_vehicle_date_of_oil_change_month').val(data[4][1]);
+                    $('#order_header_add_vehicle_date_of_oil_change_year').val(data[4][2]);
+
+                }
+
+            }
+        });
+
+        removeVehicleErrors();
+
+        $('.h-enum.selected-vehicle').text('4. Możesz przejrzeć i zmienić dane pojazdu');
+
+        $('#searchable-vehicle > div').slideUp();
+
+    });
+
+    $(document).on('click', '#order_header_add_vehicle_car_brand', function(){
+        $('#selectable-brand .content').slideDown();
+    });
+
+    $(document).on('dblclick', '#order_header_add_vehicle_car_brand', function(){
+        $('#selectable-brand .content').slideUp();
+    });
+
+    $(document).on('click', '#order_header_add_vehicle_car_model', function(){
+
+        var brandName = $('#order_header_add_vehicle_car_brand').val();
+
+        if(brandName == '') return;
+
+        getModels(brandName);
+
+        $('#selectable-model .content').slideDown();
+        $('#selectable-brand .content').slideUp();
+    });
+
+    $(document).on('dblclick', '#order_header_add_vehicle_car_model', function(){
+        $('#selectable-model .content').slideUp();
+    });
+
+    $(document).on('click', '#selectable-brand .content div', function(){
+
+        var brandName = $(this).text();
+
+        $('#order_header_add_vehicle_car_brand').val(brandName);
+
+        $('#selectable-brand .content').slideUp();
+
+        getModels(brandName);
+
+        $('#selectable-model .content').slideDown();
+    });
+
+    $(document).on('click', '#selectable-model .content div', function(){
+
+        var modelName = $(this).text();
+
+        $('#order_header_add_vehicle_car_model').val(modelName);
+
+        $('#selectable-brand .content').slideUp();
+        $('#selectable-model .content').slideUp();
+    });
+
+    $(document).on('keyup', '#order_header_add_vehicle_car_brand', function()
+    {
+        if(globalTimeout != null)
+        {
+            clearTimeout(globalTimeout);
+        }
+
+        globalTimeout = setTimeout(function()
+        {
+            globalTimeout = null;
+
+            var brandName = $('#order_header_add_vehicle_car_brand').val();
+
+            getModels(brandName);
+
+        }, 1000);
+    });
+
+    $(document).on('click', '#symptoms-inputable .add input', function(event)
+    {
+        event.preventDefault();
+
+        $('#symptoms-inputable .selectable .content').slideDown();
+    });
+
+    $(document).on('dblclick', '#symptoms-inputable .add input', function(event)
+    {
+        event.preventDefault();
+
+        $('#symptoms-inputable .selectable .content').slideUp();
+    });
+
 });
 
 /* FUNCTIONS - CUSTOMER */
@@ -146,4 +470,82 @@ function clearCustomerForm()
     $('#customer-form .div-form-labels button.active').removeClass('active');
 
     return null;
+}
+
+/* FUNCTIONS - VEHICLE */
+
+function getVehicleSortableParameters()
+{
+    //var systemFilters = [];
+    //var customFilters = [];
+
+    sortableParameters = {
+        "search": $('#searchable-vehicle > input').val(),
+        "limit": 15,
+        "sortColumnName": $('#searchable-vehicle footer .sortColumnName').val(),
+        "sortOrder": $('#searchable-vehicle footer .sortOrder').val(),
+        "currentPage": $('#searchable-vehicle footer .currentPage').val(),
+        "requestedPage": 1,
+      //  "systemFilters": systemFilters,
+       // "customFilters": customFilters,
+    };
+
+    return sortableParameters;
+}
+
+function vehicleRequest(sortableParameters)
+{
+    $.ajax({
+        type: "POST",
+        url: $('#searchable-vehicle footer .retrievePath').val(),
+        data: {
+            sortableParameters: JSON.stringify(sortableParameters)
+        },
+        success: function(data)
+        {
+            if(!data['error'])
+            {
+                $('#searchable-vehicle > div').html(data);
+            }
+        }
+    });
+}
+
+function removeVehicleErrors()
+{
+    $("input[name*='order_header_add[vehicle]'] + ul").remove();
+    $("select[name*='order_header_add[vehicle]'] + ul").remove();
+    $("textarea[name*='order_header_add[vehicle]'] + ul").remove();
+
+    return null;
+}
+
+function clearVehicleForm()
+{
+    $("input[name*='order_header_add[vehicle]']").val('').change();
+    $("select[name*='order_header_add[vehicle]']").val('').change();
+    $("textarea[name*='order_header_add[vehicle]']").val('').change();
+
+    return null;
+}
+function getModels(brandName)
+{
+
+    $.ajax({
+        type: "POST",
+        url: "/vehicle/retrieve-models",
+        data: {
+            brandName: brandName,
+        },
+        success: function(data) {
+            if(!data['error'])
+            {
+                $('#selectable-model .content').html(data);
+            }
+            else
+            {
+                $('#selectable-model .content').html('');
+            }
+        }
+    });
 }

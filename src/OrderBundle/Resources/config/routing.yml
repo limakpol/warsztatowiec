@@ -13,3 +13,8 @@ order_header_add:
 order_header_retrieve_customers:
     path: /order/retrieve-customers
     defaults: { _controller: OrderBundle:OrderHeader:retrieveCustomers }
+
+order_header_retrieve_vehicles:
+    path: /order/retrieve-vehicles
+    defaults: { _controller: OrderBundle:OrderHeader:retrieveVehicles }
+

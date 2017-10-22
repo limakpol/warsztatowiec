@@ -91,10 +91,6 @@ $(document).ready(function()
                 $('label[for="vehicle_engine_displacement_l"]').text('Pojemność silnika [cm3]');
             }
         }
-
-
-
-
     });
 });
 
