@@ -134,6 +134,7 @@ $(document).ready(function(){
                 }
                 else
                 {
+                    clearCustomerForm();
                     for(value in data[0])
                     {
                         var cssId = '#sale_header_add_customer_' + value;
@@ -149,6 +150,20 @@ $(document).ready(function(){
                     }
 
                     $('#sale_header_add_customer_address_province').val(data[1]['province_id']);
+
+                    var buttonsLabels = $('#customer-form .div-form-labels .customer-btn-filter-custom');
+
+                    for (var key in data[2])
+                    {
+                        buttonsLabels.each(function ()
+                        {
+                            if ($(this).text() == data[2][key])
+                            {
+                                $(this).addClass('active');
+                                $(this).after('<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][' + key + '][name]" required="required" value="' + data[2][key] + '">');
+                            }
+                        });
+                    }
                 }
 
             }
@@ -176,8 +191,9 @@ $(document).ready(function(){
         }
         else
         {
+            var input = '<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][' + button.data('id') + '][name]" required="required" value="' + button.text() + '">';
 
-            button.after('<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + button.text() + '">');
+            button.after(input);
             button.addClass('active');
         }
     });
@@ -189,9 +205,23 @@ $(document).ready(function(){
         {
             event.preventDefault();
 
-
             var name = $(this).val();
 
+            if(name == '') return;
+
+            var buttons = $('.customer-btn-filter-custom');
+
+            var error = false;
+
+            buttons.each(function()
+            {
+                if($(this).text() == name)
+                {
+                    error = true;
+                }
+            });
+
+            if(error) return;
 
             var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
             var hidden = '<input class="groupp" type="hidden" name="sale_header_add[customer][groupps][][name]" required="required" value="' + name + '">';

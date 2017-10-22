@@ -100,7 +100,18 @@
             {{ form_label(form.customer.groupps) }}
             <div class="div-form-labels">
                 {% for groupp in groupps %}
-                    <button class="customer-btn-filter-custom">{{ groupp.name }}</button>
+                    <button class="customer-btn-filter-custom
+                        {% for prevGroupp in form.customer.groupps %}
+                            {% if prevGroupp.vars.value.name == groupp.name %}
+                                active
+                            {% endif %}
+                        {% endfor %}
+                        " data-id="{{ groupp.id }}">{{ groupp.name }}</button>
+                    {% for prevGroupp in form.customer.groupps %}
+                        {% if prevGroupp.vars.value.name == groupp.name %}
+                            <input class="groupp" type="hidden" name="sale_header_add[customer][groupps][{{ groupp.id }}][name]" required="required" value="{{ groupp.name }}">
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
                 <input type="text" size="10" maxlength="25" class="input-label-add">
             </div>

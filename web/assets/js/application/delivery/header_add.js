@@ -128,7 +128,6 @@ $(document).ready(function(){
                 customerId: customerId,
             },
             success: function(data) {
-                console.log(data);
                 if (data.error > 0) {
 
                 }
@@ -150,11 +149,16 @@ $(document).ready(function(){
                     $('#delivery_header_add_customer_address_province').val(data[1]['province_id']);
 
                     var buttonsLabels = $('#customer-form .div-form-labels .customer-btn-filter-custom');
-                    for (var key in data[2]) {
-                        buttonsLabels.each(function () {
-                            if ($(this).text() == data[2][key]) {
+
+                    console.log(data[2]);
+                    for (var key in data[2])
+                    {
+                        buttonsLabels.each(function ()
+                        {
+                            if ($(this).text() == data[2][key])
+                            {
                                 $(this).addClass('active');
-                                $(this).after('<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][][name]" required="required" value="' + data[2][key] + '">');
+                                $(this).after('<input class="groupp" type="hidden" name="delivery_header_add[customer][groupps][' + key + '][name]" required="required" value="' + data[2][key] + '">');
                             }
                         });
                     }
@@ -179,7 +183,6 @@ $(document).ready(function(){
 
         if(button.hasClass('active'))
         {
-
             $('input[class="groupp"][type=hidden][value="' + button.text() + '"]').remove();
             button.removeClass('active');
         }

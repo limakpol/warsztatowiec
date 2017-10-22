@@ -124,31 +124,40 @@ class SaleHeaderAddHelper
         {
             $saleHeader->setCustomer(null);
         }
-
-        if($saleHeader->getCustomerId() == 'new')
+        else
         {
             $customer = $saleHeader->getCustomer();
 
-            $customer
-                ->setWorkshop($workshop)
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user)
-                ->setCreatedAt($dateTime)
-                ;
+            if ($saleHeader->getCustomerId() == 'new')
+            {
+                $customer
+                    ->setWorkshop($workshop)
+                    ->setCreatedBy($user)
+                    ->setUpdatedBy($user)
+                    ->setCreatedAt($dateTime);
 
-            $customer = $this->customerAddHelper->assignGroupps($customer);
+
+            }
 
             $address = $customer->getAddress();
 
-            $address->setCreatedAt($dateTime);
-            $address->setCreatedBy($user);
-            $address->setUpdatedBy($user);
+            if($address === null || $saleHeader->getCustomerId() == 'new')
+            {
+                $address = new Address();
+                $address->setCreatedAt($dateTime);
+                $address->setCreatedBy($user);
+                $address->setUpdatedBy($user);
+
+                $customer->setAddress($address);
+            }
+
+            $customer = $this->customerAddHelper->assignGroupps($customer);
 
             $em->persist($address);
 
             $em->persist($customer);
-        }
 
+        }
 
         $em->persist($saleHeader);
 

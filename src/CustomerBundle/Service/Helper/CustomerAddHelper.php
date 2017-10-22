@@ -139,8 +139,6 @@ class CustomerAddHelper
         foreach($grouppNames as $grouppName)
         {
 
-            //$grouppName = $groupp->getName();
-
             $groupp     = $this->entityManager
                         ->getRepository('AppBundle:Groupp')
                         ->getOneByName($workshop, $grouppName);

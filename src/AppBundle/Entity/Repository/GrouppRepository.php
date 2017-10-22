@@ -81,7 +81,7 @@ class GrouppRepository extends \Doctrine\ORM\EntityRepository
             /** @var Groupp $groupp */
             foreach($groupps as $groupp)
             {
-                $grouppNames[] = $groupp->getName();
+                $grouppNames[$groupp->getId()] = $groupp->getName();
             }
 
             return $grouppNames;
