@@ -27,7 +27,7 @@
             <td class="td-center">{{ vehicle.registrationNumber }}</td>
             <td class="td-left">
                 {% if vehicle.owner is not null %}
-                    {{ vehicle.owner.forename }} {{ vehicle.owner.surname }} {{ vehicle.owner.companyName }}
+                    <a href="{{ path('customer_show', {customerId: vehicle.owner.id}) }}">{{ vehicle.owner.forename }} {{ vehicle.owner.surname }} {{ vehicle.owner.companyName }}</a>
                 {% endif %}
             </td>
         </tr>

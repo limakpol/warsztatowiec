@@ -30,7 +30,7 @@ class OrderController extends Controller
             'orderHeaderId' => $orderHeaderId,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
-            'tab'           => 'warehouse',
+            'tab'           => 'order',
             'navbar'        => 'Przyjęcie towaru',
         ]);
     }

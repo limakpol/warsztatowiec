@@ -71,16 +71,27 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('s.removed_at IS NULL')
                 ;
             }
+
+            if(is_array($systemFilter) && $systemFilter[0] == 'vehicleIds')
+            {
+                $queryBuilder
+                    ->innerJoin('c.vehicles', 'vehicles')
+                    ->where('vehicles.id IN (:vehicleIds)')
+                    ->andWhere('vehicles.deleted_at IS NULL')
+                    ->andWhere('vehicles.removed_at IS NULL')
+                    ->setParameter(':vehicleIds', $systemFilter[1])
+                ;
+            }
         }
 
         if(count($customFilters) > 0)
         {
             $queryBuilder
                 ->innerJoin('c.groupps', 'g')
-                ->where('g.id IN (:groupps)')
+                ->where('g.id IN (:grouppIds)')
                 ->andWhere('g.deleted_at IS NULL')
                 ->andWhere('g.removed_at IS NULL')
-                ->setParameter(':groupps', $customFilters)
+                ->setParameter(':grouppIds', $customFilters)
             ;
         }
 
@@ -144,16 +155,27 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('s.removed_at IS NULL')
                 ;
             }
+
+            if(is_array($systemFilter) && $systemFilter[0] == 'vehicleIds')
+            {
+                $queryBuilder
+                    ->innerJoin('c.vehicles', 'vehicles')
+                    ->where('vehicles.id IN (:vehicleIds)')
+                    ->andWhere('vehicles.deleted_at IS NULL')
+                    ->andWhere('vehicles.removed_at IS NULL')
+                    ->setParameter(':vehicleIds', $systemFilter[1])
+                ;
+            }
         }
 
         if(count($customFilters) > 0)
         {
             $queryBuilder
                 ->innerJoin('c.groupps', 'g')
-                ->where('g.id IN (:groupps)')
+                ->where('g.id IN (:grouppIds)')
                 ->andWhere('g.deleted_at IS NULL')
                 ->andWhere('g.removed_at IS NULL')
-                ->setParameter(':groupps', $customFilters)
+                ->setParameter(':grouppIds', $customFilters)
             ;
         }
 

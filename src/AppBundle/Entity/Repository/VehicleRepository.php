@@ -41,8 +41,10 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
         $offset     = (int) $sortableParameters['offset'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
-        // $systemFilters  = $sortableParameters['systemFilters'];
+        $systemFilters  = $sortableParameters['systemFilters'];
         // $customFilters  = $sortableParameters['customFilters'];
+
+
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -52,6 +54,20 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
             ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'v.owner_id = c.id')
         ;
+
+        foreach($systemFilters as $systemFilter)
+        {
+            if(is_array($systemFilter) && $systemFilter[0] == 'customerIds')
+            {
+                $queryBuilder
+                    ->innerJoin('v.customers', 'customers')
+                    ->where('customers.id IN (:customerIds)')
+                    ->andWhere('customers.deleted_at IS NULL')
+                    ->andWhere('customers.removed_at IS NULL')
+                    ->setParameter(':customerIds', $systemFilter[1])
+                ;
+            }
+        }
 
         $vehicles = $queryBuilder
             ->andWhere('v.deleted_at IS NULL')
@@ -83,8 +99,9 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
         $search     = $sortableParameters['search'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
-        // $systemFilters  = $sortableParameters['systemFilters'];
-        // $customFilters  = $sortableParameters['customFilters'];
+        $systemFilters  = $sortableParameters['systemFilters'];
+        //$customFilters  = $sortableParameters['customFilters'];
+
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -94,6 +111,20 @@ class VehicleRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
             ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'v.owner_id = c.id')
         ;
+
+        foreach($systemFilters as $systemFilter)
+        {
+            if(is_array($systemFilter) && $systemFilter[0] == 'customerIds')
+            {
+                $queryBuilder
+                    ->innerJoin('v.customers', 'customers')
+                    ->where('customers.id IN (:customerIds)')
+                    ->andWhere('customers.deleted_at IS NULL')
+                    ->andWhere('customers.removed_at IS NULL')
+                    ->setParameter(':customerIds', $systemFilter[1])
+                ;
+            }
+        }
 
         $countVehicles = $queryBuilder
             ->andWhere('v.deleted_at IS NULL')

@@ -163,6 +163,8 @@ class OrderHeaderAddHelper
             $vehicle->setCreatedAt($dateTime);
             $vehicle->setCreatedBy($user);
             $vehicle->setUpdatedBy($user);
+            $vehicle->setOwner($customer);
+
         }
         
         $brandName = $request->get('order_header_add')['vehicle']['car_brand'];
@@ -177,6 +179,8 @@ class OrderHeaderAddHelper
 
         $orderHeader = $this->setOrderNumbers($orderHeader);
         $orderHeader = $this->setSymptoms($orderHeader);
+
+        $customer->addVehicle($vehicle);
 
         $em->persist($customer);
         $em->persist($vehicle);

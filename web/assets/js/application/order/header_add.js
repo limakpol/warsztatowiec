@@ -131,6 +131,12 @@ $(document).ready(function()
                             }
                         });
                     }
+
+                    var vehicleSortableParameters = getVehicleSortableParameters();
+                    vehicleSortableParameters.systemFilters = [['customerIds', [customerId]]];
+                    vehicleRequest(sortableParameters);
+
+
                 }
 
             }
@@ -317,6 +323,9 @@ $(document).ready(function()
                     $('#order_header_add_vehicle_date_of_oil_change_month').val(data[4][1]);
                     $('#order_header_add_vehicle_date_of_oil_change_year').val(data[4][2]);
 
+                    var customerSortableParameters = getCustomerSortableParameters();
+                    customerSortableParameters.systemFilters = [['vehicleIds', [vehicleId]]];
+                    customerRequest(sortableParameters);
                 }
 
             }
@@ -539,8 +548,8 @@ function clearCustomerForm()
 
 function getVehicleSortableParameters()
 {
-    //var systemFilters = [];
-    //var customFilters = [];
+    var systemFilters = [];
+    var customFilters = [];
 
     sortableParameters = {
         "search": $('#searchable-vehicle > input').val(),
@@ -549,8 +558,8 @@ function getVehicleSortableParameters()
         "sortOrder": $('#searchable-vehicle footer .sortOrder').val(),
         "currentPage": $('#searchable-vehicle footer .currentPage').val(),
         "requestedPage": 1,
-      //  "systemFilters": systemFilters,
-       // "customFilters": customFilters,
+        "systemFilters": systemFilters,
+        "customFilters": customFilters,
     };
 
     return sortableParameters;
