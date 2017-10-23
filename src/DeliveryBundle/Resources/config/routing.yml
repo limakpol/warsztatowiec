@@ -1,6 +1,10 @@
 delivery_index:
     path: /przyjecia-towarow
     defaults: { _controller: DeliveryBundle:Delivery:index }
+    
+delivery_retrieve:
+    path: /delivery-retrieve
+    defaults: { _controller: DeliveryBundle:Delivery:retrieve }
 
 delivery_show:
     path: /przyjecia-towarow/{deliveryHeaderId}

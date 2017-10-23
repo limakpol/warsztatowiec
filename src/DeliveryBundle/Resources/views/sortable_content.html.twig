@@ -1,0 +1,46 @@
+<table>
+    <tr class="tr-th">
+        <th>L.p.</th>
+        <th class="th-sort-column" data-column="d.created_at">Data utworzenia</th>
+        <th class="th-sort-column" data-column="c.surname">Dostawca</th>
+        <th class="th-sort-column" data-column="d.document_type">Dokument</th>
+        <th class="th-sort-column" data-column="d.document_number">Nr dokumentu</th>
+        <th class="th-sort-column" data-column="d.total_net">Netto</th>
+        <th class="th-sort-column" data-column="d.vat">VAT</th>
+        <th class="th-sort-column" data-column="d.total_due">Brutto</th>
+    </tr>
+    {% for key, deliveryHeader in deliveryHeaders %}
+        <tr>
+            <td class="td-center">{{ key+1}}.</td>
+            <td class="td-center"><a href="{{ path('delivery_show', {deliveryHeaderId: deliveryHeader.id}) }}">{{ deliveryHeader.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a></td>
+
+            {% if deliveryHeader.customer is not null %}
+                <td class="td-left">
+                    <a href="{{ path('customer_show', {customerId: deliveryHeader.customer.id}) }}">
+                        {{ deliveryHeader.customer.forename }} {{ deliveryHeader.customer.surname }}
+                    </a>
+                </td>
+            {% else %}
+                <td class="td-center">przyjęcie wewnętrzne</td>
+            {% endif %}
+            <td class="td-center">{{ deliveryHeader.documentType }}</td>
+            <td class="td-center">{{ deliveryHeader.documentNumber }}</td>
+            <td class="td-center">{{ deliveryHeader.totalNet }}</td>
+            <td class="td-center">{{ deliveryHeader.vat }}</td>
+            <td class="td-center">{{ deliveryHeader.totalDue }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="footer">
+    <div class="pagination-buttons">
+        <button class="btn-previous"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+        <button class="btn-next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="pagination-info">
+        <span>strona <span class="currentPage">{{ sortableParameters['currentPage'] }}</span></span> z <span>{{ sortableParameters['lastPage'] }}</span>
+        <input type="hidden" class="retrievePath" value="{{ path('delivery_retrieve') }}">
+        <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
+        <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
+    </div>
+    <div class="count-all">{{ sortableParameters.countAll }} rekordów</div>
+</div>

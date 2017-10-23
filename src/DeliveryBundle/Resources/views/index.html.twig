@@ -1,4 +1,29 @@
 {% extends ':base:application.html.twig' %}
 {% block main %}
-    Delivery
+    <div id="div-delivery-sortable" class="div-sortable">
+        <div class="header">
+            <div class="div-input">
+                <input type="text" size="20" maxlength="40" autofocus="autofocus" placeholder="Wyszukaj klienta" class="input-search" value="{{ sortableParameters['search'] }}">
+            </div>
+            <div class="div-limit">
+                <span>Liczba rekordów na stronie:</span>
+                <select class="select-limit">
+                    {% for limit in limitSet %}
+                        <option value="{{ limit }}">{{ limit }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="content">
+            {% include 'DeliveryBundle::sortable_content.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/delivery/index.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

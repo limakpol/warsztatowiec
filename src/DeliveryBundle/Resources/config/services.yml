@@ -9,3 +9,7 @@ services:
   delivery.helper.header_add:
       class: DeliveryBundle\Service\Helper\DeliveryHeaderAddHelper
       arguments: ["@security.token_storage", "@request_stack", "@doctrine.orm.default_entity_manager", "@form.factory", "@customer.helper.index", "@customer.helper.add", "@app.trade"]
+
+  delivery.helper.index:
+      class: DeliveryBundle\Service\Helper\DeliveryIndexHelper
+      arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]

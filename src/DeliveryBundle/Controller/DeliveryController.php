@@ -10,6 +10,8 @@ namespace DeliveryBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DeliveryController extends Controller
@@ -17,6 +19,16 @@ class DeliveryController extends Controller
 
     public function indexAction()
     {
+        $indexHelper = $this->get('delivery.helper.index');
+
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $deliveryHeaders  = $indexHelper->retrieve($sortableParameters);
+
+        $limitSet   = $this->getParameter('app')['limit_set'];
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -24,11 +36,43 @@ class DeliveryController extends Controller
         return $this->render('DeliveryBundle::index.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
-            'tab'           => 'warehouse',
-            'navbar'        => 'Przyjęcia towarów',
+            'tab'           => 'delivery',
+            'navbar'        => 'Klienci',
+            'deliveryHeaders'     => $deliveryHeaders,
+            'limitSet'      => $limitSet,
+            'sortableParameters' => $sortableParameters,
         ]);
     }
 
+    public function retrieveAction()
+    {
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        if(!$request->isMethod('POST') || !$request->isXmlHttpRequest())
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nieprawidłowe żądanie'],
+            ]);
+        }
+
+        $indexHelper = $this->get('delivery.helper.index');
+        $inputSortableParameters = $indexHelper->getInputSortableParameters();
+        $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
+        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+
+        $deliveryHeaders  = $indexHelper->retrieve($sortableParameters);
+
+        $limitSet   = $this->getParameter('app')['limit_set'];
+
+        return $this->render('DeliveryBundle::sortable_content.html.twig', [
+            'deliveryHeaders' => $deliveryHeaders,
+            'limitSet' => $limitSet,
+            'sortableParameters' => $sortableParameters,
+        ]);
+    }
+    
     public function showAction($deliveryHeaderId)
     {
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
