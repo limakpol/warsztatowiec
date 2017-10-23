@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\Extension\IconSubmitType;
+use AppBundle\Form\Transformer\PhoneTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -55,6 +56,7 @@ class UserType extends AbstractType
             ->add('phone1', TextType::class, [
                 'label' => 'Telefon',
                 'required' => false,
+                'data' => '+48',
                 'attr' => [
                     'maxlength' => 15,
                     'size' => 12,
@@ -63,6 +65,7 @@ class UserType extends AbstractType
             ->add('phone2', TextType::class, [
                 'label' => 'Telefon 2',
                 'required' => false,
+                'data' => '+48',
                 'attr' => [
                     'maxlength' => 15,
                     'size' => 12,
@@ -108,7 +111,11 @@ class UserType extends AbstractType
                 'label' => 'Uwagi',
                 'required' => false,
             ])
-        ;
+            ;
+
+            $builder->get('phone1')->addModelTransformer(new PhoneTransformer());
+            $builder->get('phone2')->addModelTransformer(new PhoneTransformer());
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

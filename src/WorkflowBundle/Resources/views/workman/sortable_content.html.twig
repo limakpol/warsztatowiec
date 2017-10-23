@@ -1,0 +1,31 @@
+<table>
+    <tr class="tr-th">
+        <th>L.p.</th>
+        <th class="th-sort-column" data-column="u.created_at">Data utworzenia</th>
+        <th class="th-sort-column" data-column="u.forename">Imię</th>
+        <th class="th-sort-column" data-column="u.surname">Nazwisko</th>
+        <th class="th-sort-column" data-column="u.hourly_rate_net">Stawka godzinowa netto [zł]</th>
+        <th class="th-sort-column" data-column="u.password">Możliwość logowania</th>
+        <th class="th-sort-column" data-column="u.phone1">Telefon</th>
+    </tr>
+    {% for key, user in users %}
+        <tr>
+            <td class="td-center">{{ key+1}}.</td>
+            <td class="td-center"><a href="{{ path('workflow_workman_show', {userId: user.id}) }}">{{ user.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a></td>
+            <td class="td-left">{{ user.forename }}</td>
+            <td class="td-left">{{ user.surname }}</td>
+            <td class="td-center">{{ user.hourlyRateNet }}</td>
+            <td class="td-center">
+                {% if user.password is not null %}TAK{% else %}{% endif %}
+            </td>
+            <td class="td-center">{{ user.phone1|phone }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="footer">
+    <div class="pagination-info">
+        <input type="hidden" class="retrievePath" value="{{ path('workflow_workman_retrieve') }}">
+        <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
+        <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
+    </div>
+</div>

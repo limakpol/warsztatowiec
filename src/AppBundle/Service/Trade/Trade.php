@@ -13,8 +13,14 @@ use AppBundle\Service\Trade\TradeHeaderInterface;
 class Trade
 {
 
-    public function normalize($value)
+    public function normalize($value, $null = false)
     {
+
+        if($null && !$value)
+        {
+            return $value;
+        }
+
         $value = str_replace(',', '.', $value);
 
         return round($value, 2);

@@ -6,4 +6,9 @@ services:
 # HELPERS
     workflow.helper.workman_add:
         class: WorkflowBundle\Service\Helper\WorkmanAddHelper
-        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory", "@request_stack"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage", "@form.factory", "@request_stack", "@app.trade"]
+
+    workflow.helper.workman_index:
+        class: WorkflowBundle\Service\Helper\WorkmanIndexHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+

@@ -6,9 +6,17 @@ workflow_workman_index:
     path: /pracownicy
     defaults: { _controller: WorkflowBundle:Workman:index }
 
+workflow_workman_retrieve:
+    path: /workflow/workman-retrieve
+    defaults: { _controller: WorkflowBundle:Workman:retrieve }
+
 workflow_workman_add:
     path: /dodaj-pracownika
     defaults: { _controller: WorkflowBundle:Workman:add }
+
+workflow_workman_show:
+    path: /pracownicy/{userId}
+    defaults: { _controller: WorkflowBundle:Workman:show }
 
 workflow_schedule_index:
     path: /terminarz

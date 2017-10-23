@@ -7,6 +7,7 @@ use AppBundle\Entity\Position;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRole;
 use AppBundle\Entity\Workshop;
+use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
@@ -23,13 +24,15 @@ class WorkmanAddHelper
     private $tokenStorage;
     private $formFactory;
     private $requestStack;
+    private $trade;
 
-    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, RequestStack $requestStack)
+    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, RequestStack $requestStack, Trade $trade)
     {
         $this->entityManager    = $entityManager;
         $this->tokenStorage     = $tokenStorage;
         $this->formFactory      = $formFactory;
         $this->requestStack     = $requestStack;
+        $this->trade            = $trade;
     }
 
     public function createAddForm()
@@ -99,12 +102,15 @@ class WorkmanAddHelper
 
         $newUser->addRole($userRole);
 
+        $hourlyRateNet = $this->trade->normalize($newUser->getHourlyRateNet(), true);
+        $newUser->setHourlyRateNet($hourlyRateNet);
+
         $em->persist($address);
         $em->persist($userRole);
         $em->persist($newUser);
 
         $em->flush();
 
-        return true;
+        return $newUser->getId();
     }
 }
