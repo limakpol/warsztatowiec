@@ -44,6 +44,7 @@ class OrderSymptomRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('h.deleted_at IS NULL')
             ->setParameter(':workshop', $workshop)
             ->orderBy('s.name', 'ASC')
+            ->distinct()
             ->getQuery()
             ->getResult()
         ;

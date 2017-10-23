@@ -75,9 +75,9 @@ $(document).ready(function()
 
         removeCustomerErrors();
 
-        $('.h-enum.selected-customer').text('2. Wpisz dane klienta');
+        $('.h-enum.selected-customer').text('2. Wpisz dane nowego klienta');
 
-        $('#order_header_add_customer_id').val('new');
+        $('#order_header_add_customer_id').val('');
 
         $('#searchable-customer > div').slideUp();
 
@@ -275,7 +275,7 @@ $(document).ready(function()
 
         $('.h-enum.selected-vehicle').text('4. Wpisz dane nowego pojazdu');
 
-        $('#order_header_add_vehicle_id').val('new');
+        $('#order_header_add_vehicle_id').val('');
 
         $('#searchable-vehicle > div').slideUp();
 
@@ -432,6 +432,18 @@ $(document).ready(function()
     $(document).on('click', '#symptoms-inputable .item .btn-remove', function(event)
     {
         $(this).parent().remove();
+    });
+
+    $(document).on('click', '#symptoms-inputable .selectable .content div', function(event)
+    {
+        var symptom = $(this).text();
+
+        if(symptom == '') return;
+
+        insertSymptom(symptom);
+
+        $('#symptoms-inputable .selectable .content').slideUp();
+
     });
 
     $(document).on('keyup', '#order_header_add_vehicle_engine_displacement_l', function()
