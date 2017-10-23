@@ -36,8 +36,8 @@ class DeliveryController extends Controller
         return $this->render('DeliveryBundle::index.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
-            'tab'           => 'delivery',
-            'navbar'        => 'Klienci',
+            'tab'           => 'warehouse',
+            'navbar'        => 'Przyjęcia towarów',
             'deliveryHeaders'     => $deliveryHeaders,
             'limitSet'      => $limitSet,
             'sortableParameters' => $sortableParameters,

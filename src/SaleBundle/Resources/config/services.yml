@@ -9,3 +9,7 @@ services:
   sale.helper.header_add:
       class: SaleBundle\Service\Helper\SaleHeaderAddHelper
       arguments: ["@security.token_storage", "@request_stack", "@doctrine.orm.default_entity_manager", "@form.factory", "@customer.helper.index", "@customer.helper.add"]
+
+  sale.helper.index:
+        class: SaleBundle\Service\Helper\SaleIndexHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]

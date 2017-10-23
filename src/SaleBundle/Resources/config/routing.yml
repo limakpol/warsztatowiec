@@ -2,6 +2,10 @@ sale_index:
     path: /wystawienia-towarow
     defaults: { _controller: SaleBundle:Sale:index }
 
+sale_retrieve:
+    path: /sale-retrieve
+    defaults: { _controller: SaleBundle:Sale:retrieve }
+    
 sale_show:
     path: /wystawienia-towarow/{saleHeaderId}
     defaults: { _controller: SaleBundle:Sale:show }
