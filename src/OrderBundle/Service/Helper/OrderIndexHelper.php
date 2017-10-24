@@ -137,4 +137,20 @@ class OrderIndexHelper
         return $outputSortableParameters;
     }
 
+    public function getStatuses()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $statuses = $em->getRepository('AppBundle:Status')->retrieve($workshop);
+
+        return $statuses;
+    }
+
 }

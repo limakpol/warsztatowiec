@@ -89,8 +89,15 @@ $(document).ready(function(){
 
 function getSortableParameters()
 {
-    var customFilters = [];
     var systemFilters = [];
+
+    var customFilterInputs = $('#status-filters button.active');
+    var customFilters = [];
+
+    customFilterInputs.each(function()
+    {
+        customFilters.push($(this).data('id'));
+    });
 
     sortableParameters = {
         "search": $('#div-order-sortable .input-search').val(),

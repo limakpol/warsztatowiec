@@ -95,5 +95,10 @@ $(document).ready(function()
         });
     });
 
+    $(document).on('mouseover', '#status-filters button', function()
+    {
+        $(this).css("border-width: 2px; border-right-width: 20px");
+
+    });
 
 });

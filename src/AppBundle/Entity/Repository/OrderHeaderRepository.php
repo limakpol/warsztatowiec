@@ -95,6 +95,17 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
         ;
 
+        if(count($customFilters) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('o.statuses', 's')
+                ->where('s.id IN (:statusIds)')
+                ->andWhere('s.deleted_at IS NULL')
+                ->andWhere('s.removed_at IS NULL')
+                ->setParameter(':statusIds', $customFilters)
+            ;
+        }
+
         $orderHeaders = $queryBuilder
             ->andWhere('o.deleted_at IS NULL')
             ->andWhere('o.removed_at IS NULL')
@@ -142,6 +153,17 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
         ;
+
+        if(count($customFilters) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('o.statuses', 's')
+                ->where('s.id IN (:statusIds)')
+                ->andWhere('s.deleted_at IS NULL')
+                ->andWhere('s.removed_at IS NULL')
+                ->setParameter(':statusIds', $customFilters)
+            ;
+        }
 
         $countOrderHeaders = $queryBuilder
             ->andWhere('o.deleted_at IS NULL')

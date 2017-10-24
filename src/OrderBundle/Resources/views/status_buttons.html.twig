@@ -1,3 +1,3 @@
-{% for status in orderHeader.statuses %}
-    <button style="border-color: {{ status.hexColor }};">{{ status.name }}</button>
+{% for orderStatus in orderHeader.statuses %}
+    <button style="border-color: {{ orderStatus.hexColor }};">{{ orderStatus.name }}</button>
 {% endfor %}

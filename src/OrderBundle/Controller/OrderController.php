@@ -17,6 +17,7 @@ class OrderController extends Controller
         $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
 
         $orderHeaders  = $indexHelper->retrieve($sortableParameters);
+        $statuses = $indexHelper->getStatuses();
 
         $limitSet   = $this->getParameter('app')['limit_set'];
 
@@ -29,7 +30,8 @@ class OrderController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'order',
             'navbar'        => 'Zlecenia serwisowe',
-            'orderHeaders'     => $orderHeaders,
+            'orderHeaders'  => $orderHeaders,
+            'statuses'      => $statuses,
             'limitSet'      => $limitSet,
             'sortableParameters' => $sortableParameters,
         ]);

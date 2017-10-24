@@ -14,6 +14,11 @@
             <div class="div-input">
                 <input type="text" size="20" maxlength="40" autofocus="autofocus" placeholder="Wyszukaj wystawienie" class="input-search" value="{{ sortableParameters['search'] }}">
             </div>
+            <div id="status-filters" class="div-filters">
+                {% for status in statuses %}
+                    <button class="customer-btn-filter-custom" data-id="{{ status.id }}" style="border-color: {{ status.hexColor }}">{{ status.name }}</button>
+                {% endfor %}
+            </div>
             <div class="div-limit">
                 <span>Liczba rekordów na stronie:</span>
                 <select class="select-limit">
