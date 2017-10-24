@@ -2,10 +2,10 @@
     <tr class="tr-th">
         <th>L.p.</th>
         <th class="th-sort-column" data-column="v.vin">VIN</th>
+        <th class="th-sort-column" data-column="v.registration_number">Numer rejestracyjny</th>
         <th class="th-sort-column" data-column="b.name">Marka</th>
         <th class="th-sort-column" data-column="m.name">Model</th>
         <th class="th-sort-column" data-column="v.version">Wersja</th>
-        <th class="th-sort-column" data-column="v.registration_number">Numer rejestracyjny</th>
         <th class="th-sort-column" data-column="c.surname">Właściciel</th>
     </tr>
     {% for key, vehicle in vehicles %}
@@ -21,10 +21,10 @@
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                 </a>
             </td>
+            <td class="td-center">{{ vehicle.registrationNumber }}</td>
             <td class="td-left">{{ vehicle.carModel.brand.name }}</td>
             <td class="td-left">{{ vehicle.carModel.name }}</td>
             <td class="td-left">{{ vehicle.version }}</td>
-            <td class="td-center">{{ vehicle.registrationNumber }}</td>
             <td class="td-left">
                 {% if vehicle.owner is not null %}
                     <a href="{{ path('customer_show', {customerId: vehicle.owner.id}) }}">{{ vehicle.owner.forename }} {{ vehicle.owner.surname }} {{ vehicle.owner.companyName }}</a>
