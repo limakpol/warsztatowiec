@@ -129,13 +129,13 @@ class VehicleType extends AbstractType
                 ],
             ])
             ->add('date_of_inspection', DateType::class, [
-                'label'     => 'Data najbliższego przeglądu technicznego',
+                'label'     => 'Data najbliższego przeglądu technicznego [dd-mm-rrrr]',
                 'required'  => false,
                 'widget'    => 'choice',
                 'format'    => 'dd-MM-yyyy',
             ])
             ->add('date_of_oil_change', DateType::class, [
-                'label' => 'Data wymiany oleju',
+                'label' => 'Data wymiany oleju [dd-mm-rrrr]',
                 'required' => false,
                 'widget'    => 'choice',
                 'format'    => 'dd-MM-yyyy',
