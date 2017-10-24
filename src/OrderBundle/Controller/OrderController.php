@@ -77,6 +77,8 @@ class OrderController extends Controller
             'navbar'        => 'Przyjęcie towaru',
         ]);
     }
+
+
     
 
 }

@@ -24,10 +24,8 @@
                     {{ orderHeader.vehicle.carModel.brand.name }} {{ orderHeader.vehicle.carModel.name }} {{ orderHeader.vehicle.version }}
                 </a>
             </td>
-            <td class="statuses">
-                {% for status in orderHeader.statuses %}
-                    {{ status.name }}
-                {% endfor %}
+            <td class="statuses td-center" data-order-id="{{ orderHeader.id }}">
+                {% include 'OrderBundle::status_buttons.html.twig' %}
             </td>
             <td class="td-center">{{ orderHeader.totalDue }}</td>
             <td class="td-center">

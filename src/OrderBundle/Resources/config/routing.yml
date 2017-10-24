@@ -1,3 +1,4 @@
+# ORDER
 order_index:
     path: /zlecenia-serwisowe
     defaults: { _controller: OrderBundle:Order:index }
@@ -10,6 +11,7 @@ order_show:
     path: /zlecenia-serwisowe/{orderHeaderId}
     defaults: { _controller: OrderBundle:Order:show }
 
+# ORDER HEADER
 order_header_add:
     path: /nowe-zlecenie
     defaults: { _controller: OrderBundle:OrderHeader:add }
@@ -27,4 +29,12 @@ order_header_retrieve_symptoms:
     defaults: { _controller: OrderBundle:OrderHeader:retrieveSymptoms }
 
 
+# STATUS
+order_status_get_box:
+    path: /order/status/get-box
+    defaults: { _controller: OrderBundle:Status:getBox }
+
+order_status_assign:
+    path: /order/status-assign
+    defaults: { _controller: OrderBundle:Status:assign }
 
