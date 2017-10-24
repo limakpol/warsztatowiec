@@ -1,9 +1,12 @@
 #status-filters button {
     background-color: #fff;
     color: #333;
+    margin: 4px;
 }
-#status-filters button:hover, #status-filters button.active {
+#status-filters button:hover {
     border-width: 2px;
+}
+#status-filters button.active {
     border-right-width: 20px;
 }
 td.statuses {
