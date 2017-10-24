@@ -17,8 +17,7 @@
             {% if deliveryHeader.customer is not null %}
                 <td class="td-left">
                     <a href="{{ path('customer_show', {customerId: deliveryHeader.customer.id}) }}">
-                        {{ deliveryHeader.customer.forename }} {{ deliveryHeader.customer.surname }}
-                    </a>
+                        {{ deliveryHeader.customer.forename }} {{ deliveryHeader.customer.surname }} {{ deliveryHeader.customer.companyName }}</a>
                 </td>
             {% else %}
                 <td class="td-center">przyjęcie wewnętrzne</td>

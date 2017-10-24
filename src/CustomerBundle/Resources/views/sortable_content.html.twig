@@ -1,22 +1,31 @@
 <table>
     <tr class="tr-th">
         <th>L.p.</th>
-        <th class="th-sort-column" data-column="c.created_at">Data utworzenia</th>
+        <th class="th-sort-column" data-column="c.mobile_phone1">Telefon kom.</th>
         <th class="th-sort-column" data-column="c.forename">Imię</th>
         <th class="th-sort-column" data-column="c.surname">Nazwisko</th>
         <th class="th-sort-column" data-column="c.company_name">Firma</th>
-        <th class="th-sort-column" data-column="c.mobile_phone1">Telefon kom.</th>
         <th class="th-sort-column" data-column="c.email">E-mail</th>
+        <th class="th-sort-column" data-column="c.created_at">Data utworzenia</th>
     </tr>
     {% for key, customer in customers %}
         <tr>
             <td class="td-center">{{ key+1}}.</td>
-            <td class="td-center"><a href="{{ path('customer_show', {customerId: customer.id}) }}">{{ customer.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a></td>
+            <td class="td-center">
+                {% if customer.mobilePhone1 is not null %}
+                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">{{ customer.mobilePhone1|phone }}
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">--- -----------<i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+            </td>
             <td class="td-left">{{ customer.forename }}</td>
             <td class="td-left">{{ customer.surname }}</td>
             <td class="td-left">{{ customer.companyName }}</td>
-            <td class="td-center">{{ customer.mobilePhone1|phone }}</td>
             <td class="td-left">{{ customer.email }}</td>
+            <td class="td-center">{{ customer.createdAt|date }}</td>
         </tr>
     {% endfor %}
 </table>

@@ -20,7 +20,7 @@ class PhoneTransformer implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        if(!$value) return $value;
+        if(!$value) return null;
 
         $plus = substr($value, 0, 1);
         $prefix = substr($value, 1, 2);
@@ -34,7 +34,7 @@ class PhoneTransformer implements DataTransformerInterface
                 return $value;
             }
 
-            return '';
+            return null;
         }
 
         return '+48' . $value;

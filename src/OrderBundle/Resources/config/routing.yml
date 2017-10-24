@@ -1,6 +1,10 @@
 order_index:
     path: /zlecenia-serwisowe
     defaults: { _controller: OrderBundle:Order:index }
+    
+order_retrieve:
+    path: /order-retrieve
+    defaults: { _controller: OrderBundle:Order:retrieve }
 
 order_show:
     path: /zlecenia-serwisowe/{orderHeaderId}

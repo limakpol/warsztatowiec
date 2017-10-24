@@ -29,7 +29,7 @@ class ProducerController extends Controller
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
-            'navbar'        => 'Producenci towarów',
+            'navbar'        => 'Producenci towarów i części samochodowych',
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 
 /**
  * OrderHeaderRepository
@@ -50,5 +51,120 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
 
         return $count;
     }
+    
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $orderHeader = $this->_em
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->where('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('o.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+        ;
 
+        return $orderHeader;
+    }
+
+    public function retrieve(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $limit      = (int) $sortableParameters['limit'];
+        $offset     = (int) $sortableParameters['offset'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        $systemFilters  = $sortableParameters['systemFilters'];
+        $customFilters  = $sortableParameters['customFilters'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'o.customer_id = c.id')
+            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id')
+            ->leftJoin('AppBundle:Province', 'p', 'WITH', 'a.province_id = p.id')
+            ->leftJoin('AppBundle:Vehicle', 'v', 'WITH', 'o.vehicle_id = v.id')
+            ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+        ;
+
+        $orderHeaders = $queryBuilder
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere("
+                    CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city, p.name) LIKE :search
+                OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
+                OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
+                OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search
+                OR  CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
+                OR  CONCAT_WS(' ', v.vin, v.registration_number, v.remarks) LIKE :search
+                OR  o.remarks LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('o.updated_at', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->groupBy('o.id')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderHeaders;
+    }
+
+    public function getCountAllRetrieved(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        $systemFilters  = $sortableParameters['systemFilters'];
+        $customFilters  = $sortableParameters['customFilters'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('COUNT(o)')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'o.customer_id = c.id')
+            ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id')
+            ->leftJoin('AppBundle:Province', 'p', 'WITH', 'a.province_id = p.id')
+            ->leftJoin('AppBundle:Vehicle', 'v', 'WITH', 'o.vehicle_id = v.id')
+            ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+        ;
+
+        $countOrderHeaders = $queryBuilder
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere("
+                    CONCAT_WS(' ', c.forename, c.surname, c.company_name) LIKE :search
+                OR  CONCAT_WS(' ', a.street, a.house_number, a.flat_number, a.post_code, a.city, p.name) LIKE :search
+                OR  CONCAT_WS(' ', c.mobile_phone1, c.mobile_phone2, c.landline_phone, c.email) LIKE :search
+                OR  CONCAT_WS(' ', c.nip, c.pesel, c.bank_account_number) LIKE :search
+                OR  CONCAT_WS(' ', c.contact_person, c.remarks) LIKE :search
+                OR  CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
+                OR  CONCAT_WS(' ', v.vin, v.registration_number, v.remarks) LIKE :search
+                OR  o.remarks LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('o.updated_at', 'DESC')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $countOrderHeaders;
+    }
 }

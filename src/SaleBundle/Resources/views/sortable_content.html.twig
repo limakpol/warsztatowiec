@@ -17,7 +17,7 @@
             {% if saleHeader.customer is not null %}
                 <td class="td-left">
                     <a href="{{ path('customer_show', {customerId: saleHeader.customer.id}) }}">
-                        {{ saleHeader.customer.forename }} {{ saleHeader.customer.surname }}
+                        {{ saleHeader.customer.forename }} {{ saleHeader.customer.surname }} {{ saleHeader.customer.companyName }}
                     </a>
                 </td>
             {% else %}
