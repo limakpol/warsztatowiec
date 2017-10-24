@@ -1,3 +1,4 @@
+# DELIVERY
 delivery_index:
     path: /przyjecia-towarow
     defaults: { _controller: DeliveryBundle:Delivery:index }
@@ -7,9 +8,10 @@ delivery_retrieve:
     defaults: { _controller: DeliveryBundle:Delivery:retrieve }
 
 delivery_show:
-    path: /przyjecia-towarow/{deliveryHeaderId}
+    path: /przyjecie-towaru/{deliveryHeaderId}
     defaults: { _controller: DeliveryBundle:Delivery:show }
 
+# HEADER
 delivery_header_add:
     path: /przyjmij-towar
     defaults: { _controller: DeliveryBundle:DeliveryHeader:add }
@@ -17,3 +19,8 @@ delivery_header_add:
 delivery_header_retrieve_customers:
     path: /delivery/retrieve-customers
     defaults: { _controller: DeliveryBundle:DeliveryHeader:retrieveCustomers }
+
+# DETAIL
+delivery_detail_add:
+    path: /przyjecie-towaru/{deliveryHeaderId}/dodaj-pozycje
+    defaults: { _controller: DeliveryBundle:DeliveryDetail:add }

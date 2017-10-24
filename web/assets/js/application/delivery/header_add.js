@@ -150,7 +150,6 @@ $(document).ready(function(){
 
                     var buttonsLabels = $('#customer-form .div-form-labels .customer-btn-filter-custom');
 
-                    console.log(data[2]);
                     for (var key in data[2])
                     {
                         buttonsLabels.each(function ()

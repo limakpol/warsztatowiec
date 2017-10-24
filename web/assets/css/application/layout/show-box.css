@@ -1,0 +1,70 @@
+.show-box {
+    width: 100%;
+    margin: 0 0 15px 0;
+}
+.show-box h1 {
+    margin: 0;
+    padding: 0 0 10px 10px;
+}
+.show-box h1 label {
+    font: bold 18px 'Times New Roman', sans-serif;
+    color: #333;
+    cursor: pointer;
+}
+.show-box section {
+    width: 100%;
+}
+.show-box section .info-table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+.show-box section .info-table td:first-child {
+    background-color: #f4f4f4;
+    text-align: right;
+    font: bold 12px 'Ubuntu', sans-serif;
+    color: #333;
+    padding: 5px;
+}
+.show-box section .info-table td:last-child {
+    text-align: left;
+    font: 12px 'Courier New', Monospace;
+    color: #333;
+    padding: 5px;
+}
+.show-box section .info-table tr:last-child td {
+    text-align: center;
+    height: 35px;
+}
+.show-box section .info-table tr:last-child td a, .show-box section .info-table tr:last-child td button {
+    margin: 5px;
+}
+.show-box .info-table tr:not(:last-child) td a {
+    text-decoration: none;
+    color: #333;
+}
+.show-box .info-table tr:not(:last-child) td a:hover {
+    text-decoration: underline;
+}
+
+
+
+@media screen and (min-width: 1200px) {
+    .show-box h1 label {
+        font-size: 25px;
+    }
+    .show-box section .info-table td:first-child {
+        font-size: 15px;
+        padding: 6px;
+    }
+    .show-box section .info-table td:last-child {
+        font-size: 15px;
+        padding: 6px;
+    }
+    .show-box section .info-table tr:last-child td {
+        height: 40px;
+    }
+    .show-box section .info-table tr:last-child td a, .show-box section .info-table tr:last-child td button {
+        margin: 7px;
+    }
+}

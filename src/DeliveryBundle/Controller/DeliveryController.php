@@ -9,6 +9,7 @@
 namespace DeliveryBundle\Controller;
 
 
+use AppBundle\Entity\DeliveryHeader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,16 +76,25 @@ class DeliveryController extends Controller
     
     public function showAction($deliveryHeaderId)
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $deliveryShowHelper = $this->get('delivery.helper.show');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        /** @var DeliveryHeader $deliveryHeader */
+        $deliveryHeader = $deliveryShowHelper->getDelivery($deliveryHeaderId);
+
+        if(null === $deliveryHeader)
+        {
+            return $this->redirectToRoute('delivery_index');
+        }
+
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         return $this->render('DeliveryBundle::show.html.twig', [
-            'deliveryHeaderId' => $deliveryHeaderId,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
             'navbar'        => 'Przyjęcie towaru',
+            'deliveryHeader'    => $deliveryHeader,
         ]);
     }
 

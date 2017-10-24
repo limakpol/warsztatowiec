@@ -13,3 +13,7 @@ services:
   delivery.helper.index:
       class: DeliveryBundle\Service\Helper\DeliveryIndexHelper
       arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+
+  delivery.helper.show:
+      class: DeliveryBundle\Service\Helper\DeliveryShowHelper
+      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]

@@ -167,8 +167,6 @@
             {{ form_widget(form.submit)}}
         </div>
     {{ form_end(form, {'render_rest': false})}}
-    {% for groupp in form.customer.groupps %}
-    {% endfor %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

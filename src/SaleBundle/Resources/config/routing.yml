@@ -7,7 +7,7 @@ sale_retrieve:
     defaults: { _controller: SaleBundle:Sale:retrieve }
     
 sale_show:
-    path: /wystawienia-towarow/{saleHeaderId}
+    path: /wystawienie-towaru/{saleHeaderId}
     defaults: { _controller: SaleBundle:Sale:show }
 
 sale_header_add:
