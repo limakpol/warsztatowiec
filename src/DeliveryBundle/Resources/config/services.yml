@@ -4,6 +4,12 @@ services:
       class: DeliveryBundle\Form\DeliveryHeaderAddType
       tags:
           - { name: form.type }
+
+  form.type.delivery_detail_add:
+      class: DeliveryBundle\Form\DeliveryDetailAddType
+      tags:
+          - { name: form.type }
+
 # SERVICES
 
   delivery.helper.header_add:

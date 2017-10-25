@@ -1,6 +1,6 @@
 <?php
 
-namespace WarehouseBundle\Service;
+namespace WarehouseBundle\Service\Helper;
 
 use AppBundle\Entity\Producer;
 use AppBundle\Entity\User;

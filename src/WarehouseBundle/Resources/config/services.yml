@@ -1,4 +1,25 @@
 services:
+# FORM TYPES
+    form.type.good:
+        class: WarehouseBundle\Form\GoodType
+        tags:
+            - { name: form.type }
+
+    form.type.indexx:
+        class: WarehouseBundle\Form\IndexxType
+        tags:
+            - { name: form.type }
+
+# HELPERS
     warehouse.helper.producer:
-        class: WarehouseBundle\Service\ProducerHelper
+        class: WarehouseBundle\Service\Helper\ProducerHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]
+
+
+    warehouse.helper.good_index:
+        class: WarehouseBundle\Service\Helper\GoodIndexHelper
+        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@service_container"]
+
+    warehouse.helper.good_show:
+        class: WarehouseBundle\Service\Helper\GoodShowHelper
+        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager"]

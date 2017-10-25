@@ -23,11 +23,6 @@ class Good
     private $name;
 
     /**
-     * @var integer
-     */
-    private $category_id;
-
-    /**
      * @var string
      */
     private $quantity = 0.0;
@@ -193,30 +188,6 @@ class Good
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set categoryId
-     *
-     * @param integer $categoryId
-     *
-     * @return Good
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->category_id = $categoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get categoryId
-     *
-     * @return integer
-     */
-    public function getCategoryId()
-    {
-        return $this->category_id;
     }
 
     /**
@@ -729,3 +700,4 @@ class Good
         return $this->categories;
     }
 }
+

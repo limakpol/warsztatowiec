@@ -22,11 +22,6 @@ AppBundle\Entity\Good:
             nullable: false
             options:
                 fixed: false
-        category_id:
-            type: integer
-            nullable: true
-            options:
-                unsigned: true
         quantity:
             type: decimal
             nullable: false

@@ -8,7 +8,7 @@ delivery_retrieve:
     defaults: { _controller: DeliveryBundle:Delivery:retrieve }
 
 delivery_show:
-    path: /przyjecie-towaru/{deliveryHeaderId}
+    path: /przyjecia-towarow/{deliveryHeaderId}
     defaults: { _controller: DeliveryBundle:Delivery:show }
 
 # HEADER
@@ -22,5 +22,5 @@ delivery_header_retrieve_customers:
 
 # DETAIL
 delivery_detail_add:
-    path: /przyjecie-towaru/{deliveryHeaderId}/dodaj-pozycje
+    path: /przyjecia-towarow/{deliveryHeaderId}/dodaj-pozycje
     defaults: { _controller: DeliveryBundle:DeliveryDetail:add }

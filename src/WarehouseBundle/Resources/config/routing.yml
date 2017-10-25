@@ -2,6 +2,10 @@ warehouse_good_index:
     path: /towary
     defaults: { _controller: WarehouseBundle:Warehouse:index }
 
+warehouse_good_show:
+    path: /towary/{goodId}
+    defaults: { _controller: WarehouseBundle:Warehouse:show }
+
 warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
