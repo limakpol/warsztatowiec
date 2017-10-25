@@ -23,3 +23,7 @@ services:
   delivery.helper.show:
       class: DeliveryBundle\Service\Helper\DeliveryShowHelper
       arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]
+
+  delivery.helper.detail_add:
+      class: DeliveryBundle\Service\Helper\DeliveryDetailAddHelper
+      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@warehouse.helper.good", "@warehouse.helper.indexx", "@app.trade"]

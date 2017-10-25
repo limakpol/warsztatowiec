@@ -11,7 +11,7 @@ class WarehouseController extends Controller
 {
     public function indexAction()
     {
-        $indexHelper = $this->get('warehouse.helper.good_index');
+        $indexHelper = $this->get('warehouse.helper.good');
 
         $inputSortableParameters = $indexHelper->getInputSortableParameters();
         $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);

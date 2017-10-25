@@ -1,0 +1,32 @@
+<header>
+    <div id="good-new">-- nowy --</div>
+</header>
+<table>
+    <th class="sort-column" data-column="g.name">Nazwa towaru</th>
+    <th class="sort-column" data-column="g.quantity">Ilość</th>
+    <th class="sort-column" data-column="m.shortcut">J.m.</th>
+    <th class="sort-column" data-column="g.remarks">Uwagi</th>
+    {% for good in goods %}
+        <tr data-id="{{ good.id }}">
+            <td class="td-left">{{ good.name }}</td>
+            <td class="td-center">{{ good.quantity }}</td>
+            <td class="td-center">{{ good.measure.shortcut }}</td>
+            <td class="td-left">{{ good.remarks }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<footer>
+    {% if goodSortableParameters.lastPage > 1 %}
+        <div class="buttons">
+            <button class="prev"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+            <button class="next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="page-info">
+            <span>{{ goodSortableParameters.currentPage }}</span>/<span>{{ goodSortableParameters.lastPage }}</span>
+        </div>
+    {% endif %}
+    <input type="hidden" class="currentPage" value="{{ goodSortableParameters['currentPage'] }}">
+    <input type="hidden" class="retrievePath" value="{{ path('delivery_retrieve_goods') }}">
+    <input type="hidden" class="sortColumnName" value="{{ goodSortableParameters['sortColumnName'] }}">
+    <input type="hidden" class="sortOrder" value="{{ goodSortableParameters['sortOrder'] }}">
+</footer>

@@ -10,10 +10,10 @@
     </tr>
     {% for customer in customers %}
         <tr data-id="{{ customer.id }}">
-            <td>{{ customer.forename }}</td>
-            <td>{{ customer.surname }}</td>
-            <td>{{ customer.companyName }}</td>
-            <td>{{ customer.mobilePhone1|phone }}</td>
+            <td class="td-left">{{ customer.forename }}</td>
+            <td class="td-left">{{ customer.surname }}</td>
+            <td class="td-left">{{ customer.companyName }}</td>
+            <td class="td-center">{{ customer.mobilePhone1|phone }}</td>
         </tr>
     {% endfor %}
 </table>

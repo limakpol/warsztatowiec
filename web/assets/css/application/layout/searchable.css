@@ -98,6 +98,15 @@
     font: 12px 'Ubuntu', sans-serif;
     color: #333;
 }
+.searchable .td-left {
+    text-align: left;
+}
+.searchable .td-center {
+    text-align: center;
+}
+.searchable .td-right {
+    text-align: right;
+}
 @media screen and (min-width: 1200px)
 {
     .searchable > input {

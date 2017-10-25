@@ -39,9 +39,9 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $limit      = (int) $sortableParameters['limit'];
         $offset     = (int) $sortableParameters['offset'];
         $sortOrder  = $sortableParameters['sortOrder'];
-        $sortColumnName = $sortableParameters['sortColumnName'];
-        $systemFilters  = $sortableParameters['systemFilters'];
-        $customFilters  = $sortableParameters['customFilters'];
+        $sortColumnName     = $sortableParameters['sortColumnName'];
+        $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
+        $filterModelIds     = $sortableParameters['filterModelIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -54,21 +54,32 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
         ;
 
-        if(count($customFilters) > 0)
+        if(count($filterCategoryIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.categories', 's')
-                ->where('s.id IN (:statusIds)')
-                ->andWhere('s.deleted_at IS NULL')
-                ->andWhere('s.removed_at IS NULL')
-                ->setParameter(':statusIds', $customFilters)
+                ->innerJoin('g.categories', 'c')
+                ->where('c.id IN (:filterCategoryIds)')
+                ->andWhere('c.deleted_at IS NULL')
+                ->andWhere('c.removed_at IS NULL')
+                ->setParameter(':filterCategoryIds', $filterCategoryIds)
+            ;
+        }
+
+        if(count($filterModelIds) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('g.car_models', 'model')
+                ->where('model.id IN (:filterModelIds)')
+                ->andWhere('model.deleted_at IS NULL')
+                ->andWhere('model.removed_at IS NULL')
+                ->setParameter(':filterModelIds', $filterModelIds)
             ;
         }
 
         $goods = $queryBuilder
+            ->andWhere('g.workshop = :workshop')
             ->andWhere('g.deleted_at IS NULL')
             ->andWhere('g.removed_at IS NULL')
-            ->andWhere('g.workshop = :workshop')
             ->andWhere('i.removed_at IS NULL')
             ->andWhere('i.deleted_at IS NULL')
             ->andWhere("
@@ -99,8 +110,8 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $search     = $sortableParameters['search'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
-        $systemFilters  = $sortableParameters['systemFilters'];
-        $customFilters  = $sortableParameters['customFilters'];
+        $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
+        $filterModelIds     = $sortableParameters['filterModelIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -113,21 +124,32 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
         ;
 
-        if(count($customFilters) > 0)
+        if(count($filterCategoryIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.categories', 's')
-                ->where('s.id IN (:statusIds)')
-                ->andWhere('s.deleted_at IS NULL')
-                ->andWhere('s.removed_at IS NULL')
-                ->setParameter(':statusIds', $customFilters)
+                ->innerJoin('g.categories', 'c')
+                ->where('c.id IN (:filterCategoryIds)')
+                ->andWhere('c.deleted_at IS NULL')
+                ->andWhere('c.removed_at IS NULL')
+                ->setParameter(':filterCategoryIds', $filterCategoryIds)
+            ;
+        }
+
+        if(count($filterModelIds) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('g.car_models', 'model')
+                ->where('model.id IN (:filterModelIds)')
+                ->andWhere('model.deleted_at IS NULL')
+                ->andWhere('model.removed_at IS NULL')
+                ->setParameter(':filterModelIds', $filterModelIds)
             ;
         }
 
         $countGoods = $queryBuilder
+            ->andWhere('g.workshop = :workshop')
             ->andWhere('g.deleted_at IS NULL')
             ->andWhere('g.removed_at IS NULL')
-            ->andWhere('g.workshop = :workshop')
             ->andWhere('i.removed_at IS NULL')
             ->andWhere('i.deleted_at IS NULL')
             ->andWhere("

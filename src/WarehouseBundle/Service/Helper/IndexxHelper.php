@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class GoodIndexHelper
+class IndexxHelper
 {
     private $requestStack;
     private $tokenStorage;
@@ -43,7 +43,7 @@ class GoodIndexHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $goods = $em->getRepository('AppBundle:Good')->retrieve($workshop, $sortableParameters);
+        $goods = $em->getRepository('AppBundle:Indexx')->retrieve($workshop, $sortableParameters);
 
         return $goods;
     }
@@ -63,9 +63,8 @@ class GoodIndexHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'g.updated_at',
-                'systemFilters' => [],
-                'customFilters' => [],
+                'sortColumnName' => 'i.updated_at',
+                'filterGoodIds' => [],
             ];
         }
         else
@@ -97,7 +96,7 @@ class GoodIndexHelper
         $currentPage    = (int) $inputSortableParameters['currentPage'];
         $requestedPage  = (int) $inputSortableParameters['requestedPage'];
 
-        $countAllRetrieved = $em->getRepository('AppBundle:Good')->getCountAllRetrieved($workshop, $inputSortableParameters);
+        $countAllRetrieved = $em->getRepository('AppBundle:Indexx')->getCountAllRetrieved($workshop, $inputSortableParameters);
 
         $lastPage = (int) floor(abs($countAllRetrieved-1)/$limit)+1;
 

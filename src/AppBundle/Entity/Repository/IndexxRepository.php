@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 
 /**
  * IndexxRepository
@@ -10,4 +12,136 @@ namespace AppBundle\Entity\Repository;
  */
 class IndexxRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $indexx = $this->_em
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Indexx', 'i')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->where('i.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
+            ->andWhere('g.deleted_at IS NULL')
+            ->andWhere('g.workshop = :workshop')
+            ->andWhere('g.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+        ;
+
+        return $indexx;
+    }
+
+    public function retrieve(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $limit      = (int) $sortableParameters['limit'];
+        $offset     = (int) $sortableParameters['offset'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        $filterGoodIds  = $sortableParameters['filterGoodIds'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Indexx', 'i')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->leftJoin('AppBundle:Measure', 'm', 'WITH', 'g.measure_id = m.id')
+            ->leftJoin('AppBundle:Producer', 'p', 'WITH', 'i.producer_id = p.id')
+            ->leftJoin('g.car_models', 'cm')
+            ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
+        ;
+
+        if(count($filterGoodIds) > 0)
+        {
+            $queryBuilder
+                ->where('g.id IN (:filterGoodIds)')
+                ->setParameter(':filterGoodIds', $filterGoodIds)
+            ;
+        }
+
+        $goods = $queryBuilder
+            ->andWhere('g.workshop = :workshop')
+            ->andWhere('g.deleted_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere("
+                    g.name LIKE :search
+                OR  g.remarks LIKE :search
+                OR  m.name LIKE :search
+                OR  m.shortcut LIKE :search
+                OR  i.name LIKE :search
+                OR  p.name LIKE :search
+                OR  CONCAT_WS(' ', cm.name, cb.name) LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('i.updated_at', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->groupBy('i.id')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $goods;
+    }
+
+    public function getCountAllRetrieved(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+        $filterGoodIds  = $sortableParameters['filterGoodIds'];
+
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('COUNT(i)')
+            ->from('AppBundle:Indexx', 'i')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->leftJoin('AppBundle:Measure', 'm', 'WITH', 'g.measure_id = m.id')
+            ->leftJoin('AppBundle:Producer', 'p', 'WITH', 'i.producer_id = p.id')
+            ->leftJoin('g.car_models', 'cm')
+            ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
+        ;
+
+        if(count($filterGoodIds) > 0)
+        {
+            $queryBuilder
+                ->where('g.id IN (:)')
+                ->setParameter(':filterGoodIds', $filterGoodIds)
+            ;
+        }
+
+        $countGoods = $queryBuilder
+            ->andWhere('g.workshop = :workshop')
+            ->andWhere('g.deleted_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere("
+                    g.name LIKE :search
+                OR  g.remarks LIKE :search
+                OR  m.name LIKE :search
+                OR  m.shortcut LIKE :search
+                OR  i.name LIKE :search
+                OR  p.name LIKE :search
+                OR  CONCAT_WS(' ', cm.name, cb.name) LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('i.updated_at', 'DESC')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $countGoods;
+    }
 }

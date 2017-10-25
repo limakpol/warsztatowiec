@@ -24,3 +24,12 @@ delivery_header_retrieve_customers:
 delivery_detail_add:
     path: /przyjecia-towarow/{deliveryHeaderId}/dodaj-pozycje
     defaults: { _controller: DeliveryBundle:DeliveryDetail:add }
+
+delivery_retrieve_goods:
+    path: /delivery/retrieve-goods
+    defaults: { _controller: DeliveryBundle:DeliveryDetail:retrieveGoods }
+
+delivery_retrieve_indexxes:
+    path: /delivery/retrieve-indexxes
+    defaults: { _controller: DeliveryBundle:DeliveryDetail:retrieveIndexxes }
+

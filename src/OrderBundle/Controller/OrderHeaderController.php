@@ -13,6 +13,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Doctrine\ORM\EntityManager;
+use OrderBundle\Service\Helper\OrderHeaderAddHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
@@ -65,13 +66,14 @@ class OrderHeaderController extends Controller
 
     public function retrieveCustomersAction()
     {
+
+        /** @var OrderHeaderAddHelper $orderHeaderAddHelper */
+        $orderHeaderAddHelper = $this->get('order.helper.header_add');
+
         /** @var CustomerIndexHelper $customerIndexHelper */
         $customerIndexHelper = $this->get('customer.helper.index');
 
-        $inputSortableParameters = $customerIndexHelper->getInputSortableParameters();
-        $inputSortableParameters['limit'] = 15;
-        $outputSortableParameters = $customerIndexHelper->getOutputSortableParameters($inputSortableParameters);
-        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+        $sortableParameters = $orderHeaderAddHelper->getCustomerSortableParameters();
 
         $customers = $customerIndexHelper->retrieve($sortableParameters);
 
@@ -83,13 +85,13 @@ class OrderHeaderController extends Controller
 
     public function retrieveVehiclesAction()
     {
+        /** @var OrderHeaderAddHelper $orderHeaderAddHelper */
+        $orderHeaderAddHelper = $this->get('order.helper.header_add');
+
         /** @var VehicleIndexHelper $vehicleIndexHelper */
         $vehicleIndexHelper = $this->get('vehicle.helper.index');
 
-        $inputSortableParameters = $vehicleIndexHelper->getInputSortableParameters();
-        $inputSortableParameters['limit'] = 15;
-        $outputSortableParameters = $vehicleIndexHelper->getOutputSortableParameters($inputSortableParameters);
-        $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);
+        $sortableParameters = $orderHeaderAddHelper->getVehicleSortableParameters();
 
         $vehicles = $vehicleIndexHelper->retrieve($sortableParameters);
 
