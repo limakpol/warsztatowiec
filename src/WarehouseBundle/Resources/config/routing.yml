@@ -21,3 +21,7 @@ warehouse_producer_edit:
 warehouse_producer_remove:
     path: /producer-remove
     defaults: { _controller: WarehouseBundle:Producer:remove }
+
+warehouse_category_get_selectable_modal:
+    path: /warehouse/category/get-selectable-modal
+    defaults: { _controller: WarehouseBundle:Category:getSelectableModal }

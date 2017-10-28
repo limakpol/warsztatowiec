@@ -1,0 +1,16 @@
+.form-selectable-modal .names label {
+    font: 12px 'Arial', sans-serif;
+    margin: 4px;
+}
+.selectable-modal {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 15vh auto;
+    width: 40vw;
+    height: 60vh;
+    background-color: #f5f5f5;
+}

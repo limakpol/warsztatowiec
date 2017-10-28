@@ -26,4 +26,4 @@ services:
 
   delivery.helper.detail_add:
       class: DeliveryBundle\Service\Helper\DeliveryDetailAddHelper
-      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@warehouse.helper.good", "@warehouse.helper.indexx", "@app.trade"]
+      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@form.factory", "@warehouse.helper.good", "@warehouse.helper.indexx", "@app.trade"]

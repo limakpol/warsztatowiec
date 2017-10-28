@@ -10,6 +10,17 @@ services:
         tags:
             - { name: form.type }
 
+    form.type.category:
+        class: WarehouseBundle\Form\CategoryType
+        tags:
+            - { name: form.type }
+
+    form.type.car_model:
+        class: WarehouseBundle\Form\CarModelType
+        tags:
+            - { name: form.type }
+
+
 # HELPERS
     warehouse.helper.producer:
         class: WarehouseBundle\Service\Helper\ProducerHelper

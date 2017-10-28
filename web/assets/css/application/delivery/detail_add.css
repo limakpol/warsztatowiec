@@ -1,0 +1,4 @@
+.searchable header div:hover {
+    cursor: pointer;
+    color: #777;
+}

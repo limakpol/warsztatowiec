@@ -2,10 +2,15 @@
 
 namespace WarehouseBundle\Form;
 
+use AppBundle\Entity\CarModel;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Measure;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,13 +38,28 @@ class GoodType extends AbstractType
                 'expanded' => false,
             ])
             ->add('quantity', TextType::class, [
-                'label' => 'Ilość',
+                'label' => 'Ilość całkowita w magazynie',
                 'required' => false,
                 'empty_data' => 0.00,
+                'disabled' => true,
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade input-quantity',
+                    'class' => 'trade',
                 ]
+            ])
+            ->add('categories', CollectionType::class, [
+                'label' => 'Kategorie',
+                'entry_type' => HiddenType::class,
+                'entry_options' => ['label' => false,],
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('car_models', CollectionType::class, [
+                'label' => 'Modele samochodów',
+                'entry_type' => HiddenType::class,
+                'entry_options' => ['label' => false,],
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
             ->add('remarks', TextareaType::class, [
                 'label' => 'Uwagi',

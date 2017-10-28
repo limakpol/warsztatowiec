@@ -15,6 +15,8 @@ $(document).ready(function()
     {
         $('#searchable-good > div').slideUp();
     });
+
+
     
     /* INDEXX */
 
@@ -32,4 +34,30 @@ $(document).ready(function()
     {
         $('#searchable-indexx > div').slideUp();
     });
+
+    /* CATEGORIES */
+
+    $(document).on('click', '#categories-form-selectable-modal .btn-choose', function(event)
+    {
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/warehouse/category/get-selectable-modal",
+            success: function(data) {
+                if(!data['error'])
+                {
+                    $('.selectable-modal').remove();
+
+                    var modal = '<div class="selectable-modal"></div>';
+
+                    $('footer').before(modal);
+
+                    $('.selectable-modal').html(data);
+                }
+            },
+        });
+
+    });
+
 });

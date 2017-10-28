@@ -32,7 +32,7 @@ a[class*='btn-'] {
 .btn-previous i {
     margin-right: 4px;
 }
-.btn-next i, .btn-save i, .btn-edit i, .btn-info i, .btn-remove i, .btn-add i {
+.btn-next i, .btn-save i, .btn-edit i, .btn-info i, .btn-remove i, .btn-add i, .btn-choose i {
     margin-left: 4px;
 }
 .btn-previous, .btn-next, .btn-info {
@@ -53,6 +53,9 @@ a[class*='btn-'] {
 .btn-disabled {
     background-color: #ddd;
     color: #888;
+}
+.btn-choose {
+    background-color: #8e54ff;
 }
 .btn-disabled:hover {
     filter: none;

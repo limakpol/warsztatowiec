@@ -7,6 +7,7 @@ use AppBundle\Entity\Indexx;
 use AppBundle\Entity\Producer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +17,10 @@ class IndexxType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('good_id', HiddenType::class, [
+                'required' => true,
+                'empty_data' => null,
+            ])
             ->add('good', GoodType::class, [
                 'required' => false,
             ])
@@ -37,21 +42,22 @@ class IndexxType extends AbstractType
                 'expanded' => false,
             ])
             ->add('quantity', TextType::class, [
-                'label' => 'Ilość',
+                'label' => 'Ilość w magazynie',
                 'required' => false,
                 'empty_data' => 0.00,
+                'disabled' => true,
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade input-quantity',
+                    'class' => 'trade',
                 ]
             ])
             ->add('unit_price_net', TextType::class, [
-                'label' => 'Ilość',
+                'label' => 'Cena jednostkowa netto [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
                 'attr' => [
                     'maxlength' => 10,
-                    'class' => 'trade input-unit-price-net',
+                    'class' => 'trade',
                 ]
             ])
         ;

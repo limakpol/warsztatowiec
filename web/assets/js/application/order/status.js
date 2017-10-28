@@ -94,11 +94,4 @@ $(document).ready(function()
             }
         });
     });
-
-    /*$(document).on('mouseover', '#status-filters button', function()
-    {
-        $(this).css("border-width: 2px;");
-
-    });
-*/
 });

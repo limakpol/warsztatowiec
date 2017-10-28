@@ -28,6 +28,14 @@ class DeliveryDetailController extends Controller
         /** @var IndexxHelper $indexxHelper */
         $indexxHelper = $this->get('warehouse.helper.indexx');
 
+        $form = $detailAddHelper->createForm();
+
+        if($detailAddHelper->isValid($form))
+        {
+            var_dump($form->getData());
+        }
+
+
         $goodSortableParameters = $detailAddHelper->getGoodSortableParameters();
         $indexxSortableParameters = $detailAddHelper->getIndexxSortableParameters();
 
@@ -42,6 +50,7 @@ class DeliveryDetailController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
             'navbar'        => 'Dodawanie pozycji przyjęcia',
+            'form'          => $form->createView(),
             'goods'         => $goods,
             'indexxes'      => $indexxes,
             'goodSortableParameters' => $goodSortableParameters,

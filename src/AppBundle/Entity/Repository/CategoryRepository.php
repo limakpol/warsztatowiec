@@ -49,6 +49,28 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
         return $categories;
     }
 
+    public function retrieveByGoodId(Workshop $workshop, $goodIds = [])
+    {
+        $categories = $this->_em->createQueryBuilder()
+            ->select('c')
+            ->from('AppBundle:Category', 'c')
+            ->innerJoin('c.goods', 'g')
+            ->where('c.removed_at IS NULL')
+            ->andWhere('c.deleted_at IS NULL')
+            ->andWhere('c.workshop = :workshop')
+            ->andWhere('g.id IN (:goodIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':goodIds' => $goodIds,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $categories;
+    }
+
+
     public function getOneByName(Workshop $workshop, $name)
     {
         $category = $this->_em->createQueryBuilder()

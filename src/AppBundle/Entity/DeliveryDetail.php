@@ -70,7 +70,7 @@ class DeliveryDetail
     /**
      * @var boolean
      */
-    private $autocomplete = 1;
+    private $autocomplete = true;
 
     /**
      * @var string

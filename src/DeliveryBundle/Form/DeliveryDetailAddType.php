@@ -12,6 +12,7 @@ namespace DeliveryBundle\Form;
 use AppBundle\Entity\DeliveryDetail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +25,10 @@ class DeliveryDetailAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('indexx_id', HiddenType::class, [
+                'required' => true,
+                'empty_data' => null,
+            ])
             ->add('indexx', IndexxType::class, [
                 'required' => true,
             ])
@@ -31,6 +36,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Cena jednostkowa netto [zł]',
                 'required' => true,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-unit-price-net',
@@ -39,6 +45,7 @@ class DeliveryDetailAddType extends AbstractType
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość',
                 'required' => true,
+                'data' => '',
                 'empty_data' => 0.00,
                 'attr' => [
                     'maxlength' => 10,
@@ -49,6 +56,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Wartość netto przed rabatem [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-total-net-before-discount',
@@ -58,6 +66,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Rabat [%]',
                 'required' => true,
                 'empty_data' => 0.00,
+                'data' => 0,
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-discount-pc',
@@ -67,6 +76,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Kwota rabatu [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-discount',
@@ -76,6 +86,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Wartość netto [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-total-net',
@@ -85,6 +96,7 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'VAT [%]',
                 'required' => true,
                 'empty_data' => 0.00,
+                'data' => 0,
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-vat-pc',
@@ -94,15 +106,17 @@ class DeliveryDetailAddType extends AbstractType
                 'label' => 'Kwota VAT [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-vat',
                 ]
             ])
             ->add('total_due', TextType::class, [
-                'label' => 'Należność całkowita [z]',
+                'label' => 'Należność całkowita [zł]',
                 'required' => false,
                 'empty_data' => 0.00,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade input-total-due',

@@ -2,29 +2,130 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
+        'assets/css/application/delivery/detail_add.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 {% block main %}
-    <h1 class="h-enum">1. Wybierz towar lub dodaj nowy</h1>
-    <div id="searchable-good" class="searchable">
-        <input type="text" placeholder="Wyszukaj towar">
-        <div>
-            {% include 'DeliveryBundle:detail:good_searchable_content.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'main-form'}}) }}
+        {{ form_widget(form.indexx_id) }}
+        {{ form_widget(form.indexx.good_id) }}
+        <h1 class="h-enum">1. Wybierz towar lub dodaj nowy</h1>
+        <div id="searchable-good" class="searchable">
+            <input type="text" placeholder="Wyszukaj towar">
+            <div>
+                {% include 'DeliveryBundle:detail:good_searchable_content.html.twig' %}
+            </div>
         </div>
-    </div>
-    <h1 class="h-enum">2. Wpisz dane nowego towaru</h1>
-    <h1 class="h-enum">3. Wybierz indeks lub dodaj nowy</h1>
-    <div id="searchable-indexx" class="searchable">
-        <input type="text" placeholder="Wyszukaj indeks">
-        <div>
-            {% include 'DeliveryBundle:detail:indexx_searchable_content.html.twig' %}
-        </div>
-    </div>
-    <h1 class="h-enum">4. Wpisz dane nowego indeksu</h1>
-    <h1 class="h-enum">5. Uzupełnij dane pozycji przyjęcia</h1>
+        <h1 class="h-enum">2. Wpisz dane nowego towaru</h1>
+        <div id="good-form" class="form-part">
+            {{ form_label(form.indexx.good.name) }}
+            {{ form_widget(form.indexx.good.name) }}
+            {{ form_errors(form.indexx.good.name) }}
 
+            {{ form_label(form.indexx.good.measure) }}
+            {{ form_widget(form.indexx.good.measure) }}
+            {{ form_errors(form.indexx.good.measure) }}
+
+            {{ form_label(form.indexx.good.quantity) }}
+            {{ form_widget(form.indexx.good.quantity) }}
+            {{ form_errors(form.indexx.good.quantity) }}
+
+            {{ form_label(form.indexx.good.categories) }}
+
+            <div id="categories-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names"><label>Płyny</label><label>Klocki hamulcowe</label><label>Akumulatory</label></div>
+                    <div class="ids"></div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
+
+            {{ form_label(form.indexx.good.car_models) }}
+
+            {{ form_label(form.indexx.good.remarks) }}
+            {{ form_widget(form.indexx.good.remarks) }}
+            {{ form_errors(form.indexx.good.remarks) }}
+        </div>
+        <h1 class="h-enum">3. Wybierz indeks lub dodaj nowy</h1>
+        <div id="searchable-indexx" class="searchable">
+            <input type="text" placeholder="Wyszukaj indeks">
+            <div>
+                {% include 'DeliveryBundle:detail:indexx_searchable_content.html.twig' %}
+            </div>
+        </div>
+        <h1 class="h-enum">4. Wpisz dane nowego indeksu</h1>
+        <div id="indexx-form" class="form-part">
+            {{ form_label(form.indexx.name) }}
+            {{ form_widget(form.indexx.name) }}
+            {{ form_errors(form.indexx.name) }}
+
+            {{ form_label(form.indexx.producer) }}
+            {{ form_widget(form.indexx.producer) }}
+            {{ form_errors(form.indexx.producer) }}
+
+            {{ form_label(form.indexx.quantity) }}
+            {{ form_widget(form.indexx.quantity) }}
+            {{ form_errors(form.indexx.quantity) }}
+
+            {{ form_label(form.indexx.unit_price_net) }}
+            {{ form_widget(form.indexx.unit_price_net) }}
+            {{ form_errors(form.indexx.unit_price_net) }}
+        </div>
+        <h1 class="h-enum">5. Uzupełnij dane pozycji przyjęcia</h1>
+        <div class="form-part">
+            <div class="main-form-checkbox">
+                {{ form_label(form.autocomplete) }}
+                {{ form_widget(form.autocomplete) }}
+                {{ form_errors(form.autocomplete) }}
+            </div>
+            {{ form_label(form.unit_price_net) }}
+            {{ form_widget(form.unit_price_net) }}
+            {{ form_errors(form.unit_price_net) }}
+
+            {{ form_label(form.quantity) }}
+            {{ form_widget(form.quantity) }}
+            {{ form_errors(form.quantity) }}
+
+            {{ form_label(form.total_net_before_discount) }}
+            {{ form_widget(form.total_net_before_discount, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_net_before_discount) }}
+
+            {{ form_label(form.discount_pc) }}
+            {{ form_widget(form.discount_pc) }}
+            {{ form_errors(form.discount_pc) }}
+
+            {{ form_label(form.discount) }}
+            {{ form_widget(form.discount, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.discount) }}
+
+            {{ form_label(form.total_net) }}
+            {{ form_widget(form.total_net, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_net) }}
+
+            {{ form_label(form.vat_pc) }}
+            {{ form_widget(form.vat_pc) }}
+            {{ form_errors(form.vat_pc) }}
+
+            {{ form_label(form.vat) }}
+            {{ form_widget(form.vat, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.vat) }}
+
+            {{ form_label(form.total_due) }}
+            {{ form_widget(form.total_due, {'disabled': form.autocomplete.vars.checked }) }}
+            {{ form_errors(form.total_due) }}
+
+
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
+
+            {{ form_widget(form._token) }}
+
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

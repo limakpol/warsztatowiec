@@ -54,13 +54,14 @@ $(document).ready(function()
 function update1()
 {
 
-    if($('.economical-autocomplete').length && !$('.economical-autocomplete').is(':checked'))
+    if($('.trade-autocomplete').length && !$('.trade-autocomplete').is(':checked'))
     {
         return;
     }
 
     var unitPriceNet = parseFloat(removeComma($('.input-unit-price-net').val()));
     var quantity = parseFloat(removeComma($('.input-quantity').val()));
+
 
     if(!isNaN(unitPriceNet) && !isNaN(quantity))
     {
@@ -101,7 +102,7 @@ function update1()
 
 function update2()
 {
-    if($('.economical-autocomplete').length && !$('.economical-autocomplete').is(':checked'))
+    if($('.trade-autocomplete').length && !$('.trade-autocomplete').is(':checked'))
     {
         return;
     }
@@ -141,7 +142,7 @@ function update2()
 
 function update3()
 {
-    if($('.economical-autocomplete').length && !$('.economical-autocomplete').is(':checked'))
+    if($('.trade-autocomplete').length && !$('.trade-autocomplete').is(':checked'))
     {
         return;
     }
