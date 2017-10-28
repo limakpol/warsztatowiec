@@ -37,6 +37,11 @@ $(document).ready(function()
 
     /* CATEGORIES */
 
+    $(document).on('click', '.selectable-modal header i', function()
+    {
+        $('.selectable-modal').remove();
+    });
+
     $(document).on('click', '#categories-form-selectable-modal .btn-choose', function(event)
     {
         event.preventDefault();
@@ -49,15 +54,65 @@ $(document).ready(function()
                 {
                     $('.selectable-modal').remove();
 
-                    var modal = '<div class="selectable-modal"></div>';
+                    var modal = '<div id="categories-selectable-modal" class="selectable-modal"></div>';
 
-                    $('footer').before(modal);
+                    $('main.section-inner').before(modal);
 
-                    $('.selectable-modal').html(data);
+                    $('#categories-selectable-modal').html(data);
+
+                    var selectedInputs = $('#categories-form-selectable-modal .ids input');
+                    var categoryLis = $('#categories-selectable-modal main ul li');
+
+                    selectedInputs.each(function()
+                    {
+                        var selectedId = $(this).val();
+
+                        categoryLis.each(function()
+                        {
+                            if($(this).find('label').data('id') == selectedId)
+                            {
+                                $(this).addClass('active');
+                            }
+                        });
+
+                    });
                 }
             },
         });
+    });
 
+    $(document).on('click', '#categories-selectable-modal main li', function()
+    {
+        var li = $(this);
+
+        if(li.hasClass('active'))
+        {
+            li.removeClass('active');
+        }
+        else
+        {
+            li.addClass('active');
+        }
+    });
+
+    $(document).on('click', '#categories-selectable-modal footer .btn-save', function()
+    {
+        var selectedLabels = $('#categories-selectable-modal main li.active label');
+
+        $('#categories-form-selectable-modal .content .names').html('');
+        $('#categories-form-selectable-modal .content .ids').html('');
+
+        selectedLabels.each(function()
+        {
+            var input = '<input type="hidden" value="' +  $(this).data('id') + '">';
+            var label = '<label>' +  $(this).text() + '</label>';
+
+            $('#categories-form-selectable-modal .content .names').append(label);
+            $('#categories-form-selectable-modal .content .ids').append(input);
+
+        });
+
+        $('#categories-selectable-modal').remove();
     });
 
 });
