@@ -24,7 +24,7 @@ class IndexxRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('g.removed_at IS NULL')
             ->andWhere('g.deleted_at IS NULL')
             ->andWhere('g.workshop = :workshop')
-            ->andWhere('g.id = :id')
+            ->andWhere('i.id = :id')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':id'       => $id,

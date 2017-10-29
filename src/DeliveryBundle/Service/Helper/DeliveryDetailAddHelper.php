@@ -9,6 +9,8 @@
 namespace DeliveryBundle\Service\Helper;
 
 use AppBundle\Entity\DeliveryDetail;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
 use DeliveryBundle\Form\DeliveryDetailAddType;
 use Doctrine\ORM\EntityManager;
@@ -46,7 +48,9 @@ class DeliveryDetailAddHelper
 
         $deliveryDetail = new DeliveryDetail();
 
-        $form = $this->formFactory->create(DeliveryDetailAddType::class, $deliveryDetail);
+        $form = $this->formFactory->create(DeliveryDetailAddType::class, $deliveryDetail, [
+            'validation_groups' => ['delivery_detail_add'],
+        ]);
 
         return $form;
     }
@@ -66,6 +70,18 @@ class DeliveryDetailAddHelper
         return false;
     }
 
+
+    public function write(Form $form)
+    {
+        /** @var DeliveryDetail $deliveryDetail */
+        $deliveryDetail = $form->getData();
+
+
+        var_dump($deliveryDetail);
+        die();
+
+        return true;
+    }
 
     public function getGoodSortableParameters()
     {
@@ -91,5 +107,21 @@ class DeliveryDetailAddHelper
         $sortableParameters = array_merge($inputSortableParamaters, $outputSortableParameters);
 
         return $sortableParameters;
+    }
+
+    public function headerExists($deliveryHeaderId)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $deliveryHeader = $em->getRepository('AppBundle:DeliveryHeader')->getOne($workshop, $deliveryHeaderId);
+
+        return null !== $deliveryHeader;
     }
 }

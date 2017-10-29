@@ -22,6 +22,19 @@ warehouse_producer_remove:
     path: /producer-remove
     defaults: { _controller: WarehouseBundle:Producer:remove }
 
-warehouse_category_get_selectable_modal:
-    path: /warehouse/category/get-selectable-modal
-    defaults: { _controller: WarehouseBundle:Category:getSelectableModal }
+warehouse_selectable_get_categories:
+    path: /warehouse/selectable/get-categories
+    defaults: { _controller: WarehouseBundle:Ajax:getSelectableCategories }
+
+warehouse_selectable_get_models:
+    path: /warehouse/selectable/get-models
+    defaults: { _controller: WarehouseBundle:Ajax:getSelectableModels }
+
+warehouse_get_one_good:
+    path: /warehouse/get-one-good
+    defaults: { _controller: WarehouseBundle:Ajax:getOneGood }
+
+warehouse_get_one_indexx:
+    path: /warehouse/get-one-indexx
+    defaults: { _controller: WarehouseBundle:Ajax:getOneIndexx }
+

@@ -37,14 +37,20 @@
             <div id="categories-form-selectable-modal" class="form-selectable-modal">
                 <div class="content">
                     <div class="names"></div>
-                    <div class="ids">
-                        <input type="hidden" value="4">
-                    </div>
+                    <div class="ids"></div>
                 </div>
                 <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
             </div>
 
             {{ form_label(form.indexx.good.car_models) }}
+
+            <div id="models-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names"></div>
+                    <div class="ids"></div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
 
             {{ form_label(form.indexx.good.remarks) }}
             {{ form_widget(form.indexx.good.remarks) }}

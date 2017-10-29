@@ -64,6 +64,11 @@ AppBundle\Entity\Customer:
                 groups: [ customer ]
         address:
             - Valid: ~
+        remarks:
+            - Length:
+                max: 255
+                maxMessage: 'Pole Uwagi powinno zawierać maksymalnie 255 znaków'
+                groups: [ customer ]
     constraints:
         - Callback:
             callback: validate

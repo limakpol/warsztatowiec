@@ -17,7 +17,7 @@ use WarehouseBundle\Service\Helper\IndexxHelper;
 class DeliveryDetailController extends Controller
 {
 
-    public function addAction()
+    public function addAction($deliveryHeaderId)
     {
         /** @var DeliveryDetailAddHelper $detailAddHelper */
         $detailAddHelper = $this->get('delivery.helper.detail_add');
@@ -28,11 +28,20 @@ class DeliveryDetailController extends Controller
         /** @var IndexxHelper $indexxHelper */
         $indexxHelper = $this->get('warehouse.helper.indexx');
 
+        if(!$detailAddHelper->headerExists($deliveryHeaderId))
+        {
+            return $this->redirectToRoute('delivery_index');
+        }
+
         $form = $detailAddHelper->createForm();
 
         if($detailAddHelper->isValid($form))
         {
-            var_dump($form->getData());
+            $detailAddHelper->write($form);
+
+            return $this->redirectToRoute('delivery_show', [
+                'deliveryHeaderId' => $deliveryHeaderId,
+            ]);
         }
 
 

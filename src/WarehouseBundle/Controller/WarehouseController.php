@@ -49,7 +49,7 @@ class WarehouseController extends Controller
             ]);
         }
 
-        $indexHelper = $this->get('warehouse.helper.good_index');
+        $indexHelper = $this->get('warehouse.helper.good');
         $inputSortableParameters = $indexHelper->getInputSortableParameters();
         $outputSortableParameters = $indexHelper->getOutputSortableParameters($inputSortableParameters);
         $sortableParameters = array_merge($inputSortableParameters, $outputSortableParameters);

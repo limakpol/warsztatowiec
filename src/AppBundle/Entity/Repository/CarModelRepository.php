@@ -34,6 +34,50 @@ class CarModelRepository extends \Doctrine\ORM\EntityRepository
         return $carModel;
     }
 
+    public function retrieve(Workshop $workshop)
+    {
+        $carModels = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
+            ->andWhere('b.deleted_at IS NULL')
+            ->andWhere('b.removed_at IS NULL')
+            ->andWhere('b.workshop = :workshop')
+            ->setParameters([
+                ':workshop' => $workshop,
+            ])
+            ->orderBy('b.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $carModels;
+    }
+
+    public function retrieveByGoodId(Workshop $workshop, $goodIds = [])
+    {
+        $models = $this->_em->createQueryBuilder()
+            ->select('m')
+            ->from('AppBundle:CarModel', 'm')
+            ->innerJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->innerJoin('m.goods', 'g')
+            ->where('m.removed_at IS NULL')
+            ->andWhere('m.deleted_at IS NULL')
+            ->andWhere('b.workshop = :workshop')
+            ->andWhere('g.id IN (:goodIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':goodIds' => $goodIds,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $models;
+    }
+
     public function retrieveByBrandId(Workshop $workshop, $brandId)
     {
         $carModels = $this->_em->createQueryBuilder()

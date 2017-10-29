@@ -1,0 +1,18 @@
+<div class="content">
+    <header>
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </header>
+    <main>
+        <ul>
+            {% for model in models %}
+                <li>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <label data-id="{{ model.id }}">{{ model.brand.name }} {{ model.name }}</label>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+    <footer>
+        <button class="btn-save">zapisz<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+    </footer>
+</div>
