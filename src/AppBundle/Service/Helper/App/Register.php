@@ -4,9 +4,12 @@ namespace AppBundle\Service\Helper\App;
 
 use AppBundle\Entity\Action;
 use AppBundle\Entity\Address;
+use AppBundle\Entity\CarBrand;
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Parameters;
 use AppBundle\Entity\Position;
+use AppBundle\Entity\Producer;
 use AppBundle\Entity\Settings;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\User;
@@ -56,7 +59,7 @@ class Register
         $userAddress        = new Address();
         $workshopAddress    = new Address();
         $dateTime           = new \DateTime();
-        
+
         $settings   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $parameters ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
         $workshop   ->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
@@ -81,14 +84,18 @@ class Register
         $em->persist($parameters);
         $em->persist($settings);
 
-        $em->flush();
-
         $this->assignRoles($workshop, $workshop->getAdmin());
         $this->assignMeasures($workshop);
         $this->assignWorkstations($workshop);
         $this->assignPositions($workshop, $workshop->getAdmin());
         $this->assignStatuses($workshop);
+        $this->assignProducers($workshop);
         $this->assignActions($workshop);
+        $this->assignCarModels($workshop);
+
+        $em->flush();
+
+        return;
     }
 
     public function assignMeasures(Workshop $workshop)
@@ -130,7 +137,7 @@ class Register
             $em->persist($measure);
         }
 
-        $em->flush();
+       // $em->flush();
 
         return true;
     }
@@ -157,7 +164,7 @@ class Register
             $em->persist($workstation);
         }
 
-        $em->flush();
+        //$em->flush();
 
         return true;
     }
@@ -191,7 +198,7 @@ class Register
             }
         }
 
-        $em->flush();
+        //$em->flush();
 
         return true;
     }
@@ -219,7 +226,34 @@ class Register
             $em->persist($status);
         }
 
-        $em->flush();
+        //$em->flush();
+
+        return true;
+    }
+
+    public function assignProducers(Workshop $workshop)
+    {
+        /** @var EntityManager $em */
+        $em = $this->em;
+
+        /** @var User $user */
+        $user = $workshop->getAdmin();
+
+        $dateTime = new \DateTime();
+
+        $producers = $this->container->getParameter('app')['producers'];
+
+        foreach($producers as $producerName)
+        {
+            $producer = new Producer();
+            $producer->setWorkshop($workshop);
+            $producer->setName($producerName);
+            $producer->setCreatedAt($dateTime)->setCreatedBy($user)->setUpdatedBy($user);
+
+            $em->persist($producer);
+        }
+
+        //$em->flush();
 
         return true;
     }
@@ -246,7 +280,7 @@ class Register
             $em->persist($action);
         }
 
-        $em->flush();
+        //$em->flush();
 
         return true;
     }
@@ -280,6 +314,47 @@ class Register
             $em->persist($userRole);
         }
 
-        $em->flush();
+        //$em->flush();
+    }
+
+    public function assignCarModels(Workshop $workshop)
+    {
+        /** @var EntityManager $em */
+        $em = $this->em;
+
+        /** @var User $user */
+        $user = $workshop->getAdmin();
+
+        $dateTime = new \DateTime();
+
+        $carModels = $this->container->getParameter('app')['car_models'];
+
+        foreach($carModels as $carModelData)
+        {
+            $carBrand = new CarBrand();
+            $carBrand->setWorkshop($workshop);
+            $carBrand->setName($carModelData['brand']);
+            $carBrand->setCreatedAt($dateTime);
+            $carBrand->setCreatedBy($workshop->getAdmin());
+            $carBrand->setUpdatedBy($workshop->getAdmin());
+
+            foreach($carModelData['models'] as $modelName)
+            {
+                $carModel = new CarModel();
+                $carModel->setBrand($carBrand);
+                $carModel->setName($modelName);
+                $carModel->setCreatedAt($dateTime);
+                $carModel->setCreatedBy($workshop->getAdmin());
+                $carModel->setUpdatedBy($workshop->getAdmin());
+
+                $em->persist($carModel);
+            }
+
+            $em->persist($carBrand);
+        }
+
+        //$em->flush();
+
+        return true;
     }
 }

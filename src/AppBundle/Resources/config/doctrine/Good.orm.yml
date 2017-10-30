@@ -115,23 +115,23 @@ AppBundle\Entity\Good:
             targetEntity: AppBundle\Entity\CarModel
             inversedBy: goods
             joinTable:
-                name: car_model_good
+                name: good_car_models
                 joinColumns:
-                    car_model_id:
+                    good_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    good_id:
+                    car_model_id:
                         referencedColumnName: id
         categories:
             targetEntity: AppBundle\Entity\Category
             inversedBy: goods
             joinTable:
-                name: category_good
+                name: good_category
                 joinColumns:
-                    category_id:
+                    good_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    good_id:
+                    category_id:
                         referencedColumnName: id
     uniqueConstraints:
         workshop_name:

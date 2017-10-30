@@ -226,7 +226,7 @@ $(document).ready(function()
 
         selectedLabels.each(function()
         {
-            var input = '<input type="hidden" value="' +  $(this).data('id') + '">';
+            var input = '<input type="hidden" name="delivery_detail_add[indexx][good][car_models][]" value="' +  $(this).data('id') + '">';
             var label = '<label>' +  $(this).text() + '</label>';
 
             $('#models-form-selectable-modal .content .names').append(label);

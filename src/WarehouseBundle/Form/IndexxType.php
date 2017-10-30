@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class IndexxType extends AbstractType
 {
@@ -23,6 +24,7 @@ class IndexxType extends AbstractType
             ])
             ->add('good', GoodType::class, [
                 'required' => false,
+                'constraints' => [new Valid()],
             ])
             ->add('name', TextType::class, [
                 'label' => 'Nazwa',
@@ -44,7 +46,6 @@ class IndexxType extends AbstractType
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość w magazynie',
                 'required' => false,
-                'empty_data' => 0.00,
                 'disabled' => true,
                 'attr' => [
                     'maxlength' => 10,
@@ -54,7 +55,7 @@ class IndexxType extends AbstractType
             ->add('unit_price_net', TextType::class, [
                 'label' => 'Cena jednostkowa netto [zł]',
                 'required' => false,
-                'empty_data' => 0.00,
+                'disabled' => true,
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade',

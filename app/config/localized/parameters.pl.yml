@@ -19,3 +19,29 @@ parameters:
          limit_set: [15, 30, 70, 100, 150]
          default_limit: 15
          warehouse_documents: ["invoice", "voucher", "issue"]
+         producers: ["4MAX", "ADVANTI", "BOSCH", "CARTECHNIC", "DONALDSON", "ELF", "FLORIMEX", "GUMTECH", "HEPU", "INTERSTATE", "JURID", "KANACO", "LAUFENN", "MAHLE", "NEXUS", "OPTIMA", "PASCAL", "RONAL", "SASIC", "TEAMEC","VIGNAL", "ZAVOLI"]
+         car_models:
+              - brand: 'Citroen'
+                models: ['Berlingo', 'Jumper', 'Xsara']
+              - brand: 'Daewoo'
+                models: ["Espero", "Lanos", 'Leganza', "Matiz", "Nexia", "Nubira", "Tico"]
+              - brand: 'Ford'
+                models: ["Escort", "Fiesta", "Focus", "Fusion", "Ka", "Mondeo", "Scorpio", "Transit", "Sierra"]
+              - brand: 'Honda'
+                models: ["Accord", "Civic"]
+              - brand: 'Hyundai'
+                models: ["Accent", "Atos", "Pony"]
+              - brand: 'Mitsubishi'
+                models: ["Carisma", "Colt", "Lancer", "Outlander", "Pajero"]
+              - brand: 'Fiat'
+                models: ["Brava", "Cinquecento", "Ducato", "Palio", "Panda", "Punto", "Seicento", "Stilo"]
+              - brand: 'Opel'
+                models: ["Astra", "Corsa", "Kadett", "omega", "Vectra", "Zafira"]
+              - brand: 'Renault'
+                models: ["Clio", "Espace", "Kangoo", "Laguna", "Megane", "Twingo"]
+              - brand: 'Skoda'
+                models: ["Fabia", "Felicia", "Octavia", "Rapid", "Superb"]
+              - brand: 'Subaru'
+                models: ["Impreza"]
+              - brand: 'Toyota'
+                models: ["Aygo", "Auris", "Avensis", "Corolla", "Previa", "Yaris"]

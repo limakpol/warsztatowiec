@@ -6,19 +6,19 @@ AppBundle\Entity\Good:
                 max: 40
                 minMessage: 'Nazwa powinna zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa może zawierać maksymalnie 40 liter'
-                groups: [ delivery_detail_add ]
+                groups: [ good ]
         quantity:
             - Length:
                 max: 10
                 maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
-                groups: [ delivery_detail_add ]
+                groups: [ good ]
             - AppBundle\Form\Validator\Constraint\Trade:
-                groups: [ delivery_detail_add ]
+                groups: [ good ]
         remarks:
             - Length:
                 max: 255
                 maxMessage: 'Pole Uwagi powinno zawierać maksymalnie 255 znaków'
-                groups: [ delivery_detail_add ]
+                groups: [ good ]
 AppBundle\Entity\Indexx:
     properties:
         name:
@@ -27,18 +27,18 @@ AppBundle\Entity\Indexx:
                 max: 30
                 minMessage: 'Nazwa powinna zawierać co najmniej 2 litery'
                 maxMessage: 'Nazwa może zawierać maksymalnie 30 liter'
-                groups: [ delivery_detail_add ]
+                groups: [ indexx ]
         quantity:
             - Length:
                 max: 10
                 maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
-                groups: [ delivery_detail_add ]
+                groups: [ indexx ]
             - AppBundle\Form\Validator\Constraint\Trade:
-                groups: [ delivery_detail_add ]
+                groups: [ indexx ]
         unit_price_net:
             - Length:
                 max: 10
                 maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
-                groups: [ delivery_detail_add ]
+                groups: [ indexx ]
             - AppBundle\Form\Validator\Constraint\Trade:
-                groups: [ delivery_detail_add ]
+                groups: [ indexx ]

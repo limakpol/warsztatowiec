@@ -7,6 +7,7 @@ services:
 
   form.type.delivery_detail_add:
       class: DeliveryBundle\Form\DeliveryDetailAddType
+      arguments: ["@security.token_storage"]
       tags:
           - { name: form.type }
 

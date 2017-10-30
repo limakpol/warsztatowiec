@@ -14,39 +14,46 @@
         </h1>
         <section>
             <table class="info-table">
-                <tr>
-                    <td>Imię</td>
-                    <td>{{ deliveryHeader.customer.forename }}</td>
-                </tr>
-                <tr>
-                    <td>Nazwisko</td>
-                    <td>{{ deliveryHeader.customer.surname }}</td>
-                </tr>
-                <tr>
-                    <td>Firma</td>
-                    <td>{{ deliveryHeader.customer.companyName }}</td>
-                </tr>
-                <tr>
-                    <td>Telefon</td>
-                    <td>
-                        {% if deliveryHeader.customer.mobilePhone1 is not empty %}
-                            {{ deliveryHeader.customer.mobilePhone1|phone }}
-                        {% else %}
-                            {{ deliveryHeader.customer.mobilePhone2|phone }}
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>E-mail</td>
-                    <td>{{ deliveryHeader.customer.email }}</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <a class="btn-info" target="_blank" href="{{ path('customer_show', {customerId: deliveryHeader.customer.id}) }}">szczegóły
-                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                </tr>
+                {% if deliveryHeader.customer is not null %}
+                    <tr>
+                        <td>Imię</td>
+                        <td>{{ deliveryHeader.customer.forename }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nazwisko</td>
+                        <td>{{ deliveryHeader.customer.surname }}</td>
+                    </tr>
+                    <tr>
+                        <td>Firma</td>
+                        <td>{{ deliveryHeader.customer.companyName }}</td>
+                    </tr>
+                    <tr>
+                        <td>Telefon</td>
+                        <td>
+                            {% if deliveryHeader.customer.mobilePhone1 is not empty %}
+                                {{ deliveryHeader.customer.mobilePhone1|phone }}
+                            {% else %}
+                                {{ deliveryHeader.customer.mobilePhone2|phone }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>{{ deliveryHeader.customer.email }}</td>
+                    </tr>
+                    <tr class="footer">
+                        <td colspan="2">
+                            <a class="btn-info" target="_blank" href="{{ path('customer_show', {customerId: deliveryHeader.customer.id}) }}">szczegóły
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td>przyjęcie wewnętrzne</td>
+                    </tr>
+                {% endif %}
             </table>
         </section>
     </div>
@@ -84,7 +91,7 @@
                         </a>
                     </td>
                 </tr>
-                <tr>
+                <tr class="footer">
                     <td colspan="2">
                         <a class="btn-edit" target="_blank">edytuj
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>

@@ -28,16 +28,18 @@ class DeliveryDetailController extends Controller
         /** @var IndexxHelper $indexxHelper */
         $indexxHelper = $this->get('warehouse.helper.indexx');
 
-        if(!$detailAddHelper->headerExists($deliveryHeaderId))
+        if(null === ($deliveryHeader = $detailAddHelper->getHeader($deliveryHeaderId)))
         {
             return $this->redirectToRoute('delivery_index');
         }
 
-        $form = $detailAddHelper->createForm();
+        $formData = $detailAddHelper->prepareFormData();
+
+        $form = $detailAddHelper->createForm($formData['deliveryDetail']);
 
         if($detailAddHelper->isValid($form))
         {
-            $detailAddHelper->write($form);
+            $detailAddHelper->write($form, $deliveryHeader, $formData['prevGood']);
 
             return $this->redirectToRoute('delivery_show', [
                 'deliveryHeaderId' => $deliveryHeaderId,
