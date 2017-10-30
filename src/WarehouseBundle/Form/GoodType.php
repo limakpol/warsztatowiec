@@ -36,6 +36,13 @@ class GoodType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => false,
                 'expanded' => false,
+                'query_builder' => function(EntityRepository $er)
+                {
+                    return $er->createQueryBuilder('m')
+                        ->where('m.type_of_quantity = :type')
+                        ->setParameter(':type', 'good')
+                        ;
+                }
             ])
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość całkowita w magazynie',

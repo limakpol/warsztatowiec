@@ -9,6 +9,7 @@
 namespace WarehouseBundle\Controller;
 
 
+use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
@@ -108,7 +109,7 @@ class AjaxController extends Controller
 
         /** @var Good $good */
         $good =  $em->getRepository('AppBundle:Good')
-            ->getOne($workshop, $request->get('goodId'), Query::HYDRATE_ARRAY);
+            ->getOne($workshop, $request->get('goodId'));
 
         if(null === $good)
         {
@@ -118,7 +119,25 @@ class AjaxController extends Controller
             ]);
         }
 
-        return new JsonResponse($good);
+        $categories = [];
+
+        /** @var Category $category */
+        foreach($good->getCategories() as $category)
+        {
+            $categories[] = [$category->getId(), $category->getName()];
+        }
+
+        $carModels = [];
+
+        /** @var CarModel $carModel */
+        foreach($good->getCarModels() as $carModel)
+        {
+            $carModels[] = [$carModel->getId(), $carModel->getBrand()->getName() . ' ' . $carModel->getName()];
+        }
+
+        $good = $em->getRepository('AppBundle:Good')->getOne($workshop, $good->getId(), Query::HYDRATE_ARRAY);
+
+        return new JsonResponse([$good, $categories, $carModels]);
     }
 
     public function getOneIndexxAction()

@@ -114,7 +114,7 @@ class IndexxRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterGoodIds) > 0)
         {
             $queryBuilder
-                ->where('g.id IN (:)')
+                ->where('g.id IN (:filterGoodIds)')
                 ->setParameter(':filterGoodIds', $filterGoodIds)
             ;
         }

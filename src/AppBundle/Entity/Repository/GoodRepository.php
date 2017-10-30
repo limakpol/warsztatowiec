@@ -42,6 +42,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $sortColumnName     = $sortableParameters['sortColumnName'];
         $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
         $filterModelIds     = $sortableParameters['filterModelIds'];
+        $filterIndexxIds     = $sortableParameters['filterIndexxIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -73,6 +74,17 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('model.deleted_at IS NULL')
                 ->andWhere('model.removed_at IS NULL')
                 ->setParameter(':filterModelIds', $filterModelIds)
+            ;
+        }
+
+        if(count($filterIndexxIds) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('g.indexxes', 'indexx')
+                ->where('indexx.id IN (:filterIndexxIds)')
+                ->andWhere('indexx.deleted_at IS NULL')
+                ->andWhere('indexx.removed_at IS NULL')
+                ->setParameter(':filterIndexxIds', $filterIndexxIds)
             ;
         }
 
@@ -112,6 +124,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $sortColumnName = $sortableParameters['sortColumnName'];
         $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
         $filterModelIds     = $sortableParameters['filterModelIds'];
+        $filterIndexxIds     = $sortableParameters['filterIndexxIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -143,6 +156,17 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere('model.deleted_at IS NULL')
                 ->andWhere('model.removed_at IS NULL')
                 ->setParameter(':filterModelIds', $filterModelIds)
+            ;
+        }
+
+        if(count($filterIndexxIds) > 0)
+        {
+            $queryBuilder
+                ->innerJoin('g.indexxes', 'indexx')
+                ->where('indexx.id IN (:filterIndexxIds)')
+                ->andWhere('indexx.deleted_at IS NULL')
+                ->andWhere('indexx.removed_at IS NULL')
+                ->setParameter(':filterIndexxIds', $filterIndexxIds)
             ;
         }
 

@@ -183,6 +183,7 @@ class DeliveryDetailAddHelper
         $deliveryDetail = $this->setQuantity($deliveryDetail, $prevGood);
 
         $good = $this->assignCarModels($good);
+        $good = $this->assignCategories($good);
 
         $em->persist($good);
         $em->persist($indexx);
@@ -346,6 +347,34 @@ class DeliveryDetailAddHelper
             if(null !== $carModel)
             {
                 $good->addCarModel($carModel);
+            }
+        }
+
+        return $good;
+    }
+
+    public function assignCategories(Good $good)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $categories = $good->getCategories()->toArray();
+
+        $good->getCategories()->clear();
+
+        foreach($categories as $categoryId)
+        {
+            $category = $em->getRepository('AppBundle:Category')->getOne($workshop, $categoryId);
+
+            if(null !== $category)
+            {
+                $good->addCategory($category);
             }
         }
 

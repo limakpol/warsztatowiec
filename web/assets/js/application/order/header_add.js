@@ -82,6 +82,13 @@ $(document).ready(function()
         $('#searchable-customer > div').slideUp();
 
         $('#customer-form').slideDown();
+
+        var vehicleSortableParameters = getVehicleSortableParameters();
+        vehicleRequest(vehicleSortableParameters);
+
+        var customerSortableParameters = getCustomerSortableParameters();
+        customerRequest(customerSortableParameters);
+        
     });
 
     $(document).on('click', '#searchable-customer tr:not(:first-child)', function()
@@ -102,6 +109,8 @@ $(document).ready(function()
                 else
                 {
                     clearCustomerForm();
+                    removeCustomerErrors();
+
                     for(value in data[0])
                     {
                         var cssId = '#order_header_add_customer_' + value;
@@ -132,22 +141,16 @@ $(document).ready(function()
                         });
                     }
 
+                    $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane klienta');
+
+                    $('#searchable-customer > div').slideUp();
+
                     var vehicleSortableParameters = getVehicleSortableParameters();
                     vehicleSortableParameters.systemFilters = [['customerIds', [customerId]]];
-                    vehicleRequest(sortableParameters);
-
-
+                    vehicleRequest(vehicleSortableParameters);
                 }
-
             }
         });
-
-        removeCustomerErrors();
-
-        $('.h-enum.selected-customer').text('2. Możesz przejrzeć i zmienić dane klienta');
-
-        $('#searchable-customer > div').slideUp();
-
     });
 
     $(document).on('click', '.customer-btn-filter-custom', function(event)
@@ -285,6 +288,12 @@ $(document).ready(function()
 
         $('#searchable-vehicle > div').slideUp();
 
+        var customerSortableParameters = getCustomerSortableParameters();
+        customerRequest(customerSortableParameters);
+
+        var vehicleSortableParameters = getVehicleSortableParameters();
+        vehicleRequest(vehicleSortableParameters);
+
     });
 
     $(document).on('click', '#searchable-vehicle tr:not(:first-child)', function()
@@ -305,6 +314,8 @@ $(document).ready(function()
                 else
                 {
                     clearVehicleForm();
+                    removeVehicleErrors();
+
                     for(value in data[0])
                     {
                         var cssId = '#order_header_add_vehicle_' + value;
@@ -323,20 +334,16 @@ $(document).ready(function()
                     $('#order_header_add_vehicle_date_of_oil_change_month').val(data[4][1]);
                     $('#order_header_add_vehicle_date_of_oil_change_year').val(data[4][2]);
 
+                    $('.h-enum.selected-vehicle').text('4. Możesz przejrzeć i zmienić dane pojazdu');
+
+                    $('#searchable-vehicle > div').slideUp();
+
                     var customerSortableParameters = getCustomerSortableParameters();
                     customerSortableParameters.systemFilters = [['vehicleIds', [vehicleId]]];
-                    customerRequest(sortableParameters);
+                    customerRequest(customerSortableParameters);
                 }
-
             }
         });
-
-        removeVehicleErrors();
-
-        $('.h-enum.selected-vehicle').text('4. Możesz przejrzeć i zmienić dane pojazdu');
-
-        $('#searchable-vehicle > div').slideUp();
-
     });
 
     $(document).on('click', '#order_header_add_vehicle_car_brand', function(){

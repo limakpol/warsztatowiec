@@ -264,7 +264,6 @@ function request(sortableParameters)
         },
         success: function(data)
         {
-            console.log(data);
             if(!data['error'])
             {
                 $('#searchable-customer > div').html(data);

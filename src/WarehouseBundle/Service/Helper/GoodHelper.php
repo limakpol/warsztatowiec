@@ -66,6 +66,7 @@ class GoodHelper
                 'sortColumnName' => 'g.updated_at',
                 'filterCategoryIds' => [],
                 'filterModelIds' => [],
+                'filterIndexxIds' => [],
             ];
         }
         else

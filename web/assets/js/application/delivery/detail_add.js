@@ -16,6 +16,81 @@ $(document).ready(function()
         $('#searchable-good > div').slideUp();
     });
 
+    $(document).on('click', '#searchable-good .prev', function(event){
+        event.preventDefault();
+
+        var sortableParameters = getGoodSortableParameters();
+        sortableParameters.requestedPage = 0;
+        goodRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-good .next', function(event){
+        event.preventDefault();
+
+        var sortableParameters = getGoodSortableParameters();
+        sortableParameters.requestedPage = 2;
+        goodRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-good th.sort-column', function(){
+        var sortableParameters = getGoodSortableParameters();
+
+        sortableParameters.sortColumnName = $(this).data('column');
+
+        var sortOrder = $('#searchable-good footer .sortOrder').val();
+        if(sortOrder == 'DESC')
+        {
+            sortOrder = 'ASC';
+        }
+        else
+        {
+            sortOrder = 'DESC';
+        }
+
+        sortableParameters.sortOrder = sortOrder;
+
+        goodRequest(sortableParameters);
+    });
+
+    var globalTimeout = null;
+    $(document).on('keyup', '#searchable-good > input', function()
+    {
+        if(globalTimeout != null)
+        {
+            clearTimeout(globalTimeout);
+        }
+
+        globalTimeout = setTimeout(function()
+        {
+            globalTimeout = null;
+
+            var sortableParameters = getGoodSortableParameters();
+            goodRequest(sortableParameters);
+
+        }, 1000);
+    });
+
+
+    $(document).on('click', '#good-new', function()
+    {
+        $('#delivery_detail_add_indexx_good_name').focus();
+
+        removeGoodErrors();
+        clearGoodForm();
+
+        $('.h-enum.selected-good').text('2. Wpisz dane nowego towaru');
+
+        $('#delivery_detail_add_indexx_good_id').val('');
+
+        $('#searchable-good > div').slideUp();
+
+        var indexxSortableParameters = getIndexxSortableParameters();
+        indexxRequest(indexxSortableParameters);
+
+        var goodSortableParameters = getGoodSortableParameters();
+        goodRequest(goodSortableParameters);
+    });
+
     $(document).on('click', '#searchable-good tr:not(:first-child)', function()
     {
         var goodId = $(this).data('id');
@@ -28,11 +103,49 @@ $(document).ready(function()
             },
             success: function(data)
             {
-                $('#delivery_detail_add_indexx_good_id').val(data.id);
-                $('#delivery_detail_add_indexx_good_name').val(data.name);
-                $('#delivery_detail_add_indexx_good_measure').val(data.measure_id);
-                $('#delivery_detail_add_indexx_good_quantity').val(data.quantity);
-                $('#delivery_detail_add_indexx_good_remarks').val(data.remarks);
+                removeGoodErrors();
+                clearGoodForm();
+
+                $('.h-enum.selected-good').text('2. Możesz przejrzeć lub zmienić dane towaru');
+
+                $('#delivery_detail_add_indexx_good_id').val(data[0].id);
+                $('#delivery_detail_add_indexx_good_name').val(data[0].name);
+                $('#delivery_detail_add_indexx_good_measure').val(data[0].measure_id);
+                $('#delivery_detail_add_indexx_good_quantity').val(data[0].quantity);
+                $('#delivery_detail_add_indexx_good_remarks').val(data[0].remarks);
+
+                $('#categories-form-selectable-modal .content .names').html('');
+                $('#categories-form-selectable-modal .content .ids').html('');
+
+                data[1].forEach(function(category)
+                {
+                    var input = '<input type="hidden" ' +
+                        'name="delivery_detail_add[indexx][good][categories][]" ' +
+                        'value="' + category[0] + '">';
+
+                    var label = '<label>' +  category[1] + '</label>';
+
+                    $('#categories-form-selectable-modal .content .names').append(label);
+                    $('#categories-form-selectable-modal .content .ids').append(input);
+                });
+
+                data[2].forEach(function(carModel)
+                {
+                    var input = '<input type="hidden" ' +
+                        'name="delivery_detail_add[indexx][good][car_models][]" ' +
+                        'value="' + carModel[0] + '">';
+
+                    var label = '<label>' +  carModel[1] + '</label>';
+
+                    $('#models-form-selectable-modal .content .names').append(label);
+                    $('#models-form-selectable-modal .content .ids').append(input);
+                });
+
+                $('#searchable-good > div').slideUp();
+
+                var indexxSortableParameters = getIndexxSortableParameters();
+                indexxSortableParameters.filterGoodIds = [goodId];
+                indexxRequest(indexxSortableParameters);
             }
         });
     });
@@ -55,6 +168,82 @@ $(document).ready(function()
         $('#searchable-indexx > div').slideUp();
     });
 
+    $(document).on('click', '#searchable-indexx .prev', function(event){
+        event.preventDefault();
+
+        var sortableParameters = getIndexxSortableParameters();
+        sortableParameters.requestedPage = 0;
+
+        indexxRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-indexx .next', function(event){
+        event.preventDefault();
+
+        var sortableParameters = getIndexxSortableParameters();
+        sortableParameters.requestedPage = 2;
+
+        indexxRequest(sortableParameters);
+    });
+
+    $(document).on('click', '#searchable-indexx th.sort-column', function(){
+        var sortableParameters = getIndexxSortableParameters();
+
+        sortableParameters.sortColumnName = $(this).data('column');
+
+        var sortOrder = $('#searchable-indexx footer .sortOrder').val();
+
+        if(sortOrder == 'DESC')
+        {
+            sortOrder = 'ASC';
+        }
+        else
+        {
+            sortOrder = 'DESC';
+        }
+
+        sortableParameters.sortOrder = sortOrder;
+
+        indexxRequest(sortableParameters);
+    });
+
+    $(document).on('keyup', '#searchable-indexx > input', function()
+    {
+        if(globalTimeout != null)
+        {
+            clearTimeout(globalTimeout);
+        }
+
+        globalTimeout = setTimeout(function()
+        {
+            globalTimeout = null;
+
+            var sortableParameters = getIndexxSortableParameters();
+            indexxRequest(sortableParameters);
+
+        }, 1000);
+    });
+
+    $(document).on('click', '#indexx-new', function()
+    {
+        $('#delivery_detail_add_indexx_name').focus();
+
+        removeIndexxErrors();
+        clearIndexxForm();
+
+        $('.h-enum.selected-good').text('4. Wpisz dane nowego indeksu');
+
+        $('#delivery_detail_add_indexx_id').val('');
+
+        $('#searchable-indexx > div').slideUp();
+
+        var goodSortableParameters = getGoodSortableParameters();
+        goodRequest(goodSortableParameters);
+
+        var indexxSortableParameters = getIndexxSortableParameters();
+        indexxRequest(indexxSortableParameters);
+    });
+
     $(document).on('click', '#searchable-indexx tr:not(:first-child)', function()
     {
         var indexxId = $(this).data('id');
@@ -67,11 +256,23 @@ $(document).ready(function()
             },
             success: function(data)
             {
+                removeIndexxErrors();
+                clearIndexxForm();
+
+                $('.h-enum.selected-indexx').text('4. Możesz przejrzeć lub zmienić dane indeksu');
+
                 $('#delivery_detail_add_indexx_id').val(data.id);
                 $('#delivery_detail_add_indexx_name').val(data.name);
                 $('#delivery_detail_add_indexx_producer').val(data.producer_id);
                 $('#delivery_detail_add_indexx_quantity').val(data.quantity);
                 $('#delivery_detail_add_indexx_unit_price_net').val(data.unit_price_net);
+                $('#delivery_detail_add_unit_price_net').val(data.unit_price_net);
+
+                $('#searchable-indexx > div').slideUp();
+
+                var goodSortableParameters = getGoodSortableParameters();
+                goodSortableParameters.filterIndexxIds = [indexxId];
+                goodRequest(goodSortableParameters);
             }
         });
     });
@@ -145,7 +346,10 @@ $(document).ready(function()
 
         selectedLabels.each(function()
         {
-            var input = '<input type="hidden" value="' +  $(this).data('id') + '">';
+            var input = '<input type="hidden" ' +
+                'name="delivery_detail_add[indexx][good][categories][]" ' +
+                'value="' +  $(this).data('id') + '">';
+
             var label = '<label>' +  $(this).text() + '</label>';
 
             $('#categories-form-selectable-modal .content .names').append(label);
@@ -226,7 +430,10 @@ $(document).ready(function()
 
         selectedLabels.each(function()
         {
-            var input = '<input type="hidden" name="delivery_detail_add[indexx][good][car_models][]" value="' +  $(this).data('id') + '">';
+            var input = '<input type="hidden" ' +
+                'name="delivery_detail_add[indexx][good][car_models][]" ' +
+                'value="' +  $(this).data('id') + '">';
+
             var label = '<label>' +  $(this).text() + '</label>';
 
             $('#models-form-selectable-modal .content .names').append(label);
@@ -236,5 +443,119 @@ $(document).ready(function()
 
         $('#models-selectable-modal').remove();
     });
-
 });
+/* FUNTIONS - GOOD */
+
+function getGoodSortableParameters()
+{
+    var filterCategoryIds = [];
+    var filterModelIds = [];
+    var filterIndexxIds = [];
+
+    sortableParameters = {
+        "search": $('#searchable-good > input').val(),
+        "limit": 15,
+        "sortColumnName": $('#searchable-good footer .sortColumnName').val(),
+        "sortOrder": $('#searchable-good footer .sortOrder').val(),
+        "currentPage": $('#searchable-good footer .currentPage').val(),
+        "requestedPage": 1,
+        "filterCategoryIds": filterCategoryIds,
+        "filterModelIds": filterModelIds,
+        "filterIndexxIds": filterIndexxIds,
+    };
+
+    return sortableParameters;
+}
+function goodRequest(sortableParameters)
+{
+    $.ajax({
+        type: "POST",
+        url: $('#searchable-good footer .retrievePath').val(),
+        data: {
+            sortableParameters: JSON.stringify(sortableParameters)
+        },
+        success: function(data)
+        {
+            if(!data['error'])
+            {
+                $('#searchable-good > div').html(data);
+            }
+        }
+    });
+}
+function removeGoodErrors()
+{
+    $("input[name*='delivery_detail_add[indexx][good]'] + ul").remove();
+    $("select[name*='delivery_detail_add[indexx][good]'] + ul").remove();
+    $("textarea[name*='delivery_detail_add[indexx][good]'] + ul").remove();
+
+    return null;
+}
+
+function clearGoodForm()
+{
+    $("input[name*='delivery_detail_add[indexx][good]']").val('').change();
+    $("select[name*='delivery_detail_add[indexx][good]']").val('').change();
+    $("textarea[name*='delivery_detail_add[indexx][good]']").val('').change();
+
+    $('#categories-form-selectable-modal .names').html('');
+    $('#categories-form-selectable-modal .ids').html('');
+
+    $('#models-form-selectable-modal .names').html('');
+    $('#models-form-selectable-modal .ids').html('');
+
+    return null;
+}
+/* FUNCTIONS - INDEXX */
+function indexxRequest(sortableParameters)
+{
+    $.ajax({
+        type: "POST",
+        url: $('#searchable-indexx footer .retrievePath').val(),
+        data: {
+            sortableParameters: JSON.stringify(sortableParameters)
+        },
+        success: function(data)
+        {
+            if(!data['error'])
+            {
+                $('#searchable-indexx > div').html(data);
+            }
+        }
+    });
+}
+function getIndexxSortableParameters()
+{
+    var filterGoodIds = [];
+
+    sortableParameters = {
+        "search": $('#searchable-indexx > input').val(),
+        "limit": 15,
+        "sortColumnName": $('#searchable-indexx footer .sortColumnName').val(),
+        "sortOrder": $('#searchable-indexx footer .sortOrder').val(),
+        "currentPage": $('#searchable-indexx footer .currentPage').val(),
+        "requestedPage": 1,
+        "filterGoodIds": filterGoodIds,
+    };
+
+    return sortableParameters;
+}
+function removeIndexxErrors()
+{
+    $('#delivery_detail_add_indexx_name + ul').remove();
+    $('#delivery_detail_add_indexx_producer + ul').remove();
+    $('#delivery_detail_add_indexx_quantity + ul').remove();
+    $('#delivery_detail_add_indexx_unit_price_net + ul').remove();
+
+    return null;
+}
+
+function clearIndexxForm()
+{
+    $('#delivery_detail_add_indexx_name').val('').change();
+    $('#delivery_detail_add_indexx_producer').val('').change();
+    $('#delivery_detail_add_indexx_quantity').val('').change();
+    $('#delivery_detail_add_indexx_unit_price_net').val('').change();
+
+    return null;
+}

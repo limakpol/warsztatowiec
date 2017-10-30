@@ -46,7 +46,6 @@ class DeliveryDetailController extends Controller
             ]);
         }
 
-
         $goodSortableParameters = $detailAddHelper->getGoodSortableParameters();
         $indexxSortableParameters = $detailAddHelper->getIndexxSortableParameters();
 
@@ -101,7 +100,7 @@ class DeliveryDetailController extends Controller
 
         $indexxes = $indexxHelper->retrieve($sortableParameters);
 
-        return $this->render('DeliveryBundle:detail:good_searchable_content.html.twig', [
+        return $this->render('DeliveryBundle:detail:indexx_searchable_content.html.twig', [
             'indexxes' => $indexxes,
             'indexxSortableParameters' => $sortableParameters,
         ]);
