@@ -33,6 +33,27 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         return $good;
     }
 
+    public function getOneByName(Workshop $workshop, $name, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $good = $this->_em
+            ->createQueryBuilder()
+            ->select('g')
+            ->from('AppBundle:Good', 'g')
+            ->where('g.deleted_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
+            ->andWhere('g.workshop = :workshop')
+            ->andWhere('g.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name'       => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+        ;
+
+        return $good;
+    }
+
     public function retrieve(Workshop $workshop, $sortableParameters = [])
     {
         $search     = $sortableParameters['search'];

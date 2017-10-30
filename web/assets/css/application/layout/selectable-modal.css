@@ -13,13 +13,13 @@
     left: 0;
     right: 0;
     margin: 15vh auto;
-    width: 25vw;
+    max-width: 40vw;
+    min-width: 400px;
     background-color: #f5f5f5;
 }
 .selectable-modal .content {
     display: flex;
     flex-direction: column;
-
     justify-content: flex-start;
 }
 .selectable-modal header {
@@ -51,17 +51,17 @@
     padding: 0;
     margin: 0;
 }
-.selectable-modal main ul li {
+.selectable-modal main ul .checkable {
     padding: 3px;
 }
-.selectable-modal main ul li.active label {
+.selectable-modal main ul .checkable.active label {
     background-color: #8e54ff;
     color: #fff;
 }
-.selectable-modal main ul li.active i {
+.selectable-modal main ul .checkable.active i {
     color: #666;
 }
-.selectable-modal main ul li label {
+.selectable-modal main ul .checkable label {
     font: 12px 'Ubuntu', sans-serif;
     color: #666;
     padding: 3px;
@@ -74,14 +74,36 @@
     background-color: #c4aeff;
     color: #fff;
 }
-.selectable-modal main ul li i {
+.selectable-modal main ul .checkable i {
     font-size: 12px;
     color: transparent;
+}
+.selectable-modal main ul .addable div {
+    display: none;
+}
+.selectable-modal main ul .btn-add:not(.active) {
+    background-color: #ddd;
+}
+.selectable-modal main ul .btn-add:not(.active):hover {
+    background-color: #ccc;
+    filter: none;
+}
+.selectable-modal main ul .addable {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.selectable-modal main ul .addable input {
+    font: 12px 'Arial', sans-serif;
+    color: #333;
+    padding: 3px;
+    margin-right: 5px;
 }
 .selectable-modal footer {
     display: flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 15px;
@@ -96,10 +118,7 @@
         padding: 6px;
         margin: 6px;
     }
-    .selectable-modal main ul li label {
-        font-size: 15px;
-    }
-    .selectable-modal main ul li i {
+    .selectable-modal main ul .checkable label, .selectable-modal main ul .checkable i, .selectable-modal main ul .addable i, .selectable-modal main ul .addable input {
         font-size: 15px;
     }
 }

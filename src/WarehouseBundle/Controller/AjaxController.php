@@ -9,6 +9,7 @@
 namespace WarehouseBundle\Controller;
 
 
+use AppBundle\Entity\CarBrand;
 use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Good;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AjaxController extends Controller
 {
 
-    public function getSelectableCategoriesAction()
+    public function selectableGetCategoriesAction()
     {
         /** @var Request $request */
         $request = $this->get('request_stack')->getCurrentRequest();
@@ -58,7 +59,7 @@ class AjaxController extends Controller
         ]);
     }
 
-    public function getSelectableModelsAction()
+    public function selectableGetModelsAction()
     {
 
         /** @var Request $request */
@@ -92,6 +93,101 @@ class AjaxController extends Controller
             'goodModels' => $goodModels,
         ]);
     }
+
+    public function selectableAddCategoryAction()
+    {
+
+        $categoryHelper = $this->get('header.helper.category');
+
+        if(!$categoryHelper->isRequestCorrect())
+        {
+            return $categoryHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(!$categoryHelper->isValid())
+        {
+            return $categoryHelper->getErrorMessage('Wpisano nieprawidłowe dane');
+        }
+
+        if($categoryHelper->categoryExists())
+        {
+            return $categoryHelper->getErrorMessage('Taka kategoria już istnieje');
+        }
+
+        if(null !== ($category = $categoryHelper->categoryExistsRemoved()))
+        {
+            $categoryHelper->restore($category);
+
+            return $this->selectableGetCategoriesAction();
+        }
+
+        $categoryHelper->write();
+
+        return $this->selectableGetCategoriesAction();
+    }
+
+    public function selectableAddCarModelAction()
+    {
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->get('doctrine.orm.default_entity_manager');
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $brandName = $request->get('brand');
+        $modelName = $request->get('model');
+
+        if(!$request->isXmlHttpRequest() || !$request->isMethod('POST') || !$brandName || strlen($brandName) > 20 || !$modelName || strlen($modelName) > 20)
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => [
+                    'Nieprawidłowe żądanie',
+                ],
+            ]);
+        }
+
+        /** @var CarBrand $brand */
+        $brand = $em->getRepository('AppBundle:CarBrand')->getOneByName($workshop, $brandName);
+
+        if(null === $brand)
+        {
+            $brand = new CarBrand();
+            $brand->setWorkshop($workshop);
+            $brand->setName($brandName);
+            $brand->setCreatedBy(new \DateTime());
+            $brand->setCreatedBy($user);
+            $brand->setUpdatedBy($user);
+        }
+
+        /** @var CarModel $model */
+        $model = $em->getRepository('AppBundle:CarModel')->getOneByName($workshop, $modelName);
+
+        if(null === $model)
+        {
+            $model = new CarModel();
+            $model->setName($modelName);
+            $model->setCreatedAt(new \DateTime());
+            $model->setCreatedBy($user);
+            $model->setUpdatedBy($user);
+        }
+
+        $model->setBrand($brand);
+
+        $em->persist($model);
+        $em->persist($brand);
+
+        $em->flush();
+
+        return $this->selectableGetModelsAction();
+    }
+
 
     public function getOneGoodAction()
     {
@@ -167,5 +263,44 @@ class AjaxController extends Controller
         }
 
         return new JsonResponse($indexx);
+    }
+
+    public function addProducerAction()
+    {
+        $producerHelper = $this->get('warehouse.helper.producer');
+
+        if(!$producerHelper->isRequestCorrect())
+        {
+            return $producerHelper->getErrorMessage('Nieprawidłowe żądanie');
+        }
+
+        if(!$producerHelper->isValid())
+        {
+            return $producerHelper->getErrorMessage('Wpisano nieprawidłowe dane');
+        }
+
+        if($producerHelper->producerExists())
+        {
+            return $producerHelper->getErrorMessage('Producent o takiej nazwie już istnieje');
+        }
+
+        if(null !== ($producer = $producerHelper->producerExistsRemoved()))
+        {
+            $producer = $producerHelper->recover($producer);
+
+            return new JsonResponse([
+                'errors' => 0,
+                'producerId' => $producer->getId(),
+                'producerName' => $producer->getName(),
+            ]);
+        }
+
+        $producer = $producerHelper->write();
+
+        return new JsonResponse([
+            'errors' => 0,
+            'producerId' => $producer->getId(),
+            'producerName' => $producer->getName(),
+        ]);
     }
 }

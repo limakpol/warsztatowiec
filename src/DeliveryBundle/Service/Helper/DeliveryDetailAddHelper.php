@@ -64,6 +64,7 @@ class DeliveryDetailAddHelper
 
         $indexxId   = $request->get('delivery_detail_add')['indexx_id'];
         $goodId     = $request->get('delivery_detail_add')['indexx']['good_id'];
+        $goodName     = $request->get('delivery_detail_add')['indexx']['good']['name'];
 
         /** @var Indexx $indexx */
         $indexx = $em->getRepository('AppBundle:Indexx')->getOne($workshop, $indexxId);
@@ -75,6 +76,7 @@ class DeliveryDetailAddHelper
 
         if(null === $indexx)
         {
+
             $indexx = new Indexx();
         }
         else
@@ -84,7 +86,12 @@ class DeliveryDetailAddHelper
 
         if(null === $good)
         {
-            $good = new Good();
+            $good = $em->getRepository('AppBundle:Good')->getOneByName($workshop, $goodName);
+
+            if(null === $good)
+            {
+                $good = new Good();
+            }
         }
 
         $indexx->setGood($good);
@@ -239,6 +246,11 @@ class DeliveryDetailAddHelper
 
     public function setIndexxUnitPriceNet(DeliveryDetail $deliveryDetail)
     {
+        if(!$deliveryDetail->getQuantity())
+        {
+            return $deliveryDetail;
+        }
+
         $indexx = $deliveryDetail->getIndexx();
 
         if(null !== $indexx->getUnitPriceNet())

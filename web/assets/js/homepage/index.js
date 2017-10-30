@@ -12,6 +12,5 @@ $(document).ready(function()
             $('main').css("display", "flex");
             $('header ul').css("display", "none");
         }
-        console.log($('header ul').css("display"));
     });
 });

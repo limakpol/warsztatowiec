@@ -14,6 +14,10 @@ warehouse_producer_add:
     path: /producer-add
     defaults: { _controller: WarehouseBundle:Producer:add }
 
+warehouse_ajax_producer_add:
+    path: /ajax/producer-add
+    defaults: { _controller: WarehouseBundle:Ajax:addProducer }
+
 warehouse_producer_edit:
     path: /producer-edit
     defaults: { _controller: WarehouseBundle:Producer:edit }
@@ -24,11 +28,19 @@ warehouse_producer_remove:
 
 warehouse_selectable_get_categories:
     path: /warehouse/selectable/get-categories
-    defaults: { _controller: WarehouseBundle:Ajax:getSelectableCategories }
+    defaults: { _controller: WarehouseBundle:Ajax:selectableGetCategories }
+
+warehouse_selectable_add_category:
+    path: /warehouse/selectable/add-category
+    defaults: { _controller: WarehouseBundle:Ajax:selectableAddCategory }
 
 warehouse_selectable_get_models:
     path: /warehouse/selectable/get-models
-    defaults: { _controller: WarehouseBundle:Ajax:getSelectableModels }
+    defaults: { _controller: WarehouseBundle:Ajax:selectableGetModels }
+
+warehouse_selectable_add_car_model:
+    path: /warehouse/selectable/add-car-model
+    defaults: { _controller: WarehouseBundle:Ajax:selectableAddCarModel }
 
 warehouse_get_one_good:
     path: /warehouse/get-one-good
@@ -37,4 +49,5 @@ warehouse_get_one_good:
 warehouse_get_one_indexx:
     path: /warehouse/get-one-indexx
     defaults: { _controller: WarehouseBundle:Ajax:getOneIndexx }
+
 

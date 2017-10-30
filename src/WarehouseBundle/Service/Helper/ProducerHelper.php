@@ -30,7 +30,7 @@ class ProducerHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return $request->isMethod('POST')  &&  $request->isXmlHttpRequest();
+        return $request->isMethod('POST')  && $request->isXmlHttpRequest();
     }
 
     public function getErrorMessage($message)
@@ -53,7 +53,7 @@ class ProducerHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return $request->get('name') != '';
+        return $request->get('name') != '' && strlen($request->get('name')) <= 40;
     }
 
     public function getProducers()
@@ -161,7 +161,7 @@ class ProducerHelper
 
         $em->flush();
 
-        return true;
+        return $producer;
     }
 
     public function write()
@@ -190,7 +190,7 @@ class ProducerHelper
 
         $em->flush();
 
-        return true;
+        return $producer;
     }
 
     public function edit(Producer $producer)

@@ -5,11 +5,20 @@
     <main>
         <ul>
             {% for category in categories %}
-                <li>
+                <li class="checkable">
                     <i class="fa fa-check" aria-hidden="true"></i>
                     <label data-id="{{ category.id }}">{{ category.name }}</label>
                 </li>
             {% endfor %}
+            <li class="addable">
+                <input type="hidden" id="add-category-path" value="{{ path('warehouse_selectable_add_category') }}">
+                <div>
+                    <input type="text" maxlength="20">
+                </div>
+                <button class="btn-square btn-add" data-type="good">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </li>
         </ul>
     </main>
     <footer>

@@ -57,7 +57,7 @@ class CarModelHelper
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
 
-        return  $request->get('name') != '';
+        return  $request->get('name') != '' && strlen($request->get('name')) <= 20;
     }
 
     public function getBrand()

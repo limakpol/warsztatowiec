@@ -28,7 +28,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#only-recipients span', function(){
-        console.log('gfdfg');
+
         if($('#only-recipients input').is(':checked'))
         {
             $('#only-recipients input').prop('checked', false);

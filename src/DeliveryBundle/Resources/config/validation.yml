@@ -50,3 +50,73 @@ AppBundle\Entity\DeliveryHeader:
                 groups: [ delivery_header_add ]
             - AppBundle\Form\Validator\Constraint\Trade:
                 groups: [ delivery_header_add ]
+AppBundle\Entity\DeliveryDetail:
+    properties:
+        remarks:
+            - Length:
+                max: 255
+                maxMessage: 'Pole Uwagi powinno zawierać maksymalnie 255 znaków'
+                groups: [ delivery_detail_add ]
+        unit_price_net:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        quantity:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        total_net_before_discount:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        discount_pc:
+            - Range:
+                min: 0
+                max: 100
+                minMessage: 'Wartości procentowe muszą mieścić między 0 a 100'
+                maxMessage: 'Wartości procentowe muszą mieścić między 0 a 100'
+                groups: [ delivery_detail_add ]
+        discount:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        total_net:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        vat_pc:
+            - Range:
+                min: 0
+                max: 100
+                minMessage: 'Wartości procentowe muszą mieścić między 0 a 100'
+                maxMessage: 'Wartości procentowe muszą mieścić między 0 a 100'
+                groups: [ delivery_detail_add ]
+        vat:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]
+        total_due:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ delivery_detail_add ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ delivery_detail_add ]

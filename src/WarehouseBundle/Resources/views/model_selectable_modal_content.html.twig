@@ -5,11 +5,21 @@
     <main>
         <ul>
             {% for model in models %}
-                <li>
+                <li class="checkable">
                     <i class="fa fa-check" aria-hidden="true"></i>
                     <label data-id="{{ model.id }}">{{ model.brand.name }} {{ model.name }}</label>
                 </li>
             {% endfor %}
+            <li class="addable">
+                <input type="hidden" id="add-car-model-path" value="{{ path('warehouse_selectable_add_car_model') }}">
+                <div>
+                    <input type="text" maxlength="20">
+                    <input type="text" maxlength="20">
+                </div>
+                <button class="btn-square btn-add" data-type="good">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </li>
         </ul>
     </main>
     <footer>

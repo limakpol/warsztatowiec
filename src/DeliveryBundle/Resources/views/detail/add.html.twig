@@ -73,6 +73,20 @@
             {{ form_widget(form.indexx.producer) }}
             {{ form_errors(form.indexx.producer) }}
 
+            <div id="new-producer">
+                <label>Nowy producent</label>
+                <div class="form-inputable">
+                    <div class="add">
+                        <div class="selectable">
+                            <input type="text" maxlength="40">
+                        </div>
+                        <button class="btn-square btn-add" data-type="good">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             {{ form_label(form.indexx.quantity) }}
             {{ form_widget(form.indexx.quantity) }}
             {{ form_errors(form.indexx.quantity) }}
@@ -140,6 +154,7 @@
     {% javascripts
         'assets/js/application/trade.js'
         'assets/js/application/delivery/detail_add.js'
+        'assets/js/application/selectable.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
