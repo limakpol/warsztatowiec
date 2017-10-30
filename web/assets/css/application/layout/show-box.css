@@ -14,6 +14,7 @@
 .show-box section {
     width: 100%;
 }
+/* INFO-TABLE */
 .show-box section .info-table {
     width: 100%;
     border: none;
@@ -46,7 +47,56 @@
 .show-box .info-table tr:not(.footer) td a:hover {
     text-decoration: underline;
 }
+/* DETAILS-TABLE */
 
+.show-box .details-table {
+    border-collapse: collapse;
+}
+.show-box .details-table th {
+    font: bold 12px 'Ubuntu', sans-serif;
+    color: #fff;
+    background-color: #ff5a00;
+    padding: 5px;
+    border: 1px solid #cd5214;
+    white-space: nowrap;
+}
+.show-box .details-table tr.header {
+    font: 12px "Courier New", Monospace;
+    color: #333;
+    background-color: #f4f4f4;
+    border: none;
+}
+.show-box .details-table tr.header:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+.show-box .details-table tr.header td {
+    padding: 5px;
+    border: 1px solid #fefefe;
+    border-bottom: none;
+}
+.show-box .details-table tr.content div.content {
+    display: none;
+    margin-bottom: 20px;
+}
+.show-box .details-table tr.content > td {
+    padding: 0;
+}
+.show-box .details-table tr.summary {
+    font-weight: bold;
+}
+.show-box .details-table td.num {
+    width: 2rem;
+}
+.show-box .details-table .td-left {
+    text-align: left;
+}
+.show-box .details-table .td-center {
+    text-align: center;
+}
+.show-box .details-table .td-right {
+    text-align: right;
+}
 
 
 @media screen and (min-width: 1200px) {
@@ -67,4 +117,12 @@
     .show-box section .info-table tr.footer td a, .show-box section .info-table tr.footer td button {
         margin: 7px;
     }
+
+    .show-box .details-table th {
+        font-size: 15px;
+    }
+    .show-box .details-table tr.header {
+        font-size: 14px;
+    }
+
 }
