@@ -134,4 +134,35 @@ class GoodHelper
         return $outputSortableParameters;
     }
 
+    public function getCategories()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $categories = $em->getRepository('AppBundle:Category')->retrieve($workshop);
+
+        return $categories;
+    }
+
+    public function getCarModels()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $carModels = $em->getRepository('AppBundle:CarModel')->retrieve($workshop);
+
+        return $carModels;
+    }
 }

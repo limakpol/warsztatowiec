@@ -13,12 +13,12 @@
             <td class="td-left">{{ good.name }}</td>
             <td class="td-left">
                 {% for category in good.categories %}
-                    |{{ category.name }}|
+                    <label>{{ category.name }}</label>
                 {% endfor %}
             </td>
             <td class="td-left">
                 {% for model in good.carModels %}
-                    |{{ model.brand.name }} {{ model.name }}|
+                    <label>{{ model.brand.name }} {{ model.name }}</label>
                 {% endfor %}
             </td>
             <td class="td-center">{{ good.quantity }}</td>

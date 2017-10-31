@@ -13,6 +13,38 @@
             <div class="div-input">
                 <input type="text" size="20" maxlength="40" autofocus="autofocus" placeholder="Wyszukaj klienta" class="input-search" value="{{ sortableParameters['search'] }}">
             </div>
+            <div id="filter-categories" class="filter">
+                <div class="selector">
+                    <label>kategorie</label>
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <div class="content">
+                    <ul>
+                        {% for category in categories %}
+                            <li>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <label data-id="{{ category.id }}">{{ category.name }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="filter-models" class="filter">
+                <div class="selector">
+                    <label>pojazdy</label>
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <div class="content">
+                    <ul>
+                        {% for carModel in carModels %}
+                            <li>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <label data-id="{{ carModel.id }}">{{ carModel.brand.name }} {{ carModel.name }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
             <div class="div-limit">
                 <span>Liczba rekordów na stronie:</span>
                 <select class="select-limit">

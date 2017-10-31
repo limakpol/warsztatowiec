@@ -25,6 +25,14 @@
     color: #333;
     font: 12px "Courier New", sans-serif;
 }
+.accordion-first-level tr.accordion-header td label {
+    background-color: #e8e8e8;
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+.accordion-first-level tr.accordion-header td label:hover {
+    cursor: pointer;
+}
 .accordion-first-level tr.accordion-header:hover td {
     background-color: #eee;
     cursor: pointer;
@@ -65,6 +73,82 @@
 .accordion-second-level .accordion-footer td button, .accordion-second-level .accordion-footer a {
     margin: 15px;
 }
+.accordion-second-level .accordion-main:hover td {
+    background-color: #eee;
+}
+/* FILTER */
+.filter {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.filter .selector {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+.filter .selector:hover {
+    cursor: pointer;
+}
+.filter .selector label {
+    font: 12px 'Ubuntu', sans-serif;
+    color: #333;
+    align-self: center;
+}
+.filter .selector label:hover {
+    cursor: pointer;
+}
+.filter .selector i {
+    font-size: 12px;
+    color: #aaa;
+    align-self: center;
+}
+.filter .content {
+    padding: 0;
+    border: none;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+.filter .content ul {
+    list-style: none;
+    display: none;
+    height: 250px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    margin: 0;
+    position: absolute;
+    background-color: #f4f4f4;
+    width: 250px;
+    box-sizing: border-box;
+}
+.filter .content ul li  {
+    font: 11px 'Ubuntu', sans-serif;
+    color: #666;
+    padding: 2px;
+}
+.filter .content ul li i {
+    color: transparent;
+}
+.filter .content ul li.active i {
+    color: #666;
+}
+.filter .content ul li label {
+    padding: 2px;
+}
+.filter .content ul li:hover label {
+    cursor: pointer;
+    background-color: #e2e2e2;
+}
+.filter .content ul li.active label {
+    background-color: #e2e2e2;
+}
 
 @media screen and (min-width: 1200px)
 {
@@ -73,5 +157,14 @@
     }
     .accordion-first-level tr.accordion-header td {
         font-size: 15px;
+    }
+    .filter .selector label {
+        font-size: 15px;
+    }
+    .filter .selector i {
+        font-size: 20px;
+    }
+    .filter .content ul li  {
+        font-size: 13px;
     }
 }

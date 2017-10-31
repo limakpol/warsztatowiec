@@ -19,6 +19,9 @@ class WarehouseController extends Controller
 
         $goods  = $indexHelper->retrieve($sortableParameters);
 
+        $categories = $indexHelper->getCategories();
+        $carModels = $indexHelper->getCarModels();
+
         $limitSet   = $this->getParameter('app')['limit_set'];
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
@@ -32,6 +35,8 @@ class WarehouseController extends Controller
             'navbar'        => 'Towary',
             'goods'         => $goods,
             'limitSet'      => $limitSet,
+            'categories'    => $categories,
+            'carModels'     => $carModels,
             'sortableParameters' => $sortableParameters,
         ]);
     }

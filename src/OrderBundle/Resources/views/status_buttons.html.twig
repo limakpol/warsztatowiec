@@ -1,3 +1,5 @@
 {% for orderStatus in orderHeader.statuses %}
-    <button style="border-color: {{ orderStatus.hexColor }};">{{ orderStatus.name }}</button>
+    {% if orderStatus.removedAt is null and orderStatus.deletedAt is null %}
+        <button style="border-color: {{ orderStatus.hexColor }};">{{ orderStatus.name }}</button>
+    {% endif %}
 {% endfor %}

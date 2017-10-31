@@ -58,17 +58,68 @@ $(document).ready(function()
         {
             sortOrder = 'DESC';
         }
+
         sortableParameters.sortOrder = sortOrder;
 
         request(sortableParameters);
     });
-});
 
+
+
+    $(document).on('click', '.filter .selector', function()
+    {
+        $(this).parent().find('.content ul').slideToggle();
+
+        if($(this).find('i').hasClass('fa-chevron-down'))
+        {
+            $(this).find('i').removeClass('fa-chevron-down');
+            $(this).find('i').addClass('fa-chevron-up');
+        }
+        else
+        {
+            $(this).find('i').removeClass('fa-chevron-up');
+            $(this).find('i').addClass('fa-chevron-down');
+        }
+
+    });
+
+    $(document).on('click', '.filter .content ul li:not(.active)', function()
+    {
+        $(this).addClass('active');
+
+        var sortableParameters = getSortableParameters();
+        request(sortableParameters);
+
+    });
+
+    $(document).on('click', '.filter .content ul li.active', function()
+    {
+        $(this).removeClass('active');
+
+        var sortableParameters = getSortableParameters();
+        request(sortableParameters);
+    });
+
+});
 
 function getSortableParameters()
 {
     var filterCategoryIds = [];
+    var filterCategoryInputs = $('#filter-categories .content ul li.active label');
+
+    filterCategoryInputs.each(function()
+    {
+        filterCategoryIds.push($(this).data('id'));
+    });
+
     var filterModelIds = [];
+    var filterModelInputs = $('#filter-models .content ul li.active label');
+
+    filterModelInputs.each(function()
+    {
+        filterModelIds.push($(this).data('id'));
+    });
+
     var filterIndexxIds = [];
 
     sortableParameters = {
@@ -99,7 +150,7 @@ function request(sortableParameters)
         {
             if(!data['error'])
             {
-                $('#div-good-sortable .content').html(data);
+                $('#div-good-sortable > .content').html(data);
             }
         }
     });

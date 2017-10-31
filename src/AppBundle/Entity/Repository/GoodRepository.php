@@ -63,7 +63,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $sortColumnName     = $sortableParameters['sortColumnName'];
         $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
         $filterModelIds     = $sortableParameters['filterModelIds'];
-        $filterIndexxIds     = $sortableParameters['filterIndexxIds'];
+        $filterIndexxIds    = $sortableParameters['filterIndexxIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -74,13 +74,15 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:Producer', 'p', 'WITH', 'i.producer_id = p.id')
             ->leftJoin('g.car_models', 'cm')
             ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
+            ->leftJoin('g.categories', 'c')
+            ->where('g.deleted_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
         ;
 
         if(count($filterCategoryIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.categories', 'c')
-                ->where('c.id IN (:filterCategoryIds)')
+                ->andWhere('c.id IN (:filterCategoryIds)')
                 ->andWhere('c.deleted_at IS NULL')
                 ->andWhere('c.removed_at IS NULL')
                 ->setParameter(':filterCategoryIds', $filterCategoryIds)
@@ -90,10 +92,9 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterModelIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.car_models', 'model')
-                ->where('model.id IN (:filterModelIds)')
-                ->andWhere('model.deleted_at IS NULL')
-                ->andWhere('model.removed_at IS NULL')
+                ->andWhere('cm.id IN (:filterModelIds)')
+                ->andWhere('cm.deleted_at IS NULL')
+                ->andWhere('cm.removed_at IS NULL')
                 ->setParameter(':filterModelIds', $filterModelIds)
             ;
         }
@@ -101,18 +102,15 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterIndexxIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.indexxes', 'indexx')
-                ->where('indexx.id IN (:filterIndexxIds)')
-                ->andWhere('indexx.deleted_at IS NULL')
-                ->andWhere('indexx.removed_at IS NULL')
+                ->andWhere('i.id IN (:filterIndexxIds)')
+                ->andWhere('i.deleted_at IS NULL')
+                ->andWhere('i.removed_at IS NULL')
                 ->setParameter(':filterIndexxIds', $filterIndexxIds)
             ;
         }
 
         $goods = $queryBuilder
             ->andWhere('g.workshop = :workshop')
-            ->andWhere('g.deleted_at IS NULL')
-            ->andWhere('g.removed_at IS NULL')
             ->andWhere("
                     g.name LIKE :search
                 OR  g.remarks LIKE :search
@@ -120,6 +118,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
                 OR  m.shortcut LIKE :search
                 OR  i.name LIKE :search
                 OR  p.name LIKE :search
+                OR  c.name LIKE :search
                 OR  CONCAT_WS(' ', cm.name, cb.name) LIKE :search
             ")
             ->orderBy($sortColumnName, $sortOrder)
@@ -143,24 +142,26 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         $sortColumnName = $sortableParameters['sortColumnName'];
         $filterCategoryIds  = $sortableParameters['filterCategoryIds'];
         $filterModelIds     = $sortableParameters['filterModelIds'];
-        $filterIndexxIds     = $sortableParameters['filterIndexxIds'];
+        $filterIndexxIds    = $sortableParameters['filterIndexxIds'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
-            ->select('COUNT(g)')
+            ->select('COUNT(DISTINCT g)')
             ->from('AppBundle:Good', 'g')
             ->leftJoin('AppBundle:Indexx', 'i', 'WITH', 'i.good_id = g.id')
             ->leftJoin('AppBundle:Measure', 'm', 'WITH', 'g.measure_id = m.id')
             ->leftJoin('AppBundle:Producer', 'p', 'WITH', 'i.producer_id = p.id')
             ->leftJoin('g.car_models', 'cm')
             ->leftJoin('cm.brand', 'cb', 'WITH', 'cm.brand_id = cb.id')
+            ->leftJoin('g.categories', 'c')
+            ->where('g.deleted_at IS NULL')
+            ->andWhere('g.removed_at IS NULL')
         ;
 
         if(count($filterCategoryIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.categories', 'c')
-                ->where('c.id IN (:filterCategoryIds)')
+                ->andWhere('c.id IN (:filterCategoryIds)')
                 ->andWhere('c.deleted_at IS NULL')
                 ->andWhere('c.removed_at IS NULL')
                 ->setParameter(':filterCategoryIds', $filterCategoryIds)
@@ -170,10 +171,9 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterModelIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.car_models', 'model')
-                ->where('model.id IN (:filterModelIds)')
-                ->andWhere('model.deleted_at IS NULL')
-                ->andWhere('model.removed_at IS NULL')
+                ->andWhere('cm.id IN (:filterModelIds)')
+                ->andWhere('cm.deleted_at IS NULL')
+                ->andWhere('cm.removed_at IS NULL')
                 ->setParameter(':filterModelIds', $filterModelIds)
             ;
         }
@@ -181,18 +181,15 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterIndexxIds) > 0)
         {
             $queryBuilder
-                ->innerJoin('g.indexxes', 'indexx')
-                ->where('indexx.id IN (:filterIndexxIds)')
-                ->andWhere('indexx.deleted_at IS NULL')
-                ->andWhere('indexx.removed_at IS NULL')
+                ->andWere('i.id IN (:filterIndexxIds)')
+                ->andWhere('i.deleted_at IS NULL')
+                ->andWhere('i.removed_at IS NULL')
                 ->setParameter(':filterIndexxIds', $filterIndexxIds)
             ;
         }
 
         $countGoods = $queryBuilder
             ->andWhere('g.workshop = :workshop')
-            ->andWhere('g.deleted_at IS NULL')
-            ->andWhere('g.removed_at IS NULL')
             ->andWhere("
                     g.name LIKE :search
                 OR  g.remarks LIKE :search
@@ -200,6 +197,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
                 OR  m.shortcut LIKE :search
                 OR  i.name LIKE :search
                 OR  p.name LIKE :search
+                OR  c.name LIKE :search
                 OR  CONCAT_WS(' ', cm.name, cb.name) LIKE :search
             ")
             ->orderBy($sortColumnName, $sortOrder)

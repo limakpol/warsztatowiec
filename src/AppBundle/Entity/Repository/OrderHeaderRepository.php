@@ -93,12 +93,12 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:Vehicle', 'v', 'WITH', 'o.vehicle_id = v.id')
             ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->leftJoin('o.statuses', 's')
         ;
 
         if(count($customFilters) > 0)
         {
             $queryBuilder
-                ->innerJoin('o.statuses', 's')
                 ->where('s.id IN (:statusIds)')
                 ->andWhere('s.deleted_at IS NULL')
                 ->andWhere('s.removed_at IS NULL')
@@ -119,6 +119,7 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
                 OR  CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
                 OR  CONCAT_WS(' ', v.vin, v.registration_number, v.remarks) LIKE :search
                 OR  o.remarks LIKE :search
+                OR s.name LIKE :search
             ")
             ->orderBy($sortColumnName, $sortOrder)
             ->addOrderBy('o.updated_at', 'DESC')
@@ -144,7 +145,7 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
-            ->select('COUNT(o)')
+            ->select('COUNT(DISTINCT o)')
             ->from('AppBundle:OrderHeader', 'o')
             ->leftJoin('AppBundle:Customer', 'c', 'WITH', 'o.customer_id = c.id')
             ->leftJoin('AppBundle:Address', 'a', 'WITH', 'c.address_id = a.id')
@@ -152,12 +153,12 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:Vehicle', 'v', 'WITH', 'o.vehicle_id = v.id')
             ->leftJoin('AppBundle:CarModel', 'm', 'WITH', 'v.car_model_id = m.id')
             ->leftJoin('AppBundle:CarBrand', 'b', 'WITH', 'm.brand_id = b.id')
+            ->leftJoin('o.statuses', 's')
         ;
 
         if(count($customFilters) > 0)
         {
             $queryBuilder
-                ->innerJoin('o.statuses', 's')
                 ->where('s.id IN (:statusIds)')
                 ->andWhere('s.deleted_at IS NULL')
                 ->andWhere('s.removed_at IS NULL')
@@ -178,6 +179,7 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
                 OR  CONCAT_WS(' ', b.name, m.name, v.version) LIKE :search
                 OR  CONCAT_WS(' ', v.vin, v.registration_number, v.remarks) LIKE :search
                 OR  o.remarks LIKE :search
+                OR s.name LIKE :search
             ")
             ->orderBy($sortColumnName, $sortOrder)
             ->addOrderBy('o.updated_at', 'DESC')
