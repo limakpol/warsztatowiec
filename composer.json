@@ -36,7 +36,9 @@
     "require": {
         "php": ">=5.5.9",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-migrations-bundle": "^1.2",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "doctrine/migrations": "dev-master",
+        "doctrine/annotations": "dev-master",
         "doctrine/orm": "^2.5",
         "luxifer/doctrine-functions": "dev-master",
         "incenteev/composer-parameter-handler": "^2.0",

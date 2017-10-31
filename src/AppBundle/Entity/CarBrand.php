@@ -504,4 +504,3 @@ class CarBrand
         return $this->deleted_by;
     }
 }
-

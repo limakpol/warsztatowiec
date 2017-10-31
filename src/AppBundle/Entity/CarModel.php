@@ -544,4 +544,3 @@ class CarModel
         return $this->goods;
     }
 }
-

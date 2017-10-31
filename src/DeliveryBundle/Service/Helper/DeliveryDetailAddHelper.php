@@ -149,6 +149,7 @@ class DeliveryDetailAddHelper
         $dateTime = new \DateTime();
 
         $deliveryDetail->setDeliveryHeader($deliveryHeader);
+        $deliveryHeader->addDeliveryDetail($deliveryDetail);
         $deliveryDetail->setCreatedAt($dateTime);
         $deliveryDetail->setCreatedBy($user);
         $deliveryDetail->setUpdatedBy($user);
@@ -184,7 +185,7 @@ class DeliveryDetailAddHelper
 
         if($deliveryHeader->getAutocomplete())
         {
-            $deliveryHeader = $this->trade->addDetail($deliveryHeader, $deliveryDetail);
+            $deliveryHeader = $this->evaluateHeader($deliveryHeader);
         }
 
         $deliveryDetail = $this->setQuantity($deliveryDetail, $prevGood);
@@ -335,6 +336,38 @@ class DeliveryDetailAddHelper
         $deliveryDetail->setIndexx($indexx);
 
         return $deliveryDetail;
+    }
+
+    public function evaluateHeader(DeliveryHeader $deliveryHeader)
+    {
+
+        $totalNetBeforeDiscount = 0;
+        $discount = 0;
+        $totalNet = 0;
+        $vat = 0;
+        $totalDue = 0;
+
+
+        /** @var DeliveryDetail $deliveryDetail */
+        foreach($deliveryHeader->getDeliveryDetails() as $deliveryDetail)
+        {
+            if(null === $deliveryDetail->getDeletedAt() && null === $deliveryDetail->getRemovedAt())
+            {
+                $totalNetBeforeDiscount +=  $deliveryDetail->getTotalNetBeforeDiscount();
+                $discount               +=  $deliveryDetail->getDiscount();
+                $totalNet               +=  $deliveryDetail->getTotalNet();
+                $vat                    +=  $deliveryDetail->getVat();
+                $totalDue               +=  $deliveryDetail->getTotalDue();
+            }
+        }
+
+        $deliveryHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
+        $deliveryHeader->setDiscount($discount);
+        $deliveryHeader->setTotalNet($totalNet);
+        $deliveryHeader->setVat($vat);
+        $deliveryHeader->setTotalDue($totalDue);
+
+        return $deliveryHeader;
     }
 
     public function assignCarModels(Good $good)
