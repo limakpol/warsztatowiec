@@ -113,8 +113,6 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('g.workshop = :workshop')
             ->andWhere('g.deleted_at IS NULL')
             ->andWhere('g.removed_at IS NULL')
-            ->andWhere('i.removed_at IS NULL')
-            ->andWhere('i.deleted_at IS NULL')
             ->andWhere("
                     g.name LIKE :search
                 OR  g.remarks LIKE :search
@@ -195,8 +193,6 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('g.workshop = :workshop')
             ->andWhere('g.deleted_at IS NULL')
             ->andWhere('g.removed_at IS NULL')
-            ->andWhere('i.removed_at IS NULL')
-            ->andWhere('i.deleted_at IS NULL')
             ->andWhere("
                     g.name LIKE :search
                 OR  g.remarks LIKE :search
