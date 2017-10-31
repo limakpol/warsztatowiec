@@ -1,0 +1,87 @@
+<table class="accordion-first-level">
+    <tr class="tr-th">
+        <th>L.p.</th>
+        <th class="th-sort-column" data-column="g.name">Nazwa towaru</th>
+        <th>Kategorie</th>
+        <th>Pojazdy</th>
+        <th class="th-sort-column" data-column="g.quantity">Ilość całkowita</th>
+        <th class="th-sort-column" data-column="m.shortcut">J.m.</th>
+    </tr>
+    {% for key, good in goods %}
+        <tr class="accordion-header">
+            <td class="td-center">{{ key+1}}.</td>
+            <td class="td-left">{{ good.name }}</td>
+            <td class="td-left">
+                {% for category in good.categories %}
+                    |{{ category.name }}|
+                {% endfor %}
+            </td>
+            <td class="td-left">
+                {% for model in good.carModels %}
+                    |{{ model.brand.name }} {{ model.name }}|
+                {% endfor %}
+            </td>
+            <td class="td-center">{{ good.quantity }}</td>
+            <td class="td-center">{{ good.measure.shortcut }}</td>
+        </tr>
+        <tr class="accordion-content">
+            <td colspan="7">
+                <div class="accordion-content">
+                    <table class="accordion-second-level">
+                        <tr class="accordion-header">
+                            <th>Indeks</th>
+                            <th>Producent</th>
+                            <th>Ilość [{{ good.measure.shortcut }}]</th>
+                            <th>Cena jedn. netto [zł]</th>
+                            <th colspan="2"></th>
+                        </tr>
+                        {% for indexx in good.indexxes %}
+                            <tr class="accordion-main">
+                                <td class="td-left">{{ indexx.name }}</td>
+                                <td class="td-left">{{ indexx.producer.name }}</td>
+                                <td class="td-center">{{ indexx.quantity }}</td>
+                                <td class="td-center">{{ indexx.unitPriceNet }}</td>
+                                <td class="td-center">
+                                    <a href="" class="btn-square btn-edit">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td class="td-center">
+                                    <button class="btn-square btn-remove indexx-remove">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="accordion-footer">
+                            <td colspan="6">
+                                <a href="{{ path('warehouse_good_show', {'goodId': good.id}) }}" class="btn-info">szczegóły
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
+                                <a href="" class="btn-edit">edytuj
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                <button class="btn-remove" data-good-id="56">usuń
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="footer">
+    <div class="pagination-buttons">
+        <button class="btn-previous"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+        <button class="btn-next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="pagination-info">
+        <span>strona <span class="currentPage">{{ sortableParameters['currentPage'] }}</span></span> z <span>{{ sortableParameters['lastPage'] }}</span>
+        <input type="hidden" class="retrievePath" value="{{ path('warehouse_good_retrieve') }}">
+        <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
+        <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
+    </div>
+    <div class="count-all">{{ sortableParameters.countAll }} rekordów</div>
+</div>

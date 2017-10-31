@@ -70,7 +70,7 @@
     color: #333;
     border: 1px solid #aaa;
 }
-.div-sortable table {
+.div-sortable .default {
     margin-top: 1vw;
     width: 100%;
 }
@@ -90,47 +90,47 @@
 .div-sortable .td-right {
     text-align: right;
 }
-.div-sortable table {
+.div-sortable .default {
     border-collapse: collapse;
     border: 1px solid #aaa;
 }
-.div-sortable table th {
+.div-sortable .default th {
     background-color: #ff791f;
     font: bold 12px 'Ubuntu', sans-serif;
     color: #333;
     padding: 5px;
     border: 1px solid #cd5214;
 }
-.div-sortable table .th-sort-column:hover {
+.div-sortable .default .th-sort-column:hover {
     cursor: pointer;
 }
-.div-sortable table td {
+.div-sortable .default td {
     border: 1px solid #aaa;
     font: 11px 'Courier New', Monospace;
     padding: 5px;
     white-space: nowrap;
     color: #333;
 }
-.div-sortable table td a {
+.div-sortable .default td a {
     color: #333;
     text-decoration: none;
 }
-.div-sortable table td a:hover {
+.div-sortable .default td a:hover {
     text-decoration: underline;
 }
-.div-sortable table td i {
+.div-sortable .default td i {
     margin-left: 4px;
 }
-.div-sortable table tr:not(.tr-th):nth-child(even) {
+.div-sortable .default tr:not(.tr-th):nth-child(even) {
     background-color: #f5f5f5;
 }
-.div-sortable table tr:not(.tr-th):nth-child(even):hover {
+.div-sortable .default tr:not(.tr-th):nth-child(even):hover {
     background-color: #fefefe;
 }
-.div-sortable table tr:not(.tr-th):nth-child(odd) {
+.div-sortable .default tr:not(.tr-th):nth-child(odd) {
     background-color: #e6e6e6;
 }
-.div-sortable table tr:not(.tr-th):nth-child(odd):hover {
+.div-sortable .default tr:not(.tr-th):nth-child(odd):hover {
     background-color: #ededed;
 }
 .div-sortable .footer {
@@ -166,15 +166,15 @@
         height: 28px;
         font-size: 14px;
     }
-    .div-sortable table th {
+    .div-sortable .default th {
         font-size: 14px;
         padding: 6px;
     }
-    .div-sortable table td {
+    .div-sortable .default td {
         font-size: 12px;
         padding: 6px;
     }
-    .div-sortable table td i {
+    .div-sortable .default td i {
         margin-left: 4px;
     }
     .div-sortable .footer .pagination-info {

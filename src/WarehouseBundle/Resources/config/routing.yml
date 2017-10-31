@@ -6,6 +6,18 @@ warehouse_good_show:
     path: /towary/{goodId}
     defaults: { _controller: WarehouseBundle:Warehouse:show }
 
+warehouse_get_one_good:
+    path: /warehouse/get-one-good
+    defaults: { _controller: WarehouseBundle:Ajax:getOneGood }
+
+warehouse_get_one_indexx:
+    path: /warehouse/get-one-indexx
+    defaults: { _controller: WarehouseBundle:Ajax:getOneIndexx }
+
+warehouse_good_retrieve:
+    path: /warehouse/good-retrieve
+    defaults: { _controller: WarehouseBundle:Warehouse:retrieve }
+
 warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
@@ -42,12 +54,5 @@ warehouse_selectable_add_car_model:
     path: /warehouse/selectable/add-car-model
     defaults: { _controller: WarehouseBundle:Ajax:selectableAddCarModel }
 
-warehouse_get_one_good:
-    path: /warehouse/get-one-good
-    defaults: { _controller: WarehouseBundle:Ajax:getOneGood }
-
-warehouse_get_one_indexx:
-    path: /warehouse/get-one-indexx
-    defaults: { _controller: WarehouseBundle:Ajax:getOneIndexx }
 
 

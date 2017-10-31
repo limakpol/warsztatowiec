@@ -1,0 +1,77 @@
+.accordion-first-level {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1vw;
+}
+.accordion-first-level .th-sort-column:hover {
+    cursor: pointer;
+}
+.accordion-first-level th {
+    font: bold 12px 'Ubuntu', sans-serif;
+    color: #333;
+    background: #ff5f06;
+    background: linear-gradient(top, #ff5f06 0%, #ff6f40 40%);
+    background: -moz-linear-gradient(top, #ff5f06 0%, #ff6f40 40%);
+    background: -webkit-linear-gradient(top, #ff5f06 0%, #ff6f40 40%);
+    border: 1px solid #ff5f06;
+    padding: 5px;
+    white-space: nowrap;
+}
+.accordion-first-level tr.accordion-header td {
+    background-color: #f4f4f4;
+    border: 1px solid #fefefe;
+    padding: 5px;
+    color: #333;
+    font: 12px "Courier New", sans-serif;
+}
+.accordion-first-level tr.accordion-header:hover td {
+    background-color: #eee;
+    cursor: pointer;
+}
+.accordion-first-level div.accordion-content {
+    display: none;
+}
+.accordion-first-level tr.accordion-content > td {
+    border: none;
+    padding: 0;
+}
+.accordion-second-level {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.accordion-second-level .accordion-header th {
+    background: #f4f4f4;
+    border: 1px solid #adadad;
+}
+.accordion-second-level .accordion-main td {
+    font: 12px 'Courier New', Monospace;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 5px;
+    border: 1px solid #fefefe;
+}
+.accordion-second-level .accordion-main td:nth-child(5) {
+    width: 70px;
+}
+.accordion-second-level .accordion-main td:nth-child(6) {
+    width: 70px;
+}
+.accordion-second-level .accordion-footer td {
+    text-align: center;
+    background-color: #f4f4f4;
+}
+.accordion-second-level .accordion-footer td button, .accordion-second-level .accordion-footer a {
+    margin: 15px;
+}
+
+@media screen and (min-width: 1200px)
+{
+    .accordion-first-level th {
+        font-size: 15px;
+    }
+    .accordion-first-level tr.accordion-header td {
+        font-size: 15px;
+    }
+}

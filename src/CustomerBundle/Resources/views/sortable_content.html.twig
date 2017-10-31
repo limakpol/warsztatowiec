@@ -1,4 +1,4 @@
-<table>
+<table class="default">
     <tr class="tr-th">
         <th>L.p.</th>
         <th class="th-sort-column" data-column="c.mobile_phone1">Telefon kom.</th>
@@ -13,12 +13,9 @@
             <td class="td-center">{{ key+1}}.</td>
             <td class="td-center">
                 {% if customer.mobilePhone1 is not null %}
-                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">{{ customer.mobilePhone1|phone }}
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                    </a>
+                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">{{ customer.mobilePhone1|phone }}<i class="fa fa-info-circle" aria-hidden="true"></i></a>
                 {% else %}
-                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">--- -----------<i class="fa fa-info-circle" aria-hidden="true"></i>
-                    </a>
+                    <a href="{{ path('customer_show', {customerId: customer.id}) }}">--- -----------<i class="fa fa-info-circle" aria-hidden="true"></i></a>
                 {% endif %}
             </td>
             <td class="td-left">{{ customer.forename }}</td>
