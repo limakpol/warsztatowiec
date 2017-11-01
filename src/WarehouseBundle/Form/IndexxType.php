@@ -23,7 +23,7 @@ class IndexxType extends AbstractType
                 'empty_data' => null,
             ])
             ->add('good', GoodType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [new Valid()],
             ])
             ->add('name', TextType::class, [
@@ -47,6 +47,7 @@ class IndexxType extends AbstractType
                 'label' => 'Ilość w magazynie',
                 'required' => false,
                 'disabled' => true,
+                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade',
@@ -55,7 +56,6 @@ class IndexxType extends AbstractType
             ->add('unit_price_net', TextType::class, [
                 'label' => 'Cena jednostkowa netto [zł]',
                 'required' => false,
-                'disabled' => true,
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade',

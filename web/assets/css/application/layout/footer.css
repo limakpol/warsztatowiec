@@ -1,3 +1,7 @@
+section.footer {
+
+    bottom: 0;
+}
 footer.section-inner div {
     display: flex;
     flex-direction: column;

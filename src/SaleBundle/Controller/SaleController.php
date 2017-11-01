@@ -2,6 +2,7 @@
 
 namespace SaleBundle\Controller;
 
+use AppBundle\Entity\SaleHeader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,16 +68,25 @@ class SaleController extends Controller
 
     public function showAction($saleHeaderId)
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $saleShowHelper = $this->get('sale.helper.show');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        /** @var SaleHeader $saleHeader */
+        $saleHeader = $saleShowHelper->getSale($saleHeaderId);
+
+        if(null === $saleHeader)
+        {
+            return $this->redirectToRoute('sale_index');
+        }
+
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         return $this->render('SaleBundle::show.html.twig', [
-            'saleHeaderId' => $saleHeaderId,
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
-            'navbar'        => 'Wystawienie towaru',
+            'navbar'        => 'Przyjęcie towaru',
+            'saleHeader'    => $saleHeader,
         ]);
     }
 

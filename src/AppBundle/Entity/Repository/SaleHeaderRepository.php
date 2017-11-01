@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 
 /**
  * SaleHeaderRepository

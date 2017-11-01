@@ -1,3 +1,4 @@
+# SALE
 sale_index:
     path: /wystawienia-towarow
     defaults: { _controller: SaleBundle:Sale:index }
@@ -10,6 +11,7 @@ sale_show:
     path: /wystawienia-towarow/{saleHeaderId}
     defaults: { _controller: SaleBundle:Sale:show }
 
+# HEADER
 sale_header_add:
     path: /wystaw-towar
     defaults: { _controller: SaleBundle:SaleHeader:add }
@@ -21,3 +23,16 @@ sale_header_retrieve_customers:
 sale_header_get_next_number:
     path: /sale/get-next-number
     defaults: { _controller: SaleBundle:SaleHeader:getNextDocumentNumber }
+
+# DETAIL
+sale_detail_add:
+    path: /wystawienia-towarow/{saleHeaderId}/dodaj-pozycje
+    defaults: { _controller: SaleBundle:SaleDetail:add }
+
+sale_retrieve_goods:
+    path: /sale/retrieve-goods
+    defaults: { _controller: SaleBundle:SaleDetail:retrieveGoods }
+
+sale_retrieve_indexxes:
+    path: /sale/retrieve-indexxes
+    defaults: { _controller: SaleBundle:SaleDetail:retrieveIndexxes }

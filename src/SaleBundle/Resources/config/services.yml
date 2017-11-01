@@ -4,6 +4,13 @@ services:
       class: SaleBundle\Form\SaleHeaderAddType
       tags:
           - { name: form.type }
+          
+  form.type.sale_detail_add:
+      class: SaleBundle\Form\SaleDetailAddType
+      arguments: ["@security.token_storage"]
+      tags:
+          - { name: form.type }
+          
 # SERVICES
 
   sale.helper.header_add:
@@ -13,3 +20,11 @@ services:
   sale.helper.index:
         class: SaleBundle\Service\Helper\SaleIndexHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+        
+  sale.helper.show:
+      class: SaleBundle\Service\Helper\SaleShowHelper
+      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]
+
+  sale.helper.detail_add:
+      class: SaleBundle\Service\Helper\SaleDetailAddHelper
+      arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@form.factory", "@warehouse.helper.good", "@warehouse.helper.indexx", "@app.trade"]

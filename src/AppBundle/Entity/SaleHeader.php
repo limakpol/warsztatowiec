@@ -1,11 +1,12 @@
 <?php
 
 namespace AppBundle\Entity;
+use AppBundle\Service\Trade\TradeHeaderInterface;
 
 /**
  * SaleHeader
  */
-class SaleHeader
+class SaleHeader implements TradeHeaderInterface
 {
     /**
      * @var integer

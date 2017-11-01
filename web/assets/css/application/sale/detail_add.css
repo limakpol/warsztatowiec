@@ -1,0 +1,11 @@
+.searchable header div:hover {
+    cursor: pointer;
+    color: #777;
+}
+#new-producer {
+    margin: 12px 0 0 0;
+    display: none;
+}
+#new-producer input {
+    min-width: unset;
+}

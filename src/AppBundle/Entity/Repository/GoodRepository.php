@@ -181,7 +181,7 @@ class GoodRepository extends \Doctrine\ORM\EntityRepository
         if(count($filterIndexxIds) > 0)
         {
             $queryBuilder
-                ->andWere('i.id IN (:filterIndexxIds)')
+                ->andWhere('i.id IN (:filterIndexxIds)')
                 ->andWhere('i.deleted_at IS NULL')
                 ->andWhere('i.removed_at IS NULL')
                 ->setParameter(':filterIndexxIds', $filterIndexxIds)

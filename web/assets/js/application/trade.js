@@ -1,23 +1,57 @@
 $(document).ready(function()
 {
+
     $(document).on('input', '.input-unit-price-net', function()
     {
+        $('.input-unit-price-net + ul').remove();
+
         update1();
     });
 
     $(document).on('input', '.input-quantity', function()
     {
+        $('.input-quantity + ul').remove();
+
         update1();
+    });
+
+    $(document).on('input', '.input-total-net-before-discount', function()
+    {
+        $('.input-total-net-before-discount + ul').remove();
     });
 
     $(document).on('input', '.input-discount-pc', function()
     {
+        $('.input-discount-pc + ul').remove();
+
         update2();
+    });
+
+    $(document).on('input', '.input-discount', function()
+    {
+        $('.input-discount + ul').remove();
+    });
+
+    $(document).on('input', '.input-total-net', function()
+    {
+        $('.input-total-net + ul').remove();
     });
 
     $(document).on('input', '.input-vat-pc', function()
     {
+        $('.input-vat-pc + ul').remove();
+
         update3();
+    });
+
+    $(document).on('input', '.input-vat', function()
+    {
+        $('.input-vat + ul').remove();
+    });
+
+    $(document).on('input', '.input-total-due', function()
+    {
+        $('.input-total-due + ul').remove();
     });
 
 
