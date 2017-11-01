@@ -113,6 +113,11 @@
 
             {{ form_label(form.quantity) }}
             {{ form_widget(form.quantity) }}
+            {% if exceedQtyError is not null %}
+                <ul>
+                    <li>{{ 'Wystawiana ilość przekracza ilość dostępną w magazynie' }}</li>
+                </ul>
+            {% endif %}
             {{ form_errors(form.quantity) }}
 
             {{ form_label(form.total_net_before_discount) }}

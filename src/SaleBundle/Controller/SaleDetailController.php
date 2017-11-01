@@ -60,6 +60,7 @@ class SaleDetailController extends Controller
 
         $indexxError    = null;
         $goodError      = null;
+        $exceedQtyError = null;
 
         if($request->isMethod('POST'))
         {
@@ -96,7 +97,9 @@ class SaleDetailController extends Controller
 
                 $form->submit($request->request->get($form->getName()));
 
-                if($form->isValid())
+                $exceedQtyError = $saleDetail->getQuantity() > $indexx->getQuantity() ? true : null;
+
+                if($form->isValid() && !$exceedQtyError)
                 {
                     $detailAddHelper->write($form, $saleHeader, $prevGood, $prevIndexxQty);
 
@@ -132,6 +135,7 @@ class SaleDetailController extends Controller
             'indexxSortableParameters' => $indexxSortableParameters,
             'goodError' => $goodError,
             'indexxError' => $indexxError,
+            'exceedQtyError' => $exceedQtyError,
         ]);
     }
 
