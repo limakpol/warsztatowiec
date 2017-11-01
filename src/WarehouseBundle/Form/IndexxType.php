@@ -46,7 +46,7 @@ class IndexxType extends AbstractType
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość w magazynie',
                 'required' => false,
-                'disabled' => true,
+                'disabled' =>  in_array('sale_detail_add', $options['validation_groups']) ? false : true,
                 'data' => '',
                 'attr' => [
                     'maxlength' => 10,

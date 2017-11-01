@@ -8,6 +8,7 @@
 
 namespace SaleBundle\Service\Helper;
 
+use AppBundle\Entity\IndexxEdit;
 use AppBundle\Entity\SaleDetail;
 use AppBundle\Entity\SaleHeader;
 use AppBundle\Entity\Good;
@@ -47,7 +48,7 @@ class SaleDetailAddHelper
         $this->trade            = $trade;
     }
 
-    public function write(Form $form, SaleHeader $saleHeader, $prevGood)
+    public function write(Form $form, SaleHeader $saleHeader, $prevGood, $prevIndexxQty)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -71,7 +72,7 @@ class SaleDetailAddHelper
 
         $saleDetail = $this->trade->evaluateDetail($saleDetail);
         $saleDetail = $this->setIndexxUnitPriceNet($saleDetail);
-        $saleDetail = $this->setQuantity($saleDetail, $prevGood);
+        $saleDetail = $this->setQuantity($saleDetail, $prevGood, $prevIndexxQty);
 
         $saleHeader = $this->evaluateHeader($saleHeader);
 
@@ -86,6 +87,36 @@ class SaleDetailAddHelper
         $em->flush();
 
         return true;
+    }
+
+    public function setIndexxEdit(Indexx $indexx, $prevIndexxQty)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $diffQty = round($indexx->getQuantity() - $prevIndexxQty, 2);
+
+        $indexxEdit = new IndexxEdit();
+        $indexxEdit->setCreatedAt(new \DateTime());
+        $indexxEdit->setCreatedBy($user);
+        $indexxEdit->setWorkshop($workshop);
+        $indexxEdit->setIndexx($indexx);
+        $indexxEdit->setBeforeQty($prevIndexxQty);
+        $indexxEdit->setAfterQty($indexx->getQuantity());
+        $indexxEdit->setChangeQty($diffQty);
+
+        $em->persist($indexxEdit);
+
+        return;
     }
 
     public function getGoodSortableParameters()
@@ -153,29 +184,34 @@ class SaleDetailAddHelper
      * @param Good $prevGood|null
      * @return SaleDetail
      */
-    public function setQuantity(SaleDetail $saleDetail, $prevGood)
+    public function setQuantity(SaleDetail $saleDetail, $prevGood, $prevIndexxQty)
     {
-
         /** @var EntityManager $em */
         $em = $this->entityManager;
+
+        $detailQty = $saleDetail->getQuantity();
 
         $indexx = $saleDetail->getIndexx();
         $good = $indexx->getGood();
 
-        $detailQty = $saleDetail->getQuantity();
         $indexxQty = $indexx->getQuantity();
         $goodQty = $good->getQuantity();
 
-        $prevQty = $prevGood instanceof Good ? $prevGood->getQuantity() : 0;
+        $diffIndexxQty = round($indexxQty - $prevIndexxQty, 2);
 
-        if($prevGood === $good)
+        if($diffIndexxQty != 0)
+        {
+            $this->setIndexxEdit($indexx, $prevIndexxQty);
+        }
+
+        if($good === $prevGood)
         {
             $indexx->setQuantity($indexxQty - $detailQty);
-            $good->setQuantity($goodQty - $detailQty);
+            $good->setQuantity($goodQty + $diffIndexxQty - $detailQty);
         }
         else
         {
-            $prevGood->setQuantity($prevQty - $indexxQty);
+            $prevGood->setQuantity($prevGood->getQuantity() - $prevIndexxQty);
 
             $em->persist($prevGood);
 

@@ -98,7 +98,7 @@
             </div>
 
             {{ form_label(form.indexx.quantity) }}
-            {{ form_widget(form.indexx.quantity) }}
+            {{ form_widget(form.indexx.quantity, {'disabled': false, 'attr': {'disabled': false}}) }}
             {{ form_errors(form.indexx.quantity) }}
 
             {{ form_label(form.indexx.unit_price_net) }}

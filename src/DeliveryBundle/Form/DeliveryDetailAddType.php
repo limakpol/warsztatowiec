@@ -51,6 +51,7 @@ class DeliveryDetailAddType extends AbstractType
             ->add('indexx', IndexxType::class, [
                 'required' => true,
                 'constraints' => [new Valid()],
+                'validation_groups' => $options['validation_groups'],
             ])
             ->add('unit_price_net', TextType::class, [
                 'label' => 'Cena jednostkowa netto [zł]',

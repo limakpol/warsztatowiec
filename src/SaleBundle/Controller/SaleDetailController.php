@@ -86,6 +86,8 @@ class SaleDetailController extends Controller
             {
                 $prevGood = $indexx->getGood();
 
+                $prevIndexxQty = $indexx->getQuantity();
+
                 $indexx->setGood($good);
 
                 $saleDetail->setIndexx($indexx);
@@ -96,7 +98,7 @@ class SaleDetailController extends Controller
 
                 if($form->isValid())
                 {
-                    $detailAddHelper->write($form, $saleHeader, $prevGood);
+                    $detailAddHelper->write($form, $saleHeader, $prevGood, $prevIndexxQty);
 
                     return $this->redirectToRoute('sale_show', [
                         'saleHeaderId' => $saleHeaderId,

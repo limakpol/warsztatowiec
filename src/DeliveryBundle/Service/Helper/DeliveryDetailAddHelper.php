@@ -293,7 +293,7 @@ class DeliveryDetailAddHelper
 
         $detailQty = $deliveryDetail->getQuantity();
         $indexxQty = $indexx->getQuantity();
-        $goodQty = $good->getQuantity();
+        $goodQty   = $good->getQuantity();
 
         $prevQty = $prevGood instanceof Good ? $prevGood->getQuantity() : 0;
 

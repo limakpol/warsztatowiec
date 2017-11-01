@@ -85,7 +85,7 @@ class SaleController extends Controller
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',
-            'navbar'        => 'Przyjęcie towaru',
+            'navbar'        => 'Wystawienie towaru',
             'saleHeader'    => $saleHeader,
         ]);
     }
