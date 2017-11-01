@@ -287,6 +287,10 @@ $(document).ready(function()
                 var goodSortableParameters = getGoodSortableParameters();
                 goodSortableParameters.filterIndexxIds = [indexxId];
                 goodRequest(goodSortableParameters);
+
+                var measureShortcut = $('#sale_detail_add_indexx_good_measure option:selected').data('shortcut');
+
+                $('label[for=sale_detail_add_quantity]').text('Ilość [' + measureShortcut + ']');
             }
         });
     });

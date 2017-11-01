@@ -34,6 +34,10 @@ class GoodType extends AbstractType
                 'required' => true,
                 'class' => Measure::class,
                 'choice_label' => 'name',
+                'choice_attr' => function($val, $key, $index)
+                {
+                  return ['data-shortcut' => $val->getShortcut()];
+                },
                 'multiple' => false,
                 'expanded' => false,
                 'query_builder' => function(EntityRepository $er)
