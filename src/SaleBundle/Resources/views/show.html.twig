@@ -128,12 +128,12 @@
                             <td class="td-center num">{{ key+1 }}.</td>
                             <td class="td-left">{{ saleDetail.indexx.good.name }}</td>
                             <td class="td-left">{{ saleDetail.indexx.name }}</td>
-                            <td class="td-center">{{ saleDetail.unitPriceNet }}</td>
-                            <td class="td-center">{{ saleDetail.quantity }}</td>
+                            <td class="td-center">{{ saleDetail.unitPriceNet|money }}</td>
+                            <td class="td-center">{{ saleDetail.quantity|money }}</td>
                             <td class="td-center">{{ saleDetail.indexx.good.measure.shortcut }}</td>
-                            <td class="td-center">{{ saleDetail.totalNet }}</td>
-                            <td class="td-center">{{ saleDetail.vat }}</td>
-                            <td class="td-center">{{ saleDetail.totalDue }}</td>
+                            <td class="td-center">{{ saleDetail.totalNet|money }}</td>
+                            <td class="td-center">{{ saleDetail.vat|money }}</td>
+                            <td class="td-center">{{ saleDetail.totalDue|money }}</td>
                         </tr>
                         <tr class="content">
                             <td colspan="9">
@@ -155,15 +155,15 @@
                                         </tr>
                                         <tr>
                                             <td>Cena jednostkowa netto</td>
-                                            <td>{{ saleDetail.unitPriceNet }} zł</td>
+                                            <td>{{ saleDetail.unitPriceNet|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Ilość</td>
-                                            <td>{{ saleDetail.quantity }} {{ saleDetail.indexx.good.measure.shortcut }}</td>
+                                            <td>{{ saleDetail.quantity|money }} {{ saleDetail.indexx.good.measure.shortcut }}</td>
                                         </tr>
                                         <tr>
                                             <td>Wartość netto przed rabatem</td>
-                                            <td>{{ saleDetail.totalNetBeforeDiscount }} zł</td>
+                                            <td>{{ saleDetail.totalNetBeforeDiscount|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Rabat</td>
@@ -171,11 +171,11 @@
                                         </tr>
                                         <tr>
                                             <td>Kwota rabatu</td>
-                                            <td>{{ saleDetail.discount }} zł</td>
+                                            <td>{{ saleDetail.discount|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Wartość netto</td>
-                                            <td>{{ saleDetail.totalNet }} zł</td>
+                                            <td>{{ saleDetail.totalNet|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>VAT</td>
@@ -183,11 +183,11 @@
                                         </tr>
                                         <tr>
                                             <td>Kwota VAT</td>
-                                            <td>{{ saleDetail.vat }} zł</td>
+                                            <td>{{ saleDetail.vat|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Należność całkowita</td>
-                                            <td>{{ saleDetail.totalDue }} zł</td>
+                                            <td>{{ saleDetail.totalDue|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Uwagi</td>
@@ -227,9 +227,9 @@
                 {% endfor %}
                 <tr class="header summary">
                     <td class="td-right" colspan="6">Razem [zł]:</td>
-                    <td class="td-center">{{ saleHeader.totalNet }}</td>
-                    <td class="td-center">{{ saleHeader.vat }}</td>
-                    <td class="td-center">{{ saleHeader.totalDue }}</td>
+                    <td class="td-center">{{ saleHeader.totalNet|money }}</td>
+                    <td class="td-center">{{ saleHeader.vat|money }}</td>
+                    <td class="td-center">{{ saleHeader.totalDue|money }}</td>
                 </tr>
                 <tr class="content">
                     <td colspan="9">
@@ -237,23 +237,23 @@
                             <table class="content info-table">
                                 <tr>
                                     <td>Wartość całkowita netto przed rabatem</td>
-                                    <td>{{ saleHeader.totalNetBeforeDiscount }} zł</td>
+                                    <td>{{ saleHeader.totalNetBeforeDiscount|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Kwota rabatu</td>
-                                    <td>{{ saleHeader.discount }} zł</td>
+                                    <td>{{ saleHeader.discount|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Wartość netto</td>
-                                    <td>{{ saleHeader.totalNet }} zł</td>
+                                    <td>{{ saleHeader.totalNet|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Kwota VAT</td>
-                                    <td>{{ saleHeader.vat }} zł</td>
+                                    <td>{{ saleHeader.vat|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Należność całkowita</td>
-                                    <td>{{ saleHeader.totalDue }} zł</td>
+                                    <td>{{ saleHeader.totalDue|money }} zł</td>
                                 </tr>
                             </table>
                         </div>

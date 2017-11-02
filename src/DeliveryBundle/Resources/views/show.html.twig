@@ -128,12 +128,12 @@
                             <td class="td-center num">{{ key+1 }}.</td>
                             <td class="td-left">{{ deliveryDetail.indexx.good.name }}</td>
                             <td class="td-left">{{ deliveryDetail.indexx.name }}</td>
-                            <td class="td-center">{{ deliveryDetail.unitPriceNet }}</td>
-                            <td class="td-center">{{ deliveryDetail.quantity }}</td>
+                            <td class="td-center">{{ deliveryDetail.unitPriceNet|money }}</td>
+                            <td class="td-center">{{ deliveryDetail.quantity|money }}</td>
                             <td class="td-center">{{ deliveryDetail.indexx.good.measure.shortcut }}</td>
-                            <td class="td-center">{{ deliveryDetail.totalNet }}</td>
+                            <td class="td-center">{{ deliveryDetail.totalNet|money }}</td>
                             <td class="td-center">{{ deliveryDetail.vat }}</td>
-                            <td class="td-center">{{ deliveryDetail.totalDue }}</td>
+                            <td class="td-center">{{ deliveryDetail.totalDue|money }}</td>
                         </tr>
                         <tr class="content">
                             <td colspan="9">
@@ -155,15 +155,15 @@
                                         </tr>
                                         <tr>
                                             <td>Cena jednostkowa netto</td>
-                                            <td>{{ deliveryDetail.unitPriceNet }} zł</td>
+                                            <td>{{ deliveryDetail.unitPriceNet|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Ilość</td>
-                                            <td>{{ deliveryDetail.quantity }} {{ deliveryDetail.indexx.good.measure.shortcut }}</td>
+                                            <td>{{ deliveryDetail.quantity|money }} {{ deliveryDetail.indexx.good.measure.shortcut }}</td>
                                         </tr>
                                         <tr>
                                             <td>Wartość netto przed rabatem</td>
-                                            <td>{{ deliveryDetail.totalNetBeforeDiscount }} zł</td>
+                                            <td>{{ deliveryDetail.totalNetBeforeDiscount|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Rabat</td>
@@ -171,11 +171,11 @@
                                         </tr>
                                         <tr>
                                             <td>Kwota rabatu</td>
-                                            <td>{{ deliveryDetail.discount }} zł</td>
+                                            <td>{{ deliveryDetail.discount|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Wartość netto</td>
-                                            <td>{{ deliveryDetail.totalNet }} zł</td>
+                                            <td>{{ deliveryDetail.totalNet|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>VAT</td>
@@ -183,11 +183,11 @@
                                         </tr>
                                         <tr>
                                             <td>Kwota VAT</td>
-                                            <td>{{ deliveryDetail.vat }} zł</td>
+                                            <td>{{ deliveryDetail.vat|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Należność całkowita</td>
-                                            <td>{{ deliveryDetail.totalDue }} zł</td>
+                                            <td>{{ deliveryDetail.totalDue|money }} zł</td>
                                         </tr>
                                         <tr>
                                             <td>Uwagi</td>
@@ -231,9 +231,9 @@
                 {% endfor %}
                 <tr class="header summary">
                     <td class="td-right" colspan="6">Razem [zł]:</td>
-                    <td class="td-center">{{ deliveryHeader.totalNet }}</td>
-                    <td class="td-center">{{ deliveryHeader.vat }}</td>
-                    <td class="td-center">{{ deliveryHeader.totalDue }}</td>
+                    <td class="td-center">{{ deliveryHeader.totalNet|money }}</td>
+                    <td class="td-center">{{ deliveryHeader.vat|money }}</td>
+                    <td class="td-center">{{ deliveryHeader.totalDue|money }}</td>
                 </tr>
                 <tr class="content">
                     <td colspan="9">
@@ -241,23 +241,23 @@
                             <table class="content info-table">
                                 <tr>
                                     <td>Wartość całkowita netto przed rabatem</td>
-                                    <td>{{ deliveryHeader.totalNetBeforeDiscount }} zł</td>
+                                    <td>{{ deliveryHeader.totalNetBeforeDiscount|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Kwota rabatu</td>
-                                    <td>{{ deliveryHeader.discount }} zł</td>
+                                    <td>{{ deliveryHeader.discount|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Wartość netto</td>
-                                    <td>{{ deliveryHeader.totalNet }} zł</td>
+                                    <td>{{ deliveryHeader.totalNet|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Kwota VAT</td>
-                                    <td>{{ deliveryHeader.vat }} zł</td>
+                                    <td>{{ deliveryHeader.vat|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Należność całkowita</td>
-                                    <td>{{ deliveryHeader.totalDue }} zł</td>
+                                    <td>{{ deliveryHeader.totalDue|money }} zł</td>
                                 </tr>
                                 <tr>
                                     <td>Przeliczanie automatyczne</td>

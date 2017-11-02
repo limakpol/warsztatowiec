@@ -24,9 +24,9 @@
             {% endif %}
             <td class="td-center">{{ deliveryHeader.documentType }}</td>
             <td class="td-center">{{ deliveryHeader.documentNumber }}</td>
-            <td class="td-center">{{ deliveryHeader.totalNet }}</td>
-            <td class="td-center">{{ deliveryHeader.vat }}</td>
-            <td class="td-center">{{ deliveryHeader.totalDue }}</td>
+            <td class="td-center">{{ deliveryHeader.totalNet|money }}</td>
+            <td class="td-center">{{ deliveryHeader.vat|money }}</td>
+            <td class="td-center">{{ deliveryHeader.totalDue|money }}</td>
         </tr>
     {% endfor %}
 </table>

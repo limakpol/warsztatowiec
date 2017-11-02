@@ -27,7 +27,7 @@
             <td class="statuses td-center" data-order-id="{{ orderHeader.id }}">
                 {% include 'OrderBundle::status_buttons.html.twig' %}
             </td>
-            <td class="td-center">{{ orderHeader.totalDue }}</td>
+            <td class="td-center">{{ orderHeader.totalDue|money }}</td>
             <td class="td-center">
                 {% if orderHeader.paidAt is not null %}
                     {{ orderHeader.paidAt|date }}

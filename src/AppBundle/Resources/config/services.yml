@@ -96,12 +96,14 @@ services:
             - { name: validator.constraint_validator }
 
 # TRANSFORMERS
-    app.transformer.trade:
-        class: AppBundle\Form\Transformer\TradeTransformer
-
     app.transformer.phone:
         class: AppBundle\Form\Transformer\PhoneTransformer
 
+    app.transformer.nip:
+        class: AppBundle\Form\Transformer\NipTransformer
+
+    app.transformer.nrb:
+        class: AppBundle\Form\Transformer\NrbTransformer
 
 # HELPERS
     app.helper.app.register:

@@ -57,6 +57,9 @@ AppBundle\Entity\User:
                 groups: [ registration, user, workman ]
             - AppBundle\Form\Validator\Constraint\Email:
                 groups: [registration]
+        hourly_rate_net:
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ workman ]
         password:
             - AppBundle\Form\Validator\Constraint\Password:
                 groups: [ registration, change_password ]

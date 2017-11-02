@@ -1,10 +1,16 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: limakpol
+ * Date: 11/2/17
+ * Time: 2:35 AM
+ */
 
 namespace AppBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
-class TradeTransformer implements DataTransformerInterface
+class NrbTransformer implements DataTransformerInterface
 {
     public function transform($value)
     {
@@ -14,8 +20,8 @@ class TradeTransformer implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        $value = str_replace(',', '.', $value);
+        if(!$value) return null;
 
-        return round($value, 2);
+        return str_replace(' ', '', $value);
     }
 }

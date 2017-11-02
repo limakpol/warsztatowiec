@@ -4,6 +4,8 @@ namespace CustomerBundle\Form;
 
 use AppBundle\Entity\Customer;
 use AppBundle\Form\AddressType;
+use AppBundle\Form\Transformer\NipTransformer;
+use AppBundle\Form\Transformer\NrbTransformer;
 use AppBundle\Form\Transformer\PhoneTransformer;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
@@ -60,7 +62,7 @@ class CustomerType extends AbstractType
                 'label'     => 'NIP',
                 'required'  => false,
                 'attr'      => [
-                    'maxlength' => 35,
+                    'maxlength' => 13,
                     'size'      => 20,
                 ],
             ])
@@ -121,7 +123,7 @@ class CustomerType extends AbstractType
                 'label'     => 'Nr konta bankowego',
                 'required'  => false,
                 'attr'      => [
-                    'maxlength' => 26,
+                    'maxlength' => 32,
                     'size'      => 24,
                 ],
             ])
@@ -150,7 +152,8 @@ class CustomerType extends AbstractType
 
             $builder->get('mobile_phone1')->addModelTransformer(new PhoneTransformer());
             $builder->get('mobile_phone2')->addModelTransformer(new PhoneTransformer());
-
+            $builder->get('nip')->addModelTransformer(new NipTransformer());
+            $builder->get('bank_account_number')->addModelTransformer(new NrbTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

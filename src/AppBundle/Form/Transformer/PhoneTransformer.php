@@ -22,6 +22,8 @@ class PhoneTransformer implements DataTransformerInterface
     {
         if(!$value) return null;
 
+        $value = str_replace(['-', ' '], '', $value);
+
         $plus = substr($value, 0, 1);
         $prefix = substr($value, 1, 2);
 

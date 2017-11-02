@@ -28,18 +28,19 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         return $user;
     }
 
-    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
+    public function getOne($workshopIds = [], $id, $hydrationMode = Query::HYDRATE_OBJECT)
     {
         $vehicle = $this->_em
             ->createQueryBuilder()
             ->select('u')
             ->from('AppBundle:User', 'u')
+            ->innerJoin('u.workshops', 'w')
             ->where('u.deleted_at IS NULL')
             ->andWhere('u.removed_at IS NULL')
-            ->andWhere('u.workshop = :workshop')
+            ->andWhere('w.id IN (:workshops)')
             ->andWhere('u.id = :id')
             ->setParameters([
-                ':workshop' => $workshop,
+                ':workshops' => $workshopIds,
                 ':id'       => $id,
             ])
             ->getQuery()

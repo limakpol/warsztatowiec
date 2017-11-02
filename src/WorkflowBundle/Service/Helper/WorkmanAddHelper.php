@@ -102,6 +102,8 @@ class WorkmanAddHelper
 
         $newUser->addRole($userRole);
 
+       // var_dump($newUser->getHourlyRateNet()); die();
+
         $hourlyRateNet = $this->trade->normalize($newUser->getHourlyRateNet(), true);
         $newUser->setHourlyRateNet($hourlyRateNet);
 

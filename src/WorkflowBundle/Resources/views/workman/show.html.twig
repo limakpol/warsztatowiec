@@ -1,4 +1,144 @@
 {% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    'assets/css/application/delivery/show.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 {% block main %}
-    show
+    <div class="show-box">
+        <h1>
+            <label>Dane podstawowe</label>
+        </h1>
+        <section>
+            <table class="info-table">
+                <tr>
+                    <td>Imię</td>
+                    <td>{{ workman.forename }}</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko</td>
+                    <td>{{ workman.surname }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        {% if workman.status == 0 %}Użytkownik zweryfikował się negatywnie (błędny e-mail)
+                        {% elseif workman.status == 1 %}Użytkownik jeszcze nie dokonał weryfikacji
+                        {% elseif workman.status == 2 %}Użytkownik zweryfikował się pozytywnie przez e-mail
+                        {% elseif workman.status == 3 %}Użytkownik zbanowany
+                        {% else %}{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Możliwość logowania</td>
+                    <td>
+                        {% if workman.password is null %}
+                           NIE
+                        {% else %}
+                            TAK
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stawka godzinowa netto</td>
+                    <td>
+                        {% if workman.hourlyRateNet is not null %}
+                            {{ workman.hourlyRateNet|money }}zł
+                        {% else %}{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td>{{ workman.phone1|phone }}</td>
+                </tr>
+                <tr>
+                    <td>Telefon 2</td>
+                    <td>{{ workman.phone2|phone }}</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>{{ workman.email }}</td>
+                </tr>
+                {% if workman.address is not null %}
+                    <tr>
+                        <td>Ulica</td>
+                        <td>{{ workman.address.street }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nr domu</td>
+                        <td>{{ workman.address.houseNumber }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nr mieszkania</td>
+                        <td>{{ workman.address.flatNumber }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kod pocztowy</td>
+                        <td>{{ workman.address.postCode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Miasto</td>
+                        <td>{{ workman.address.city }}</td>
+                    </tr>
+                    <tr>
+                        <td>Województwo</td>
+                        <td>
+                            {% if workman.address.province is not null %}
+                                {{ workman.address.province.name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>NIP</td>
+                    <td>{{ workman.nip }}</td>
+                </tr>
+                <tr>
+                    <td>PESEL</td>
+                    <td>{{ workman.pesel }}</td>
+                </tr>
+                <tr>
+                    <td>Nr konta bankowego</td>
+                    <td>{{ workman.bankAccountNumber|nrb }}</td>
+                </tr>
+                <tr>
+                    <td>Uwagi</td>
+                    <td>{{ workman.remarks }}</td>
+                </tr>
+                <tr>
+                    <td>Wprowadzono</td>
+                    <td>
+                        {{ workman.createdAt|date }} przez <a href="{{ path('workflow_workman_show', {userId: workman.createdBy.id}) }}">{{ workman.createdBy.forename }} {{ workman.createdBy.surname }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Zaktualizowano</td>
+                    <td>
+                        {{ workman.updatedAt|date }} przez <a href="{{ path('workflow_workman_show', {userId: workman.updatedBy.id}) }}">{{ workman.updatedBy.forename }} {{ workman.updatedBy.surname }}</a>
+                    </td>
+                </tr>
+                <tr class="footer">
+                    <td colspan="2">
+                        <a class="btn-edit" target="_blank">edytuj
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <button class="btn-remove">usuń
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/show.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

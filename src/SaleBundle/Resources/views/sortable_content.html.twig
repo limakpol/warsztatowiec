@@ -25,9 +25,9 @@
             {% endif %}
             <td class="td-center">{{ saleHeader.documentType }}</td>
             <td class="td-center">{{ saleHeader.documentNumber }}</td>
-            <td class="td-center">{{ saleHeader.totalNet }}</td>
-            <td class="td-center">{{ saleHeader.vat }}</td>
-            <td class="td-center">{{ saleHeader.totalDue }}</td>
+            <td class="td-center">{{ saleHeader.totalNet|money }}</td>
+            <td class="td-center">{{ saleHeader.vat|money }}</td>
+            <td class="td-center">{{ saleHeader.totalDue|money }}</td>
         </tr>
     {% endfor %}
 </table>

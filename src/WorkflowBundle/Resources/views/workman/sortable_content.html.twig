@@ -14,7 +14,7 @@
             <td class="td-center"><a href="{{ path('workflow_workman_show', {userId: user.id}) }}">{{ user.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a></td>
             <td class="td-left">{{ user.forename }}</td>
             <td class="td-left">{{ user.surname }}</td>
-            <td class="td-center">{{ user.hourlyRateNet }}</td>
+            <td class="td-center">{{ user.hourlyRateNet|money }}</td>
             <td class="td-center">
                 {% if user.password is not null %}TAK{% else %}{% endif %}
             </td>

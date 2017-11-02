@@ -8,6 +8,9 @@
 
 namespace WorkflowBundle\Controller;
 
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,6 +103,18 @@ class WorkmanController extends Controller
 
     public function showAction($userId)
     {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $workman */
+        $workman = $em->getRepository('AppBundle:User')->getOne([$workshop->getId()], $userId);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -109,6 +124,7 @@ class WorkmanController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'workflow',
             'navbar'        => 'Pracownik',
+            'workman'       => $workman,
         ]);
     }
 }

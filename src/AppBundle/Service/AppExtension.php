@@ -19,6 +19,7 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('date', [$this, 'dateFilter']),
             new \Twig_SimpleFilter('bool', [$this, 'boolFilter']),
             new \Twig_SimpleFilter('money', [$this, 'moneyFilter']),
+            new \Twig_SimpleFilter('nrb', [$this, 'nrbFilter']),
         ];
     }
 
@@ -73,8 +74,22 @@ class AppExtension extends \Twig_Extension
         }
     }
 
+    public function nrbFilter($number)
+    {
+        if(!$number) return $number;
+
+        $first = substr($number, 0, 2);
+        $rest = substr_replace($number, '', 0, 2);
+
+        $number = $first . ' ' . chunk_split($rest, 4, ' ');
+
+        return $number;
+    }
+
     public function moneyFilter($float)
     {
+        if(!$float) return $float;
+
         return number_format($float, 2, '.', ' ');
     }
 

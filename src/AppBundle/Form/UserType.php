@@ -4,12 +4,13 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\User;
-use AppBundle\Form\Extension\IconSubmitType;
+use AppBundle\Form\Transformer\NipTransformer;
+use AppBundle\Form\Transformer\NrbTransformer;
 use AppBundle\Form\Transformer\PhoneTransformer;
+use AppBundle\Form\Transformer\TradeTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -87,7 +88,7 @@ class UserType extends AbstractType
                 'label' => 'NIP',
                 'required' => false,
                 'attr' => [
-                    'maxlength' => 10,
+                    'maxlength' => 13,
                     'size' => 12,
                 ],
             ])
@@ -103,7 +104,7 @@ class UserType extends AbstractType
                 'label' => 'Nr konta bankowego',
                 'required' => false,
                 'attr' => [
-                    'maxlength' => 26,
+                    'maxlength' => 32,
                     'size' => 23,
                 ],
             ])
@@ -115,6 +116,8 @@ class UserType extends AbstractType
 
             $builder->get('phone1')->addModelTransformer(new PhoneTransformer());
             $builder->get('phone2')->addModelTransformer(new PhoneTransformer());
+            $builder->get('nip')->addModelTransformer(new NipTransformer());
+            $builder->get('bank_account_number')->addModelTransformer(new NrbTransformer());
 
     }
 
