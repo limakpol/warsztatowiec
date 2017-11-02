@@ -9,7 +9,10 @@
     text-align: center;
     vertical-align: middle;
 }
-a[class*='btn-'] {
+a[class*='btn-']:not(.btn-square) {
+    display: inline-block;
+}
+a[class='btn-square'] {
     display: inline;
 }
 [class*='btn-']{

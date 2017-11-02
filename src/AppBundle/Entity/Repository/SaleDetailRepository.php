@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Good;
+use AppBundle\Entity\Indexx;
+use AppBundle\Entity\Workshop;
 
 /**
  * SaleDetailRepository
@@ -10,4 +13,55 @@ namespace AppBundle\Entity\Repository;
  */
 class SaleDetailRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByIndexx(Workshop $workshop, Indexx $indexx)
+    {
+        $saleDetails = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:SaleDetail', 's')
+            ->innerJoin('AppBundle:SaleHeader', 'h', 'WITH', 's.sale_header_id = h.id')
+            ->where('s.removed_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('s.indexx = :indexx')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':indexx' => $indexx,
+            ])
+            ->orderBy('s.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $saleDetails;
+    }
+
+    public function getByGood(Workshop $workshop, Good $good)
+    {
+        $saleDetails = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:SaleDetail', 's')
+            ->innerJoin('AppBundle:SaleHeader', 'h', 'WITH', 's.sale_header_id = h.id')
+            ->innerJoin('AppBundle:Indexx', 'i', 'WITH', 's.indexx_id = i.id')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->where('s.removed_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('i.good = :good')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':good' => $good,
+            ])
+            ->orderBy('s.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $saleDetails;
+    }
 }

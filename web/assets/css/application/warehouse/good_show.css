@@ -1,0 +1,23 @@
+.show-box .info-table td:first-child {
+    width: 15%;
+}
+.show-box .info-table .show-labels label {
+    background-color: #e8e8e8;
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+.show-box .details-table tr.header:hover {
+    cursor: auto;
+}
+.show-box .details-table tr.header td.double-info a {
+    color: #333;
+    text-decoration: none;
+}
+.show-box .details-table tr.header td.double-info a:hover {
+    text-decoration: underline;
+}
+.show-box .details-table tr.header td.double-info div {
+    display: flex;
+    flex-direction: column;
+}
+.show

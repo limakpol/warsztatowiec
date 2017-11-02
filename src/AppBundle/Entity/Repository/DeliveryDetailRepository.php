@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Good;
+use AppBundle\Entity\Indexx;
 use AppBundle\Entity\Workshop;
 
 /**
@@ -11,8 +13,7 @@ use AppBundle\Entity\Workshop;
  */
 class DeliveryDetailRepository extends \Doctrine\ORM\EntityRepository
 {
-
-    public function getByIndexxId(Workshop $workshop, $indexxId)
+    public function getByIndexx(Workshop $workshop, Indexx $indexx)
     {
         $deliveryDetails = $this->_em->createQueryBuilder()
             ->select('d')
@@ -23,10 +24,38 @@ class DeliveryDetailRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('h.removed_at IS NULL')
             ->andWhere('h.deleted_at IS NULL')
             ->andWhere('h.workshop = :workshop')
-            ->andWhere('d.indexx_id = :indexxId')
+            ->andWhere('d.indexx = :indexx')
             ->setParameters([
                 ':workshop' => $workshop,
-                ':indexxId' => $indexxId,
+                ':indexx' => $indexx,
+            ])
+            ->orderBy('d.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $deliveryDetails;
+    }
+
+    public function getByGood(Workshop $workshop, Good $good)
+    {
+        $deliveryDetails = $this->_em->createQueryBuilder()
+            ->select('d')
+            ->from('AppBundle:DeliveryDetail', 'd')
+            ->innerJoin('AppBundle:DeliveryHeader', 'h', 'WITH', 'd.delivery_header_id = h.id')
+            ->innerJoin('AppBundle:Indexx', 'i', 'WITH', 'd.indexx_id = i.id')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->where('d.removed_at IS NULL')
+            ->andWhere('d.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('i.good = :good')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':good' => $good,
             ])
             ->orderBy('d.updated_at', 'DESC')
             ->getQuery()

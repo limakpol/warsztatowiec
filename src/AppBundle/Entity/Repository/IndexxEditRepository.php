@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Good;
+use AppBundle\Entity\Indexx;
+use AppBundle\Entity\Workshop;
 
 /**
  * IndexxEditRepository
@@ -10,4 +13,43 @@ namespace AppBundle\Entity\Repository;
  */
 class IndexxEditRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByIndexx(Workshop $workshop, Indexx $indexx)
+    {
+        $indexxEdits = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from('AppBundle:IndexxEdit', 'e')
+            ->andWhere('e.workshop = :workshop')
+            ->andWhere('e.indexx = :indexx')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':indexx' => $indexx,
+            ])
+            ->orderBy('e.created_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $indexxEdits;
+    }
+
+    public function getByGood(Workshop $workshop, Good $good)
+    {
+        $indexxEdits = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from('AppBundle:IndexxEdit', 'e')
+            ->innerJoin('AppBundle:Indexx', 'i', 'WITH', 'e.indexx_id = i.id')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->andWhere('e.workshop = :workshop')
+            ->andWhere('i.good = :good')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':good' => $good,
+            ])
+            ->orderBy('e.created_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $indexxEdits;
+    }
 }

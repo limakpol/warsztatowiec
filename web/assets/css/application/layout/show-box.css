@@ -51,6 +51,7 @@
 
 .show-box .details-table {
     border-collapse: collapse;
+    width: 100%;
 }
 .show-box .details-table th {
     font: bold 12px 'Ubuntu', sans-serif;

@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Good;
+use AppBundle\Entity\Indexx;
+use AppBundle\Entity\Workshop;
 
 /**
  * OrderIndexxRepository
@@ -10,4 +13,55 @@ namespace AppBundle\Entity\Repository;
  */
 class OrderIndexxRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByIndexx(Workshop $workshop, Indexx $indexx)
+    {
+        $orderIndexxes = $this->_em->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:OrderIndexx', 'i')
+            ->innerJoin('AppBundle:OrderHeader', 'h', 'WITH', 'i.order_header_id = h.id')
+            ->where('i.removed_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('i.indexx = :indexx')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':indexx' => $indexx,
+            ])
+            ->orderBy('i.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderIndexxes;
+    }
+
+    public function getByGood(Workshop $workshop, Good $good)
+    {
+        $orderIndexxes = $this->_em->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderIndexx', 'o')
+            ->innerJoin('AppBundle:OrderHeader', 'h', 'WITH', 'o.order_header_id = h.id')
+            ->innerJoin('AppBundle:Indexx', 'i', 'WITH', 'o.indexx_id = i.id')
+            ->innerJoin('AppBundle:Good', 'g', 'WITH', 'i.good_id = g.id')
+            ->where('o.removed_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('i.good = :good')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':good' => $good,
+            ])
+            ->orderBy('o.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderIndexxes;
+    }
 }

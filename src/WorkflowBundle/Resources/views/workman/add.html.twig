@@ -2,12 +2,10 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-    'assets/css/application/layout/main-form.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
-
 {% block main %}
 <div class="main-form">
     {{ form_start(form) }}

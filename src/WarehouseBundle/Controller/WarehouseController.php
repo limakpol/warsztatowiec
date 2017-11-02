@@ -82,6 +82,11 @@ class WarehouseController extends Controller
             return $this->redirectToRoute('warehouse_good_index');
         }
 
+        $deliveryDetails    = $showHelper->getDeliveryDetails($good);
+        $saleDetails        = $showHelper->getSaleDetails($good);
+        $orderIndexxes      = $showHelper->getOrderIndexxes($good);
+        $indexxEdits        = $showHelper->getIndexxEdits($good);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
         $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
@@ -91,6 +96,10 @@ class WarehouseController extends Controller
             'tab'           => 'warehouse',
             'navbar'        => 'Towar',
             'good'          => $good,
+            'deliveryDetails'   => $deliveryDetails,
+            'saleDetails'   => $saleDetails,
+            'orderIndexxes' => $orderIndexxes,
+            'indexxEdits'   => $indexxEdits,
         ]);
     }
 

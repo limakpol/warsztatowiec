@@ -320,10 +320,16 @@ class AjaxController extends Controller
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
+        $indexx = $em->getRepository('AppBundle:Indexx')->getOne($workshop, $request->get('indexxId'));
+
+        if(null === $indexx)
+        {
+            return new JsonResponse([]);
+        }
 
         $deliveryDetails = $em
             ->getRepository('AppBundle:DeliveryDetail')
-            ->getByIndexxId($workshop, $request->get('indexxId'));
+            ->getByIndexx($workshop, $indexx);
 
         $prices = [];
 
