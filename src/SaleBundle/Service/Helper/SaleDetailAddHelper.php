@@ -89,36 +89,6 @@ class SaleDetailAddHelper
         return true;
     }
 
-    public function setIndexxEdit(Indexx $indexx, $prevIndexxQty)
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $diffQty = round($indexx->getQuantity() - $prevIndexxQty, 2);
-
-        $indexxEdit = new IndexxEdit();
-        $indexxEdit->setCreatedAt(new \DateTime());
-        $indexxEdit->setCreatedBy($user);
-        $indexxEdit->setWorkshop($workshop);
-        $indexxEdit->setIndexx($indexx);
-        $indexxEdit->setBeforeQty($prevIndexxQty);
-        $indexxEdit->setAfterQty($indexx->getQuantity());
-        $indexxEdit->setChangeQty($diffQty);
-
-        $em->persist($indexxEdit);
-
-        return;
-    }
-
     public function getGoodSortableParameters()
     {
         $goodIndexHelper = $this->goodHelper;
@@ -201,7 +171,7 @@ class SaleDetailAddHelper
 
         if($diffIndexxQty != 0)
         {
-            $this->setIndexxEdit($indexx, $prevIndexxQty);
+            $this->indexxHelper->setIndexxEdit($indexx, $prevIndexxQty);
         }
 
         if($good === $prevGood)

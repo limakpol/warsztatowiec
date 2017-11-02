@@ -1,0 +1,39 @@
+{% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block main %}
+    {{ form_start(form, {'attr': {'class': 'main-form'}}) }}
+        <div class="form-part">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'autofocus': true}}) }}
+            {{ form_errors(form.name) }}
+
+            {{ form_label(form.producer) }}
+            {{ form_widget(form.producer) }}
+            {{ form_errors(form.producer) }}
+
+            {{ form_label(form.quantity) }}
+            {{ form_widget(form.quantity) }}
+            {{ form_errors(form.quantity) }}
+
+            {{ form_label(form.unit_price_net) }}
+            {{ form_widget(form.unit_price_net) }}
+            {{ form_errors(form.unit_price_net) }}
+
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

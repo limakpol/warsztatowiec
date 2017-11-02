@@ -51,6 +51,13 @@
     color: red;
     font: 12px 'Ubuntu', sans-serif;
 }
+.main-form input + ul + ul, .main-form select + ul + ul, .main-form textarea + ul + ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 1px 0 0 0;
+    color: red;
+    font: 12px 'Ubuntu', sans-serif;
+}
 .main-form button {
     margin-top: 12px;
 }
@@ -186,5 +193,8 @@
     }
     .main-form .last-prices .content a {
         font-size: 17px;
+    }
+    .main-form input + ul + ul, .main-form select + ul + ul, .main-form textarea + ul + ul {
+        font-size: 15px;
     }
 }

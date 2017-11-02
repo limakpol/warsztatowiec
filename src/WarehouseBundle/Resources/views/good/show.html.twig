@@ -112,7 +112,7 @@
                                 </div>
                             </td>
                             <td class="td-center">
-                                <a class="btn-edit btn-square" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <a class="btn-edit btn-square" href="{{ path('warehouse_indexx_edit', {indexxId: indexx.id}) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </a>
                             </td>
                             <td class="td-center">
@@ -227,7 +227,7 @@
     {% if indexxEdits|length > 0 %}
         <div class="show-box">
             <h1>
-                <label>Ręczne edycje</label>
+                <label>Edycje</label>
             </h1>
             <section>
                 <table class="details-table">

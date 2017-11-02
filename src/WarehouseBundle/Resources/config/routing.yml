@@ -1,3 +1,4 @@
+# GENERAL
 warehouse_good_index:
     path: /towary
     defaults: { _controller: WarehouseBundle:Warehouse:index }
@@ -18,6 +19,12 @@ warehouse_good_retrieve:
     path: /warehouse/good-retrieve
     defaults: { _controller: WarehouseBundle:Warehouse:retrieve }
 
+# INDEXX
+warehouse_indexx_edit:
+    path: /edytuj-indeks/{indexxId}
+    defaults: { _controller: WarehouseBundle:Indexx:edit }
+
+# PRODUCER
 warehouse_producer_index:
     path: /producenci-towarow
     defaults: { _controller: WarehouseBundle:Producer:index }
@@ -38,6 +45,7 @@ warehouse_producer_remove:
     path: /producer-remove
     defaults: { _controller: WarehouseBundle:Producer:remove }
 
+# AJAX
 warehouse_selectable_get_categories:
     path: /warehouse/selectable/get-categories
     defaults: { _controller: WarehouseBundle:Ajax:selectableGetCategories }

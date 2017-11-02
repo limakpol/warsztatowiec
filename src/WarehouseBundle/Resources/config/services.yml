@@ -10,6 +10,11 @@ services:
         tags:
             - { name: form.type }
 
+    form.type.indexx_edit:
+        class: WarehouseBundle\Form\IndexxEditType
+        tags:
+            - { name: form.type }
+
     form.type.category:
         class: WarehouseBundle\Form\CategoryType
         tags:
@@ -33,7 +38,7 @@ services:
 
     warehouse.helper.indexx:
             class: WarehouseBundle\Service\Helper\IndexxHelper
-            arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@service_container"]
+            arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@service_container", "@form.factory"]
 
     warehouse.helper.good_show:
         class: WarehouseBundle\Service\Helper\GoodShowHelper

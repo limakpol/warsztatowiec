@@ -55,7 +55,7 @@ class SaleDetailController extends Controller
         $saleDetail = new SaleDetail();
 
         $form = $this->createForm(SaleDetailAddType::class, $saleDetail, [
-            'validation_groups' => ['sale_detail_add', 'good', 'indexx']
+            'validation_groups' => ['sale_detail_add', 'good', 'indexx', 'indexx_edit']
         ]);
 
         $indexxError    = null;

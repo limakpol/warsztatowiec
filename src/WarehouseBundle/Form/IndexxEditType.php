@@ -14,19 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class IndexxType extends AbstractType
+class IndexxEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('good_id', HiddenType::class, [
-                'required' => true,
-                'empty_data' => null,
-            ])
-            ->add('good', GoodType::class, [
-                'required' => true,
-                'constraints' => [new Valid()],
-            ])
             ->add('name', TextType::class, [
                 'label' => 'Nazwa',
                 'required' => true,
@@ -47,8 +39,6 @@ class IndexxType extends AbstractType
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość w magazynie',
                 'required' => false,
-                'disabled' =>  in_array('indexx_edit', $options['validation_groups']) ? false : true,
-                'data' => '',
                 'attr' => [
                     'maxlength' => 10,
                     'class' => 'trade',
