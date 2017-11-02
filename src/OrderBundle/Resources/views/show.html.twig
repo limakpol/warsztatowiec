@@ -108,13 +108,93 @@
         <h1>
             <label>Klient</label>
         </h1>
-        <section>aaa</section>
+        <section>
+            <table class="info-table">
+                <tr>
+                    <td>Imię</td>
+                    <td>{{ orderHeader.customer.forename }}</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko</td>
+                    <td>{{ orderHeader.customer.surname }}</td>
+                </tr>
+                <tr>
+                    <td>Nazwa firmy</td>
+                    <td>
+                        {{ orderHeader.customer.companyName }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td>
+                        {% if orderHeader.customer.mobilePhone1 is null%}
+                            {{ orderHeader.customer.mobilePhone2|phone }}
+                        {% else %}
+                            {{ orderHeader.customer.mobilePhone1|phone }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>{{ orderHeader.customer.email }}</td>
+                </tr>
+                <tr class="footer">
+                    <td colspan="2">
+                        <a class="btn-info" href="{{ path('customer_show', {customerId: orderHeader.customerId}) }}">szczegóły
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a>
+                        <button class="btn-edit">zmień
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>
             <label>Pojazd</label>
         </h1>
-        <section>aaa</section>
+        <section>
+            <table class="info-table">
+                <tr>
+                    <td>Marka</td>
+                    <td>
+                        {{ orderHeader.vehicle.carModel.brand.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td>{{ orderHeader.vehicle.carModel.name }}</td>
+                </tr>
+                <tr>
+                    <td>Wersja</td>
+                    <td>{{ orderHeader.vehicle.version }}</td>
+                </tr>
+                <tr>
+                    <td>Typ silnika</td>
+                    <td>{{ orderHeader.vehicle.engineType }}</td>
+                </tr>
+                <tr>
+                    <td>Pojemność</td>
+                    <td>
+                        {% if orderHeader.vehicle.engineDisplacementL is not null %}
+                            {{ orderHeader.vehicle.engineDisplacementL }}l
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="footer">
+                    <td colspan="2">
+                        <a class="btn-info" href="{{ path('vehicle_show', {vehicleId: orderHeader.vehicleId}) }}">szczegóły
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a>
+                        <button class="btn-edit">zmień
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>

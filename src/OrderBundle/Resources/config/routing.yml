@@ -28,6 +28,9 @@ order_header_retrieve_symptoms:
     path: /order/retrieve-symptoms
     defaults: { _controller: OrderBundle:OrderHeader:retrieveSymptoms }
 
+order_header_change_priority:
+    path: /order/change-priority
+    defaults: { _controller: OrderBundle:OrderHeader:changePriority }
 
 # STATUS
 order_status_get_box:

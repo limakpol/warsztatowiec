@@ -9,12 +9,15 @@
 namespace OrderBundle\Controller;
 
 
+use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Doctrine\ORM\EntityManager;
 use OrderBundle\Service\Helper\OrderHeaderAddHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
 class OrderHeaderController extends Controller
@@ -115,6 +118,49 @@ class OrderHeaderController extends Controller
         $symptoms = $em->getRepository('AppBundle:OrderSymptom')->retrieveNames($workshop);
 
         return $symptoms;
+    }
+
+    public function changePriorityAction()
+    {
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $em->getRepository('AppBundle:OrderHeader')->getOne($workshop, $request->get('orderHeaderId'));
+
+        if(null === $orderHeader)
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nie ma takiego zlecenia'],
+            ]);
+        }
+
+        if($orderHeader->getPriority() == true)
+        {
+            $orderHeader->setPriority(false);
+        }
+        else
+        {
+            $orderHeader->setPriority(true);
+        }
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return new JsonResponse([
+            'error' => 0,
+        ]);
     }
 
 
