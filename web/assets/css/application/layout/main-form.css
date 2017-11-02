@@ -136,6 +136,23 @@
     margin: 0 0 0 6px;
     align-self: flex-start;
 }
+.main-form .last-prices label {
+    display: block;
+    margin: 12px 0 0 0;
+}
+.main-form .last-prices .content {
+    display: flex;
+    flex-direction: row;
+}
+.main-form .last-prices .content a {
+    display: block;
+    margin: 3px;
+    color: #666;
+    font: 15px "Times New Roman", Monospace;
+}
+.main-form .last-prices .content a:hover {
+    text-decoration: underline;
+}
 
 @media screen and (min-width: 1200px) {
     .main-form label {
@@ -166,5 +183,8 @@
     .main-form .div-form-labels .input-label-add {
         font-size: 15px;
         padding: 7px;
+    }
+    .main-form .last-prices .content a {
+        font-size: 17px;
     }
 }

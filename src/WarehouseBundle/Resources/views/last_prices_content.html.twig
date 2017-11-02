@@ -1,0 +1,8 @@
+{% if prices|length > 0 %}
+    <label>Ostatnie jednostkowe ceny zakupu (brutto)</label>
+    <div class="content">
+        {% for price in prices %}
+            <a href="{{ path('delivery_show', {deliveryHeaderId: price[2]}) }}" target="_blank">{{ price[0] }}zł/{{ price[1] }};</a>
+        {% endfor %}
+    </div>
+{% endif %}

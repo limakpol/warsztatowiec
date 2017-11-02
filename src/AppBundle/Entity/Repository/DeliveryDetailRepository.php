@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * DeliveryDetailRepository
@@ -10,4 +11,28 @@ namespace AppBundle\Entity\Repository;
  */
 class DeliveryDetailRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getByIndexxId(Workshop $workshop, $indexxId)
+    {
+        $deliveryDetails = $this->_em->createQueryBuilder()
+            ->select('d')
+            ->from('AppBundle:DeliveryDetail', 'd')
+            ->innerJoin('AppBundle:DeliveryHeader', 'h', 'WITH', 'd.delivery_header_id = h.id')
+            ->where('d.removed_at IS NULL')
+            ->andWhere('d.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->andWhere('h.workshop = :workshop')
+            ->andWhere('d.indexx_id = :indexxId')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':indexxId' => $indexxId,
+            ])
+            ->orderBy('d.updated_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $deliveryDetails;
+    }
 }

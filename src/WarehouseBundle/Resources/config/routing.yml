@@ -54,5 +54,8 @@ warehouse_selectable_add_car_model:
     path: /warehouse/selectable/add-car-model
     defaults: { _controller: WarehouseBundle:Ajax:selectableAddCarModel }
 
+warehouse_get_last_prices:
+    path: /warehouse/get-last-prices
+    defaults: { _controller: WarehouseBundle:Ajax:getLasPrices }
 
 

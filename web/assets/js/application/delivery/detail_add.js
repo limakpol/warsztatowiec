@@ -325,8 +325,11 @@ $(document).ready(function()
                 var measureShortcut = $('#delivery_detail_add_indexx_good_measure option:selected').data('shortcut');
 
                 $('label[for=delivery_detail_add_quantity]').text('Ilość [' + measureShortcut + ']');
+
+                getLastPrices(indexxId);
             }
         });
+
     });
 
     /* CATEGORIES */
@@ -664,4 +667,19 @@ function clearIndexxForm()
     $('#delivery_detail_add_indexx_unit_price_net').val('').change();
 
     return null;
+}
+
+function getLastPrices(indexxId)
+{
+    $.ajax({
+        type: "POST",
+        url: "/warehouse/get-last-prices",
+        data: {
+            indexxId: indexxId,
+        },
+        success: function(data)
+        {
+          $('.last-prices').html(data);
+        }
+    });
 }

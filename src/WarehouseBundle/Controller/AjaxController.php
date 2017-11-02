@@ -12,6 +12,7 @@ namespace WarehouseBundle\Controller;
 use AppBundle\Entity\CarBrand;
 use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\DeliveryDetail;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\User;
@@ -21,6 +22,7 @@ use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AjaxController extends Controller
 {
@@ -303,4 +305,44 @@ class AjaxController extends Controller
             'producerName' => $producer->getName(),
         ]);
     }
+
+    public function getLasPricesAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Request $request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+
+        $deliveryDetails = $em
+            ->getRepository('AppBundle:DeliveryDetail')
+            ->getByIndexxId($workshop, $request->get('indexxId'));
+
+        $prices = [];
+
+        /** @var DeliveryDetail $deliveryDetail */
+        foreach($deliveryDetails as $deliveryDetail)
+        {
+            if(($qty = $deliveryDetail->getQuantity()) > 0)
+            {
+                $price = round($deliveryDetail->getTotalDue()/$qty, 2);
+                $shortcut = $deliveryDetail->getIndexx()->getGood()->getMeasure()->getShortcut();
+                $headerId = $deliveryDetail->getDeliveryHeaderId();
+
+                $prices[] = [$price, $shortcut, $headerId ];
+            }
+        }
+
+        return $this->render('WarehouseBundle::last_prices_content.html.twig', [
+            'prices' => $prices,
+        ]);
+    }
+
 }
