@@ -186,7 +186,7 @@ class IndexxHelper
         $prevIndexxQty = $indexx->getQuantity();
 
         $form = $this->formFactory->create(IndexxEditType::class, $indexx, [
-            'validation_groups' => ['indexx', 'indexx_edit']
+            'validation_groups' => ['indexx', 'indexx_edit'],
         ]);
 
         return [$form, $prevIndexxQty];

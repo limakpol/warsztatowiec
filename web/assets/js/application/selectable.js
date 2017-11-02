@@ -6,7 +6,5 @@ $(document).ready(function()
         $('.selectable-modal main ul .addable div').show(400);
         $('.selectable-modal main ul .addable div').css("display", "flex");
         $('.selectable-modal main ul .addable div input:first-child').focus();
-
     });
-
 });

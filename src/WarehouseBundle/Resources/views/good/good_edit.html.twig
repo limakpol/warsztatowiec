@@ -1,0 +1,72 @@
+{% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block main %}
+    <input type="hidden" id="good_id" value="{{ goodId }}">
+    {{ form_start(form, {'attr': {'class': 'main-form'}}) }}
+        <div class="form-part">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'autofocus': true}}) }}
+            {{ form_errors(form.name) }}
+
+            {{ form_label(form.categories) }}
+            <div id="categories-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names">
+                        {% for category in categories %}
+                            <label>{{ category.name }}</label>
+                        {% endfor %}
+                    </div>
+                    <div class="ids">
+                        {% for category in categories %}
+                            <input type="hidden" name="good[categories][]" value="{{ category.id }}">
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
+
+            {{ form_label(form.car_models) }}
+            <div id="models-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names">
+                        {% for carModel in carModels %}
+                            <label>{{ carModel.brand.name }} {{ carModel.name }}</label>
+                        {% endfor %}
+                    </div>
+                    <div class="ids">
+                        {% for carModel in carModels %}
+                            <input type="hidden" name="good[car_models][]" value="{{ carModel.id }}">
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
+
+            {{ form_label(form.measure) }}
+            {{ form_widget(form.measure) }}
+            {{ form_errors(form.measure) }}
+
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
+
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'assets/js/application/selectable.js'
+        'assets/js/application/warehouse/good_edit.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

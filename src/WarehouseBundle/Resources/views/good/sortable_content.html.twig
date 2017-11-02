@@ -60,7 +60,7 @@
                                 <a href="{{ path('warehouse_good_show', {'goodId': good.id}) }}" class="btn-info">szczegóły
                                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                                 </a>
-                                <a class="btn-edit">edytuj
+                                <a class="btn-edit" href="{{ path('warehouse_good_edit', {goodId: good.id}) }}">edytuj
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </a>
                                 <button class="btn-remove" data-good-id="56">usuń

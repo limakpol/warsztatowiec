@@ -34,7 +34,7 @@ services:
 
     warehouse.helper.good:
         class: WarehouseBundle\Service\Helper\GoodHelper
-        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@service_container"]
+        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.default_entity_manager", "@service_container", "@form.factory"]
 
     warehouse.helper.indexx:
             class: WarehouseBundle\Service\Helper\IndexxHelper

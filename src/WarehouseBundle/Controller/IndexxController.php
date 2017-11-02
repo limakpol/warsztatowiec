@@ -40,7 +40,7 @@ class IndexxController extends Controller
         $headerMenu     = $yamlParser->getHeaderMenu();
         $mainMenu       = $yamlParser->getMainMenu();
 
-        return $this->render('WarehouseBundle:good:edit.html.twig', [
+        return $this->render('WarehouseBundle:good:indexx_edit.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'warehouse',

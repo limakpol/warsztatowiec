@@ -19,6 +19,11 @@ warehouse_good_retrieve:
     path: /warehouse/good-retrieve
     defaults: { _controller: WarehouseBundle:Warehouse:retrieve }
 
+# GOOD
+warehouse_good_edit:
+    path: /edytuj-towar/{goodId}
+    defaults: { _controller: WarehouseBundle:Good:edit }
+
 # INDEXX
 warehouse_indexx_edit:
     path: /edytuj-indeks/{indexxId}

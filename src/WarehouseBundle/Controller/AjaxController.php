@@ -163,7 +163,7 @@ class AjaxController extends Controller
             $brand = new CarBrand();
             $brand->setWorkshop($workshop);
             $brand->setName($brandName);
-            $brand->setCreatedBy(new \DateTime());
+            $brand->setCreatedAt(new \DateTime());
             $brand->setCreatedBy($user);
             $brand->setUpdatedBy($user);
         }

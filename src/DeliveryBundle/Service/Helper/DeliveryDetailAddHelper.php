@@ -190,8 +190,8 @@ class DeliveryDetailAddHelper
 
         $deliveryDetail = $this->setQuantity($deliveryDetail, $prevGood);
 
-        $good = $this->assignCarModels($good);
-        $good = $this->assignCategories($good);
+        $good = $this->goodHelper->assignCarModels($good);
+        $good = $this->goodHelper->assignCategories($good);
 
         $em->persist($good);
         $em->persist($indexx);
@@ -275,7 +275,6 @@ class DeliveryDetailAddHelper
 
         return $deliveryDetail;
     }
-
 
     /**
      * @param DeliveryDetail $deliveryDetail
@@ -368,61 +367,5 @@ class DeliveryDetailAddHelper
         $deliveryHeader->setTotalDue($totalDue);
 
         return $deliveryHeader;
-    }
-
-    public function assignCarModels(Good $good)
-    {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        $carModels = $good->getCarModels()->toArray();
-
-        $good->getCarModels()->clear();
-
-        foreach($carModels as $carModelId)
-        {
-            $carModel = $em->getRepository('AppBundle:CarModel')->getOne($workshop, $carModelId);
-
-            if(null !== $carModel)
-            {
-                $good->addCarModel($carModel);
-            }
-        }
-
-        return $good;
-    }
-
-    public function assignCategories(Good $good)
-    {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        $categories = $good->getCategories()->toArray();
-
-        $good->getCategories()->clear();
-
-        foreach($categories as $categoryId)
-        {
-            $category = $em->getRepository('AppBundle:Category')->getOne($workshop, $categoryId);
-
-            if(null !== $category)
-            {
-                $good->addCategory($category);
-            }
-        }
-
-        return $good;
     }
 }
