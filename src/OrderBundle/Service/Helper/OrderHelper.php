@@ -2,12 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: limakpol
- * Date: 10/24/17
- * Time: 5:13 PM
+ * Date: 11/2/17
+ * Time: 7:03 PM
  */
 
-namespace SaleBundle\Service\Helper;
-
+namespace OrderBundle\Service\Helper;
 
 
 use AppBundle\Entity\User;
@@ -16,8 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class SaleShowHelper
+class OrderHelper
 {
+
     private $requestStack;
     private $tokenStorage;
     private $entityManager;
@@ -29,7 +29,7 @@ class SaleShowHelper
         $this->entityManager    = $entityManager;
     }
 
-    public function getSale($saleHeaderId)
+    public function getOrderHeader($orderHeaderId)
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
@@ -37,8 +37,21 @@ class SaleShowHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $saleHeader = $this->entityManager->getRepository('AppBundle:SaleHeader')->getOne($workshop, $saleHeaderId);
+        $orderHeader = $this->entityManager->getRepository('AppBundle:OrderHeader')->getOne($workshop, $orderHeaderId);
 
-        return $saleHeader;
+        return $orderHeader;
+    }
+
+    public function getWorkstations($orderHeaderId)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $workstations = $this->entityManager->getRepository('AppBundle:Workstation')->retrieve($workshop);
+
+        return $workstations;
     }
 }

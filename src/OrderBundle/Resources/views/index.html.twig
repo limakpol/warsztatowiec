@@ -2,12 +2,12 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-    'assets/css/application/order/status.css'
+        'assets/css/application/order/status.css'
+        'assets/css/application/order/index.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
-
 {% block main %}
     <div id="div-order-sortable" class="div-sortable">
         <div class="header">

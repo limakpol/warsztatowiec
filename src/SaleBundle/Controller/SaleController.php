@@ -68,7 +68,7 @@ class SaleController extends Controller
 
     public function showAction($saleHeaderId)
     {
-        $saleShowHelper = $this->get('sale.helper.show');
+        $saleShowHelper = $this->get('sale.helper');
 
         /** @var SaleHeader $saleHeader */
         $saleHeader = $saleShowHelper->getSale($saleHeaderId);

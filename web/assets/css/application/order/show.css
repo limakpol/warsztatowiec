@@ -1,0 +1,16 @@
+.info-table td:first-child {
+    width: 20%;
+}
+#checkbox-priority {
+    width: 17px;
+    height: 17px;
+}
+div.form-set {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+#input-paid {
+    margin-right: 2px;
+}

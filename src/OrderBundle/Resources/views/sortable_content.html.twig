@@ -12,7 +12,11 @@
         <tr>
             <td class="td-center">{{ key+1}}.</td>
             <td class="td-center">
-                <a href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}">{{ orderHeader.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                <a href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}"
+                {% if orderHeader.priority == true %}
+                    class="priority"
+                {% endif %}
+                >{{ orderHeader.createdAt|date }}<i class="fa fa-info-circle" aria-hidden="true"></i></a>
             </td>
             <td class="td-left">
                 <a href="{{ path('customer_show', {customerId: orderHeader.customer.id}) }}">

@@ -21,8 +21,8 @@ services:
         class: SaleBundle\Service\Helper\SaleIndexHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
         
-  sale.helper.show:
-      class: SaleBundle\Service\Helper\SaleShowHelper
+  sale.helper:
+      class: SaleBundle\Service\Helper\SaleHelper
       arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]
 
   sale.helper.detail_add:

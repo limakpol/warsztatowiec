@@ -21,8 +21,8 @@ services:
       class: DeliveryBundle\Service\Helper\DeliveryIndexHelper
       arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
 
-  delivery.helper.show:
-      class: DeliveryBundle\Service\Helper\DeliveryShowHelper
+  delivery.helper:
+      class: DeliveryBundle\Service\Helper\DeliveryHelper
       arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]
 
   delivery.helper.detail_add:

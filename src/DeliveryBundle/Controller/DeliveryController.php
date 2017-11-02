@@ -76,7 +76,7 @@ class DeliveryController extends Controller
     
     public function showAction($deliveryHeaderId)
     {
-        $deliveryShowHelper = $this->get('delivery.helper.show');
+        $deliveryShowHelper = $this->get('delivery.helper');
 
         /** @var DeliveryHeader $deliveryHeader */
         $deliveryHeader = $deliveryShowHelper->getDelivery($deliveryHeaderId);

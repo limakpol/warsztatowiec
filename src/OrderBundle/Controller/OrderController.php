@@ -2,6 +2,7 @@
 
 namespace OrderBundle\Controller;
 
+use OrderBundle\Service\Helper\OrderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,6 +68,18 @@ class OrderController extends Controller
     }
     public function showAction($orderHeaderId)
     {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+        $orderHeader = $orderHelper->getOrderHeader($orderHeaderId);
+
+        if(null === $orderHeader)
+        {
+            return $this->redirectToRoute('order_index');
+        }
+
+        $workstations = $orderHelper->getWorkstations($orderHeaderId);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -76,11 +89,9 @@ class OrderController extends Controller
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'order',
-            'navbar'        => 'Przyjęcie towaru',
+            'navbar'        => 'Zlecenie serwisowe',
+            'orderHeader'   => $orderHeader,
+            'workstations'  => $workstations,
         ]);
     }
-
-
-    
-
 }

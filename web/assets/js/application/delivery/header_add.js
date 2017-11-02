@@ -100,6 +100,8 @@ $(document).ready(function(){
 
         $('#customer-form').slideDown();
 
+        $('#delivery_header_add_customer_forename').focus();
+
     });
 
     $(document).on('click', '#customer-empty', function()

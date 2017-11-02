@@ -101,6 +101,8 @@ $(document).ready(function(){
 
         $('#customer-form').slideDown();
 
+        $('#sale_header_add_customer_forename').focus();
+
     });
 
     $(document).on('click', '#customer-empty', function()

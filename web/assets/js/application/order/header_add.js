@@ -432,6 +432,9 @@ $(document).ready(function()
         var symptom = $('#symptoms-inputable .add input').val();
 
         insertSymptom(symptom);
+
+        $('#symptoms-inputable .add .selectable input').focus();
+
     });
 
     $(document).on('keypress', '#symptoms-inputable .add input', function(event)
