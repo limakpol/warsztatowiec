@@ -14,3 +14,17 @@ div.form-set {
 #input-paid {
     margin-right: 2px;
 }
+.date-or-no {
+    cursor: pointer;
+    border: 1px solid #aaa;
+    background-color: #f4f4f4;
+    color: #333;
+    font: 12px 'Ubuntu', sans-serif;
+}
+
+@media screen and (min-width: 1200px)
+{
+    .date-or-no {
+        font-size: 15px;
+    }
+}

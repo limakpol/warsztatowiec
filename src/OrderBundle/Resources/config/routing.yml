@@ -35,7 +35,14 @@ order_header_change_priority:
 order_header_change_workstation:
     path: /order/change-workstation
     defaults: { _controller: OrderBundle:OrderHeader:changeWorkstation }
-  
+
+order_header_set_completed:
+    path: /order/set-completed
+    defaults: { _controller: OrderBundle:OrderHeader:setCompleted }
+
+order_header_set_paid:
+    path: /order/set-paid
+    defaults: { _controller: OrderBundle:OrderHeader:setPaid }
 
 # STATUS
 order_status_get_box:

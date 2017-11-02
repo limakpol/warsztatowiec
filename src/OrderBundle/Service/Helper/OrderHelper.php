@@ -144,4 +144,55 @@ class OrderHelper
 
         return $workstation;
     }
+
+    public function setCompleted(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        if(null == $orderHeader->getCompletedAt())
+        {
+            $dateTime = new \DateTime();
+
+            $orderHeader->setCompletedAt($dateTime);
+        }
+        else
+        {
+            $dateTime = null;
+
+            $orderHeader->setCompletedAt($dateTime);
+        }
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return $dateTime;
+    }
+
+    public function setPaid(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        if(null == $orderHeader->getPaidAt())
+        {
+            $dateTime = new \DateTime();
+
+            $orderHeader->setPaidAt($dateTime);
+        }
+        else
+        {
+            $dateTime = null;
+
+            $orderHeader->setPaidAt($dateTime);
+        }
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return $dateTime;
+    }
+
 }

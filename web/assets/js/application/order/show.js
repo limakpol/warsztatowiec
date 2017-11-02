@@ -45,4 +45,38 @@ $(document).ready(function()
             }
         });
     });
+
+    $(document).on('dblclick', '#order-completed', function()
+    {
+        var orderHeaderId = $('.statuses').data('order-id');
+
+        $.ajax({
+            type: "POST",
+            url: "/order/set-completed",
+            data: {
+                orderHeaderId: orderHeaderId,
+            },
+            success: function(data)
+            {
+                $('#order-completed').html(data);
+            }
+        });
+    });
+
+    $(document).on('dblclick', '#order-paid', function()
+    {
+        var orderHeaderId = $('.statuses').data('order-id');
+
+        $.ajax({
+            type: "POST",
+            url: "/order/set-paid",
+            data: {
+                orderHeaderId: orderHeaderId,
+            },
+            success: function(data)
+            {
+                $('#order-paid').html(data);
+            }
+        });
+    });
 });

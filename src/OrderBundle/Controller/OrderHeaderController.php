@@ -169,4 +169,54 @@ class OrderHeaderController extends Controller
         return $orderHelper->getSuccessMessage();
     }
 
+    public function setCompletedAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        $dateTime = $orderHelper->setCompleted($orderHeader);
+
+        return $this->render('OrderBundle::date_or_no.html.twig', [
+            'dateTime' => $dateTime,
+        ]);
+    }
+
+    public function setPaidAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        $dateTime = $orderHelper->setPaid($orderHeader);
+
+        return $this->render('OrderBundle::date_or_no.html.twig', [
+            'dateTime' => $dateTime,
+        ]);
+    }
+
 }

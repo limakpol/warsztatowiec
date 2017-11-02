@@ -57,21 +57,25 @@
                 <tr>
                     <td>Zakończone</td>
                     <td>
-                        {% if orderHeader.completedAt is null %}
-                        NIE
-                        {% else %}
-                            {{ orderHeader.completedAt|date }}
-                        {% endif %}
+                        <button id="order-completed" class="date-or-no">
+                            {% if orderHeader.completedAt is null %}
+                            NIE
+                            {% else %}
+                                {{ orderHeader.completedAt|date }}
+                            {% endif %}
+                        </button>
                     </td>
                 </tr>
                 <tr>
                     <td>Zapłacone</td>
                     <td>
-                        {% if orderHeader.paidAt is null %}
-                            NIE
-                        {% else %}
-                            {{ orderHeader.paidAt|date }}
-                        {% endif %}
+                        <button id="order-paid" class="date-or-no">
+                            {% if orderHeader.paidAt is null %}
+                                NIE
+                            {% else %}
+                                {{ orderHeader.paidAt|date }}
+                            {% endif %}
+                        </button>
                     </td>
                 </tr>
                 <tr>
