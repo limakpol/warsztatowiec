@@ -26,4 +26,23 @@ $(document).ready(function()
             }
         });
     });
+
+    $(document).on('change', '#select-workstation', function()
+    {
+        var orderHeaderId = $('.statuses').data('order-id');
+        var workstationId = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/order/change-workstation",
+            data: {
+                orderHeaderId: orderHeaderId,
+                workstationId: workstationId,
+            },
+            success: function(data)
+            {
+
+            }
+        });
+    });
 });

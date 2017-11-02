@@ -28,6 +28,7 @@
                     <td>
                         <div class="main-form">
                             <select id="select-workstation">
+                                <option value=""></option>
                                 {% for workstation in workstations %}
                                     <option value="{{ workstation.id }}"
                                     {% if workstation.id == orderHeader.workstationId %}

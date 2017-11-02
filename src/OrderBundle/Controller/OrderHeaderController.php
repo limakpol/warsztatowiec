@@ -15,6 +15,7 @@ use AppBundle\Entity\Workshop;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Doctrine\ORM\EntityManager;
 use OrderBundle\Service\Helper\OrderHeaderAddHelper;
+use OrderBundle\Service\Helper\OrderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,46 +123,50 @@ class OrderHeaderController extends Controller
 
     public function changePriorityAction()
     {
-        /** @var Request $request */
-        $request = $this->get('request_stack')->getCurrentRequest();
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        /** @var User $user */
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
 
         /** @var OrderHeader $orderHeader */
-        $orderHeader = $em->getRepository('AppBundle:OrderHeader')->getOne($workshop, $request->get('orderHeaderId'));
+        $orderHeader = $orderHelper->getOrderHeader();
 
         if(null === $orderHeader)
         {
-            return new JsonResponse([
-                'error' => 1,
-                'messages' => ['Nie ma takiego zlecenia'],
-            ]);
+            return $orderHelper->getError('Nie ma takiego zlecenia');
         }
 
-        if($orderHeader->getPriority() == true)
-        {
-            $orderHeader->setPriority(false);
-        }
-        else
-        {
-            $orderHeader->setPriority(true);
-        }
+        $orderHelper->changePriority($orderHeader);
 
-        $em->persist($orderHeader);
-
-        $em->flush();
-
-        return new JsonResponse([
-            'error' => 0,
-        ]);
+        return $orderHelper->getSuccessMessage();
     }
 
+    public function changeWorkstationAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        $workstation = $orderHelper->getWorkstation();
+
+        $orderHelper->changeWorkstation($orderHeader, $workstation);
+
+        return $orderHelper->getSuccessMessage();
+    }
 
 }

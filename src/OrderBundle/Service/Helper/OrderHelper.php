@@ -9,9 +9,14 @@
 namespace OrderBundle\Service\Helper;
 
 
+use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
+use AppBundle\Entity\Workstation;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -29,13 +34,21 @@ class OrderHelper
         $this->entityManager    = $entityManager;
     }
 
-    public function getOrderHeader($orderHeaderId)
+    public function getOrderHeader($orderHeaderId = null)
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
 
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
+
+        if(null === $orderHeaderId)
+        {
+            $orderHeaderId = $request->get('orderHeaderId');
+        }
 
         $orderHeader = $this->entityManager->getRepository('AppBundle:OrderHeader')->getOne($workshop, $orderHeaderId);
 
@@ -53,5 +66,82 @@ class OrderHelper
         $workstations = $this->entityManager->getRepository('AppBundle:Workstation')->retrieve($workshop);
 
         return $workstations;
+    }
+
+    public function getError($msg)
+    {
+        return new JsonResponse([
+            'error' => 1,
+            'messages' => [$msg],
+        ]);
+    }
+
+    public function getSuccessMessage()
+    {
+        return new JsonResponse([
+            'error' => 0,
+        ]);
+    }
+
+    public function isRequestValid()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        return $request->isXmlHttpRequest() && $request->isMethod('POST') && $request->get('orderHeaderId');
+    }
+
+    public function changePriority(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        if($orderHeader->getPriority() == true)
+        {
+            $orderHeader->setPriority(false);
+        }
+        else
+        {
+            $orderHeader->setPriority(true);
+        }
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return true;
+    }
+
+    public function changeWorkstation(OrderHeader $orderHeader, $workstation)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $orderHeader->setWorkstation($workstation);
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return true;
+    }
+
+    public function getWorkstation()
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $workstation = $em->getRepository('AppBundle:Workstation')->getOne($workshop, $request->get('workstationId'));
+
+        return $workstation;
     }
 }

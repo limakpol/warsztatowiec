@@ -31,6 +31,11 @@ order_header_retrieve_symptoms:
 order_header_change_priority:
     path: /order/change-priority
     defaults: { _controller: OrderBundle:OrderHeader:changePriority }
+    
+order_header_change_workstation:
+    path: /order/change-workstation
+    defaults: { _controller: OrderBundle:OrderHeader:changeWorkstation }
+  
 
 # STATUS
 order_status_get_box:
