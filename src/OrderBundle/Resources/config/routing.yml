@@ -66,3 +66,12 @@ order_symptom_remove:
     path: /order/symptom-remove
     defaults: { _controller: OrderBundle:OrderHeader:removeSymptom }
 
+# FAULT
+order_fault_add:
+    path: /order/fault-add
+    defaults: { _controller: OrderBundle:OrderHeader:addFault }
+
+order_fault_remove:
+    path: /order/fault-remove
+    defaults: { _controller: OrderBundle:OrderHeader:removeFault }
+

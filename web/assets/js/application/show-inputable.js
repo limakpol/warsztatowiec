@@ -46,7 +46,7 @@ $(document).ready(function () {
                     {
                         inputable.find('tr.add').before(data);
                     }
-                    inputable.find('.add input').val('');
+                    inputable.find('.add input').val('').focus();
 
                     inputable.find('.add .select').slideUp();
                 }
@@ -84,7 +84,7 @@ $(document).ready(function () {
                             inputable.find('tr.add').before(data);
                         }
 
-                        inputable.find('.add input').val('');
+                        inputable.find('.add input').val('').focus();
 
                         inputable.find('.add .select').slideUp();
                     }

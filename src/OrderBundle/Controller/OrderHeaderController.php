@@ -9,6 +9,7 @@
 namespace OrderBundle\Controller;
 
 
+use AppBundle\Entity\OrderFault;
 use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
@@ -293,6 +294,57 @@ class OrderHeaderController extends Controller
         }
 
         return $orderHelper->removeSymptom($orderHeader);
+    }
+
+    public function addFaultAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        if(($orderFault = $orderHelper->addFault($orderHeader)) instanceof OrderFault)
+        {
+            return $this->render('OrderBundle::inputable_fault.html.twig', [
+                'orderFault' => $orderFault,
+            ]);
+        }
+
+        return $orderFault;
+    }
+
+    public function removeFaultAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        return $orderHelper->removeFault($orderHeader);
     }
 
 }

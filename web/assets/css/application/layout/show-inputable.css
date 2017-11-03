@@ -33,7 +33,7 @@
 }
 .show-inputable tr.add .select {
     background-color: #eee;
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     display: none;
 }

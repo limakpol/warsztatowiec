@@ -9,6 +9,7 @@
 namespace OrderBundle\Service\Helper;
 
 
+use AppBundle\Entity\OrderFault;
 use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
@@ -314,5 +315,99 @@ class OrderHelper
 
         return $this->getSuccessMessage();
     }
+
+    public function retrieveFaults()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $faults = $em->getRepository('AppBundle:OrderFault')->retrieve($workshop);
+
+        return $faults;
+    }
+
+    public function addFault(OrderHeader $orderHeader)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $faultName = $request->get('name');
+
+        if(!$faultName)
+        {
+            return $this->getError('Nic nie wpisano');
+        }
+
+        /** @var OrderFault $orderFault */
+        foreach($orderHeader->getFaults() as $orderFault)
+        {
+            if($orderFault->getName() == $faultName)
+            {
+                if($orderFault->getRemovedAt() === null && $orderFault->getDeletedAt() === null)
+                {
+                    return $this->getSuccessMessage(['present']);
+                }
+
+                $orderFault->setRemovedAt(null);
+                $orderFault->setDeletedAt(null);
+
+                $em->persist($orderFault);
+
+                $em->flush();
+
+                return $orderFault;
+            }
+        }
+
+        $orderFault = new OrderFault();
+        $orderFault->setOrderHeader($orderHeader);
+        $orderFault->setCreatedAt(new \DateTime());
+        $orderFault->setCreatedBy($user);
+        $orderFault->setUpdatedBy($user);
+        $orderFault->setName($faultName);
+
+        $em->persist($orderFault);
+
+        $em->flush();
+
+        return $orderFault;
+    }
+
+    public function removeFault(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var OrderFault $orderFault */
+        foreach($orderHeader->getFaults() as $orderFault)
+        {
+            if($orderFault->getId() == $request->get('id'))
+            {
+                $orderFault->setRemovedAt(new \DateTime());
+
+                $em->persist($orderFault);
+
+                $em->flush();
+            }
+        }
+
+        return $this->getSuccessMessage();
+    }
+
 
 }

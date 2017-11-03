@@ -85,6 +85,7 @@ class OrderController extends Controller
         $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         $symptoms = $orderHelper->retrieveSymptoms();
+        $faults = $orderHelper->retrieveFaults();
 
         return $this->render('OrderBundle::show.html.twig', [
             'orderHeaderId' => $orderHeaderId,
@@ -95,6 +96,7 @@ class OrderController extends Controller
             'orderHeader'   => $orderHeader,
             'workstations'  => $workstations,
             'symptoms'      => $symptoms,
+            'faults'        => $faults,
         ]);
     }
 }
