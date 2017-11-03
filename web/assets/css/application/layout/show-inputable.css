@@ -1,0 +1,67 @@
+.show-inputable {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: none;
+    border-collapse: collapse;
+}
+.show-inputable tr.present td {
+    padding: 5px;
+    font: 12px 'Courier New', Monospace;
+    color: #333;
+}
+.show-inputable td:last-child {
+    width: 70px;
+    text-align: center;
+}
+.show-inputable tr.present:hover {
+    background-color: #eee;
+}
+.show-inputable tr.add input {
+    width: 100%;
+    font: 12px 'Arial', sans-serif;
+    padding: 3px;
+    color: #333;
+}
+.show-inputable tr.add td {
+    padding: 5px;
+}
+.show-inputable tr.add td:last-child {
+    vertical-align: top;
+}
+.show-inputable tr.add {
+    background-color: #eee;
+}
+.show-inputable tr.add .select {
+    background-color: #eee;
+    height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+.show-inputable tr.add .select div {
+    padding: 5px;
+    font: 12px 'Courier New', sans-serif;
+    color: #333;
+}
+.show-inputable tr.add .select div:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1200px) {
+    .show-inputable tr.present td {
+        padding: 7px;
+        font-size: 15px;
+    }
+    .show-inputable tr.add input {
+        font-size: 15px;
+        padding: 4px;
+    }
+    .show-inputable tr.add td {
+        padding: 7px;
+    }
+
+    .show-inputable tr.add .select div {
+        padding: 7px;
+        font-size: 15px;
+    }
+}

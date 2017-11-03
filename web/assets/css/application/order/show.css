@@ -5,6 +5,9 @@
     width: 18px;
     height: 18px;
 }
+#checkbox-priority:hover {
+    cursor: pointer;
+}
 div.form-set {
     display: flex;
     flex-direction: row;

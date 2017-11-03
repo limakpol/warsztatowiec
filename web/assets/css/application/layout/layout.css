@@ -11,6 +11,9 @@ a, div, img {
 a {
     text-decoration: none;
 }
+div, span, label, input {
+    box-sizing: border-box;
+}
 #wrapper {
     margin: 0 auto 0 auto;
     display: flex;

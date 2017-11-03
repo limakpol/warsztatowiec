@@ -211,7 +211,37 @@
         <h1>
             <label>Objawy zgłaszane przez klienta</label>
         </h1>
-        <section>aaa</section>
+        <section>
+            <table class="show-inputable" data-add-path="{{ path('order_symptom_add') }}" data-remove-path="{{ path('order_symptom_remove') }}">
+                {% for orderSymptom in orderHeader.symptoms %}
+                    {% if orderSymptom.removedAt is null and orderSymptom.deletedAt is null %}
+                        <tr class="present">
+                            <td>{{ orderSymptom.name }}</td>
+                            <td>
+                                <button class="btn-square btn-remove" data-id="{{ orderSymptom.id }}">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr class="add">
+                    <td>
+                        <input type="text">
+                        <div class="select">
+                            {% for symptom in symptoms %}
+                                <div>{{ symptom.name }}</div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn-square btn-add">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>
@@ -232,6 +262,7 @@
         'assets/js/application/show.js'
         'assets/js/application/order/show.js'
         'assets/js/application/order/status.js'
+        'assets/js/application/show-inputable.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

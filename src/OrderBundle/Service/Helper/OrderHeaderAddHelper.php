@@ -217,21 +217,6 @@ class OrderHeaderAddHelper
         return $sortableParameters;
     }
 
-    public function retrieveSymptoms()
-    {
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $symptoms = $em->getRepository('AppBundle:OrderSymptom')->retrieve($workshop);
-
-        return $symptoms;
-    }
 
     public function setOrderNumbers(OrderHeader $orderHeader)
     {

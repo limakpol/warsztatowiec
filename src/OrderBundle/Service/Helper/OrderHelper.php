@@ -10,6 +10,7 @@ namespace OrderBundle\Service\Helper;
 
 
 use AppBundle\Entity\OrderHeader;
+use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Entity\Workstation;
@@ -218,6 +219,100 @@ class OrderHelper
         $em->flush();
 
         return $amountPaid;
+    }
+
+
+    public function retrieveSymptoms()
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $symptoms = $em->getRepository('AppBundle:OrderSymptom')->retrieve($workshop);
+
+        return $symptoms;
+    }
+
+    public function addSymptom(OrderHeader $orderHeader)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        $symptomName = $request->get('name');
+
+        if(!$symptomName)
+        {
+            return $this->getError('Nic nie wpisano');
+        }
+
+        /** @var OrderSymptom $orderSymptom */
+        foreach($orderHeader->getSymptoms() as $orderSymptom)
+        {
+            if($orderSymptom->getName() == $symptomName)
+            {
+                if($orderSymptom->getRemovedAt() === null && $orderSymptom->getDeletedAt() === null)
+                {
+                    return $this->getSuccessMessage(['present']);
+                }
+
+                $orderSymptom->setRemovedAt(null);
+                $orderSymptom->setDeletedAt(null);
+
+                $em->persist($orderSymptom);
+
+                $em->flush();
+
+                return $orderSymptom;
+            }
+        }
+
+        $orderSymptom = new OrderSymptom();
+        $orderSymptom->setOrderHeader($orderHeader);
+        $orderSymptom->setCreatedAt(new \DateTime());
+        $orderSymptom->setCreatedBy($user);
+        $orderSymptom->setUpdatedBy($user);
+        $orderSymptom->setName($symptomName);
+
+        $em->persist($orderSymptom);
+
+        $em->flush();
+
+        return $orderSymptom;
+    }
+
+    public function removeSymptom(OrderHeader $orderHeader)
+    {
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var OrderSymptom $orderSymptom */
+        foreach($orderHeader->getSymptoms() as $orderSymptom)
+        {
+            if($orderSymptom->getId() == $request->get('id'))
+            {
+                $orderSymptom->setRemovedAt(new \DateTime());
+
+                $em->persist($orderSymptom);
+
+                $em->flush();
+            }
+        }
+
+        return $this->getSuccessMessage();
     }
 
 }

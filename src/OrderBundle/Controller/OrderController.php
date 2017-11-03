@@ -82,8 +82,9 @@ class OrderController extends Controller
         $workstations = $orderHelper->getWorkstations($orderHeaderId);
 
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        $symptoms = $orderHelper->retrieveSymptoms();
 
         return $this->render('OrderBundle::show.html.twig', [
             'orderHeaderId' => $orderHeaderId,
@@ -93,6 +94,7 @@ class OrderController extends Controller
             'navbar'        => 'Zlecenie serwisowe',
             'orderHeader'   => $orderHeader,
             'workstations'  => $workstations,
+            'symptoms'      => $symptoms,
         ]);
     }
 }

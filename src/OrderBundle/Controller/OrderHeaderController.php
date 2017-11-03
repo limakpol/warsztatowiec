@@ -10,6 +10,7 @@ namespace OrderBundle\Controller;
 
 
 use AppBundle\Entity\OrderHeader;
+use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
@@ -30,6 +31,7 @@ class OrderHeaderController extends Controller
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
 
         $orderHeaderAddHelper   = $this->get('order.helper.header_add');
+        $orderHelper = $this->get('order.helper');
 
         $form = $orderHeaderAddHelper->createForm();
 
@@ -51,7 +53,7 @@ class OrderHeaderController extends Controller
         $customers = $customerIndexHelper->retrieve($customerSortableParameters);
         $groupps = $customerIndexHelper->retrieveGroupps();
         $vehicles = $vehicleIndexHelper->retrieve($vehicleSortableParameters);
-        $symptoms = $orderHeaderAddHelper->retrieveSymptoms();
+        $symptoms = $orderHelper->retrieveSymptoms();
 
         return $this->render('OrderBundle:header:add.html.twig', [
             'headerMenu'    => $headerMenu,
@@ -240,6 +242,57 @@ class OrderHeaderController extends Controller
         $amountPaid = $orderHelper->pay($orderHeader);
 
         return $orderHelper->getSuccessMessage([$amountPaid]);
+    }
+
+    public function addSymptomAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        if(($orderSymptom = $orderHelper->addSymptom($orderHeader)) instanceof OrderSymptom)
+        {
+            return $this->render('OrderBundle::inputable_symptom.html.twig', [
+                'orderSymptom' => $orderSymptom,
+            ]);
+        }
+
+        return $orderSymptom;
+    }
+
+    public function removeSymptomAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        return $orderHelper->removeSymptom($orderHeader);
     }
 
 }

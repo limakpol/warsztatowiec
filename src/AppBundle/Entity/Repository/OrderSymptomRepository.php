@@ -11,6 +11,52 @@ use AppBundle\Entity\Workshop;
  */
 class OrderSymptomRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $orderSymptom = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:OrderSymptom', 's')
+            ->innerJoin('AppBundle:OrderHeader', 'o', 'WITH', 's.order_header_id = o.id')
+            ->where('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('s.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id' => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+        return $orderSymptom;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $orderSymptom = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:OrderSymptom', 's')
+            ->innerJoin('AppBundle:OrderHeader', 'o', 'WITH', 's.order_header_id = o.id')
+            ->where('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('s.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name' => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $orderSymptom;
+    }
+
     public function retrieveNames(Workshop $workshop)
     {
         $symptomNames = $this->_em->createQueryBuilder()
@@ -34,7 +80,7 @@ class OrderSymptomRepository extends \Doctrine\ORM\EntityRepository
     public function retrieve(Workshop $workshop)
     {
         $symptoms = $this->_em->createQueryBuilder()
-            ->select('s.name')
+            ->select('s')
             ->from('AppBundle:OrderSymptom', 's')
             ->leftJoin('AppBundle:OrderHeader', 'h', 'WITH', 's.order_header_id = h.id')
             ->where('h.workshop = :workshop')

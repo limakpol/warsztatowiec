@@ -57,3 +57,12 @@ order_status_assign:
     path: /order/status-assign
     defaults: { _controller: OrderBundle:Status:assign }
 
+# SYMPTOM
+order_symptom_add:
+    path: /order/symptom-add
+    defaults: { _controller: OrderBundle:OrderHeader:addSymptom }
+
+order_symptom_remove:
+    path: /order/symptom-remove
+    defaults: { _controller: OrderBundle:OrderHeader:removeSymptom }
+

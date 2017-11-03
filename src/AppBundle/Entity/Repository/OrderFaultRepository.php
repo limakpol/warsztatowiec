@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Workshop;
 
 /**
  * OrderFaultRepository
@@ -10,4 +11,90 @@ namespace AppBundle\Entity\Repository;
  */
 class OrderFaultRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOne(Workshop $workshop, $id)
+    {
+        $orderFault = $this->_em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:OrderFault', 'f')
+            ->innerJoin('AppBundle:OrderHeader', 'o', 'WITH', 'f.order_header_id = o.id')
+            ->where('f.deleted_at IS NULL')
+            ->andWhere('f.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('f.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id' => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $orderFault;
+    }
+
+    public function getOneByName(Workshop $workshop, $name)
+    {
+        $orderFault = $this->_em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:OrderFault', 'f')
+            ->innerJoin('AppBundle:OrderHeader', 'o', 'WITH', 'f.order_header_id = o.id')
+            ->where('f.deleted_at IS NULL')
+            ->andWhere('f.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('f.name = :name')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':name' => $name,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $orderFault;
+    }
+
+    public function retrieveNames(Workshop $workshop)
+    {
+        $faultNames = $this->_em->createQueryBuilder()
+            ->select('f.name')
+            ->from('AppBundle:OrderFault', 'f')
+            ->leftJoin('AppBundle:OrderHeader', 'h', 'WITH', 'f.order_header_id = h.id')
+            ->where('h.workshop = :workshop')
+            ->andWhere('f.deleted_at IS NULL')
+            ->andWhere('f.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->setParameter(':workshop', $workshop)
+            ->orderBy('f.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        return $faultNames;
+    }
+
+    public function retrieve(Workshop $workshop)
+    {
+        $faults = $this->_em->createQueryBuilder()
+            ->select('f')
+            ->from('AppBundle:OrderFault', 'f')
+            ->leftJoin('AppBundle:OrderHeader', 'h', 'WITH', 'f.order_header_id = h.id')
+            ->where('h.workshop = :workshop')
+            ->andWhere('f.deleted_at IS NULL')
+            ->andWhere('f.removed_at IS NULL')
+            ->andWhere('h.removed_at IS NULL')
+            ->andWhere('h.deleted_at IS NULL')
+            ->setParameter(':workshop', $workshop)
+            ->orderBy('f.name', 'ASC')
+            ->distinct()
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $faults;
+    }
 }
