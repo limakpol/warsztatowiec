@@ -22,4 +22,4 @@ services:
             
     order.helper:
         class: OrderBundle\Service\Helper\OrderHelper
-        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager"]
+        arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@app.trade"]

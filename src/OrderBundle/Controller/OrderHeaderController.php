@@ -219,4 +219,27 @@ class OrderHeaderController extends Controller
         ]);
     }
 
+    public function payAction()
+    {
+        /** @var OrderHelper $orderHelper */
+        $orderHelper = $this->get('order.helper');
+
+        if(!$orderHelper->isRequestValid())
+        {
+            return $orderHelper->getError('Nieprawidłowe żądanie');
+        }
+
+        /** @var OrderHeader $orderHeader */
+        $orderHeader = $orderHelper->getOrderHeader();
+
+        if(null === $orderHeader)
+        {
+            return $orderHelper->getError('Nie ma takiego zlecenia');
+        }
+
+        $amountPaid = $orderHelper->pay($orderHeader);
+
+        return $orderHelper->getSuccessMessage([$amountPaid]);
+    }
+
 }

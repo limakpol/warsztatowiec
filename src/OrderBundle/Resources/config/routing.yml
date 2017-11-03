@@ -44,6 +44,10 @@ order_header_set_paid:
     path: /order/set-paid
     defaults: { _controller: OrderBundle:OrderHeader:setPaid }
 
+order_header_pay:
+    path: /order/pay
+    defaults: { _controller: OrderBundle:OrderHeader:pay }
+
 # STATUS
 order_status_get_box:
     path: /order/status/get-box

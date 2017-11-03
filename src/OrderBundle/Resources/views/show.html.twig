@@ -82,7 +82,13 @@
                     <td>Kwota wpłacona przez klienta</td>
                     <td>
                         <div class="main-form form-set">
-                            <input type="text" maxlength="10" size="6" id="input-paid">zł
+                            <input type="hidden" id="paid-amount" value="{{ orderHeader.amountPaid }}">
+                            <input type="text" maxlength="10" size="6" class="input-disabled" id="input-paid" value="{{ orderHeader.amountPaid }}">zł
+                            <div id="paid-buttons">
+                                <button class="btn-save btn-square" data-add-i="floppy-o"><i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div id="paid-errors"></div>
                         </div>
                     </td>
                 </tr>

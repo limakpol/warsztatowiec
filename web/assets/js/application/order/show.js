@@ -79,4 +79,52 @@ $(document).ready(function()
             }
         });
     });
+
+    $(document).on('dblclick', '#input-paid', function()
+    {
+        var input = $(this);
+
+        if(input.hasClass('input-disabled'))
+        {
+            input.removeClass('input-disabled');
+            $('#paid-buttons').show('slow');
+        }
+        else
+        {
+            input.addClass('input-disabled');
+            $('#paid-buttons').hide('slow');
+        }
+    });
+
+    $(document).on('click', '#paid-buttons button', function()
+    {
+        var orderHeaderId = $('.statuses').data('order-id');
+        var amountPaid = $('#input-paid').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/order/pay",
+            data: {
+                amountPaid: amountPaid,
+                orderHeaderId: orderHeaderId,
+            },
+            success: function(data) {
+                console.log(data['data'][0]);
+                $('#input-paid').addClass('input-disabled');
+                $('#paid-buttons').hide('slow');
+
+                if(!data['error'])
+                {
+                    $('#paid-amount').val(data['data'][0]);
+                    $('#input-paid').val(data['data'][0]);
+                }
+                else
+                {
+                    var paidAmount = $('#paid-amount').val();
+                    $('#input-paid').val(paidAmount);
+                }
+            }
+        });
+
+    });
 });

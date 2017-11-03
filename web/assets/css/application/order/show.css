@@ -13,6 +13,8 @@ div.form-set {
 }
 #input-paid {
     margin-right: 2px;
+    text-align: center;
+    background-color: #fff;
 }
 .date-or-no {
     cursor: pointer;
@@ -21,10 +23,27 @@ div.form-set {
     color: #333;
     font: 12px 'Ubuntu', sans-serif;
 }
-
+#input-paid.input-disabled {
+    border: 1px solid #aaa;
+    background-color: #ddd;
+    cursor: pointer;
+}
+#paid-buttons {
+    display: none;
+}
+#paid-buttons button {
+    margin: 0 3px 0 3px;
+}
+#paid-errors {
+    color: red;
+    font: 12px 'Ubuntu', sans-serif;
+}
 @media screen and (min-width: 1200px)
 {
     .date-or-no {
+        font-size: 15px;
+    }
+    #paid-errors {
         font-size: 15px;
     }
 }

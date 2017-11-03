@@ -13,6 +13,7 @@ use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Entity\Workstation;
+use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,12 +27,14 @@ class OrderHelper
     private $requestStack;
     private $tokenStorage;
     private $entityManager;
+    private $trade;
 
-    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, Trade $trade)
     {
         $this->requestStack     = $requestStack;
         $this->tokenStorage     = $tokenStorage;
         $this->entityManager    = $entityManager;
+        $this->trade            = $trade;
     }
 
     public function getOrderHeader($orderHeaderId = null)
@@ -76,10 +79,11 @@ class OrderHelper
         ]);
     }
 
-    public function getSuccessMessage()
+    public function getSuccessMessage($data = [])
     {
         return new JsonResponse([
             'error' => 0,
+            'data' => $data,
         ]);
     }
 
@@ -193,6 +197,27 @@ class OrderHelper
         $em->flush();
 
         return $dateTime;
+    }
+
+    public function pay(OrderHeader $orderHeader)
+    {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $amountPaid = $request->get('amountPaid');
+
+        $amountPaid = $this->trade->normalize($amountPaid);
+
+        $orderHeader->setAmountPaid($amountPaid);
+
+        $em->persist($orderHeader);
+
+        $em->flush();
+
+        return $amountPaid;
     }
 
 }
