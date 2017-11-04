@@ -185,7 +185,7 @@ class DeliveryDetailAddHelper
 
         if($deliveryHeader->getAutocomplete())
         {
-            $deliveryHeader = $this->evaluateHeader($deliveryHeader);
+            $deliveryHeader = $this->trade->evaluateHeader($deliveryHeader, $deliveryHeader->getDeliveryDetails());
         }
 
         $deliveryDetail = $this->setQuantity($deliveryDetail, $prevGood);
@@ -337,35 +337,4 @@ class DeliveryDetailAddHelper
         return $deliveryDetail;
     }
 
-    public function evaluateHeader(DeliveryHeader $deliveryHeader)
-    {
-
-        $totalNetBeforeDiscount = 0;
-        $discount = 0;
-        $totalNet = 0;
-        $vat = 0;
-        $totalDue = 0;
-
-
-        /** @var DeliveryDetail $deliveryDetail */
-        foreach($deliveryHeader->getDeliveryDetails() as $deliveryDetail)
-        {
-            if(null === $deliveryDetail->getDeletedAt() && null === $deliveryDetail->getRemovedAt())
-            {
-                $totalNetBeforeDiscount +=  $deliveryDetail->getTotalNetBeforeDiscount();
-                $discount               +=  $deliveryDetail->getDiscount();
-                $totalNet               +=  $deliveryDetail->getTotalNet();
-                $vat                    +=  $deliveryDetail->getVat();
-                $totalDue               +=  $deliveryDetail->getTotalDue();
-            }
-        }
-
-        $deliveryHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
-        $deliveryHeader->setDiscount($discount);
-        $deliveryHeader->setTotalNet($totalNet);
-        $deliveryHeader->setVat($vat);
-        $deliveryHeader->setTotalDue($totalDue);
-
-        return $deliveryHeader;
-    }
 }

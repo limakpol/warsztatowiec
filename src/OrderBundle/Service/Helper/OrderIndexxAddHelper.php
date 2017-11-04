@@ -77,7 +77,7 @@ class OrderIndexxAddHelper
         $orderIndexx = $this->saleDetailAddHelper->setIndexxUnitPriceNet($orderIndexx);
         $orderIndexx = $this->saleDetailAddHelper->setQuantity($orderIndexx, $prevGood, $prevIndexxQty);
 
-        $orderHeader = $this->saleDetailAddHelper->evaluateHeader($orderHeader, $orderHeader->getOrderIndexxes());
+        $orderHeader = $this->trade->evaluateOrderHeader($orderHeader);
 
         $good = $this->goodHelper->assignCategories($good);
         $good = $this->goodHelper->assignCarModels($good);

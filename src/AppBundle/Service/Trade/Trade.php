@@ -8,7 +8,12 @@
 
 namespace AppBundle\Service\Trade;
 
+use AppBundle\Entity\OrderAction;
+use AppBundle\Entity\OrderHeader;
+use AppBundle\Entity\OrderIndexx;
+use AppBundle\Entity\OrderService;
 use AppBundle\Service\Trade\TradeHeaderInterface;
+use Doctrine\Common\Collections\Collection;
 
 class Trade
 {
@@ -127,6 +132,95 @@ class Trade
         $tradeDetail->setTotalDue($totalDue);
 
         return $tradeDetail;
+    }
+
+    public function evaluateHeader(TradeHeaderInterface $tradeHeader, $detailSet = [])
+    {
+        $totalNetBeforeDiscount = 0;
+        $discount = 0;
+        $totalNet = 0;
+        $vat      = 0;
+        $totalDue = 0;
+
+        /** @var TradeDetailInterface $detail */
+        foreach($detailSet as $details)
+        {
+            foreach ($details as $detail)
+            {
+                if (null === $detail->getDeletedAt() && null === $detail->getRemovedAt())
+                {
+                    $totalNetBeforeDiscount += $detail->getTotalNetBeforeDiscount();
+                    $discount += $detail->getDiscount();
+                    $totalNet += $detail->getTotalNet();
+                    $vat += $detail->getVat();
+                    $totalDue += $detail->getTotalDue();
+                }
+            }
+        }
+
+        $tradeHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
+        $tradeHeader->setDiscount($discount);
+        $tradeHeader->setTotalNet($totalNet);
+        $tradeHeader->setVat($vat);
+        $tradeHeader->setTotalDue($totalDue);
+
+        return $tradeHeader;
+    }
+
+    public function evaluateOrderHeader(OrderHeader $orderHeader)
+    {
+        $totalNetBeforeDiscount = 0;
+        $discount = 0;
+        $totalNet = 0;
+        $vat      = 0;
+        $totalDue = 0;
+
+        /** @var OrderIndexx $orderIndexx */
+        foreach($orderHeader->getOrderIndexxes() as $orderIndexx)
+        {
+            if (null === $orderIndexx->getDeletedAt() && null === $orderIndexx->getRemovedAt())
+            {
+                $totalNetBeforeDiscount += $orderIndexx->getTotalNetBeforeDiscount();
+                $discount += $orderIndexx->getDiscount();
+                $totalNet += $orderIndexx->getTotalNet();
+                $vat += $orderIndexx->getVat();
+                $totalDue += $orderIndexx->getTotalDue();
+            }
+
+            /** @var OrderAction $orderAction */
+            foreach($orderIndexx->getOrderActions() as $orderAction)
+            {
+                if (null === $orderAction->getDeletedAt() && null === $orderAction->getRemovedAt())
+                {
+                    $totalNetBeforeDiscount += $orderAction->getTotalNetBeforeDiscount();
+                    $discount += $orderAction->getDiscount();
+                    $totalNet += $orderAction->getTotalNet();
+                    $vat += $orderAction->getVat();
+                    $totalDue += $orderAction->getTotalDue();
+                }   
+            }
+        }
+
+        /** @var OrderService $orderService */
+        foreach($orderHeader->getOrderServices() as $orderService)
+        {
+            if (null === $orderService->getDeletedAt() && null === $orderService->getRemovedAt())
+            {
+                $totalNetBeforeDiscount += $orderService->getTotalNetBeforeDiscount();
+                $discount += $orderService->getDiscount();
+                $totalNet += $orderService->getTotalNet();
+                $vat += $orderService->getVat();
+                $totalDue += $orderService->getTotalDue();
+            }
+        }
+
+        $orderHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
+        $orderHeader->setDiscount($discount);
+        $orderHeader->setTotalNet($totalNet);
+        $orderHeader->setVat($vat);
+        $orderHeader->setTotalDue($totalDue);
+
+        return $orderHeader;
     }
 
     public function addDetail(TradeHeaderInterface $tradeHeader, TradeDetailInterface $tradeDetail)

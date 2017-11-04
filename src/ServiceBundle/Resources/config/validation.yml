@@ -1,0 +1,30 @@
+AppBundle\Entity\Service:
+    properties:
+        name:
+            - Length:
+                min: 2
+                max: 50
+                minMessage: 'Nazwa powinna zawierać co najmniej 2 litery'
+                maxMessage: 'Nazwa może zawierać maksymalnie 40 liter'
+                groups: [ service ]
+        unit_price_net:
+            - Length:
+                max: 10
+                maxMessage: 'To pole może zawierać maksymalnie 10 znaków'
+                groups: [ service ]
+            - AppBundle\Form\Validator\Constraint\Trade:
+                groups: [ service ]
+        remarks:
+            - Length:
+                max: 255
+                maxMessage: 'Pole Uwagi powinno zawierać maksymalnie 255 znaków'
+                groups: [ service ]
+AppBundle\Entity\Action:
+    properties:
+        name:
+            - Length:
+                min: 2
+                max: 50
+                minMessage: 'Nazwa powinna zawierać co najmniej 2 litery'
+                maxMessage: 'Nazwa może zawierać maksymalnie 30 liter'
+                groups: [ action ]

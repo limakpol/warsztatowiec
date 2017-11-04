@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 
 /**
  * ServiceRepository
@@ -11,7 +12,7 @@ use AppBundle\Entity\Workshop;
  */
 class ServiceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getOne(Workshop $workshop, $id)
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
     {
         $service = $this->_em->createQueryBuilder()
             ->select('s')
@@ -25,15 +26,15 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
                 ':id'       => $id,
             ])
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult($hydrationMode)
         ;
 
         return $service;
     }
 
-    public function retrieve(Workshop $workshop)
+    public function getServices(Workshop $workshop)
     {
-        $services = $this->_em->createQueryBuilder()
+        $service = $this->_em->createQueryBuilder()
             ->select('s')
             ->from('AppBundle:Service', 's')
             ->where('s.removed_at IS NULL')
@@ -46,7 +47,75 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
         ;
 
+        return $service;
+    }
+
+
+    public function retrieve(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $limit      = (int) $sortableParameters['limit'];
+        $offset     = (int) $sortableParameters['offset'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName     = $sortableParameters['sortColumnName'];
+
+        $services = $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:Service', 's')
+            ->leftJoin('AppBundle:Measure', 'm', 'WITH', 's.measure_id = m.id')
+            ->where('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('s.workshop = :workshop')
+            ->andWhere("
+                    s.name LIKE :search
+                OR  m.name LIKE :search
+                OR  m.shortcut LIKE :search
+                OR  s.remarks LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('s.updated_at', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->groupBy('s.id')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+
         return $services;
+    }
+
+    public function getCountAllRetrieved(Workshop $workshop, $sortableParameters = [])
+    {
+        $search     = $sortableParameters['search'];
+        $sortOrder  = $sortableParameters['sortOrder'];
+        $sortColumnName = $sortableParameters['sortColumnName'];
+
+        $countServices = $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('COUNT(DISTINCT s)')
+            ->from('AppBundle:Service', 's')
+            ->leftJoin('AppBundle:Measure', 'm', 'WITH', 's.measure_id = m.id')
+            ->where('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('s.workshop = :workshop')
+            ->andWhere("
+                    s.name LIKE :search
+                OR  m.name LIKE :search
+                OR  m.shortcut LIKE :search
+                OR  s.remarks LIKE :search
+            ")
+            ->orderBy($sortColumnName, $sortOrder)
+            ->addOrderBy('s.updated_at', 'DESC')
+            ->setParameter(':workshop', $workshop)
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+        return $countServices;
     }
 
     public function getOneByName(Workshop $workshop, $name)
@@ -87,4 +156,6 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
 
         return $service;
     }
+
+
 }

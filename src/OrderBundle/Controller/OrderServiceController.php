@@ -9,12 +9,37 @@
 namespace OrderBundle\Controller;
 
 
+use OrderBundle\Service\Helper\OrderServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class OrderServiceController extends Controller
 {
     public function addAction($orderHeaderId)
     {
+        /** @var OrderServiceHelper $orderServiceHelper */
+        $orderServiceHelper = $this->get('order_helper_service');
+
+        $orderHeader = $orderServiceHelper->getHeader($orderHeaderId);
+
+        if(null === $orderHeader)
+        {
+            return $this->redirectToRoute('order_index');
+        }
+
+        $form = $orderServiceHelper->createForm();
+
+        if($orderServiceHelper->isValid($form))
+        {
+            $orderServiceHelper->write($form, $orderHeader);
+
+            return $this->redirectToRoute('order_show', [
+                'orderHeaderId' => $orderHeaderId,
+            ]);
+        }
+
+        $sortableParameters = $orderServiceHelper->getSortableParamaters();
+        $services = $orderServiceHelper->retrieveServices($sortableParameters);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
         $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
@@ -23,6 +48,23 @@ class OrderServiceController extends Controller
             'mainMenu'      => $mainMenu,
             'tab'           => 'order',
             'navbar'        => 'Dodawanie usługi do zlecenia',
+            'services'      => $services,
+            'sortableParameters' => $sortableParameters,
+            'form'          => $form->createView(),
+        ]);
+    }
+
+    public function retrieveAction()
+    {
+        /** @var OrderServiceHelper $orderServiceHelper */
+        $orderServiceHelper = $this->get('order_helper_service');
+
+        $sortableParamters = $orderServiceHelper->getSortableParamaters();
+        $services = $orderServiceHelper->retrieveServices($sortableParamters);
+
+        return $this->render('OrderBundle:service:service_searchable_content.html.twig', [
+            'services' => $services,
+            'sortableParameters' => $sortableParamters,
         ]);
     }
 }

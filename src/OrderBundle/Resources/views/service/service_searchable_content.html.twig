@@ -1,0 +1,36 @@
+<header>
+    <div id="service-new">-- nowy --</div>
+</header>
+<table>
+    <tr>
+        <th class="sort-column" data-column="s.name">Usługa</th>
+        <th class="sort-column" data-column="m.shortcut">J.m.</th>
+        <th class="sort-column" data-column="s.unit_price_net">Cena jedn.netto [zł]</th>
+    </tr>
+    {% for service in services %}
+        <tr data-id="{{ service.id }}">
+            <td class="td-left">{{ service.name }}</td>
+            <td class="td-center">
+                {% if service.measure is not null %}
+                    {{ service.measure.shortcut }}
+                {% endif %}
+            </td>
+            <td class="td-center">{{ service.unitPriceNet }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<footer>
+    {% if sortableParameters.lastPage > 1 %}
+        <div class="buttons">
+            <button class="prev"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+            <button class="next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="page-info">
+            <span>{{ sortableParameters.currentPage }}</span>/<span>{{ sortableParameters.lastPage }}</span>
+        </div>
+    {% endif %}
+    <input type="hidden" class="currentPage" value="{{ sortableParameters['currentPage'] }}">
+    <input type="hidden" class="retrievePath" value="{{ path('order_service_retrieve') }}">
+    <input type="hidden" class="sortColumnName" value="{{ sortableParameters['sortColumnName'] }}">
+    <input type="hidden" class="sortOrder" value="{{ sortableParameters['sortOrder'] }}">
+</footer>

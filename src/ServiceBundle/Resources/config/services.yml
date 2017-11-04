@@ -1,4 +1,12 @@
 services:
+# FORM TYPES
+    form.type.service:
+        class: ServiceBundle\Form\ServiceType
+        arguments: ["@security.token_storage"]
+        tags:
+            - { name: form.type }
+
+# HELPERS
     service.helper.action:
         class: ServiceBundle\Service\ActionHelper
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.token_storage"]

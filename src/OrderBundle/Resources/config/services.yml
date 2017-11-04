@@ -17,6 +17,12 @@ services:
         tags:
             - { name: form.type }
 
+    form.type.order_service:
+        class: OrderBundle\Form\OrderServiceType
+        arguments: ["@security.token_storage"]
+        tags:
+            - { name: form.type }
+
 # HELPERS
     order.helper.header_add:
         class: OrderBundle\Service\Helper\OrderHeaderAddHelper
@@ -33,3 +39,7 @@ services:
     order.helper.indexx_add:
         class: OrderBundle\Service\Helper\OrderIndexxAddHelper
         arguments: ["@request_stack", "@security.token_storage", "@doctrine.orm.entity_manager", "@form.factory", "@warehouse.helper.good", "@warehouse.helper.indexx", "@app.trade", "@sale.helper.detail_add"]
+
+    order_helper_service:
+        class: OrderBundle\Service\Helper\OrderServiceHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container", "@app.trade"]

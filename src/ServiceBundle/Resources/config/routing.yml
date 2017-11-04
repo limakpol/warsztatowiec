@@ -15,6 +15,14 @@ service_remove:
     path: /service-remove
     defaults: { _controller: ServiceBundle:Service:remove }
 
+order_service_retrieve:
+    path: /order/service-retrieve
+    defaults: { _controller: OrderBundle:OrderService:retrieve }
+
+order_service_get_one:
+    path: /service/get-one/{hydrationMode}
+    defaults: { _controller: ServiceBundle:Service:getOne }
+
 # ACTION
 action_index:
     path: /czynnosci

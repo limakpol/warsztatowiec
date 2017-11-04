@@ -2,7 +2,11 @@
 
 namespace ServiceBundle\Controller;
 
+use AppBundle\Entity\OrderService;
+use Doctrine\ORM\Query;
+use OrderBundle\Service\Helper\OrderServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ServiceController extends Controller
 {
@@ -50,7 +54,7 @@ class ServiceController extends Controller
         {
             $serviceHelper->recover($service);
 
-            return $this->indexService();
+            return $this->indexAction();
         }
 
         $serviceHelper->write();
@@ -107,4 +111,22 @@ class ServiceController extends Controller
             'measures' => $measures,
         ]);
     }
+
+    public function getOneAction($hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $serviceHelper = $this->get('service.helper.service');
+
+        $service = $serviceHelper->getOne($hydrationMode);
+
+        if(null == $service)
+        {
+            return new JsonResponse([
+                'error' => 1,
+                'messages' => ['Nie ma takiej usługi'],
+            ]);
+        }
+
+        return new JsonResponse($service);
+    }
+
 }

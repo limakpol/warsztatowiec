@@ -10,6 +10,7 @@ use AppBundle\Service\PriceTransformer;
 use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -72,12 +73,12 @@ class ServiceHelper
         $services = $this
             ->entityManager
             ->getRepository('AppBundle:Service')
-            ->retrieve($workshop);
+            ->getServices($workshop);
 
         return $services;
     }
 
-    public function getOne()
+    public function getOne($hydrationMode = Query::HYDRATE_OBJECT)
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
@@ -93,7 +94,7 @@ class ServiceHelper
         return $this
             ->entityManager
             ->getRepository('AppBundle:Service')
-            ->getOne($workshop, $id);
+            ->getOne($workshop, $id, $hydrationMode);
     }
 
 

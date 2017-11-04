@@ -77,7 +77,7 @@ class SaleDetailAddHelper
         $saleDetail = $this->setIndexxUnitPriceNet($saleDetail);
         $saleDetail = $this->setQuantity($saleDetail, $prevGood, $prevIndexxQty);
 
-        $saleHeader = $this->evaluateHeader($saleHeader, $saleHeader->getSaleDetails());
+        $saleHeader = $this->trade->evaluateHeader($saleHeader, $saleHeader->getSaleDetails());
 
         $good = $this->goodHelper->assignCategories($good);
         $good = $this->goodHelper->assignCarModels($good);
@@ -198,33 +198,5 @@ class SaleDetailAddHelper
         return $detail;
     }
 
-    public function evaluateHeader(TradeHeaderInterface $tradeHeader, Collection $details)
-    {
-        $totalNetBeforeDiscount = 0;
-        $discount = 0;
-        $totalNet = 0;
-        $vat      = 0;
-        $totalDue = 0;
 
-        /** @var TradeDetailInterface $detail */
-        foreach($details as $detail)
-        {
-            if(null === $detail->getDeletedAt() && null === $detail->getRemovedAt())
-            {
-                $totalNetBeforeDiscount +=  $detail->getTotalNetBeforeDiscount();
-                $discount               +=  $detail->getDiscount();
-                $totalNet               +=  $detail->getTotalNet();
-                $vat                    +=  $detail->getVat();
-                $totalDue               +=  $detail->getTotalDue();
-            }
-        }
-
-        $tradeHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
-        $tradeHeader->setDiscount($discount);
-        $tradeHeader->setTotalNet($totalNet);
-        $tradeHeader->setVat($vat);
-        $tradeHeader->setTotalDue($totalDue);
-
-        return $tradeHeader;
-    }
 }
