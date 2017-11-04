@@ -75,3 +75,17 @@ order_fault_remove:
     path: /order/fault-remove
     defaults: { _controller: OrderBundle:OrderHeader:removeFault }
 
+# INDEXX
+order_indexx_add:
+    path: /zlecenia-serwisowe/{orderHeaderId}/dodaj-towar
+    defaults: { _controller: OrderBundle:OrderIndexx:add }
+
+# SERVICE
+order_service_add:
+    path: /zlecenia-serwisowe/{orderHeaderId}/dodaj-usluge
+    defaults: { _controller: OrderBundle:OrderService:add }
+
+# ACTION
+order_action_add:
+    path: /zlecenia-serwisowe/{orderHeaderId}/{orderIndexxId}/dodaj-czynnosc
+    defaults: { _controller: OrderBundle:OrderAction:add }

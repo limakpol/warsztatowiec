@@ -180,7 +180,10 @@ class OrderHeaderAddHelper
         $orderHeader = $this->setOrderNumbers($orderHeader);
         $orderHeader = $this->setSymptoms($orderHeader);
 
-        $customer->addVehicle($vehicle);
+        if(!$customer->getVehicles()->contains($vehicle))
+        {
+            $customer->addVehicle($vehicle);
+        }
 
         $em->persist($customer);
         $em->persist($vehicle);
@@ -248,9 +251,6 @@ class OrderHeaderAddHelper
 
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
 
         $dateTime = new \DateTime();
 

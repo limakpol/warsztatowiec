@@ -408,6 +408,4 @@ class OrderHelper
 
         return $this->getSuccessMessage();
     }
-
-
 }

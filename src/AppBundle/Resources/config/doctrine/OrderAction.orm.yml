@@ -21,6 +21,12 @@ AppBundle\Entity\OrderAction:
             nullable: false
             options:
                 unsigned: true
+        measure_id:
+            type: integer
+            length: 10
+            nullable: true
+            options:
+                unsigned: true
         unit_price_net:
             type: decimal
             nullable: false
@@ -143,6 +149,11 @@ AppBundle\Entity\OrderAction:
             targetEntity: Action
             joinColumn:
                 name: action_id
+                referencedColumnName: id
+        measure:
+            targetEntity: Measure
+            joinColumn:
+                name: measure_id
                 referencedColumnName: id
         order_indexx:
             targetEntity: OrderIndexx

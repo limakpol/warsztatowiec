@@ -71,7 +71,7 @@ class CustomerType extends AbstractType
                 'required'  => false,
                 'data'      => '+48',
                 'attr'      => [
-                    'maxlength' => 12,
+                    'maxlength' => 15,
                     'size'      => 12,
                 ],
             ])
@@ -80,7 +80,7 @@ class CustomerType extends AbstractType
                 'required'  => false,
                 'data'      => '+48',
                 'attr'      => [
-                    'maxlength' => 12,
+                    'maxlength' => 15,
                     'size'      => 12,
                 ],
             ])

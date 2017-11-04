@@ -1,6 +1,7 @@
 section.footer {
     position: fixed;
     bottom: 0;
+    height: 150px;
 }
 footer.section-inner div {
     display: flex;

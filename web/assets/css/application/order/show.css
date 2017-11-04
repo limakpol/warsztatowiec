@@ -41,6 +41,9 @@ div.form-set {
     color: red;
     font: 12px 'Ubuntu', sans-serif;
 }
+.service-header {
+    border-top: 20px solid #fefefe;
+}
 @media screen and (min-width: 1200px)
 {
     .date-or-no {

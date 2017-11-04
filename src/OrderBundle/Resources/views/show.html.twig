@@ -282,8 +282,395 @@
     <div class="show-box">
         <h1>
             <label>Pozycje zlecenia</label>
+            <a class="btn-add" href="{{ path('order_indexx_add', {orderHeaderId: orderHeaderId}) }}">dodaj towar<i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a class="btn-add" href="{{ path('order_service_add', {orderHeaderId: orderHeaderId}) }}">dodaj usługę<i class="fa fa-plus" aria-hidden="true"></i></a>
         </h1>
-        <section>aaa</section>
+        <section>
+            <table class="details-table">
+                {% if orderHeader.orderIndexxes.count > 0 %}
+                    <tr>
+                        <th>L.p.</th>
+                        <th>Nazwa towaru</th>
+                        <th>Indeks</th>
+                        <th>Producent</th>
+                        <th>Cena jedn. netto</th>
+                        <th>Ilość</th>
+                        <th>J.m.</th>
+                        <th>Netto</th>
+                        <th>VAT</th>
+                        <th>Brutto</th>
+                    </tr>
+                    {% for key, orderIndexx in orderHeader.orderIndexxes %}
+                        <tr class="header">
+                            <td class="td-center num">{{ key+1 }}.</td>
+                            <td class="td-left">{{ orderIndexx.indexx.good.name }}</td>
+                            <td class="td-left">{{ orderIndexx.indexx.name }}</td>
+                            <td class="td-left">{{ orderIndexx.indexx.producer.name }}</td>
+                            <td class="td-center">{{ orderIndexx.unitPriceNet|money }}</td>
+                            <td class="td-center">{{ orderIndexx.quantity|money }}</td>
+                            <td class="td-center">{{ orderIndexx.indexx.good.measure.shortcut }}</td>
+                            <td class="td-center">{{ orderIndexx.totalNet|money }}</td>
+                            <td class="td-center">{{ orderIndexx.vat|money }}</td>
+                            <td class="td-center">{{ orderIndexx.totalDue|money }}</td>
+                        </tr>
+                        <tr class="content">
+                            <td colspan="10">
+                                <div class="content">
+                                    <table class="info-table">
+                                        <tr>
+                                            <td>Towar</td>
+                                            <td>
+                                                <a href="{{ path('warehouse_good_show', {'goodId': orderIndexx.indexx.good.id}) }}">{{ orderIndexx.indexx.good.name }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Indeks</td>
+                                            <td>{{ orderIndexx.indexx.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Producent</td>
+                                            <td>{{ orderIndexx.indexx.producer.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cena jednostkowa netto</td>
+                                            <td>{{ orderIndexx.unitPriceNet|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ilość</td>
+                                            <td>{{ orderIndexx.quantity|money }} {{ orderIndexx.indexx.good.measure.shortcut }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wartość netto przed rabatem</td>
+                                            <td>{{ orderIndexx.totalNetBeforeDiscount|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rabat</td>
+                                            <td>{{ orderIndexx.discountPc }}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kwota rabatu</td>
+                                            <td>{{ orderIndexx.discount|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wartość netto</td>
+                                            <td>{{ orderIndexx.totalNet|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>VAT</td>
+                                            <td>{{ orderIndexx.vatPc }}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kwota VAT</td>
+                                            <td>{{ orderIndexx.vat|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Należność całkowita</td>
+                                            <td>{{ orderIndexx.totalDue|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uwagi</td>
+                                            <td>{{ orderIndexx.remarks }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wprowadzono</td>
+                                            <td>
+                                                {{ orderIndexx.createdAt|date }} przez
+                                                <a href="{{ path('workflow_workman_show', {userId: orderIndexx.createdBy.id}) }}">
+                                                    {{ orderIndexx.createdBy.forename }} {{ orderIndexx.createdBy.surname }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Zaktualizowano</td>
+                                            <td>
+                                                {{ orderIndexx.updatedAt|date }} przez
+                                                <a href="{{ path('workflow_workman_show', {userId: orderIndexx.updatedBy.id}) }}">
+                                                    {{ orderIndexx.updatedBy.forename }} {{ orderIndexx.updatedBy.surname }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr class="footer">
+                                            <td colspan="2">
+                                                <a class="btn-edit" target="_blank">edytuj
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                                <button class="btn-remove">usuń
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button>
+                                                <a class="btn-add" href="{{ path('order_action_add', {orderHeaderId: orderHeaderId, orderIndexxId: orderIndexx.id}) }}">dodaj czynność<i class="fa fa-plus" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr class="footer">
+                                            <td colspan="2">
+                                                <div class="content">
+                                                    <table class="details-sub-table">
+                                                        <tr>
+                                                            <th>L.p.</th>
+                                                            <th>Czynność</th>
+                                                            <th>Cena jedn. netto</th>
+                                                            <th>Ilość</th>
+                                                            <th>J.m.</th>
+                                                            <th>Netto</th>
+                                                            <th>VAT</th>
+                                                            <th>Brutto</th>
+                                                        </tr>
+                                                        {% for key, orderAction in orderIndexx.orderActions %}
+                                                            <tr class="header">
+                                                                <td class="td-center num">{{ key+1 }}.</td>
+                                                                <td class="td-left">{{ orderAction.action.name }}</td>
+                                                                <td class="td-center">{{ orderAction.unitPriceNet|money }}</td>
+                                                                <td class="td-center">{{ orderAction.quantity|money }}</td>
+                                                                <td class="td-center">
+                                                                    {% if orderAction.measure is not null %}
+                                                                        {{ orderAction.measure.shortcut }}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td class="td-center">{{ orderAction.totalNet|money }}</td>
+                                                                <td class="td-center">{{ orderAction.vat|money }}</td>
+                                                                <td class="td-center">{{ orderAction.totalDue|money }}</td>
+                                                            </tr>
+                                                            <tr class="content">
+                                                                <td colspan="10">
+                                                                    <div class="content">
+                                                                        <table class="info-table">
+                                                                            <tr>
+                                                                                <td>Nazwa usługi</td>
+                                                                                <td>
+                                                                                    <a href="{{ path('action_index') }}">{{ orderAction.action.name }}</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Cena jednostkowa netto</td>
+                                                                                <td>{{ orderAction.unitPriceNet|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Ilość</td>
+                                                                                <td>{{ orderAction.quantity|money }}
+                                                                                    {% if orderAction.measure is not null %}
+                                                                                        {{ orderAction.measure.shortcut }}
+                                                                                    {% endif %}
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Wartość netto przed rabatem</td>
+                                                                                <td>{{ orderAction.totalNetBeforeDiscount|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Rabat</td>
+                                                                                <td>{{ orderAction.discountPc }}%</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Kwota rabatu</td>
+                                                                                <td>{{ orderAction.discount|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Wartość netto</td>
+                                                                                <td>{{ orderAction.totalNet|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>VAT</td>
+                                                                                <td>{{ orderAction.vatPc }}%</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Kwota VAT</td>
+                                                                                <td>{{ orderAction.vat|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Należność całkowita</td>
+                                                                                <td>{{ orderAction.totalDue|money }} zł</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Uwagi</td>
+                                                                                <td>{{ orderAction.remarks }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Wprowadzono</td>
+                                                                                <td>
+                                                                                    {{ orderAction.createdAt|date }} przez
+                                                                                    <a href="{{ path('workflow_workman_show', {userId: orderAction.createdBy.id}) }}">
+                                                                                        {{ orderAction.createdBy.forename }} {{ orderAction.createdBy.surname }}</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Zaktualizowano</td>
+                                                                                <td>
+                                                                                    {{ orderAction.updatedAt|date }} przez
+                                                                                    <a href="{{ path('workflow_workman_show', {userId: orderAction.updatedBy.id}) }}">
+                                                                                        {{ orderAction.updatedBy.forename }} {{ orderAction.updatedBy.surname }}</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="footer">
+                                                                                <td colspan="2">
+                                                                                    <a class="btn-edit" target="_blank">edytuj
+                                                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                                    </a>
+                                                                                    <button class="btn-remove">usuń
+                                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                {% if orderHeader.orderServices.count > 0 %}
+                    <tr class="service-header">
+                        <th>L.p.</th>
+                        <th colspan="3">Usługa</th>
+                        <th>Cena jedn. netto</th>
+                        <th>Ilość</th>
+                        <th>J.m.</th>
+                        <th>Netto</th>
+                        <th>VAT</th>
+                        <th>Brutto</th>
+                    </tr>
+                    {% for key, orderService in orderHeader.orderServices %}
+                        <tr class="header">
+                            <td class="td-center num">{{ key+1 }}.</td>
+                            <td class="td-left" colspan="3">{{ orderService.service.name }}</td>
+                            <td class="td-center">{{ orderService.unitPriceNet|money }}</td>
+                            <td class="td-center">{{ orderService.quantity|money }}</td>
+                            <td class="td-center">
+                                {% if orderService.service.measure is not null %}
+                                    {{ orderService.service.measure.shortcut }}
+                                {% endif %}
+                            </td>
+                            <td class="td-center">{{ orderService.totalNet|money }}</td>
+                            <td class="td-center">{{ orderService.vat|money }}</td>
+                            <td class="td-center">{{ orderService.totalDue|money }}</td>
+                        </tr>
+                        <tr class="content">
+                            <td colspan="10">
+                                <div class="content">
+                                    <table class="content info-table">
+                                        <tr>
+                                            <td>Nazwa usługi</td>
+                                            <td>
+                                                <a href="{{ path('service_index') }}">{{ orderService.service.name }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cena jednostkowa netto</td>
+                                            <td>{{ orderService.unitPriceNet|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ilość</td>
+                                            <td>{{ orderService.quantity|money }}
+                                                {% if orderService.service.measure is not null %}
+                                                    {{ orderService.service.measure.shortcut }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wartość netto przed rabatem</td>
+                                            <td>{{ orderService.totalNetBeforeDiscount|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rabat</td>
+                                            <td>{{ orderService.discountPc }}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kwota rabatu</td>
+                                            <td>{{ orderService.discount|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wartość netto</td>
+                                            <td>{{ orderService.totalNet|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>VAT</td>
+                                            <td>{{ orderService.vatPc }}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kwota VAT</td>
+                                            <td>{{ orderService.vat|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Należność całkowita</td>
+                                            <td>{{ orderService.totalDue|money }} zł</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uwagi</td>
+                                            <td>{{ orderService.remarks }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wprowadzono</td>
+                                            <td>
+                                                {{ orderService.createdAt|date }} przez
+                                                <a href="{{ path('workflow_workman_show', {userId: orderService.createdBy.id}) }}">
+                                                    {{ orderService.createdBy.forename }} {{ orderService.createdBy.surname }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Zaktualizowano</td>
+                                            <td>
+                                                {{ orderService.updatedAt|date }} przez
+                                                <a href="{{ path('workflow_workman_show', {userId: orderService.updatedBy.id}) }}">
+                                                    {{ orderService.updatedBy.forename }} {{ orderService.updatedBy.surname }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr class="footer">
+                                            <td colspan="2">
+                                                <a class="btn-edit" target="_blank">edytuj
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                                <button class="btn-remove">usuń
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                <tr class="header summary">
+                    <td class="td-right" colspan="7">Razem [zł]:</td>
+                    <td class="td-center">{{ orderHeader.totalNet|money }}</td>
+                    <td class="td-center">{{ orderHeader.vat|money }}</td>
+                    <td class="td-center">{{ orderHeader.totalDue|money }}</td>
+                </tr>
+                <tr class="content">
+                    <td colspan="10">
+                        <div class="content">
+                            <table class="content info-table">
+                                <tr>
+                                    <td>Wartość całkowita netto przed rabatem</td>
+                                    <td>{{ orderHeader.totalNetBeforeDiscount|money }} zł</td>
+                                </tr>
+                                <tr>
+                                    <td>Kwota rabatu</td>
+                                    <td>{{ orderHeader.discount|money }} zł</td>
+                                </tr>
+                                <tr>
+                                    <td>Wartość netto</td>
+                                    <td>{{ orderHeader.totalNet|money }} zł</td>
+                                </tr>
+                                <tr>
+                                    <td>Kwota VAT</td>
+                                    <td>{{ orderHeader.vat|money }} zł</td>
+                                </tr>
+                                <tr>
+                                    <td>Należność całkowita</td>
+                                    <td>{{ orderHeader.totalDue|money }} zł</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </section>
     </div>
 {% endblock %}
 {% block javascripts %}

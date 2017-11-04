@@ -70,7 +70,7 @@ class GoodHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'g.updated_at',
+                'sortColumnName' => 'g.created_at',
                 'filterCategoryIds' => [],
                 'filterModelIds' => [],
                 'filterIndexxIds' => [],

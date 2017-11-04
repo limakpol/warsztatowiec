@@ -1,0 +1,19 @@
+{% extends ':base:application.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block main %}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/trade.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

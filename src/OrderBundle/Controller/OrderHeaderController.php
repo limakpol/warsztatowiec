@@ -28,8 +28,7 @@ class OrderHeaderController extends Controller
     public function addAction()
     {
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
-
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         $orderHeaderAddHelper   = $this->get('order.helper.header_add');
         $orderHelper = $this->get('order.helper');

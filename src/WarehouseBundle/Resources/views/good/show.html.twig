@@ -150,7 +150,7 @@
                             <td class="td-center">{{ deliveryDetail.totalDue|money }}</td>
                             <td class="td-center">{{ deliveryDetail.createdAt|date }}</td>
                             <td class="td-center">
-                                <a class="btn-info" target="_blank" href="{{ path('delivery_show', {deliveryHeaderId: deliveryDetail.deliveryHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                <a class="btn-info" href="{{ path('delivery_show', {deliveryHeaderId: deliveryDetail.deliveryHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -183,7 +183,7 @@
                             <td class="td-center">{{ saleDetail.totalDue|money }}</td>
                             <td class="td-center">{{ saleDetail.createdAt|date }}</td>
                             <td class="td-center">
-                                <a class="btn-info" target="_blank" href="{{ path('sale_show', {saleHeaderId: saleDetail.saleHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                <a class="btn-info" href="{{ path('sale_show', {saleHeaderId: saleDetail.saleHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -216,7 +216,7 @@
                             <td class="td-center">{{ orderIndexx.totalDue|money }}</td>
                             <td class="td-center">{{ orderIndexx.createdAt|date }}</td>
                             <td class="td-center">
-                                <a class="btn-info" target="_blank" href="{{ path('order_show', {orderHeaderId: orderIndexx.orderHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                <a class="btn-info" href="{{ path('order_show', {orderHeaderId: orderIndexx.orderHeader.id}) }}">szczegóły<i class="fa fa-info-circle" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -249,7 +249,7 @@
                             <td class="td-center">{{ indexxEdit.changeQty|money }}</td>
                             <td class="td-center">{{ indexxEdit.createdAt|date }}</td>
                             <td class="td-center double-info">
-                                <a target="_blank" href="{{ path('workflow_workman_show', {userId: indexxEdit.createdBy.id}) }}">{{ indexxEdit.createdBy.forename }} {{ indexxEdit.createdBy.surname }}</a>
+                                <a href="{{ path('workflow_workman_show', {userId: indexxEdit.createdBy.id}) }}">{{ indexxEdit.createdBy.forename }} {{ indexxEdit.createdBy.surname }}</a>
                             </td>
                         </tr>
                     {% endfor %}

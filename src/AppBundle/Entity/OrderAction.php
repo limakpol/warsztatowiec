@@ -862,4 +862,62 @@ class OrderAction
     {
         return $this->statuses;
     }
+    /**
+     * @var integer
+     */
+    private $measure_id;
+
+    /**
+     * @var \AppBundle\Entity\Measure
+     */
+    private $measure;
+
+
+    /**
+     * Set measureId
+     *
+     * @param integer $measureId
+     *
+     * @return OrderAction
+     */
+    public function setMeasureId($measureId)
+    {
+        $this->measure_id = $measureId;
+
+        return $this;
+    }
+
+    /**
+     * Get measureId
+     *
+     * @return integer
+     */
+    public function getMeasureId()
+    {
+        return $this->measure_id;
+    }
+
+    /**
+     * Set measure
+     *
+     * @param \AppBundle\Entity\Measure $measure
+     *
+     * @return OrderAction
+     */
+    public function setMeasure(\AppBundle\Entity\Measure $measure = null)
+    {
+        $this->measure = $measure;
+
+        return $this;
+    }
+
+    /**
+     * Get measure
+     *
+     * @return \AppBundle\Entity\Measure
+     */
+    public function getMeasure()
+    {
+        return $this->measure;
+    }
 }

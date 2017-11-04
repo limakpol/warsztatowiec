@@ -67,7 +67,7 @@ class WorkmanIndexHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'u.updated_at',
+                'sortColumnName' => 'u.created_at',
                 'systemFilters' => [],
                 'customFilters' => [],
             ];

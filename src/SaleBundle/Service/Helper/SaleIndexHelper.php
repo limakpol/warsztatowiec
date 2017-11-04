@@ -67,7 +67,7 @@ class SaleIndexHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'd.updated_at',
+                'sortColumnName' => 'd.created_at',
                 'systemFilters' => [],
                 'customFilters' => [],
             ];

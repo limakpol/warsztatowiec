@@ -67,7 +67,7 @@ class OrderIndexHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'o.updated_at',
+                'sortColumnName' => 'o.created_at',
                 'systemFilters' => [],
                 'customFilters' => [],
             ];

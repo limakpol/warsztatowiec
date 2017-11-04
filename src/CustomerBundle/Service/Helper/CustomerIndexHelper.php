@@ -83,7 +83,7 @@ class CustomerIndexHelper
                 'currentPage' => 1,
                 'requestedPage' => 1,
                 'sortOrder' => 'DESC',
-                'sortColumnName' => 'c.updated_at',
+                'sortColumnName' => 'c.created_at',
                 'systemFilters' => [],
                 'customFilters' => [],
             ];
