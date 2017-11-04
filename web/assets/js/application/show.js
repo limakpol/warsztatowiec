@@ -7,6 +7,6 @@ $(document).ready(function()
 
     $(document).on('click', '.show-box .details-table tr.header', function()
     {
-        $(this).next('tr.content').find('div.content').slideToggle('slow');
+        $(this).next('tr.content').find('div.content').first().slideToggle('slow');
     });
 });
