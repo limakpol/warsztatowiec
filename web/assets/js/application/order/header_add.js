@@ -411,6 +411,7 @@ $(document).ready(function()
         }, 1000);
     });
 
+    /* SYMPTOMS */
     $(document).on('click', '#symptoms-inputable .add input', function(event)
     {
         event.preventDefault();
@@ -439,12 +440,13 @@ $(document).ready(function()
 
     $(document).on('keypress', '#symptoms-inputable .add input', function(event)
     {
-
         if(event.which == 13)
         {
             var symptom = $(this).val();
 
             insertSymptom(symptom);
+
+            event.preventDefault();
         }
     });
 
@@ -634,9 +636,11 @@ function getModels(brandName)
 }
 function insertSymptom(symptom)
 {
+    console.log(symptom);
     if(symptom == '') return;
 
     var error = false;
+
     $('#symptoms-inputable .item input').each(function()
     {
         if($(this).val() == symptom) error = true;

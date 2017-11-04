@@ -1,11 +1,12 @@
 <?php
 
 namespace AppBundle\Entity;
+use AppBundle\Service\Trade\TradeDetailInterface;
 
 /**
  * OrderService
  */
-class OrderService
+class OrderService implements TradeDetailInterface
 {
     /**
      * @var integer

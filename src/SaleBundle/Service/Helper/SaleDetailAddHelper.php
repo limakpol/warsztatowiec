@@ -16,6 +16,9 @@ use AppBundle\Entity\Indexx;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
+use AppBundle\Service\Trade\TradeDetailInterface;
+use AppBundle\Service\Trade\TradeHeaderInterface;
+use Doctrine\Common\Collections\Collection;
 use SaleBundle\Form\SaleDetailAddType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Form;
@@ -74,7 +77,7 @@ class SaleDetailAddHelper
         $saleDetail = $this->setIndexxUnitPriceNet($saleDetail);
         $saleDetail = $this->setQuantity($saleDetail, $prevGood, $prevIndexxQty);
 
-        $saleHeader = $this->evaluateHeader($saleHeader);
+        $saleHeader = $this->evaluateHeader($saleHeader, $saleHeader->getSaleDetails());
 
         $good = $this->goodHelper->assignCategories($good);
         $good = $this->goodHelper->assignCarModels($good);
@@ -131,37 +134,37 @@ class SaleDetailAddHelper
         return $saleHeader;
     }
 
-    public function setIndexxUnitPriceNet(SaleDetail $saleDetail)
+    public function setIndexxUnitPriceNet(TradeDetailInterface $detail)
     {
 
-        $indexx = $saleDetail->getIndexx();
+        $indexx = $detail->getIndexx();
 
         if(null !== $indexx->getUnitPriceNet())
         {
-           return $saleDetail;
+           return $detail;
         }
 
-        $unitPriceNet = $saleDetail->getUnitPriceNet();
+        $unitPriceNet = $detail->getUnitPriceNet();
 
         $indexx->setUnitPriceNet($unitPriceNet);
 
-        return $saleDetail;
+        return $detail;
     }
 
 
     /**
-     * @param SaleDetail $saleDetail
+     * @param SaleDetail $detail
      * @param Good $prevGood|null
      * @return SaleDetail
      */
-    public function setQuantity(SaleDetail $saleDetail, $prevGood, $prevIndexxQty)
+    public function setQuantity(TradeDetailInterface $detail, $prevGood, $prevIndexxQty)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
 
-        $detailQty = $saleDetail->getQuantity();
+        $detailQty = $detail->getQuantity();
 
-        $indexx = $saleDetail->getIndexx();
+        $indexx = $detail->getIndexx();
         $good = $indexx->getGood();
 
         $indexxQty = $indexx->getQuantity();
@@ -190,40 +193,38 @@ class SaleDetailAddHelper
         }
 
         $indexx->setGood($good);
-        $saleDetail->setIndexx($indexx);
+        $detail->setIndexx($indexx);
 
-        return $saleDetail;
+        return $detail;
     }
 
-    public function evaluateHeader(SaleHeader $saleHeader)
+    public function evaluateHeader(TradeHeaderInterface $tradeHeader, Collection $details)
     {
-
         $totalNetBeforeDiscount = 0;
         $discount = 0;
         $totalNet = 0;
         $vat      = 0;
         $totalDue = 0;
 
-
-        /** @var SaleDetail $saleDetail */
-        foreach($saleHeader->getSaleDetails() as $saleDetail)
+        /** @var TradeDetailInterface $detail */
+        foreach($details as $detail)
         {
-            if(null === $saleDetail->getDeletedAt() && null === $saleDetail->getRemovedAt())
+            if(null === $detail->getDeletedAt() && null === $detail->getRemovedAt())
             {
-                $totalNetBeforeDiscount +=  $saleDetail->getTotalNetBeforeDiscount();
-                $discount               +=  $saleDetail->getDiscount();
-                $totalNet               +=  $saleDetail->getTotalNet();
-                $vat                    +=  $saleDetail->getVat();
-                $totalDue               +=  $saleDetail->getTotalDue();
+                $totalNetBeforeDiscount +=  $detail->getTotalNetBeforeDiscount();
+                $discount               +=  $detail->getDiscount();
+                $totalNet               +=  $detail->getTotalNet();
+                $vat                    +=  $detail->getVat();
+                $totalDue               +=  $detail->getTotalDue();
             }
         }
 
-        $saleHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
-        $saleHeader->setDiscount($discount);
-        $saleHeader->setTotalNet($totalNet);
-        $saleHeader->setVat($vat);
-        $saleHeader->setTotalDue($totalDue);
+        $tradeHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
+        $tradeHeader->setDiscount($discount);
+        $tradeHeader->setTotalNet($totalNet);
+        $tradeHeader->setVat($vat);
+        $tradeHeader->setTotalDue($totalDue);
 
-        return $saleHeader;
+        return $tradeHeader;
     }
 }

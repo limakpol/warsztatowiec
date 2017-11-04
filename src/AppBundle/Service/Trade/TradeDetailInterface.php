@@ -15,4 +15,7 @@ interface TradeDetailInterface extends TradeHeaderInterface
     public function getDiscountPc();
     public function getVatPc();
 
+    public function getDeletedAt();
+    public function getRemovedAt();
+
 }

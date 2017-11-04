@@ -2,17 +2,170 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
+        'assets/css/application/order/indexx_add.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 {% block main %}
+    {{ form_start(form, {'attr': {'class': 'main-form'}}) }}
+        {{ form_widget(form.indexx_id) }}
+        {{ form_widget(form.indexx.good_id) }}
+        <h1 class="h-enum">1. Wybierz towar</h1>
+        <div id="searchable-good" class="searchable">
+            <input type="text" placeholder="Wyszukaj towar">
+            {% if goodError is not null %}
+            <ul>
+                <li>{{ goodError }}</li>
+            </ul>
+            {% endif %}
+            <div>
+                {% include 'SaleBundle:detail:good_searchable_content.html.twig' %}
+            </div>
+        </div>
+        <h1 class="h-enum selected-good">2. Możesz zmienić dane wybranego towaru</h1>
+        <div id="good-form" class="form-part">
+            {{ form_label(form.indexx.good.name) }}
+            {{ form_widget(form.indexx.good.name) }}
+            {{ form_errors(form.indexx.good.name) }}
 
+            {{ form_label(form.indexx.good.measure) }}
+            {{ form_widget(form.indexx.good.measure) }}
+            {{ form_errors(form.indexx.good.measure) }}
+
+            {{ form_label(form.indexx.good.quantity) }}
+            {{ form_widget(form.indexx.good.quantity) }}
+            {{ form_errors(form.indexx.good.quantity) }}
+
+            {{ form_label(form.indexx.good.categories) }}
+
+            <div id="categories-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names"></div>
+                    <div class="ids"></div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
+
+            {{ form_label(form.indexx.good.car_models) }}
+
+            <div id="models-form-selectable-modal" class="form-selectable-modal">
+                <div class="content">
+                    <div class="names"></div>
+                    <div class="ids"></div>
+                </div>
+                <button class="btn-choose">wybierz<i class="fa fa-external-link-square" aria-hidden="true"></i></button>
+            </div>
+
+            {{ form_label(form.indexx.good.remarks) }}
+            {{ form_widget(form.indexx.good.remarks) }}
+            {{ form_errors(form.indexx.good.remarks) }}
+        </div>
+        <h1 class="h-enum">3. Wybierz indeks</h1>
+        <div id="searchable-indexx" class="searchable">
+            <input type="text" placeholder="Wyszukaj indeks">
+            {% if indexxError is not null %}
+                <ul>
+                    <li>{{ indexxError }}</li>
+                </ul>
+            {% endif %}
+            <div>
+                {% include 'SaleBundle:detail:indexx_searchable_content.html.twig' %}
+            </div>
+        </div>
+        <h1 class="h-enum selected-indexx">4. Możesz zmienić dane wybranego indeksu</h1>
+        <div id="indexx-form" class="form-part">
+            {{ form_label(form.indexx.name) }}
+            {{ form_widget(form.indexx.name) }}
+            {{ form_errors(form.indexx.name) }}
+
+            {{ form_label(form.indexx.producer) }}
+            {{ form_widget(form.indexx.producer) }}
+            {{ form_errors(form.indexx.producer) }}
+
+            <div id="new-producer">
+                <label>Nowy producent</label>
+                <div class="form-inputable">
+                    <div class="add">
+                        <div class="selectable">
+                            <input type="text" maxlength="40">
+                        </div>
+                        <button class="btn-square btn-add" data-type="good">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_label(form.indexx.quantity) }}
+            {{ form_widget(form.indexx.quantity) }}
+            {{ form_errors(form.indexx.quantity) }}
+
+            {{ form_label(form.indexx.unit_price_net) }}
+            {{ form_widget(form.indexx.unit_price_net) }}
+            {{ form_errors(form.indexx.unit_price_net) }}
+            <div class="last-prices"></div>
+        </div>
+        <h1 class="h-enum">5. Uzupełnij dane pozycji wystawienia</h1>
+        <div class="form-part">
+            {{ form_label(form.unit_price_net) }}
+            {{ form_widget(form.unit_price_net) }}
+            {{ form_errors(form.unit_price_net) }}
+
+            {{ form_label(form.quantity) }}
+            {{ form_widget(form.quantity) }}
+            {% if exceedQtyError is not null %}
+                <ul>
+                    <li>{{ 'Wpisana ilość towaru przekracza ilość dostępną w magazynie' }}</li>
+                </ul>
+            {% endif %}
+            {{ form_errors(form.quantity) }}
+
+            {{ form_label(form.total_net_before_discount) }}
+            {{ form_widget(form.total_net_before_discount) }}
+            {{ form_errors(form.total_net_before_discount) }}
+
+            {{ form_label(form.discount_pc) }}
+            {{ form_widget(form.discount_pc) }}
+            {{ form_errors(form.discount_pc) }}
+
+            {{ form_label(form.discount) }}
+            {{ form_widget(form.discount) }}
+            {{ form_errors(form.discount) }}
+
+            {{ form_label(form.total_net) }}
+            {{ form_widget(form.total_net) }}
+            {{ form_errors(form.total_net) }}
+
+            {{ form_label(form.vat_pc) }}
+            {{ form_widget(form.vat_pc) }}
+            {{ form_errors(form.vat_pc) }}
+
+            {{ form_label(form.vat) }}
+            {{ form_widget(form.vat) }}
+            {{ form_errors(form.vat) }}
+
+            {{ form_label(form.total_due) }}
+            {{ form_widget(form.total_due) }}
+            {{ form_errors(form.total_due) }}
+
+
+            {{ form_label(form.remarks) }}
+            {{ form_widget(form.remarks) }}
+            {{ form_errors(form.remarks) }}
+
+            {{ form_widget(form._token) }}
+
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'assets/js/application/trade.js'
+        'assets/js/application/trade.js'
+        'assets/js/application/order/indexx_add.js'
+        'assets/js/application/selectable.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

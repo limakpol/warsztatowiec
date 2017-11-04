@@ -1,0 +1,29 @@
+<table>
+    <th class="sort-column" data-column="i.name">Indeks</th>
+    <th class="sort-column" data-column="p.name">Producent</th>
+    <th class="sort-column" data-column="i.quantity">Ilość</th>
+    <th class="sort-column" data-column="i.unit_price_net">Cena jedn. netto</th>
+    {% for indexx in indexxes %}
+        <tr data-id="{{ indexx.id }}">
+            <td class="td-left">{{ indexx.name }}</td>
+            <td class="td-left">{{ indexx.producer.name }}</td>
+            <td class="td-center">{{ indexx.quantity }}</td>
+            <td class="td-center">{{ indexx.unitPriceNet }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<footer>
+    {% if indexxSortableParameters.lastPage > 1 %}
+        <div class="buttons">
+            <button class="prev"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>poprzednia</button>
+            <button class="next">następna<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="page-info">
+            <span>{{ indexxSortableParameters.currentPage }}</span>/<span>{{ indexxSortableParameters.lastPage }}</span>
+        </div>
+    {% endif %}
+    <input type="hidden" class="currentPage" value="{{ indexxSortableParameters['currentPage'] }}">
+    <input type="hidden" class="retrievePath" value="{{ path('sale_retrieve_indexxes') }}">
+    <input type="hidden" class="sortColumnName" value="{{ indexxSortableParameters['sortColumnName'] }}">
+    <input type="hidden" class="sortOrder" value="{{ indexxSortableParameters['sortOrder'] }}">
+</footer>
