@@ -179,6 +179,8 @@ class OrderActionHelper
         $orderHeader = $orderIndexx->getOrderHeader();
         $orderHeader = $this->trade->evaluateOrderHeader($orderHeader);
 
+        $orderAction = $this->assignWorkmans($orderAction);
+
         $em->persist($action);
         $em->persist($orderAction);
         $em->persist($orderIndexx);
@@ -187,5 +189,33 @@ class OrderActionHelper
         $em->flush();
 
         return true;
+    }
+
+    public function assignWorkmans(OrderAction $orderAction)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $workmans = $orderAction->getWorkmans()->toArray();
+
+        $orderAction->getWorkmans()->clear();
+
+        foreach($workmans as $workmanId)
+        {
+            $workman = $em->getRepository('AppBundle:User')->getOne($workshop, $workmanId);
+
+            if(null !== $workman)
+            {
+                $orderAction->addWorkman($workman);
+            }
+        }
+
+        return $orderAction;
     }
 }

@@ -201,8 +201,6 @@ $(document).ready(function() {
 
         input.remove();
     });
-
-
 });
 
 /* FUNCTIONS - CUSTOMER */

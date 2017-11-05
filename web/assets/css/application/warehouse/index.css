@@ -118,7 +118,7 @@
 .filter .content ul {
     list-style: none;
     display: none;
-    height: 250px;
+    max-height: 250px;
     overflow-y: auto;
     border-top: 1px solid #ddd;
     padding: 10px;

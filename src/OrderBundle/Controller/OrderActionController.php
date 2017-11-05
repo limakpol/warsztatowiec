@@ -11,6 +11,7 @@ namespace OrderBundle\Controller;
 
 use OrderBundle\Service\Helper\OrderActionHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WorkflowBundle\Service\Helper\WorkmanIndexHelper;
 
 class OrderActionController extends Controller
 {
@@ -45,6 +46,11 @@ class OrderActionController extends Controller
             ]);
         }
 
+        /** @var WorkmanIndexHelper $workmaIndexxHelper */
+        $workmaIndexxHelper = $this->get('workflow.helper.workman_index');
+
+        $workmans = $workmaIndexxHelper->retrieve();
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
         $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
@@ -54,6 +60,7 @@ class OrderActionController extends Controller
             'tab'           => 'order',
             'navbar'        => 'Dodawanie czynności do towaru w zleceniu',
             'form'          => $form->createView(),
+            'workmans'      => $workmans,
         ]);
     }
 }
