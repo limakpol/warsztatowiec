@@ -8,9 +8,7 @@
 
 namespace OrderBundle\Service\Helper;
 
-
 use AppBundle\Entity\OrderHeader;
-use AppBundle\Entity\OrderIndexx;
 use AppBundle\Entity\OrderService;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\User;

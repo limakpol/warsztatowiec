@@ -109,7 +109,6 @@ $(document).ready(function()
                 orderHeaderId: orderHeaderId,
             },
             success: function(data) {
-                console.log(data['data'][0]);
                 $('#input-paid').addClass('input-disabled');
                 $('#paid-buttons').hide('slow');
 
@@ -121,6 +120,7 @@ $(document).ready(function()
                 else
                 {
                     var paidAmount = $('#paid-amount').val();
+
                     $('#input-paid').val(paidAmount);
                 }
             }

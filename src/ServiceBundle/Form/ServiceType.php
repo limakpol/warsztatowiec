@@ -8,7 +8,6 @@
 
 namespace ServiceBundle\Form;
 
-
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\User;

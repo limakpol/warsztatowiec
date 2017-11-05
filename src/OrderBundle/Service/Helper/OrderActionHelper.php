@@ -9,31 +9,21 @@
 namespace OrderBundle\Service\Helper;
 
 use AppBundle\Entity\Action;
-use AppBundle\Entity\Address;
-use AppBundle\Entity\CarModel;
-use AppBundle\Entity\Customer;
 use AppBundle\Entity\OrderAction;
 use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\OrderIndexx;
-use AppBundle\Entity\OrderSymptom;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
-use CustomerBundle\Service\Helper\CustomerAddHelper;
-use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use OrderBundle\Form\OrderActionType;
-use OrderBundle\Form\OrderHeaderAddType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use VehicleBundle\Service\Helper\VehicleAddHelper;
-use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
 class OrderActionHelper
 {

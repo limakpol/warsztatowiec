@@ -8,7 +8,6 @@
 
 namespace OrderBundle\Controller;
 
-
 use AppBundle\Entity\OrderFault;
 use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\OrderSymptom;
@@ -19,8 +18,6 @@ use Doctrine\ORM\EntityManager;
 use OrderBundle\Service\Helper\OrderHeaderAddHelper;
 use OrderBundle\Service\Helper\OrderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use VehicleBundle\Service\Helper\VehicleIndexHelper;
 
 class OrderHeaderController extends Controller

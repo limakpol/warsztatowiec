@@ -6,7 +6,6 @@ use AppBundle\Entity\Measure;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
-use AppBundle\Service\PriceTransformer;
 use AppBundle\Service\Trade\Trade;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;

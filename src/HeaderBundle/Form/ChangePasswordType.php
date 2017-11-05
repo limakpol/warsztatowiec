@@ -2,7 +2,6 @@
 
 namespace HeaderBundle\Form;
 
-use AppBundle\Form\Validator\Constraint\OldPassword;
 use AppBundle\Form\Validator\Constraint\Password;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

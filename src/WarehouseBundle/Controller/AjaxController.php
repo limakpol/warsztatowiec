@@ -8,7 +8,6 @@
 
 namespace WarehouseBundle\Controller;
 
-
 use AppBundle\Entity\CarBrand;
 use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Category;
@@ -22,7 +21,6 @@ use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AjaxController extends Controller
 {

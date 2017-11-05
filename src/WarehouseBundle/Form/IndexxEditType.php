@@ -2,7 +2,6 @@
 
 namespace WarehouseBundle\Form;
 
-use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\Producer;
 use AppBundle\Entity\User;
@@ -10,13 +9,11 @@ use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Validator\Constraints\Valid;
 
 class IndexxEditType extends AbstractType
 {

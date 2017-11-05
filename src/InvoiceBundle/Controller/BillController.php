@@ -8,7 +8,6 @@
 
 namespace InvoiceBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BillController extends Controller

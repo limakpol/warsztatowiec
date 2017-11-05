@@ -2,7 +2,6 @@
 
 namespace HeaderBundle\Service\Helper\Crud;
 
-
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;

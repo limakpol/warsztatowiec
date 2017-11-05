@@ -8,7 +8,6 @@
 
 namespace HeaderBundle\Service\Helper\Workshop;
 
-
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Parameters;
 use AppBundle\Entity\Settings;
@@ -18,7 +17,6 @@ use AppBundle\Service\Helper\App\Register;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use HeaderBundle\Form\WorkshopAddType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

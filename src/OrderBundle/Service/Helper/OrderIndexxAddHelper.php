@@ -8,21 +8,15 @@
 
 namespace OrderBundle\Service\Helper;
 
-use AppBundle\Entity\IndexxEdit;
 use AppBundle\Entity\OrderIndexx;
 use AppBundle\Entity\OrderHeader;
-use AppBundle\Entity\Good;
-use AppBundle\Entity\Indexx;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
-use OrderBundle\Form\OrderIndexxAddType;
 use Doctrine\ORM\EntityManager;
 use SaleBundle\Service\Helper\SaleDetailAddHelper;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use WarehouseBundle\Service\Helper\GoodHelper;

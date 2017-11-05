@@ -8,7 +8,6 @@
 
 namespace WorkflowBundle\Service\Helper;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;

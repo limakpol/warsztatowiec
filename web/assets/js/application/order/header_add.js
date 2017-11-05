@@ -636,7 +636,6 @@ function getModels(brandName)
 }
 function insertSymptom(symptom)
 {
-    console.log(symptom);
     if(symptom == '') return;
 
     var error = false;

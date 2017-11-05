@@ -2,7 +2,6 @@
 
 namespace VehicleBundle\Service\Helper;
 
-use AppBundle\Entity\Address;
 use AppBundle\Entity\CarBrand;
 use AppBundle\Entity\CarModel;
 use AppBundle\Entity\Vehicle;
@@ -16,7 +15,6 @@ use HeaderBundle\Service\Helper\Crud\CarModelHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

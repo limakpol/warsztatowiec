@@ -3,7 +3,6 @@
 namespace WorkflowBundle\Service\Helper;
 
 use AppBundle\Entity\Address;
-use AppBundle\Entity\Position;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRole;
 use AppBundle\Entity\Workshop;

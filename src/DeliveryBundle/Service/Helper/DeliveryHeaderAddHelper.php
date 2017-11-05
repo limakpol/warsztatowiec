@@ -5,7 +5,6 @@ namespace DeliveryBundle\Service\Helper;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\DeliveryHeader;
-use AppBundle\Entity\Groupp;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;

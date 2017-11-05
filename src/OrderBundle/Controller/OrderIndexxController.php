@@ -8,7 +8,6 @@
 
 namespace OrderBundle\Controller;
 
-
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\OrderIndexx;

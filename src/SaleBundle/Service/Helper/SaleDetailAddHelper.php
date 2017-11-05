@@ -8,23 +8,16 @@
 
 namespace SaleBundle\Service\Helper;
 
-use AppBundle\Entity\IndexxEdit;
 use AppBundle\Entity\SaleDetail;
 use AppBundle\Entity\SaleHeader;
 use AppBundle\Entity\Good;
-use AppBundle\Entity\Indexx;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use AppBundle\Service\Trade\Trade;
 use AppBundle\Service\Trade\TradeDetailInterface;
-use AppBundle\Service\Trade\TradeHeaderInterface;
-use Doctrine\Common\Collections\Collection;
-use SaleBundle\Form\SaleDetailAddType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use WarehouseBundle\Service\Helper\GoodHelper;

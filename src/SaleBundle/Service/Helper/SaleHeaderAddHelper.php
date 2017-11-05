@@ -7,7 +7,6 @@ use AppBundle\Entity\Customer;
 use AppBundle\Entity\SaleHeader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
-use AppBundle\Service\Trade\Trade;
 use CustomerBundle\Service\Helper\CustomerAddHelper;
 use CustomerBundle\Service\Helper\CustomerIndexHelper;
 use SaleBundle\Form\SaleHeaderAddType;

@@ -2,8 +2,6 @@
 
 namespace WarehouseBundle\Form;
 
-use AppBundle\Entity\CarModel;
-use AppBundle\Entity\Category;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\User;

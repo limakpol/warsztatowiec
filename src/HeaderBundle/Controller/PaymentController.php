@@ -8,7 +8,6 @@
 
 namespace HeaderBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PaymentController extends Controller

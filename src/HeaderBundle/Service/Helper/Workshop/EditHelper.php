@@ -8,7 +8,6 @@
 
 namespace HeaderBundle\Service\Helper\Workshop;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManagerInterface;

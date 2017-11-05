@@ -2,9 +2,7 @@
 
 namespace HeaderBundle\Service\Helper\Crud;
 
-
 use AppBundle\Entity\CarBrand;
-use AppBundle\Entity\CarModel;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;

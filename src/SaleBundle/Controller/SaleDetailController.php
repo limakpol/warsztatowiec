@@ -8,7 +8,6 @@
 
 namespace SaleBundle\Controller;
 
-
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\SaleDetail;
@@ -18,7 +17,6 @@ use Doctrine\ORM\EntityManager;
 use SaleBundle\Form\SaleDetailAddType;
 use SaleBundle\Service\Helper\SaleDetailAddHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
 use WarehouseBundle\Service\Helper\GoodHelper;
 use WarehouseBundle\Service\Helper\IndexxHelper;
 

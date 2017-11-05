@@ -8,7 +8,6 @@
 
 namespace OrderBundle\Service\Helper;
 
-
 use AppBundle\Entity\OrderFault;
 use AppBundle\Entity\OrderHeader;
 use AppBundle\Entity\OrderSymptom;

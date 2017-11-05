@@ -8,7 +8,6 @@
 
 namespace WorkflowBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ScheduleController extends Controller

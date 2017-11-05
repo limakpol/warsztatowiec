@@ -8,7 +8,6 @@
 
 namespace WarehouseBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProducerController extends Controller

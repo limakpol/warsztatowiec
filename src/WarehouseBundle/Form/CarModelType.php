@@ -8,7 +8,6 @@
 
 namespace WarehouseBundle\Form;
 
-
 use AppBundle\Entity\CarModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

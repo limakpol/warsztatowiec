@@ -8,12 +8,10 @@
 
 namespace SaleBundle\Form;
 
-
 use AppBundle\Entity\SaleDetail;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

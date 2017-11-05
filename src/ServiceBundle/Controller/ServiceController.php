@@ -2,9 +2,7 @@
 
 namespace ServiceBundle\Controller;
 
-use AppBundle\Entity\OrderService;
 use Doctrine\ORM\Query;
-use OrderBundle\Service\Helper\OrderServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

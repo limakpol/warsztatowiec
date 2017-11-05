@@ -3,7 +3,6 @@
 namespace VehicleBundle\Controller;
 
 use AppBundle\Entity\CarBrand;
-use AppBundle\Entity\Customer;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
