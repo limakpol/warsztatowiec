@@ -80,7 +80,13 @@
 .show-box .details-table tr.header.no-slide {
     cursor: auto;
 }
-
+.show-box .details-table tr.header.no-slide td:not(:last-child) a {
+    color: #333;
+    text-decoration: none;
+}
+.show-box .details-table tr.header.no-slide td:not(:last-child) a:hover {
+    text-decoration: underline;
+}
 .show-box .details-table tr.header td {
     padding: 5px;
     border: 1px solid #fefefe;

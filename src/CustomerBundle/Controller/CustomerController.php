@@ -86,6 +86,10 @@ class CustomerController extends Controller
             return $this->redirectToRoute('customer_index');
         }
 
+        $orderHeaders       = $customerShowHelper->getOrderHeaders($customer);
+        $deliveryHeaders    = $customerShowHelper->getDeliveryHeaders($customer);
+        $saleHeaders        = $customerShowHelper->getSaleHeaders($customer);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
         $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
@@ -95,6 +99,9 @@ class CustomerController extends Controller
             'tab'           => 'customer',
             'navbar'        => 'Klient',
             'customer'      => $customer,
+            'orderHeaders'  => $orderHeaders,
+            'deliveryHeaders' => $deliveryHeaders,
+            'saleHeaders'   => $saleHeaders,
         ]);
     }
 

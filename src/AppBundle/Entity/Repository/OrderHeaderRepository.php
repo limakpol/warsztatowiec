@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\Query;
 
@@ -190,5 +193,80 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
         ;
 
         return $countOrderHeaders;
+    }
+
+    public function retrieveByCustomer(Workshop $workshop, Customer $customer)
+    {
+        $orderHeaders = $this->_em
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->innerJoin('AppBundle:Customer', 'c', 'WITH', 'o.customer_id = c.id')
+            ->where('o.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('c.id IN (:customerIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':customerIds' => [$customer->getId()],
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderHeaders;
+    }
+
+    public function retrieveByVehicle(Workshop $workshop, Vehicle $vehicle)
+    {
+        $orderHeaders = $this->_em
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->innerJoin('AppBundle:Vehicle', 'v', 'WITH', 'o.vehicle_id = v.id')
+            ->where('o.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('v.id IN (:vehicleIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':vehicleIds' => [$vehicle->getId()],
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderHeaders;
+    }
+
+    public function retrieveByWorkman(Workshop $workshop, User $workman)
+    {
+        $orderHeaders = $this->_em
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('AppBundle:OrderHeader', 'o')
+            ->leftJoin('AppBundle:OrderService', 's', 'WITH', 's.order_header_id = o.id')
+            ->leftJoin('AppBundle:OrderIndexx', 'i', 'WITH', 'i.order_header_id = o.id')
+            ->leftJoin('AppBundle:OrderAction', 'a', 'WITH', 'a.order_indexx_id = i.id')
+            ->leftJoin('s.workmans', 'w1')
+            ->where('o.removed_at IS NULL')
+            ->andWhere('o.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->andWhere('s.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('i.deleted_at IS NULL')
+            ->andWhere('a.removed_at IS NULL')
+            ->andWhere('a.deleted_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('w1.id IN (:workmanIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':workmanIds' => [$workman->getId()],
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $orderHeaders;
     }
 }

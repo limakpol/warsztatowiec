@@ -72,16 +72,29 @@ class VehicleController extends Controller
 
     public function showAction($vehicleId)
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $vehicleShowHelper = $this->get('vehicle.helper.show');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        /** @var Vehicle $vehicle */
+        $vehicle = $vehicleShowHelper->getVehicle($vehicleId);
+
+        if(null === $vehicle)
+        {
+            return $this->redirectToRoute('vehicle_index');
+        }
+
+        $orderHeaders       = $vehicleShowHelper->getOrderHeaders($vehicle);
+
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         return $this->render('VehicleBundle::show.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'customer',
             'navbar'        => 'Pojazd',
+            'vehicle'       => $vehicle,
             'vehicleId'     => $vehicleId,
+            'orderHeaders'  => $orderHeaders,
         ]);
     }
 

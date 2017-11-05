@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\Query;
 
@@ -159,5 +160,26 @@ class SaleHeaderRepository extends \Doctrine\ORM\EntityRepository
 
         return $countSaleHeaders;
     }
-    
+
+    public function retrieveByCustomer(Workshop $workshop, Customer $customer)
+    {
+        $saleHeaders = $this->_em
+            ->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:SaleHeader', 's')
+            ->innerJoin('AppBundle:Customer', 'c', 'WITH', 's.customer_id = c.id')
+            ->where('s.removed_at IS NULL')
+            ->andWhere('s.deleted_at IS NULL')
+            ->andWhere('s.workshop = :workshop')
+            ->andWhere('c.id IN (:customerIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':customerIds' => [$customer->getId()],
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $saleHeaders;
+    }
 }

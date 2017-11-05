@@ -20,3 +20,7 @@ services:
     vehicle.helper.index:
         class: VehicleBundle\Service\Helper\VehicleIndexHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+        
+    vehicle.helper.show:
+        class: VehicleBundle\Service\Helper\VehicleShowHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager"]

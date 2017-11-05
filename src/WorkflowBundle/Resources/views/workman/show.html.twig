@@ -122,7 +122,7 @@
                 </tr>
                 <tr class="footer">
                     <td colspan="2">
-                        <a class="btn-edit" target="_blank">edytuj
+                        <a class="btn-edit">edytuj
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
                         <button class="btn-remove">usuń
@@ -130,6 +130,55 @@
                         </button>
                     </td>
                 </tr>
+            </table>
+        </section>
+    </div>
+    <div class="show-box">
+        <h1>
+            <label>Zlecenia serwisowe</label>
+        </h1>
+        <section>
+            <table class="details-table">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Data utworzenia</th>
+                    <th>Pojazd</th>
+                    <th>Klient</th>
+                    <th>Należność całkowita</th>
+                    <th>Zakończone</th>
+                    <th>Zapłacone</th>
+                    <th></th>
+                </tr>
+                {% for key, orderHeader in orderHeaders %}
+                    <tr class="header no-slide">
+                        <td class="td-center num">{{ key+1 }}.</td>
+                        <td class="td-center date">{{ orderHeader.createdAt|date }}</td>
+                        <td class="td-left">
+                            <a href="{{ path('vehicle_show', {vehicleId: orderHeader.vehicle.id}) }}">{{ orderHeader.vehicle.carModel.brand.name }} {{ orderHeader.vehicle.carModel.name }}</a>
+                        </td>
+                        <td class="td-left">
+                            <a href="{{ path('customer_show', {customerId: orderHeader.customer.id}) }}">{{ orderHeader.customer.forename }} {{ orderHeader.customer.surname }} {{ orderHeader.customer.companyName }}</a>
+                        </td>
+                        <td class="td-center">{{ orderHeader.totalDue|money }}zł</td>
+                        <td class="td-center">
+                            {% if orderHeader.completedAt is null %}
+                                NIE
+                            {% else %}
+                                {{ orderHeader.completedAt|date }}
+                            {% endif %}
+                        </td>
+                        <td class="td-center">
+                            {% if orderHeader.paidAt is null %}
+                                NIE
+                            {% else %}
+                                {{ orderHeader.paidAt|date }}
+                            {% endif %}
+                        </td>
+                        <td class="td-center">
+                            <a class="btn-info" href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </table>
         </section>
     </div>

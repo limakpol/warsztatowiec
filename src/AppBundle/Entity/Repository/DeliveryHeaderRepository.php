@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\Query;
 
@@ -116,5 +117,27 @@ class DeliveryHeaderRepository extends \Doctrine\ORM\EntityRepository
         ;
 
         return $countDeliveryHeaders;
+    }
+
+    public function retrieveByCustomer(Workshop $workshop, Customer $customer)
+    {
+        $deliveryHeaders = $this->_em
+            ->createQueryBuilder()
+            ->select('d')
+            ->from('AppBundle:DeliveryHeader', 'd')
+            ->innerJoin('AppBundle:Customer', 'c', 'WITH', 'd.customer_id = c.id')
+            ->where('d.removed_at IS NULL')
+            ->andWhere('d.deleted_at IS NULL')
+            ->andWhere('d.workshop = :workshop')
+            ->andWhere('c.id IN (:customerIds)')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':customerIds' => [$customer->getId()],
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $deliveryHeaders;
     }
 }

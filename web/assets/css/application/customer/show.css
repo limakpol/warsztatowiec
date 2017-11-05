@@ -1,0 +1,9 @@
+.info-table td:first-child {
+    width: 20%;
+}
+.details-table td.date {
+    white-space: nowrap;
+}
+.details-table td.remarks {
+    width: 350px;
+}

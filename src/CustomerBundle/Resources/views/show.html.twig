@@ -2,7 +2,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-    'assets/css/application/customer/customer_show.css'
+    'assets/css/application/customer/show.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -98,7 +98,7 @@
                 </tr>
                 <tr class="footer">
                     <td colspan="2">
-                        <a class="btn-edit" target="_blank">edytuj
+                        <a class="btn-edit">edytuj
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
                         <button class="btn-remove">usuń
@@ -116,6 +116,7 @@
         <section>
             <table class="details-table">
                 <tr>
+                    <th>L.p.</th>
                     <th>Marka</th>
                     <th>Model</th>
                     <th>Wersja</th>
@@ -124,9 +125,10 @@
                     <th>Status klienta</th>
                     <th></th>
                 </tr>
-                {% for vehicle in customer.vehicles %}
+                {% for key, vehicle in customer.vehicles %}
                     {% if vehicle.removedAt is null and vehicle.deletedAt is null %}
                         <tr class="header no-slide">
+                            <td class="td-center num">{{ key+1 }}</td>
                             <td class="td-left">{{ vehicle.carModel.brand.name }}</td>
                             <td class="td-left">{{ vehicle.carModel.name }}</td>
                             <td class="td-left">{{ vehicle.version }}</td>
@@ -150,7 +152,48 @@
         <h1>
             <label>Zlecenia serwisowe</label>
         </h1>
-        <section></section>
+        <section>
+            <table class="details-table">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Data utworzenia</th>
+                    <th>Pojazd</th>
+                    <th>Nr rejestracyjny</th>
+                    <th>Należność całkowita</th>
+                    <th>Zakończone</th>
+                    <th>Zapłacone</th>
+                    <th></th>
+                </tr>
+                {% for key, orderHeader in orderHeaders %}
+                    <tr class="header no-slide">
+                        <td class="td-center num">{{ key+1 }}.</td>
+                        <td class="td-center date">{{ orderHeader.createdAt|date }}</td>
+                        <td class="td-left">
+                            <a href="{{ path('vehicle_show', {vehicleId: orderHeader.vehicle.id}) }}">{{ orderHeader.vehicle.carModel.brand.name }} {{ orderHeader.vehicle.carModel.name }}</a>
+                        </td>
+                        <td class="td-center">{{ orderHeader.vehicle.registrationNumber }}</td>
+                        <td class="td-center">{{ orderHeader.totalDue|money }}zł</td>
+                        <td class="td-center">
+                            {% if orderHeader.completedAt is null %}
+                            NIE
+                            {% else %}
+                                {{ orderHeader.completedAt|date }}
+                            {% endif %}
+                        </td>
+                        <td class="td-center">
+                            {% if orderHeader.paidAt is null %}
+                                NIE
+                            {% else %}
+                                {{ orderHeader.paidAt|date }}
+                            {% endif %}
+                        </td>
+                        <td class="td-center">
+                            <a class="btn-info" href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>
@@ -172,13 +215,71 @@
         <h1>
             <label>Przyjęcia towaru</label>
         </h1>
-        <section></section>
+        <section>
+            <table class="details-table">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Data utworzenia</th>
+                    <th>Dokument</th>
+                    <th>Netto [zł]</th>
+                    <th>VAT [zł]</th>
+                    <th>Brutto [zł]</th>
+                    <th>Uwagi</th>
+                    <th></th>
+                </tr>
+                {% for key, deliveryHeader in deliveryHeaders %}
+                    <tr class="header no-slide">
+                        <td class="td-center num">{{ key+1 }}</td>
+                        <td class="td-center date">
+                            {{ deliveryHeader.createdAt|date }}
+                        </td>
+                        <td class="td-center">{{ deliveryHeader.documentNumber }}</td>
+                        <td class="td-center">{{ deliveryHeader.totalNet|money }}</td>
+                        <td class="td-center">{{ deliveryHeader.vat|money }}</td>
+                        <td class="td-center">{{ deliveryHeader.totalDue|money }}</td>
+                        <td class="td-left remarks">{{ deliveryHeader.remarks }}</td>
+                        <td class="td-center"> 
+                            <a class="btn-info" href="{{ path('delivery_show', {deliveryHeaderId: deliveryHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>
             <label>Wystawienia towaru</label>
         </h1>
-        <section></section>
+        <section>
+            <table class="details-table">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Data utworzenia</th>
+                    <th>Dokument</th>
+                    <th>Netto [zł]</th>
+                    <th>VAT [zł]</th>
+                    <th>Brutto [zł]</th>
+                    <th>Uwagi</th>
+                    <th></th>
+                </tr>
+                {% for key, saleHeader in saleHeaders %}
+                    <tr class="header no-slide">
+                        <td class="td-center num">{{ key+1 }}</td>
+                        <td class="td-center date">
+                            {{ saleHeader.createdAt|date }}
+                        </td>
+                        <td class="td-center">{{ saleHeader.documentNumber }}</td>
+                        <td class="td-center">{{ saleHeader.totalNet|money }}</td>
+                        <td class="td-center">{{ saleHeader.vat|money }}</td>
+                        <td class="td-center">{{ saleHeader.totalDue|money }}</td>
+                        <td class="td-left remarks">{{ saleHeader.remarks }}</td>
+                        <td class="td-center">
+                            <a class="btn-info" href="{{ path('sale_show', {saleHeaderId: saleHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </section>
     </div>
     <div class="show-box">
         <h1>

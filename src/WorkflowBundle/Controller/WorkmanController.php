@@ -115,6 +115,13 @@ class WorkmanController extends Controller
         /** @var User $workman */
         $workman = $em->getRepository('AppBundle:User')->getOne([$workshop->getId()], $userId);
 
+        if(null === $workman)
+        {
+            return $this->redirectToRoute('workflow_workman_index');
+        }
+
+        $orderHeaders = $em->getRepository('AppBundle:OrderHeader')->retrieveByWorkman($workshop, $workman);
+
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
@@ -125,6 +132,7 @@ class WorkmanController extends Controller
             'tab'           => 'workflow',
             'navbar'        => 'Pracownik',
             'workman'       => $workman,
+            'orderHeaders'  => $orderHeaders,
         ]);
     }
 }

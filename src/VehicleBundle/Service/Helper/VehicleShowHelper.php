@@ -3,13 +3,14 @@
  * Created by PhpStorm.
  * User: limakpol
  * Date: 11/5/17
- * Time: 2:55 AM
+ * Time: 7:01 AM
  */
 
-namespace CustomerBundle\Service\Helper;
+namespace VehicleBundle\Service\Helper;
 
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Vehicle;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class CustomerShowHelper
+class VehicleShowHelper
 {
     private $requestStack;
     private $tokenStorage;
@@ -34,7 +35,7 @@ class CustomerShowHelper
         $this->entityManager    = $entityManager;
     }
 
-    public function getCustomer($customerId)
+    public function getVehicle($vehicleId)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -45,12 +46,12 @@ class CustomerShowHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $customer = $em->getRepository('AppBundle:Customer')->getOne($workshop, $customerId);
+        $vehicle = $em->getRepository('AppBundle:Vehicle')->getOne($workshop, $vehicleId);
 
-        return $customer;
+        return $vehicle;
     }
 
-    public function getOrderHeaders(Customer $customer)
+    public function getOrderHeaders(Vehicle $vehicle)
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -61,40 +62,10 @@ class CustomerShowHelper
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
 
-        $orderHeaders = $em->getRepository('AppBundle:OrderHeader')->retrieveByCustomer($workshop, $customer);
+        $orderHeaders = $em->getRepository('AppBundle:OrderHeader')->retrieveByVehicle($workshop, $vehicle);
 
         return $orderHeaders;
     }
 
-    public function getDeliveryHeaders(Customer $customer)
-    {
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
 
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $deliveryHeaders = $em->getRepository('AppBundle:DeliveryHeader')->retrieveByCustomer($workshop, $customer);
-
-        return $deliveryHeaders;
-    }
-
-    public function getSaleHeaders(Customer $customer)
-    {
-        /** @var EntityManager $em */
-        $em = $this->entityManager;
-
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        /** @var Workshop $workshop */
-        $workshop = $user->getCurrentWorkshop();
-
-        $saleHeaders = $em->getRepository('AppBundle:SaleHeader')->retrieveByCustomer($workshop, $customer);
-
-        return $saleHeaders;
-    }
 }
