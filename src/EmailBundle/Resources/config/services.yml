@@ -1,1 +1,7 @@
 services:
+    email.message:
+      class: EmailBundle\Service\Message
+
+    email.mailer:
+      class: EmailBundle\Service\Mailer
+      arguments: ["%aws_ses%"]

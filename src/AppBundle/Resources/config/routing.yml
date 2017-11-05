@@ -17,3 +17,7 @@ app_login:
 app_logout:
     path: /wyloguj
     defaults: { _controller: AppBundle:App:logout }
+
+app_workshop_send_comment:
+    path: /workshop/send-comment
+    defaults: { _controller: AppBundle:Workshop:sendComment }

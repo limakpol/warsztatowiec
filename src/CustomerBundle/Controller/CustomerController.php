@@ -8,6 +8,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use EmailBundle\Service\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class CustomerController extends Controller
         $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
 
         $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+
 
         return $this->render('CustomerBundle::index.html.twig', [
             'headerMenu'    => $headerMenu,
@@ -196,5 +198,34 @@ class CustomerController extends Controller
         }
 
         return new JsonResponse([$customer, $address, $groupps]);
+    }
+
+    public function sendEventAction()
+    {
+        /** @var User $user */
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        $mailer = $this->get('email.mailer');
+
+        $userName = $user->getForename() . ' ' . $user->getSurname();
+
+        $body = $this->render('AppBundle:mailing:customer_index_event.html.twig', [
+            'date' => new \DateTime(),
+            'userName' => $userName,
+            'workshopName' => $workshop->getName(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone1(),
+        ]);
+
+        $message = new Message();
+
+        $message->setTo('kontakt@warsztatowiec.pl');
+        $message->setSubject('Użytkownik wszedł na stronę klientów');
+        $message->setBody($body);
+
+        $mailer->send($message);
     }
 }

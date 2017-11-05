@@ -36,7 +36,7 @@ parameters:
               - brand: 'Fiat'
                 models: ["Brava", "Cinquecento", "Ducato", "Palio", "Panda", "Punto", "Seicento", "Stilo"]
               - brand: 'Opel'
-                models: ["Astra", "Corsa", "Kadett", "omega", "Vectra", "Zafira"]
+                models: ["Astra", "Corsa", "Kadett", "Omega", "Vectra", "Zafira"]
               - brand: 'Renault'
                 models: ["Clio", "Espace", "Kangoo", "Laguna", "Megane", "Twingo"]
               - brand: 'Skoda'

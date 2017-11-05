@@ -249,6 +249,7 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('AppBundle:OrderIndexx', 'i', 'WITH', 'i.order_header_id = o.id')
             ->leftJoin('AppBundle:OrderAction', 'a', 'WITH', 'a.order_indexx_id = i.id')
             ->leftJoin('s.workmans', 'w1')
+            ->leftJoin('a.workmans', 'w2')
             ->where('o.removed_at IS NULL')
             ->andWhere('o.deleted_at IS NULL')
             ->andWhere('s.removed_at IS NULL')
@@ -258,7 +259,7 @@ class OrderHeaderRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('a.removed_at IS NULL')
             ->andWhere('a.deleted_at IS NULL')
             ->andWhere('o.workshop = :workshop')
-            ->andWhere('w1.id IN (:workmanIds)')
+            ->andWhere('w1.id IN (:workmanIds) OR w2.id IN (:workmanIds)')
             ->setParameters([
                 ':workshop' => $workshop,
                 ':workmanIds' => [$workman->getId()],

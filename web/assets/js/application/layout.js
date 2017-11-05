@@ -28,6 +28,37 @@ $(document).ready(function()
             }
         });
     });
+
+    $(document).on('click', '#workshop-comments div button', function(event){
+        event.preventDefault();
+
+        var comment = $('#workshop-comments textarea').val();
+
+        if(comment.length < 3) return;
+
+        var path = window.location.href;
+        var button = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: "/workshop/send-comment",
+            data: {
+                comment: comment,
+                path: path,
+            },
+            success: function(data) {
+                button.text('dziękujemy!').addClass('btn-success');
+                $('#workshop-comments textarea').val('').change();
+
+                window.setTimeout(function()
+                {
+                    button.text('wyślij').removeClass('btn-success');
+                    addIcon();
+                }, 1500);
+            }
+    });
+    });
+
 });
 
 function headerToggle()

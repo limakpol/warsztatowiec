@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    sendEvent();
     var globalTimeout = null;
     $(document).on('keyup', '#div-customer-sortable .input-search', function()
     {
@@ -148,4 +149,15 @@ function reCheckButton(button)
     {
         button.addClass('active');
     }
+}
+function sendEvent()
+{
+
+    $.ajax({
+        type: "POST",
+        url: "/customer-index/send-event",
+        success: function(data)
+        {
+        }
+    });
 }

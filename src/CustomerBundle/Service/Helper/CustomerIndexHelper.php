@@ -13,6 +13,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use EmailBundle\Service\Mailer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +27,16 @@ class CustomerIndexHelper
     private $formFactory;
     private $entityManager;
     private $container;
+    private $mailer;
 
-    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, EntityManagerInterface $entityManager, ContainerInterface $container)
+    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, FormFactoryInterface $formFactory, EntityManagerInterface $entityManager, ContainerInterface $container, Mailer $mailer)
     {
         $this->requestStack     = $requestStack;
         $this->tokenStorage     = $tokenStorage;
         $this->formFactory      = $formFactory;
         $this->entityManager    = $entityManager;
         $this->container        = $container;
+        $this->mailer           = $mailer;
     }
 
     public function retrieve($sortableParameters)
@@ -152,5 +155,7 @@ class CustomerIndexHelper
 
         return $outputSortableParameters;
     }
+
+
 
 }

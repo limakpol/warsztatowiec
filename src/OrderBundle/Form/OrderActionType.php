@@ -46,7 +46,7 @@ class OrderActionType extends AbstractType
 
         $builder
             ->add('action', EntityType::class, [
-                'label' => 'Jednostka',
+                'label' => 'Czynność',
                 'placeholder' => '-- nowa --',
                 'required' => false,
                 'class' => Action::class,

@@ -1,5 +1,14 @@
 <div>
-    <span>Warsztatowiec.pl</span>
-    <span><strong>tel.</strong> 721-470-723</span>
-    <span><strong>e-mail:</strong> kontakt@warsztatowiec.pl</span>
+    <div id="company-contact">
+        <span>Warsztatowiec.pl</span>
+        <span><strong>tel.</strong> 721-470-723</span>
+        <span><strong>e-mail:</strong> kontakt@warsztatowiec.pl</span>
+    </div>
+    <div id="workshop-comments">
+        <label>Prosimy, wpisz swoje uwagi do strony: {{ app.request.requestUri }}:</label>
+        <div>
+            <textarea maxlength="1000"></textarea>
+            <button class="btn-info add-i" data-add-i="paper-plane">wyślij<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </div>
+    </div>
 </div>

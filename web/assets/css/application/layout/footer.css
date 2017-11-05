@@ -3,12 +3,47 @@ section.footer {
     bottom: 0;
     height: 150px;
 }
-footer.section-inner div {
+footer.section-inner > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     color: #fff;
     font: 14px "Ubuntu", sans-serif;
     margin: 1vw;
+}
+footer.section-inner #company-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+footer.section-inner #workshop-comments {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 0 0 60px;
+}
+footer.section-inner #workshop-comments label {
+    font: bold 14px 'Ubuntu', sans-serif;
+    color: #fff;
+    margin-left: 3px;
+}
+footer.section-inner #workshop-comments div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 3px;
+}
+footer.section-inner #workshop-comments div textarea {
+    resize: none;
+    overflow-y: auto;
+    width: 400px;
+    height: 90px;
+    font: 13px 'Arial', sans-serif;
+    color: #333;
+}
+footer.section-inner #workshop-comments div button {
+    margin: 0 0 0 10px;
 }
 footer.section-inner div span:nth-child(1) {
     font-weight: bold;
