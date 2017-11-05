@@ -103,19 +103,7 @@ $(document).ready(function() {
                         $(cssId).val(data[value]).change();
                     }
                     $('#order_service_service_measure').val(data['measure_id']).change();
-                    /*
-                    var buttonsLabels = $('#service-form .div-form-labels .service-btn-filter-custom');
 
-
-                    for (var key in data[2]) {
-                        buttonsLabels.each(function () {
-                            if ($(this).text() == data[2][key]) {
-                                $(this).addClass('active');
-                                $(this).after('<input class="groupp" type="hidden" name="order_service[service][groupps][' + key + '][name]" required="required" value="' + data[2][key] + '">');
-                            }
-                        });
-                    }
-                    */
                     $('.h-enum.selected-service').text('2. Możesz przejrzeć i zmienić dane usługi');
 
                     $('#searchable-service > div').slideUp();
@@ -171,6 +159,49 @@ $(document).ready(function() {
             $(this).val('');
         }
     });
+    
+    /* WORKMANS */
+
+    $(document).on('click', '.main-form .multiselect .selector', function()
+    {
+        $(this).parent().find('.content ul').slideToggle();
+
+        if($(this).find('i').hasClass('fa-chevron-down'))
+        {
+            $(this).find('i').removeClass('fa-chevron-down');
+            $(this).find('i').addClass('fa-chevron-up');
+        }
+        else
+        {
+            $(this).find('i').removeClass('fa-chevron-up');
+            $(this).find('i').addClass('fa-chevron-down');
+        }
+
+    });
+
+    $(document).on('click', '.main-form .multiselect .content ul li:not(.active)', function()
+    {
+        $(this).addClass('active');
+
+        var id = $(this).data('id');
+
+        var input = '<input type="hidden" name="order_service[workmans][]" value="' + id + '">';
+
+        $('#workmans .ids').append(input);
+
+    });
+
+    $(document).on('click', '.main-form .multiselect .content ul li.active', function()
+    {
+        $(this).removeClass('active');
+
+        var id = $(this).data('id');
+
+        var input = $('#workmans .ids input[value=' + id + ']');
+
+        input.remove();
+    });
+
 
 });
 

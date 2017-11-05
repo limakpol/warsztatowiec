@@ -36,7 +36,7 @@ class WorkmanIndexHelper
         $this->container        = $container;
     }
 
-    public function retrieve($sortableParameters)
+    public function retrieve($sortableParameters = [])
     {
         /** @var EntityManager $em */
         $em = $this->entityManager;
@@ -46,6 +46,11 @@ class WorkmanIndexHelper
 
         /** @var Workshop $workshop */
         $workshop = $user->getCurrentWorkshop();
+
+        if(!$sortableParameters)
+        {
+            $sortableParameters = $this->getSortableParameters();
+        }
 
         $users = $em->getRepository('AppBundle:User')->retrieve($workshop, $sortableParameters);
 
@@ -135,6 +140,14 @@ class WorkmanIndexHelper
         ];
 
         return $outputSortableParameters;
+    }
+
+    public function getSortableParameters()
+    {
+        $inputSortableParameters = $this->getInputSortableParameters();
+        $outputSortableParameters = $this->getOutputSortableParameters($inputSortableParameters);
+
+        return array_merge($inputSortableParameters, $outputSortableParameters);
     }
 
 }

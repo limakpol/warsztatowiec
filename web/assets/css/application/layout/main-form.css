@@ -160,6 +160,80 @@
 .main-form .last-prices .content a:hover {
     text-decoration: underline;
 }
+/* MULTISELECT */
+.main-form .multiselect {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.main-form .multiselect .selector {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+.main-form .multiselect .selector:hover {
+    cursor: pointer;
+}
+.main-form .multiselect .selector label {
+    font: 12px 'Ubuntu', sans-serif;
+    color: #333;
+    align-self: center;
+}
+.main-form .multiselect .selector label:hover {
+    cursor: pointer;
+}
+.main-form .multiselect .selector i {
+    font-size: 12px;
+    color: #aaa;
+    align-self: center;
+}
+.main-form .multiselect .content {
+    padding: 0;
+    border: none;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+.main-form .multiselect .content ul {
+    list-style: none;
+    display: none;
+    height: 250px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    margin: 0;
+    position: absolute;
+    background-color: #f4f4f4;
+    width: 250px;
+    box-sizing: border-box;
+}
+.main-form .multiselect .content ul li  {
+    font: 11px 'Ubuntu', sans-serif;
+    color: #666;
+    padding: 2px;
+}
+.main-form .multiselect .content ul li i {
+    color: transparent;
+}
+.main-form .multiselect .content ul li.active i {
+    color: #666;
+}
+.main-form .multiselect .content ul li label {
+    padding: 2px;
+    font: 12px 'Ubuntu', sans-serif;
+}
+.main-form .multiselect .content ul li:hover label {
+    cursor: pointer;
+    background-color: #e2e2e2;
+}
+.main-form .multiselect .content ul li.active label {
+    background-color: #e2e2e2;
+}
 
 @media screen and (min-width: 1200px) {
     .main-form label {
@@ -196,5 +270,19 @@
     }
     .main-form input + ul + ul, .main-form select + ul + ul, .main-form textarea + ul + ul {
         font-size: 15px;
+    }
+
+    .main-form .multiselect .selector label {
+        font-size: 15px;
+    }
+    .main-form .multiselect .selector i {
+        font-size: 20px;
+    }
+    .main-form .multiselect .content ul li  {
+        font-size: 13px;
+    }
+    .main-form .multiselect .content ul li label {
+        padding: 3px;
+        font: 15px 'Ubuntu', sans-serif;
     }
 }

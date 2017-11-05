@@ -50,6 +50,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         return $vehicle;
     }
 
+
+
     public function retrieve(Workshop $workshop, $sortableParameters = [])
     {
         $search     = $sortableParameters['search'];
@@ -57,8 +59,6 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         $offset     = (int) $sortableParameters['offset'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
-        //$systemFilters  = $sortableParameters['systemFilters'];
-        // $customFilters  = $sortableParameters['customFilters'];
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()
@@ -99,9 +99,6 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         $search     = $sortableParameters['search'];
         $sortOrder  = $sortableParameters['sortOrder'];
         $sortColumnName = $sortableParameters['sortColumnName'];
-        //$systemFilters  = $sortableParameters['systemFilters'];
-        //$customFilters  = $sortableParameters['customFilters'];
-
 
         $queryBuilder = $this->_em
             ->createQueryBuilder()

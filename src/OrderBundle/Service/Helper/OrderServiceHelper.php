@@ -147,6 +147,8 @@ class OrderServiceHelper
         $orderService = $this->setServiceUnitPriceNet($orderService);
         $orderHeader  = $this->trade->evaluateOrderHeader($orderHeader);
 
+        $orderService = $this->assignWorkmans($orderService);
+
         $em->persist($service);
         $em->persist($orderService);
         $em->persist($orderHeader);
@@ -277,6 +279,34 @@ class OrderServiceHelper
         }
 
         $service->setUnitPriceNet($orderService->getUnitPriceNet());
+
+        return $orderService;
+    }
+
+    public function assignWorkmans(OrderService $orderService)
+    {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
+        /** @var EntityManager $em */
+        $em = $this->entityManager;
+
+        $workmans = $orderService->getWorkmans()->toArray();
+
+        $orderService->getWorkmans()->clear();
+
+        foreach($workmans as $workmanId)
+        {
+            $workman = $em->getRepository('AppBundle:User')->getOne($workshop, $workmanId);
+
+            if(null !== $workman)
+            {
+                $orderService->addWorkman($workman);
+            }
+        }
 
         return $orderService;
     }

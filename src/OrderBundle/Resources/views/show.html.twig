@@ -479,6 +479,14 @@
                                                                         <td>{{ orderAction.totalDue|money }} zł</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td>Pracownicy</td>
+                                                                        <td>
+                                                                            {% for workman in orderAction.workmans %}
+                                                                                <a href="{{ path('workflow_workman_show', {userId: workman.id}) }}">{{ workman.forename }} {{ workman.surname }}</a>
+                                                                            {% endfor %}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td>Uwagi</td>
                                                                         <td>{{ orderAction.remarks }}</td>
                                                                     </tr>
@@ -597,6 +605,14 @@
                                             <tr>
                                                 <td>Należność całkowita</td>
                                                 <td>{{ orderService.totalDue|money }} zł</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pracownicy</td>
+                                                <td>
+                                                    {% for workman in orderService.workmans %}
+                                                        <a href="{{ path('workflow_workman_show', {userId: workman.id}) }}">{{ workman.forename }} {{ workman.surname }}</a>
+                                                    {% endfor %}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Uwagi</td>

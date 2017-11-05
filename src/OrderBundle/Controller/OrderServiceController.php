@@ -11,6 +11,7 @@ namespace OrderBundle\Controller;
 
 use OrderBundle\Service\Helper\OrderServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use WorkflowBundle\Service\Helper\WorkmanIndexHelper;
 
 class OrderServiceController extends Controller
 {
@@ -37,6 +38,11 @@ class OrderServiceController extends Controller
             ]);
         }
 
+        /** @var WorkmanIndexHelper $workmaIndexxHelper */
+        $workmaIndexxHelper = $this->get('workflow.helper.workman_index');
+
+        $workmans = $workmaIndexxHelper->retrieve();
+
         $sortableParameters = $orderServiceHelper->getSortableParamaters();
         $services = $orderServiceHelper->retrieveServices($sortableParameters);
 
@@ -51,6 +57,7 @@ class OrderServiceController extends Controller
             'services'      => $services,
             'sortableParameters' => $sortableParameters,
             'form'          => $form->createView(),
+            'workmans'      => $workmans,
         ]);
     }
 
