@@ -14,6 +14,7 @@ class PhoneTransformer implements DataTransformerInterface
 {
     public function transform($value)
     {
+        if(!$value) return '+48';
 
         return $value;
     }

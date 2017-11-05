@@ -57,7 +57,6 @@ class UserType extends AbstractType
             ->add('phone1', TextType::class, [
                 'label' => 'Telefon',
                 'required' => false,
-                'data' => '+48',
                 'attr' => [
                     'maxlength' => 15,
                     'size' => 12,
@@ -66,7 +65,6 @@ class UserType extends AbstractType
             ->add('phone2', TextType::class, [
                 'label' => 'Telefon 2',
                 'required' => false,
-                'data' => '+48',
                 'attr' => [
                     'maxlength' => 15,
                     'size' => 12,

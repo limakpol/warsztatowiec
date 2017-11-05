@@ -29,6 +29,19 @@ $(document).ready(function()
             event.preventDefault();
 
             var name = $(this).val();
+
+            var groupps = $('.customer-btn-filter-custom');
+
+            var error = false;
+
+            groupps.each(function()
+            {
+                if($(this).text() == name) error = true;
+            });
+
+            if(error) return;
+
+
             var button = '<button class="customer-btn-filter-custom active">' + name + '</button>';
             var hidden = '<input type="hidden" name="customer[groupps][][name]" required="required" value="' + name + '">';
 

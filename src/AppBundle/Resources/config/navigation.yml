@@ -8,9 +8,6 @@ header_menu:
     3:
         name: moje warsztaty
         route: header_workshop_index
-    4:
-        name: płatności
-        route: header_payment_index
     5:
         name: ustawienia
         route: header_settings_index
@@ -38,9 +35,6 @@ header_menu:
     13:
         name: modele samochodów
         route: header_car_brand_index
-    14:
-        name: opcje systemowe
-        route: header_system_index
 main_menu:
     1:
         tab: customer

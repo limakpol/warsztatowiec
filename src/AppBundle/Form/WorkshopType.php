@@ -10,6 +10,7 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Workshop;
+use AppBundle\Form\Transformer\PhoneTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -76,7 +77,10 @@ class WorkshopType extends AbstractType
                 ],
             ])
         ;
+
+        $builder->get('phone')->addModelTransformer(new PhoneTransformer());
     }
+
 
 
     public function configureOptions(OptionsResolver $resolver)
