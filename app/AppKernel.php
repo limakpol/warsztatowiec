@@ -15,7 +15,6 @@ use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use TrashBundle\TrashBundle;
-use UserBundle\UserBundle;
 use VehicleBundle\VehicleBundle;
 use WarehouseBundle\WarehouseBundle;
 use WorkflowBundle\WorkflowBundle;

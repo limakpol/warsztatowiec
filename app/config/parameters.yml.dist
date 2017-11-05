@@ -3,10 +3,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_host: 127.0.0.1
-    database_port: ~
-    database_name: symfony
-    database_user: root
-    database_password: ~
+    database_port: 3306
+    database_name: warsztatowiec
+    database_user: warsztatowiec
+    database_password: 'Yg$b#3Rs2t'
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
 
@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+    aws_ses:
+        from_address: kontakt@warsztatowiec.pl
+        from_name: Warsztatowiec
+        client:
+            region: eu-west-1
+            version: '2010-12-01'
+            credentials:
+                key: AKIAI3NOQPOEAU4BXTQQ
+                secret: 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
