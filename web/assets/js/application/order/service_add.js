@@ -103,8 +103,9 @@ $(document).ready(function() {
                         $(cssId).val(data[value]).change();
                     }
                     $('#order_service_service_measure').val(data['measure_id']).change();
-
+                    /*
                     var buttonsLabels = $('#service-form .div-form-labels .service-btn-filter-custom');
+
 
                     for (var key in data[2]) {
                         buttonsLabels.each(function () {
@@ -114,7 +115,7 @@ $(document).ready(function() {
                             }
                         });
                     }
-
+                    */
                     $('.h-enum.selected-service').text('2. Możesz przejrzeć i zmienić dane usługi');
 
                     $('#searchable-service > div').slideUp();

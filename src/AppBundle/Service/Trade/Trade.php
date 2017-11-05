@@ -223,29 +223,5 @@ class Trade
         return $orderHeader;
     }
 
-    public function addDetail(TradeHeaderInterface $tradeHeader, TradeDetailInterface $tradeDetail)
-    {
-        $totalNetBeforeDiscount = $tradeHeader->getTotalNetBeforeDiscount();
-        $totalNetBeforeDiscount += $tradeDetail->getTotalNetBeforeDiscount();
-        $tradeHeader->setTotalNetBeforeDiscount($totalNetBeforeDiscount);
-
-        $discount = $tradeHeader->getDiscount();
-        $discount += $tradeDetail->getDiscount();
-        $tradeHeader->setDiscount($discount);
-
-        $totalNet = $tradeHeader->getTotalNet();
-        $totalNet += $tradeDetail->getTotalNet();
-        $tradeHeader->setTotalNet($totalNet);
-
-        $vat = $tradeHeader->getVat();
-        $vat += $tradeDetail->getVat();
-        $tradeHeader->setVat($vat);
-
-        $totalDue = $tradeHeader->getTotalDue();
-        $totalDue += $tradeDetail->getTotalDue();
-        $tradeHeader->setTotalDue($totalDue);
-
-        return $tradeHeader;
-    }
 
 }

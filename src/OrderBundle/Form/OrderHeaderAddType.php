@@ -3,8 +3,11 @@
 namespace OrderBundle\Form;
 
 use AppBundle\Entity\OrderHeader;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use AppBundle\Entity\Workstation;
 use CustomerBundle\Form\CustomerType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -14,13 +17,27 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use VehicleBundle\Form\VehicleType;
 
 class OrderHeaderAddType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
         $builder
             ->add('customer_id', HiddenType::class, [
                 'required' => true,
@@ -53,6 +70,17 @@ class OrderHeaderAddType extends AbstractType
                 'placeholder' => '-- wybierz --',
                 'multiple' => false,
                 'expanded' => false,
+                'query_builder' => function(EntityRepository $er) use ($workshop)
+                {
+                    return $er->createQueryBuilder('w')
+                        ->where('w.workshop = :workshop')
+                        ->andWhere('w.deleted_at IS NULL')
+                        ->andWhere('w.removed_at IS NULL')
+                        ->setParameters([
+                            ':workshop' => $workshop,
+                        ])
+                        ;
+                }
             ])
             ->add('priority', CheckboxType::class, [
                 'label' => 'Priorytet',

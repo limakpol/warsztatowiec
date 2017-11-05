@@ -2,7 +2,7 @@ services:
 # FORM TYPES
     form.type.order_header_add:
         class: OrderBundle\Form\OrderHeaderAddType
-        arguments: ["@doctrine.orm.default_entity_manager", "@security.token_storage"]
+        arguments: ["@security.token_storage"]
         tags:
             - { name: form.type}
 
@@ -19,6 +19,12 @@ services:
 
     form.type.order_service:
         class: OrderBundle\Form\OrderServiceType
+        arguments: ["@security.token_storage"]
+        tags:
+            - { name: form.type }
+
+    form.type.order_action:
+        class: OrderBundle\Form\OrderActionType
         arguments: ["@security.token_storage"]
         tags:
             - { name: form.type }
@@ -43,3 +49,9 @@ services:
     order_helper_service:
         class: OrderBundle\Service\Helper\OrderServiceHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container", "@app.trade"]
+
+    order_helper_action:
+        class: OrderBundle\Service\Helper\OrderActionHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@app.trade"]
+
+

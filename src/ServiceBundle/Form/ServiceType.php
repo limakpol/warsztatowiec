@@ -11,17 +11,33 @@ namespace ServiceBundle\Form;
 
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Service;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ServiceType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nazwa',
@@ -43,11 +59,17 @@ class ServiceType extends AbstractType
                 },
                 'multiple' => false,
                 'expanded' => false,
-                'query_builder' => function(EntityRepository $er)
+                'query_builder' => function(EntityRepository $er) use ($workshop)
                 {
                     return $er->createQueryBuilder('m')
                         ->where('m.type_of_quantity = :type')
-                        ->setParameter(':type', 'service')
+                        ->andWhere('m.workshop = :workshop')
+                        ->andWhere('m.deleted_at IS NULL')
+                        ->andWhere('m.removed_at IS NULL')
+                        ->setParameters([
+                            ':type' => 'service',
+                            ':workshop' => $workshop,
+                        ])
                         ;
                 }
             ])

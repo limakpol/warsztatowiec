@@ -90,7 +90,7 @@ class OrderServiceHelper
         $orderService->setService($service);
 
         $form = $this->formFactory->create(OrderServiceType::class, $orderService, [
-           'validation_groups' => ['order_service_add', 'service', 'action'],
+           'validation_groups' => ['order_service_add', 'service'],
         ]);
 
         return $form;
@@ -113,9 +113,6 @@ class OrderServiceHelper
 
     public function write(Form $form, OrderHeader $orderHeader)
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
-
         /** @var EntityManager $em */
         $em = $this->entityManager;
 

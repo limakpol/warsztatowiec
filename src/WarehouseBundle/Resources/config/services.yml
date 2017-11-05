@@ -2,16 +2,19 @@ services:
 # FORM TYPES
     form.type.good:
         class: WarehouseBundle\Form\GoodType
+        arguments: ["@security.token_storage"]
         tags:
             - { name: form.type }
 
     form.type.indexx:
         class: WarehouseBundle\Form\IndexxType
+        arguments: ["@security.token_storage"]
         tags:
             - { name: form.type }
 
     form.type.indexx_edit:
         class: WarehouseBundle\Form\IndexxEditType
+        arguments: ["@security.token_storage"]
         tags:
             - { name: form.type }
 

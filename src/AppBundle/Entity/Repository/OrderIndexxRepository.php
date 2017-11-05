@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Repository;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\Workshop;
+use Doctrine\ORM\Query;
 
 /**
  * OrderIndexxRepository
@@ -13,6 +14,32 @@ use AppBundle\Entity\Workshop;
  */
 class OrderIndexxRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getOne(Workshop $workshop, $id, $hydrationMode = Query::HYDRATE_OBJECT)
+    {
+        $orderIndexx = $this->_em
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:OrderIndexx', 'i')
+            ->leftJoin('AppBundle:OrderHeader', 'o', 'WITH', 'i.order_header_id = o.id')
+            ->where('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->where('i.deleted_at IS NULL')
+            ->andWhere('i.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('i.id = :id')
+            ->setParameters([
+                ':workshop' => $workshop,
+                ':id'       => $id,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult($hydrationMode)
+        ;
+
+        return $orderIndexx;
+    }
+
+
     public function getByIndexx(Workshop $workshop, Indexx $indexx)
     {
         $orderIndexxes = $this->_em->createQueryBuilder()

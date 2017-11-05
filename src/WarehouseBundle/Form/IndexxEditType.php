@@ -5,6 +5,9 @@ namespace WarehouseBundle\Form;
 use AppBundle\Entity\Good;
 use AppBundle\Entity\Indexx;
 use AppBundle\Entity\Producer;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -12,12 +15,26 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class IndexxEditType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var User $user */
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        /** @var Workshop $workshop */
+        $workshop = $user->getCurrentWorkshop();
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nazwa',
@@ -35,6 +52,17 @@ class IndexxEditType extends AbstractType
                 'placeholder' => '-- wybierz --',
                 'multiple' => false,
                 'expanded' => false,
+                'query_builder' => function(EntityRepository $er) use ($workshop)
+                {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.workshop = :workshop')
+                        ->andWhere('p.deleted_at IS NULL')
+                        ->andWhere('p.removed_at IS NULL')
+                        ->setParameters([
+                            ':workshop' => $workshop,
+                        ])
+                        ;
+                }
             ])
             ->add('quantity', TextType::class, [
                 'label' => 'Ilość w magazynie',
