@@ -42,9 +42,12 @@ security:
                 target: /logowanie
 
     access_control:
-     #   - { path: ^/logowanie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-      #  - { path: ^/rejestracja, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         # - { path: ^/, roles: ROLE_USER }
+        - { path: ^/logowanie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/rejestracja, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/., roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
