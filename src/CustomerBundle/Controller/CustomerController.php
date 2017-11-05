@@ -76,15 +76,25 @@ class CustomerController extends Controller
 
     public function showAction($customerId)
     {
-        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $customerShowHelper = $this->get('customer.helper.show');
 
-        $mainMenu = $this->get('app.yaml_parser')->getMainMenu();
+        /** @var Customer $customer */
+        $customer = $customerShowHelper->getCustomer($customerId);
+
+        if(null === $customer)
+        {
+            return $this->redirectToRoute('customer_index');
+        }
+
+        $headerMenu = $this->get('app.yaml_parser')->getHeaderMenu();
+        $mainMenu   = $this->get('app.yaml_parser')->getMainMenu();
 
         return $this->render('CustomerBundle::show.html.twig', [
             'headerMenu'    => $headerMenu,
             'mainMenu'      => $mainMenu,
             'tab'           => 'customer',
             'navbar'        => 'Klient',
+            'customer'      => $customer,
         ]);
     }
 

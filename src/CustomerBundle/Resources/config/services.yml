@@ -19,3 +19,8 @@ services:
     customer.helper.index:
         class: CustomerBundle\Service\Helper\CustomerIndexHelper
         arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager", "@service_container"]
+
+    customer.helper.show:
+        class: CustomerBundle\Service\Helper\CustomerShowHelper
+        arguments: ["@request_stack", "@security.token_storage", "@form.factory", "@doctrine.orm.default_entity_manager"]
+

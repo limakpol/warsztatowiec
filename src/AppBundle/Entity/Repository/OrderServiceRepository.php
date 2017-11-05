@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity\Repository;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Workshop;
 
 /**
  * OrderServiceRepository
@@ -10,4 +12,27 @@ namespace AppBundle\Entity\Repository;
  */
 class OrderServiceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function retrieveByWorkman(Workshop $workshop, User $workman)
+    {
+        $orderServices = $this->_em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:OrderService', 's')
+            ->innerJoin('AppBundle:OrderHeader', 'o', 'WITH', 's.order_header_id = o.id')
+            ->innerJoin('s.workmans', 'w')
+            ->where('s.deleted_at IS NULL')
+            ->andWhere('s.removed_at IS NULL')
+            ->where('o.deleted_at IS NULL')
+            ->andWhere('o.removed_at IS NULL')
+            ->andWhere('o.workshop = :workshop')
+            ->andWhere('w.id IN (:workmanIds)')
+            ->setParameters([
+                ':workmanIds' => [$workman->getId()],
+                ':workshop' => $workshop,
+            ])
+            ->getQuery()
+            ->getResult()
+            ;
+
+        return $orderServices;
+    }
 }

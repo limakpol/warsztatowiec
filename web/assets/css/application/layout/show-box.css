@@ -77,6 +77,10 @@
     background-color: #f9f9f9;
     cursor: pointer;
 }
+.show-box .details-table tr.header.no-slide {
+    cursor: auto;
+}
+
 .show-box .details-table tr.header td {
     padding: 5px;
     border: 1px solid #fefefe;
@@ -104,11 +108,6 @@
 .show-box .details-table .td-right {
     text-align: right;
 }
-.show-box .details-sub-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-/* DETAILS-SUB-TABLE */
 .show-box .sub-header th {
     background-color: #f4f4f4;
     border: 1px solid #adadad;
