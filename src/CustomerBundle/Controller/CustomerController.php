@@ -204,7 +204,6 @@ class CustomerController extends Controller
     {
         $request = $this->get('request_stack')->getCurrentRequest();
 
-        if($request->getHost() == 'www.local.warsztatowiec.pl' || $request->getHost() == 'local.warsztatowiec.pl') return;
 
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -215,6 +214,9 @@ class CustomerController extends Controller
         $mailer = $this->get('email.mailer');
 
         $userName = $user->getForename() . ' ' . $user->getSurname();
+
+
+        if($request->getHost() == 'www.local.warsztatowiec.pl' || $request->getHost() == 'local.warsztatowiec.pl' || $user->getEmail() == 'k.polikowski@gmail.com') return;
 
         $body = $this->render('AppBundle:mailing:customer_index_event.html.twig', [
             'date' => new \DateTime(),
