@@ -202,6 +202,10 @@ class CustomerController extends Controller
 
     public function sendEventAction()
     {
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        if($request->getHost() == 'www.local.warsztatowiec.pl' || $request->getHost() == 'local.warsztatowiec.pl') return;
+
         /** @var User $user */
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
