@@ -35,6 +35,8 @@ class WorkshopController extends Controller
 
         $userName = $user->getForename() . ' ' . $user->getSurname();
 
+        $subject = 'Nowa uwaga użytkownika ' . $userName;
+
         $path = $request->get('path');
 
         $body = $this->render('AppBundle:mailing:workshop_comment.html.twig', [
@@ -50,7 +52,7 @@ class WorkshopController extends Controller
         $message = new Message();
 
         $message->setTo('kontakt@warsztatowiec.pl');
-        $message->setSubject('Nowa uwaga użytkownika testującego');
+        $message->setSubject($subject);
         $message->setBody($body);
 
         return new JsonResponse($mailer->send($message));

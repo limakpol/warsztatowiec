@@ -215,6 +215,7 @@ class CustomerController extends Controller
 
         $userName = $user->getForename() . ' ' . $user->getSurname();
 
+        $subject = 'Użytkownik ' . $userName . ' wszedł na stronę klientów';
 
         if($request->getHost() == 'www.local.warsztatowiec.pl' || $request->getHost() == 'local.warsztatowiec.pl' || $user->getEmail() == 'k.polikowski@gmail.com') return;
 
@@ -229,7 +230,7 @@ class CustomerController extends Controller
         $message = new Message();
 
         $message->setTo('kontakt@warsztatowiec.pl');
-        $message->setSubject('Użytkownik wszedł na stronę klientów');
+        $message->setSubject($subject);
         $message->setBody($body);
 
         $mailer->send($message);
