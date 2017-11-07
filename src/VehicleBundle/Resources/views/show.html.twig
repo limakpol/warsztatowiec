@@ -86,6 +86,16 @@
                         {{ vehicle.updatedAt|date }} przez <a href="{{ path('workflow_workman_show', {userId: vehicle.updatedBy.id}) }}">{{ vehicle.updatedBy.forename }} {{ vehicle.updatedBy.surname }}</a>
                     </td>
                 </tr>
+                <tr class="footer">
+                    <td colspan="2">
+                        <a class="btn-edit">edytuj
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <button class="btn-remove">usuń
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
             </table>
         </section>
     </div>
@@ -137,33 +147,35 @@
                     <th>Zapłacone</th>
                     <th></th>
                 </tr>
-                {% for key, orderHeader in orderHeaders %}
-                    <tr class="header no-slide">
-                        <td class="td-center num">{{ key+1 }}.</td>
-                        <td class="td-center date">{{ orderHeader.createdAt|date }}</td>
-                        <td class="td-left">
-                            <a href="{{ path('customer_show', {customerId: orderHeader.customer.id}) }}">{{ orderHeader.customer.forename }} {{ orderHeader.customer.surname }} {{ orderHeader.customer.companyName }}</a>
-                        </td>
-                        <td class="td-center">{{ orderHeader.totalDue|money }}zł</td>
-                        <td class="td-center">
-                            {% if orderHeader.completedAt is null %}
-                                NIE
-                            {% else %}
-                                {{ orderHeader.completedAt|date }}
-                            {% endif %}
-                        </td>
-                        <td class="td-center">
-                            {% if orderHeader.paidAt is null %}
-                                NIE
-                            {% else %}
-                                {{ orderHeader.paidAt|date }}
-                            {% endif %}
-                        </td>
-                        <td class="td-center">
-                            <a class="btn-info" href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
-                        </td>
-                    </tr>
-                {% endfor %}
+                {% if orderHeaders.count > 0 %}
+                    {% for key, orderHeader in orderHeaders %}
+                        <tr class="header no-slide">
+                            <td class="td-center num">{{ key+1 }}.</td>
+                            <td class="td-center date">{{ orderHeader.createdAt|date }}</td>
+                            <td class="td-left">
+                                <a href="{{ path('customer_show', {customerId: orderHeader.customer.id}) }}">{{ orderHeader.customer.forename }} {{ orderHeader.customer.surname }} {{ orderHeader.customer.companyName }}</a>
+                            </td>
+                            <td class="td-center">{{ orderHeader.totalDue|money }}zł</td>
+                            <td class="td-center">
+                                {% if orderHeader.completedAt is null %}
+                                    NIE
+                                {% else %}
+                                    {{ orderHeader.completedAt|date }}
+                                {% endif %}
+                            </td>
+                            <td class="td-center">
+                                {% if orderHeader.paidAt is null %}
+                                    NIE
+                                {% else %}
+                                    {{ orderHeader.paidAt|date }}
+                                {% endif %}
+                            </td>
+                            <td class="td-center">
+                                <a class="btn-info" href="{{ path('order_show', {orderHeaderId: orderHeader.id}) }}">szczegóły <i class="fa fa-info-circle"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </table>
         </section>
     </div>
