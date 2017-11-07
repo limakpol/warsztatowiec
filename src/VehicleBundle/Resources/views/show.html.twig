@@ -132,22 +132,23 @@
             </table>
         </section>
     </div>
-    <div class="show-box">
-        <h1>
-            <label>Zlecenia serwisowe</label>
-        </h1>
-        <section>
-            <table class="details-table">
-                <tr>
-                    <th>L.p.</th>
-                    <th>Data utworzenia</th>
-                    <th>Klient</th>
-                    <th>Należność całkowita</th>
-                    <th>Zakończone</th>
-                    <th>Zapłacone</th>
-                    <th></th>
-                </tr>
-                {% if orderHeaders.count > 0 %}
+    {% if orderHeaders|length > 0 %}
+        <div class="show-box">
+            <h1>
+                <label>Zlecenia serwisowe</label>
+            </h1>
+            <section>
+
+                <table class="details-table">
+                    <tr>
+                        <th>L.p.</th>
+                        <th>Data utworzenia</th>
+                        <th>Klient</th>
+                        <th>Należność całkowita</th>
+                        <th>Zakończone</th>
+                        <th>Zapłacone</th>
+                        <th></th>
+                    </tr>
                     {% for key, orderHeader in orderHeaders %}
                         <tr class="header no-slide">
                             <td class="td-center num">{{ key+1 }}.</td>
@@ -175,8 +176,16 @@
                             </td>
                         </tr>
                     {% endfor %}
-                {% endif %}
-            </table>
-        </section>
-    </div>
+                </table>
+            </section>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/application/show.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
