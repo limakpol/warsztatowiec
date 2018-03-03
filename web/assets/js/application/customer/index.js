@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    sendEvent();
+    //sendEvent();
     var globalTimeout = null;
     $(document).on('keyup', '#div-customer-sortable .input-search', function()
     {
